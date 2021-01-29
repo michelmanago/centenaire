@@ -1,20 +1,31 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Header from '../components/header'
 import styles from '../styles/pages/home.module.css'
 
 export default function Home() {
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Exposition centenaire</title>
+        <title>Exposition du centenaire</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
+      {/* Header */}
       <Header/>
 
+      {/* Page home */}
       <div>
-        <h1>Hello homepage</h1>
+        <header className={styles.header + " relative"}>
+          <Image
+            src="/static/img/photo_cathedrale.jpg"
+            // width={1400}
+            // height={927}
+            objectFit="cover"
+            layout="fill"
+          />
+        </header>
       </div>
 
     </div>
