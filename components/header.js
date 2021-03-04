@@ -68,10 +68,10 @@ export default function Header () {
             <div className="container sm:mx-auto bg-white max-w-screen-xl">
 
             <div className="flex sm:items-center">
-                <div className="flex justify-end w-1/3">
+                <div className="flex justify-end w-1/4">
                     <img className="m-2 w-36" src="/logo.svg" />
                 </div>
-                <div className="w-2/3">
+                <div className="w-3/4">
                     <div>                    
                         <span className="text-pred font-logotitle text-4xl font-bold ml-2">Exposition du centenaire de l'archevêché des églises  </span> 
                     </div>

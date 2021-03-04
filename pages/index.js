@@ -1,14 +1,20 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Header from '../components/header'
 import styles from '../styles/pages/home.module.css'
+import AppHome from '../components/apphome'
 
 export default function Home() {
+
+  const router = useRouter()
+  const { locale, locales, defaultLocale } = router
 
   return (
     <div className={styles.container}>
       <Head>
         <title>Exposition du centenaire</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {/* Header */}
@@ -25,6 +31,7 @@ export default function Home() {
             layout="fill"
           />
         </header>
+        <AppHome  currentLanguage={locale} />
       </div>
 
     </div>
