@@ -9,7 +9,6 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Exposition du centenaire</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {/* Header */}
@@ -19,7 +18,7 @@ export default function Home() {
       <div>
         <header className={styles.header + " relative"}>
           <Image
-            src="/static/img/photo_cathedrale.jpg"
+            src="/static/img/bandeau_cathedrale.jpg"
             // width={1400}
             // height={927}
             objectFit="cover"

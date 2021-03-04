@@ -61,10 +61,26 @@ export default function Header () {
         setIsNavOpened(!IsNavOpened)
     }
 
-
+  
     return (
 
-        <header className="flex flex-col items-center">
+        <header className="bg-pyellow">
+            <div className="container sm:mx-auto bg-white max-w-screen-xl">
+
+            <div className="flex sm:items-center">
+                <div className="flex justify-end w-1/3">
+                    <img className="m-2 w-36" src="/logo.svg" />
+                </div>
+                <div className="w-2/3">
+                    <div>                    
+                        <span className="text-pred font-logotitle text-4xl font-bold ml-2">Exposition du centenaire de l'archevêché des églises  </span> 
+                    </div>
+                    <div> 
+                        <span className="text-pred font-logotitle text-4xl font-bold ml-2">Orthodoxes de tradition russe en Europe occidentale</span> 
+                    </div>
+                </div>
+            </div>
+            </div>
 
             {/* Top bar */}
             <div className={"w-full px-5 flex justify-between items-center bg-pblue " + styles.topBar}>
@@ -74,8 +90,7 @@ export default function Header () {
 
                     {/* Trigger */}
                     <button onClick={toggleNavMenu} className={styles.headerNavTrigger + " flex items-center text-white"}>
-                        <span className="mr-2 text-lg font-bold">Exposition du centenaire</span> 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="18" viewBox="0 0 27 18" className="fill-current"><path d="M4.5,27h27V24H4.5Zm0-7.5h27v-3H4.5ZM4.5,9v3h27V9Z" transform="translate(-4.5 -9)"/></svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="27" height="18" viewBox="0 0 27 18" className="fill-current"><path d="M4.5,27h27V24H4.5Zm0-7.5h27v-3H4.5ZM4.5,9v3h27V9Z" transform="translate(-4.5 -9)"/></svg>
                     </button>
 
                     <ul className={styles.headerNav + " bg-white border rounded z-10 " + (IsNavOpened ? " " : "hidden")}>
@@ -90,7 +105,7 @@ export default function Header () {
                             {label: "1991-2021 : les grands bouleversements", href: "/"},
                         ]}/>
                         <HeaderNavLink label="Les grandes personnalités" href="/" subMenu={[
-                            {label: "Les saints", href: "/"},
+                            {label: "Les saints", href: "/saints"},
                             {label: "Les primats", href: "/"},
                             {label: "Les évêques", href: "/"},
                             {label: "Les maîtres spirituels", href: "/"},
@@ -142,11 +157,11 @@ export default function Header () {
                     </div>
                 </button>
             </div>
+            
 
             {/* Logo */}
             {/* <img className={"my-3 " + styles.logo} src="/logo.svg" alt="logo"/> */}
-
-
+ 
         </header>
     )
 
