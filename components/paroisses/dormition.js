@@ -1,3 +1,4 @@
+import React from 'react';
 import Carousel from '../carousel';
 
 export default function Dormition() {
@@ -12,12 +13,12 @@ export default function Dormition() {
         {url: '/static/img/paroisses/chaville/Sanctuaire/photo8.jpg', legende: ''},
     ];
     const imgArrayPose = [
-        {url: '/static/img/paroisses/chaville/Pose/photo1.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Pose/photo2.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Pose/photo3.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Pose/photo4.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Pose/photo5.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Pose/photo6.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo1.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo2.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo3.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo4.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo5.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo6.jpg', legende: ''},
     ];
 
     const imgArrayToday = [
@@ -40,10 +41,6 @@ export default function Dormition() {
             <h2>Notre Dame de la Dormition à Sainte Geneviève des Bois</h2>
 
             <h3>La Nécropole Russe de Sainte Geneviève des Bois</h3>
-
-            {/*<Carousel imgList={imgArraySanctuaire} legende="" id='1' />
-            <Carousel imgList={imgArrayPose} legende="" id='2' />
-            */}
 
             <p>
                 La nécropole russe comprend d'une part l'église orthodoxe de la Dormition de la sainte mère de Dieu et
@@ -79,7 +76,10 @@ export default function Dormition() {
                 murales à l'intérieur de l'église et de la crypte. La nécropole russe constitue un patrimoine
                 mondialement connu.
             </p>
-
+            <div className="flex flex-wrap">
+                <img className="w-1/2 px-1" src="/static/img/architecte.jpg" alt="architecte" />
+                <img className="w-1/2 px-1" src="/static/img/entrepreneur.jpg" alt="entrepreneur" />
+            </div>
             <h3>Histoire</h3>
             <p>
                 En 1927, Sainte-Geneviève-des-Bois était une petite commune de neuf cents habitants qui, en raison de sa
@@ -111,11 +111,7 @@ export default function Dormition() {
                 bâtir une église orthodoxe. La construction de l’église fut confiée à l’architecte russe Albert
                 Alexandrovitch Benois qui fit appel à l'entrepreneur Jules Despeyroux.
             </p>
-            <div className="flex flex-wrap">
-                {' '}
-                <img className="w-1/2 px-1" src="/static/img/architecte.jpg" alt="architecte" />
-                <img className="w-1/2 px-1" src="/static/img/entrepreneur.jpg" alt="entrepreneur" />
-            </div>
+            <Carousel imgList={imgArrayPose} legende="" id="dormition-pose" />
             <p>
                 Pour la nouvelle église, Bénois adopta le style de Novgorod du XVe siècle simple et élégant : un édifice
                 blanc de plan carré, découpé de fenêtres étroites, surmonté d’un toit vert symbolisant la terre et
@@ -124,7 +120,7 @@ export default function Dormition() {
                 de Dieu, eut lieu en octobre 1939. C’est dans la crypte de cette église que reposent aujourd’hui les
                 primats de l’archevêché des églises orthodoxes de tradition russe en Europe occidentale.
             </p>
-            <Carousel imgList={imgArrayToday} legende="" id="dormition-today" />
+            <Carousel imgList={imgArrayToday} legende="La paroisse aujourd'hui" id="dormition-today" />
         </div>
     );
 }

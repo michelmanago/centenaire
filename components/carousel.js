@@ -19,7 +19,7 @@ export default function Carousel({imgList, legende, id}) {
                 navigation={{clickable: true}}
                 /*onSlideChange={() => console.log('slide change')}*/
                 /*onSwiper={swiper => console.log(swiper)}*/
-                style={{'--swiper-navigation-color': 'gray'}}
+                style={{'--swiper-navigation-color': 'yellow'}}
             >
                 {imgList.map((img, i) => (
                     <SwiperSlide key={id + '-' + i}>
