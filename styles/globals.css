@@ -85,3 +85,12 @@ p {
   box-sizing: border-box;
 }
 
+.bio-block h2 {
+    @apply text-4xl;
+}
+.bio-block h3 {
+    @apply py-4 text-2xl;
+}
+.bio-block p {
+    @apply pb-2;
+}

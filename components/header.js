@@ -30,7 +30,7 @@ const HeaderNavLink = ({label, href, subMenu}) => {
                         </button>
                     </>
                 ) : (
-                    <a className={"uppercase text-xs px-3 py-3 block w-full font-medium text-sm"} href={href}>{label}</a>
+                    <a className={"uppercase px-3 py-3 block w-full font-medium text-sm"} href={href}>{label}</a>
                 )
             }
             
@@ -109,11 +109,11 @@ export default function Header () {
                             {label: "Les saints", href: "/saints"},
                             {label: "Les primats", href: "/"},
                             {label: "Les évêques", href: "/"},
-                            {label: "Les maîtres spirituels", href: "/"},
+                            {label: "Les maîtres spirituels", href: "/maitrespirituels"},
                             {label: "Les laïcs", href: "/"}
                         ]}/>
                         <HeaderNavLink label="Les paroisses" href="/" subMenu={[
-                            {label: "Liste de toutes les paroisses actuelles", href: "/"},
+                            {label: "Liste de toutes les paroisses actuelles", href: "/paroisses"},
                             {label: "Profil des paroisses les plus typiques/intéressantes/ dynamiques (critères de sélection à débattre)", href: "/"},
                             {label: "La vie quotidienne", href: "/"},
                         ]}/>
@@ -127,6 +127,7 @@ export default function Header () {
                             {label: "les monuments historiques", href: "/"},
                             {label: "l' œuvre architecturale", href: "/"},
                             {label: "les iconographes", href: "/"},
+                            {label: "les compositeurs de musique liturgique", href: "/compositeurs"},
                             {label: "artistes ayant collaboré à la vie culturelle de l'archevêché", href: "/"},
                             {label: "œuvre artistique mettant en valeur la vie des églises", href: "/"},
                         ]}/>
