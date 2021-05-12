@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Header from '../components/header';
 import Kedroffp from '../components/compositeurs/kedroffp';
 import Kedrofff from '../components/compositeurs/kedrofff';
+import Ivanovitch from '../components/compositeurs/ivanovitch';
 
 export default function Compositeurs({}) {
     const [section, setSection] = useState('KedroffP');
@@ -13,13 +14,14 @@ export default function Compositeurs({}) {
                 return <Kedroffp />;
             case 'KedroffF':
                 return <Kedrofff />;
-
+                case 'Ivanovitch':
+                    return <Ivanovitch />;
             default:
                 return null;
         }
     };
     return (
-        <div className='bg-pyellow'>
+        <div className="bg-pyellow">
             <Head>
                 <title>Les Maîtres Spirituels</title>
                 <link rel="icon" href="/favicon.ico" />
@@ -36,6 +38,9 @@ export default function Compositeurs({}) {
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('KedroffF')}>
                             Nicolas Kedroff fils
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Ivanovitch')}>
+                            Eugène Evetz
                         </li>
                     </ul>
                 </div>
