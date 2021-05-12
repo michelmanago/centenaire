@@ -4,6 +4,7 @@ export function Medvekov() {
             <h2>Père Alexis Medvekov (1867-1934)</h2>
 
             <h3>Naissance et jeunesse</h3>
+            <img className="float-right w-1/3 pl-2" src="/static/img/saint-alexis-d'ugine.jpg" />
             <p>
                 Son père, Jean, prêtre de campagne est mort peu après sa naissance, laissant la famille dans la misère.
                 Alexis étudie d'abord à l'école ecclésiastique avant d'être admis au séminaire théologique de
@@ -65,6 +66,7 @@ export function Medvekov() {
             </p>
 
             <h3>Prêtre à Ugine et fin de vie</h3>
+            <img className="float-left w-1/3 pr-2" src="/static/img/icone-alexis-d-ugine.png" />
             <p>
                 Ugine est alors un centre métallurgique important dont l'usine emploie plusieurs centaines d'immigrés
                 russes. Cependant, ses paroissiens sont très divisés entre eux en raison d'opinions politiques et
@@ -90,6 +92,7 @@ export function Medvekov() {
             </p>
 
             <h3>Exhumation des reliques et canonisation</h3>
+            <img className="float-right w-1/3 pl-2" src="/static/img/reliques-st-alexis.jpg" />
             <p>
                 En 1953, la municipalité d'Ugine décide de construire des immeubles à l'emplacement du cimetière et
                 propose aux familles de faire transférer les dépouilles de leurs proches dans le nouveau cimetière, dans

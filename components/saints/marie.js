@@ -4,6 +4,8 @@ export default function Marie() {
             <h2>Mère Marie (Skobtsov) (1891-1945)</h2>
 
             <h3>La jeunesse</h3>
+            <img className="float-right w-1/3 pl-2" src="/static/img/marie-skobtsoff.jpg" />
+            
             <p>
                 Mère Marie est caractéristique du renouveau spirituel et religieux qu&#39;a connu la Russie au début du
                 20e siècle. Bien qu&#39;issue d&#39;une famille de l&#39;aristocratie, elle était, par conviction,
@@ -31,6 +33,8 @@ export default function Marie() {
             </p>
 
             <h3>Une maison ouverte, dans une époque apocalyptique</h3>
+
+            <img className="float-left w-1/3 pr-2" src="/static/img/mère-marie3.jpg" />
             <p>
                 Elle devint donc religieuse dans cette Église de l&#39;émigration russe, traversée alors par un courant
                 évangélique. Mère Marie se sentit appelée à se donner entièrement aux plus pauvres. Sans argent, mais
@@ -73,6 +77,8 @@ export default function Marie() {
                 elle aussi pour être déportée au camp de Ravensbrück, où elle finit ses jours.
             </p>
             <h3 className="italic">&quot;Mon bûcher brûlera ici, sur une terre étrangère&quot;</h3>
+            
+            <img className="float-right w-1/3 pl-2" src="/static/img/mère-marie2.jpg" />
             <p>
                 Beaucoup de témoignages sur mère Marie ont été rapportés du camp de concentration, et notamment celui de
                 Geneviève Anthonioz-de Gaulle. Elle rappelait son courage, et ces moments où, le soir, tout le monde se
