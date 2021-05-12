@@ -3,16 +3,16 @@ import parse from 'html-react-parser'
 export default function AppSaints ({currentLanguage}) {
     return (
         <div className="bg-pyellow">
-		<div className="container sm:mx-auto bg-pwhite max-w-screen-xl">
-            <main className="bg-white pt-4 sm:px-48">
-                <h2 className=""    >Les 4 saints martyrs de l'action Orthodoxe</h2>
+		<div className="container max-w-screen-xl sm:mx-auto bg-pwhite">
+            <main className="bg-white sm:px-10">
+                <h2 className="pb-4 text-4xl"    >Les 4 saints martyrs de l'action Orthodoxe</h2>
                 <p className="">Le saint-synode du patriarcat œcuménique a procédé, lors de sa session du 16 janvier 2004, à la canonisation de cinq personnalités marquantes de 
                 l'histoire spirituelle de l'émigration russe en France, le père Alexis Medvekov (1867-1934), mère Marie (Skobtsov) (1891-1945) et ses compagnons, 
                 le père Dimitri Klépinine (1904-1944), Georges (Youri) Skobtsov (1921-1944) et Élie Fondaminsky (1880-1942). </p>
                 <p className='pb-2'>
                     La canonisation dans la tradition orthodoxe repose sur quatre critères:
                 </p>
-                <ol className="list-decimal list-outside ml-4">
+                <ol className="ml-4 list-decimal list-outside">
                     <li className="pb-2">Le "combat" spirituel qu'a mené le futur saint, le "beau/bon combat de la foi" dont parle saint Paul (1 Tm 6,12 ; 2 Tm 4,7)
                     (agôn en grec ; en russe подвиг: le haut fait, l'exploit). En fait, la réalisation du plan de Dieu concernant cette personne, car nous sommes tous appelés 
                     à la sainteté. Cette réalisation peut être inscrite dans la durée d'une vie entière, une portion de vie ou peut s'être produite en un instant, comme pour le bon larron de l'Évangile.

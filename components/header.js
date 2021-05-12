@@ -109,7 +109,7 @@ export default function Header () {
                             {label: "Les saints", href: "/saints"},
                             {label: "Les primats", href: "/"},
                             {label: "Les évêques", href: "/"},
-                            {label: "Les maîtres spirituels", href: "/"},
+                            {label: "Les maîtres spirituels", href: "/maitrespirituels"},
                             {label: "Les laïcs", href: "/"}
                         ]}/>
                         <HeaderNavLink label="Les paroisses" href="/" subMenu={[
