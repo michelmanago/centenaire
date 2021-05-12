@@ -17,10 +17,17 @@ export default function Ivanovitch() {
                 Reims, à la salle Pleyel, à l'église de la Madeleine avec l'illustre ténor Nicolas Gedda.
             </p>
             {/*<img className="float-left w-20 mr-2" src="/static/img/Eveguéni-Ivanovitch-Evetz.jpg" />*/}
+            <div className='flex flex-wrap justify-center pb-2'>
+                <a className="p-2 mx-auto border" href="/static/souvenir evgeni ivanovich.PDF" target="_blank">
+                    <img className="inline-block" src="/static/img/file-text.svg" />
+                    Extrait du bulletin paroissial de la cathédrale
+                </a>
+            </div>
             <p>
                 Son activité musicale ne se limita pas à la direction de choeurs. Il enseigna également à Koenistein, au
                 congrès d'étude de la langue russe. Il composa dans l'anonymat des oeuvres chantées à Daru dont Елице во
-                Христа кристистися et le chant du bon larron en version choeur d'hommes, choeur de femmes et choeur mixte.
+                Христа кристистися et le chant du bon larron en version choeur d'hommes, choeur de femmes et choeur
+                mixte.
             </p>
 
             <div className="flex flex-wrap justify-center">
