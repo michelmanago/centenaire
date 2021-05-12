@@ -30,7 +30,7 @@ const HeaderNavLink = ({label, href, subMenu}) => {
                         </button>
                     </>
                 ) : (
-                    <a className={"uppercase text-xs px-3 py-3 block w-full font-medium text-sm"} href={href}>{label}</a>
+                    <a className={"uppercase px-3 py-3 block w-full font-medium text-sm"} href={href}>{label}</a>
                 )
             }
             

@@ -1,15 +1,38 @@
 import Carousel from '../carousel';
 
 export default function Chaville() {
-    const imgArray = [
-        {url: '/static/img/paroisses/chaville/photo1.jpg'},
-        {url: '/static/img/paroisses/chaville/photo2.jpg'},
-        {url: '/static/img/paroisses/chaville/photo3.jpg'},
-        {url: '/static/img/paroisses/chaville/photo4.jpg'},
-        {url: '/static/img/paroisses/chaville/photo5.jpg'},
-        {url: '/static/img/paroisses/chaville/photo6.jpg'},
-        {url: '/static/img/paroisses/chaville/photo7.jpg'},
-        {url: '/static/img/paroisses/chaville/photo8.jpg'},
+    const imgArraySanctuaire = [
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo1.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo2.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo3.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo4.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo5.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo6.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo7.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Sanctuaire/photo8.jpg', legende: ''},
+    ];
+    const imgArrayPose = [
+        {url: '/static/img/paroisses/chaville/Pose/photo1.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Pose/photo2.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Pose/photo3.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Pose/photo4.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Pose/photo5.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Pose/photo6.jpg', legende: ''},
+    ]
+
+    const imgArrayToday = [
+        {url: '/static/img/paroisses/chaville/Today/photo1.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo2.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo3.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo4.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo5.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo6.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo7.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo8.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo9.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo10.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo11.jpg', legende: ''},
+        {url: '/static/img/paroisses/chaville/Today/photo12.jpg', legende: ''},
     ];
     return (
         <div className="px-10 bio-block">
@@ -59,6 +82,7 @@ export default function Chaville() {
                 Le métropolite Euloge vient le 9 juin 1935 consacrer l’autel et célébrer l’office de la pose de la
                 première pierre.
             </p>
+            <Carousel imgList={imgArrayPose} legende="Pose de la 1ère pierre et construction de l'église" id='pose' />
             <p>
                 Le père Jean Maximenko, élevé à la dignité d’archiprêtre mitré, sera le recteur de la paroisse jusqu’en
                 1954.
@@ -85,12 +109,14 @@ export default function Chaville() {
                 ont été exécutées.
             </p>
 
-            <Carousel imgList={imgArray} />
+            <Carousel imgList={imgArraySanctuaire} legende='Fresques du sanctuaire' id='sanctuaire' />
 
             <p>
                 Les offices sont célébrés en français et en slavon, les lectures et prédications en français et les
                 chants liturgiques en slavon et en français.
             </p>
+
+            <Carousel imgList={imgArrayToday} legende="La paroisse aujourd'hui" id='today' />
         </div>
     );
 }
