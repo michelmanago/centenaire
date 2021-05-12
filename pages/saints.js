@@ -8,6 +8,7 @@ import {useState} from 'react';
 import Klepinine from '../components/saints/klepinine';
 import Marie from '../components/saints/marie';
 import Fondaminsky from '../components/saints/fondaminsky';
+import Skobtsov from '../components/saints/skobtsov';
 import {Medvekov} from '../components/saints/medvekov';
 
 export default function Saints() {
@@ -25,11 +26,7 @@ export default function Saints() {
             case 'Klépinine':
                 return <Klepinine />;
             case 'Skobtsov':
-                return (
-                    <div>
-                        <h2>Georges (Youri) Skobtsov (1921-1944)</h2>
-                    </div>
-                );
+                return <Skobtsov />;
             case 'Fondaminsky':
                 return <Fondaminsky />;
             default:
