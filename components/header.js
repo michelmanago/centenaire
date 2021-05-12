@@ -127,7 +127,7 @@ export default function Header () {
                             {label: "les monuments historiques", href: "/"},
                             {label: "l' œuvre architecturale", href: "/"},
                             {label: "les iconographes", href: "/"},
-                            {label: "les compositeurs de musique liturgique", href: "/"},
+                            {label: "les compositeurs de musique liturgique", href: "/compositeurs"},
                             {label: "artistes ayant collaboré à la vie culturelle de l'archevêché", href: "/"},
                             {label: "œuvre artistique mettant en valeur la vie des églises", href: "/"},
                         ]}/>
