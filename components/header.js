@@ -113,7 +113,7 @@ export default function Header () {
                             {label: "Les laïcs", href: "/"}
                         ]}/>
                         <HeaderNavLink label="Les paroisses" href="/" subMenu={[
-                            {label: "Liste de toutes les paroisses actuelles", href: "/"},
+                            {label: "Liste de toutes les paroisses actuelles", href: "/paroisses"},
                             {label: "Profil des paroisses les plus typiques/intéressantes/ dynamiques (critères de sélection à débattre)", href: "/"},
                             {label: "La vie quotidienne", href: "/"},
                         ]}/>

@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
 import Header from '../components/header';
-import Chrol from '../components/maitrespirituels/chrol';
+import Chaville from '../components/paroisses/chaville';
+
 
 export default function MaitreSpirituels({}) {
-    const [section, setSection] = useState('Chrol');
+    const [section, setSection] = useState('Chaville');
 
     const DisplayContent = () => {
         switch (section) {
-            case 'Chrol':
-                return <Chrol />;
+            case 'Chaville':
+                return <Chaville />;
 
             default:
                 return null;
@@ -18,7 +19,7 @@ export default function MaitreSpirituels({}) {
     return (
         <div className='bg-pyellow'>
             <Head>
-                <title>Les Maîtres Spirituels</title>
+                <title>Les Paroisses:</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
