@@ -14,7 +14,7 @@ const HeaderNavLink = ({label, href, subMenu}) => {
                     <>
                         <button className={"uppercase px-3 py-3 text-xs block w-full "}>
                             <div className={"flex items-center " + (isSubMenu ? "pb-1" : "")}> 
-                                <span className="font-medium text-sm">{label}</span>
+                                <span className="text-sm font-medium">{label}</span>
                                 <svg className="inline-block ml-auto" xmlns="http://www.w3.org/2000/svg" width="23.616" height="7" viewBox="0 0 23.616 13.503">
                                     <path fill="black" d="M18,20.679l8.93-8.937a1.681,1.681,0,0,1,2.384,0,1.7,1.7,0,0,1,0,2.391L19.2,24.258a1.685,1.685,0,0,1-2.327.049L6.68,14.14a1.688,1.688,0,0,1,2.384-2.391Z" transform="translate(-6.188 -11.246)"/></svg>
                             </div>
@@ -66,7 +66,7 @@ export default function Header () {
     return (
 
         <header className="bg-pyellow">
-            <div className="container sm:mx-auto bg-white max-w-screen-xl">
+            <div className="container max-w-screen-xl bg-white sm:mx-auto">
 
             <div className="flex sm:items-center">
                 <div className="flex justify-end w-1/4">
@@ -74,10 +74,10 @@ export default function Header () {
                 </div>
                 <div className="w-3/4">
                     <div>                    
-                        <span className="text-pred font-logotitle text-4xl font-bold ml-2">Centenaire de l'archevêché des églises Orthodoxes</span> 
+                        <span className="ml-2 text-4xl font-bold text-pred font-logotitle">Centenaire de l'archevêché des églises Orthodoxes</span> 
                     </div>
                     <div> 
-                        <span className="text-pred font-logotitle text-4xl font-bold ml-2"> de tradition russe en Europe occidentale</span> 
+                        <span className="ml-2 text-4xl font-bold text-pred font-logotitle"> de tradition russe en Europe occidentale</span> 
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@ export default function Header () {
             <div className={"w-full px-5 flex justify-between items-center bg-pblue " + styles.topBar}>
 
                 {/* Nav */}
-                <nav className=" relative ">
+                <nav className="relative ">
 
                     {/* Trigger */}
                     <button onClick={toggleNavMenu} className={styles.headerNavTrigger + " flex items-center text-white"}>
@@ -145,14 +145,14 @@ export default function Header () {
 
                 {/* Multilang */}
                 <button onClick={toggleMenuLang} className={"multilang relative flex items-center font-medium text-lg uppercase " + styles.multilang}>
-                    {isLangMenuOpened && <div className={"multilang-list w-full shadow-md absolute left-0 bg-white rounded p-2 " + styles.multilangList}>
+                    {isLangMenuOpened && <div className={"multilang-list w-full shadow-md absolute left-0 bg-white rounded p-2 z-10 " + styles.multilangList}>
                         {
-                            locales.filter(f => f !== locale).map(l => (
-                                <a href={"/"}>{l}</a>
+                            locales.filter(f => f !== locale).map((l, i) => (
+                                <a href={"/"} key={i}>{l}</a>
                             ))
                         }
                     </div>}
-                    <div className="text-white multilang-label mr-1">{locale}</div>
+                    <div className="mr-1 text-white multilang-label">{locale}</div>
                     <div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="23.616" height="8.503" viewBox="0 0 23.616 13.503"><path fill="white" d="M18,20.679l8.93-8.937a1.681,1.681,0,0,1,2.384,0,1.7,1.7,0,0,1,0,2.391L19.2,24.258a1.685,1.685,0,0,1-2.327.049L6.68,14.14a1.688,1.688,0,0,1,2.384-2.391Z" transform="translate(-6.188 -11.246)"/></svg>
                     </div>
