@@ -24,9 +24,9 @@ export default function Ivanovitch() {
                 </a>
             </div>
             <p>
-                Son activité musicale ne se limita pas à la direction de choeurs. Il enseigna également à Koenistein, au
+                Son activité musicale ne se limita pas à la direction de choeurs. Il enseigna également à Koenigstein, au
                 congrès d'étude de la langue russe. Il composa dans l'anonymat des oeuvres chantées à Daru dont Елице во
-                Христа кристистися et le chant du bon larron en version choeur d'hommes, choeur de femmes et choeur
+                Христа крестистеся et le chant du bon larron en version choeur d'hommes, choeur de femmes et choeur
                 mixte.
             </p>
 
@@ -41,7 +41,7 @@ export default function Ivanovitch() {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                    <div>"le chant du bon larron (en choeur de femmes) - Эксапостиларий великаво пятка)"</div>
+                    <div>"le chant du bon larron (en choeur de femmes) - Экзапостиларий Великаго Пятка)"</div>
                 </div>
             </div>
         </div>
