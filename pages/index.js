@@ -11,6 +11,15 @@ export default function Home() {
   const { locale, locales, defaultLocale } = router
 
   return (
+    <div>
+        <Head>
+            <meta http-equiv="Refresh" content="0; url=//fr.archeveche.eu" />
+        </Head>
+    </div>
+);
+
+/*
+  return (
     <div className={styles.container}>
       <Head>
         <title>Exposition du centenaire</title>
@@ -18,10 +27,8 @@ export default function Home() {
         <meta http-equiv="Refresh" content="0; url=//fr.archeveche.eu" />
       </Head>
 
-      {/* Header */}
       <Header/>
 
-      {/* Page home */}
       <div>
         <header className={styles.header + " relative"}>
           <Image
@@ -37,4 +44,5 @@ export default function Home() {
 
     </div>
   )
-}
+*/
+} 
