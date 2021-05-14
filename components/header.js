@@ -1,6 +1,7 @@
 import { useState } from "react"
 import styles from "../styles/components/header.module.css"
 import { useRouter } from 'next/router'
+import Image from "next/image"
 
 
 const HeaderNavLink = ({label, href, subMenu}) => {
@@ -70,7 +71,7 @@ export default function Header () {
 
             <div className="flex sm:items-center">
                 <div className="flex justify-end w-1/4">
-                    <img className="m-2 w-36" src="/logo.svg" />
+                    <Image src="/logo.svg" width={124} height={150} alt="logo" />
                 </div>
                 <div className="w-3/4">
                     <div>                    
