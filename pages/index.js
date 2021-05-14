@@ -15,6 +15,7 @@ export default function Home() {
       <Head>
         <title>Exposition du centenaire</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta http-equiv="Refresh" content="0; url=//fr.archeveche.eu" />
       </Head>
 
       {/* Header */}
