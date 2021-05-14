@@ -1,6 +1,8 @@
 import React from 'react';
 import Carousel from '../carousel';
 
+import Image from 'next/image';
+
 export default function Dormition() {
     const imgArraySanctuaire = [
         {url: '/static/img/paroisses/chaville/Sanctuaire/photo1.jpg', legende: ''},
@@ -77,8 +79,24 @@ export default function Dormition() {
                 mondialement connu.
             </p>
             <div className="flex flex-wrap">
-                <img className="w-1/2 px-1" src="/static/img/architecte.jpg" alt="architecte" />
-                <img className="w-1/2 px-1" src="/static/img/entrepreneur.jpg" alt="entrepreneur" />
+                <div className="w-1/2 px-1">
+                    <Image
+                        src="/static/img/architecte.jpg"
+                        alt="architecte"
+                        width={860}
+                        height={1400}
+                        layout="intrinsic"
+                    />
+                </div>
+                <div className="w-1/2 px-1">
+                    <Image
+                        src="/static/img/entrepreneur.jpg"
+                        alt="entrepreneur"
+                        width={860}
+                        height={1400}
+                        layout="intrinsic"
+                    />
+                </div>
             </div>
             <h3>Histoire</h3>
             <p>
