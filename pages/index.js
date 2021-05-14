@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div>
         <Head>
-            <meta http-equiv="Refresh" content="0; url=//fr.archeveche.eu" />
+            <meta http-equiv="Refresh" content="0; url=http://fr.archeveche.eu" />
         </Head>
     </div>
 );
