@@ -139,7 +139,7 @@ export default function Header () {
                             {label: "l’émission Orthodoxie", href: "/"},
                             {label: "Les pèlerinages", href: "/"},
                         ]}/>
-                        <HeaderNavLink label="l’oeucuménisme" href="/"/>
+                        <HeaderNavLink label="l’oecuménisme" href="/"/>
 
                     </ul>
                 </nav>
