@@ -19,9 +19,6 @@
 
 }
 
-.headerNavLink{
-}
-
 .headerNavLink button, .headerNavLink a{
     text-align: left;
 }
@@ -30,34 +27,30 @@
     text-decoration: underline;
 }
 
-.headerNavLink:hover .headerSubNav{
-    display: block;
-}
 
 .headerNav{
     position: absolute;
-    top: 65px;
-    left: 0;
-    width: 90vw;
+    top: 40px;
+    left: -1.25rem;
+    width: 60vw;
+    transition: ease-out .3s;
+    transition-property: transform;
 }
 
+.headerNav.is-active{
+    transform: translate(0, 0);
+
+}
 /** From md **/
 @media (min-width: 767px) { 
 
     .headerNav{
 
-        width: 450px
+        width: 45vw
 
     }
 }
 
 .headerSubNav{
     display: none;
-    /* width: 250px; */
 }
-
-.headerSubNav li:before{
-
-}
-
-
