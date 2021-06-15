@@ -11,7 +11,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export default function Carousel({imgList, legende, id}) {
     return (
-        <div className="w-3/4 h-auto m-6 mx-auto overflow-hidden bg-white md:max-w-full mb-9">
+        <div className="h-auto mx-auto my-6 overflow-hidden bg-white md:w-3/4 rounded-xl md:max-w-full mb-9">
             <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
@@ -23,8 +23,10 @@ export default function Carousel({imgList, legende, id}) {
             >
                 {imgList.map((img, i) => (
                     <SwiperSlide key={id + '-' + i}>
-                        <img className="full rounded-xl" src={img.url} alt={`slide ${i + 1}`} />
-                        {img.legende && <div className="flex justify-center">{img.legende}</div>}
+                        <div className='flex flex-col items-center'>
+                            <img className="full rounded-xl" src={img.url} alt={`slide ${i + 1}`} />
+                            {img.legende && <div className="flex justify-center">{img.legende}</div>}
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
