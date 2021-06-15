@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Header from '../components/header/header';
 import Chaville from '../components/paroisses/chaville';
 import Dormition from '../components/paroisses/dormition';
+import Daru from '../components/paroisses/daru';
 
 export default function MaitreSpirituels({}) {
     const [section, setSection] = useState('Chaville');
@@ -13,6 +14,8 @@ export default function MaitreSpirituels({}) {
                 return <Chaville />;
             case 'Dormition':
                 return <Dormition />;
+                case 'Daru':
+                    return <Daru />;                   
             default:
                 return null;
         }
@@ -36,7 +39,10 @@ export default function MaitreSpirituels({}) {
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Dormition')}>
                             Notre Dame de la Dormition
                         </li>
-                    </ul>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Daru')}>
+                            Cathédrale Saint Alexandre Nevski
+                        </li>
+                     </ul>
                 </div>
                 <div className="md:w-3/4">{DisplayContent()}</div>
             </div>
