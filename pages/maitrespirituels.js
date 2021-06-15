@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
-import Header from '../components/header';
+import Header from '../components/header/header';
 import Chrol from '../components/maitrespirituels/chrol';
 
 export default function MaitreSpirituels({}) {
