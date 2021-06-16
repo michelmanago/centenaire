@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import Header from '../components/header'
+import Header from '../components/header/header'
 import styles from '../styles/pages/home.module.css'
 import AppHome from '../components/apphome'
 
