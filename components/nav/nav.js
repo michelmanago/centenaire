@@ -1,18 +1,14 @@
 // libs
-import React from "react"
-import { useEffect, useState } from "react"
+import dynamic from 'next/dynamic'
+import React, { useEffect, useRef } from "react"
 
-// styles
-import styles from "../../styles/components/header.module.css"
-
-// components
-import HeaderNavLink from "./header-nav-link"
-
+// style
+import styles from "./nav.module.css"
 
 const HEADER_DATA = [
     {
         label: "Historique",
-        href: "/",
+        href: "#",
         subMenu: [
             {label: "Avant 1917", href: "/"},
             {label: "Les prémices : l’exode", href: "/"},
@@ -26,7 +22,7 @@ const HEADER_DATA = [
     },
     {
         label: "Personnalités",
-        href: "/",
+        href: "#",
         subMenu: [
             {label: "Les saints", href: "/saints"},
             {label: "Les primats", href: "/"},
@@ -37,7 +33,7 @@ const HEADER_DATA = [
     },
     { 
         label: "Paroisses",
-        href: "/",
+        href: "#",
         subMenu:[
             {label: "Liste de toutes les paroisses actuelles", href: "/paroisses", subMenu: [
                 {label: "Notre-Dame Souveraine à Chaville", href: "/"},
@@ -51,7 +47,7 @@ const HEADER_DATA = [
     },
     { 
         label: "la théologie",
-        href: "/",
+        href: "#",
         subMenu:[
             {label: "l'Institut Saint-Serge", href: "/"},
             {label: "les grands théologiens et philosophes", href: "/"},
@@ -61,7 +57,7 @@ const HEADER_DATA = [
     },
     { 
         label: "Patrimoine artistique",
-        href: "/",
+        href: "#",
         subMenu:[
             {label: "les monuments historiques", href: "/"},
             {label: "l' œuvre architecturale", href: "/"},
@@ -73,7 +69,7 @@ const HEADER_DATA = [
     },
     { 
         label: "l'action culturelle",
-        href: "/",
+        href: "#",
         subMenu:[
             {label: "Les écoles paroissiales", href: "/"},
             {label: "YMCA Press et les Editeurs Réunis", href: "/"},
@@ -88,89 +84,85 @@ const HEADER_DATA = [
     }
 ]
 
-const HeaderNav = ({navOpened}) => {
 
-    // states
-    const [openedMenu, setOpenedMenu] = useState(2)
-    const [mode, setMode] = useState("desktop")
+const NavLink = ({item}) => {
 
-    // methods
-    const onToggleMenu = (index, isSubMenu) => {
+    let has_children = !!item.subMenu
 
 
-        if(openedMenu === index){
-            setOpenedMenu(null)
-        } else {
-            setOpenedMenu(index)
-        }
+    if(has_children){
+  
+        return (
+            <li> 
+                <a href={item.href}>
+
+                    <span>{item.label}</span>
+                    <svg className="parent-icon" viewBox="0 0 1024 1024">
+                        <path d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
+                    </svg>
+                    <svg className="parent-toggle" viewBox="0 0 1024 1024">
+                        <path d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
+                    </svg>
+                </a>
+                <ul className="subnav md:bg-pblue"> 
+                    {
+                        item.subMenu.map((subItem, index) => <NavLink key={"subitem-" + index} item={subItem}/>)
+                    }
+                </ul>
+            </li>
+        )
+  
     }
-
-    // Hooks
-    useEffect(() => {
-
-        // init mode
-        setMode(window.innerWidth < 768 ? "mobile" : "desktop")
-        
-        // trigger mode desktop
-        window.addEventListener("resize", () => {
-
-            // console.log("resize", window.innerWidth, mode)
-
-            if(window.innerWidth < 768){
-                setMode("mobile")
-                setOpenedMenu(null)
-            }
-
-            else if(window.innerWidth > 768){
-                setMode("desktop")
-                setOpenedMenu(null)
-                
-            }
-
-        })
-
-        // click outside
-        window.addEventListener("click", event => {
-
-            let clickedElement = event.target
-            let hasClickedOutsideNav = !clickedElement.closest(".js__header-nav")
-
-            if(hasClickedOutsideNav){
-                setOpenedMenu(false)   
-            }
-
-        })
-
-    }, [])
-
-    const isHidden = mode === "mobile" && !navOpened
-
-
-    const hiddenStyle = isHidden ? [
-        "-translate-x-full"
-    ].join(" ") : [
-        "md:-translate-x-0"
-    ].join(" ")
-
-    return (
-        <ul className={styles.headerNav + " js__header-nav bg-pblue rounded z-10 transform flex justify-center transform " + hiddenStyle}>
-            {
-                HEADER_DATA.map((link, index) => (
-                    <HeaderNavLink
-                        key={"header-link-" + index}
-                        label={link.label}
-                        href={link.href}
-                        subMenu={link.subMenu}
-                        onToggleMenu={onToggleMenu}
-                        opened={index === openedMenu}
-                        index={index}
-                        level={1}
-                    />
-                ))
-            }
-        </ul>
-    )
+  
+    else {
+      return (
+        <li><a href={item.href}>{item.label}</a></li> 
+      )
+    }
 
 }
 
-export default HeaderNav
+const Nav = () => {
+
+
+    // methods
+    const renderItem = (item) => {
+
+    }
+
+    // ref
+    const refContainer = useRef()
+
+    // Effect
+    
+    useEffect(async () => {
+
+        const Navbar = (await import("navbar.js")).default
+
+        new Navbar(refContainer.current, {
+            breakpoint: 992,
+            toggleSiblings: true,
+            delay: 500
+        })
+        // console.log({refContainer})
+    }, [refContainer])
+
+    return (
+        <nav ref={refContainer} className="navbar flex items-center bg-pblue">
+            <button className="navbar-toggle">
+                <svg className="menu-icon" viewBox="0 0 1024 1024">
+                    <path d="M128 277.333h768v86h-768v-86z m0 298v-84h768v84h-768z m0 214v-86h768v86h-768z"/>
+                </svg>
+            </button>
+            <div className={styles.navContainer}>
+                <ul className="nav">
+                {
+                    HEADER_DATA.map((item, index) => <NavLink key={"item-" + index} item={item} />)
+                }
+                </ul>
+            </div>
+        </nav>
+    )
+}
+
+export default Nav

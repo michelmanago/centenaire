@@ -42,7 +42,8 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    width: 55%;
+    width: 80%;
+    user-select: none;
 }
 
 @media (min-width: 768px) { 
@@ -60,6 +61,11 @@
 
 /* Link */
 
+.headerSubLink, .headerLink{
+    height: 50px;
+
+}
+
 .headerLink{
     position: relative;
 }
@@ -70,14 +76,20 @@
     display: none;
     position: relative;
     z-index: 1;
-    left: 0;
-    top: 100%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+    /* left: 100%; */
+}
+
+/* Sub link */
+.headerSubLink{
+    display: flex;
+    align-items:  center;
 }
 
 @media (min-width: 768px) { 
 
     .headerSubNav{
-        min-width: 450px;
+        min-width: 350px;
         position: absolute;
     }
 }

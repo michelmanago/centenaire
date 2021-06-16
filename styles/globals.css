@@ -94,3 +94,12 @@ p {
 .bio-block p {
     @apply pb-2;
 }
+
+button{
+  outline: none!important;
+}
+
+
+/* Libs */
+
+@import "./libs/navbar.css";
