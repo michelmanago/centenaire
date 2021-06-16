@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import 'react-sortable-tree/style.css';
 
 //libs
 

@@ -119,7 +119,7 @@
   }
   .nav li {
     position: relative;
-    transition: margin 0.3s ease 0s;
+    /* transition: margin 0.3s ease 0s; */
   }
   .nav li > span,
   .nav li > a {
@@ -351,7 +351,7 @@
     .nav li > .subnav {
       top: -99999em;
       left: -99999em;
-      transition: transform 0.5s ease, opacity 0.4s linear;
+      /* transition: transform 0.5s ease, opacity 0.4s linear; */
       transform: translate(0, -10px);
     }
     .nav li li > .subnav {

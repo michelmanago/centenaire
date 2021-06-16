@@ -39,7 +39,7 @@ export default function MaitreSpirituels({menu}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header menu={menu}/>
+            <Header menu={menu.data}/>
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
                 <div className="w-3/4 px-10 mx-auto md:w-1/4">

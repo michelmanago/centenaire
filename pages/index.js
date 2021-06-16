@@ -1,10 +1,17 @@
-import Head from 'next/head'
+// libs
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import Image from 'next/image'
+
+// components
 import Header from '../components/header/header'
-import styles from '../styles/pages/home.module.css'
 import AppHome from '../components/apphome'
+
+// models
 import { getMenu } from '../model/menu'
+
+// styles
+import styles from '../styles/pages/home.module.css'
 
 export default function Home({menu}) {
 
@@ -19,7 +26,7 @@ export default function Home({menu}) {
       </Head>
 
       {/* Header */}
-      <Header menu={menu}/>
+      <Header menu={menu.data}/>
 
       {/* Page home */}
       <div>
