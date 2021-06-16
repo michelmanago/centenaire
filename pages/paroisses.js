@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
-import Header from '../components/header';
+import Header from '../components/header/header';
 import Chaville from '../components/paroisses/chaville';
 import Dormition from '../components/paroisses/dormition';
 import Crypte from '../components/paroisses/crypte';

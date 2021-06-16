@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
-import Header from '../components/header';
+import Header from '../components/header/header';
 import Kedroffp from '../components/compositeurs/kedroffp';
 import Kedrofff from '../components/compositeurs/kedrofff';
 import Ivanovitch from '../components/compositeurs/ivanovitch';

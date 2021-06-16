@@ -28,29 +28,56 @@
 }
 
 
+
+
+/** From md **/
+
+/* Nav ul */
 .headerNav{
     position: absolute;
     top: 40px;
     left: -1.25rem;
-    width: 60vw;
     transition: ease-out .3s;
     transition-property: transform;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 55%;
 }
 
-.headerNav.is-active{
-    transform: translate(0, 0);
-
-}
-/** From md **/
-@media (min-width: 767px) { 
+@media (min-width: 768px) { 
 
     .headerNav{
-
-        width: 45vw
-
+        position: relative;
+        left: 0;
+        top: 0;
+        flex-direction: row; 
+        width: 100%;
     }
 }
 
+
+
+/* Link */
+
+.headerLink{
+    position: relative;
+}
+
+/* Sub nav */
+
 .headerSubNav{
     display: none;
+    position: relative;
+    z-index: 1;
+    left: 0;
+    top: 100%;
+}
+
+@media (min-width: 768px) { 
+
+    .headerSubNav{
+        min-width: 450px;
+        position: absolute;
+    }
 }
