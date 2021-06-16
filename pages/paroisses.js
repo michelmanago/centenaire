@@ -7,9 +7,10 @@ import Crypte from '../components/paroisses/crypte';
 import Daru from '../components/paroisses/daru';
 import SaintPrix from '../components/paroisses/saintprix';
 import Troyes from '../components/paroisses/troyes';
+import { getMenu } from '../model/menu';
 
 
-export default function MaitreSpirituels({}) {
+export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chaville');
 
     const DisplayContent = () => {
@@ -38,7 +39,7 @@ export default function MaitreSpirituels({}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header />
+            <Header menu={menu}/>
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
                 <div className="w-3/4 px-10 mx-auto md:w-1/4">
@@ -69,3 +70,15 @@ export default function MaitreSpirituels({}) {
         </div>
     );
 }
+
+
+export async function getStaticProps(context) {
+
+    const menu = await getMenu(context)
+  
+    return {props: {
+      menu: menu
+    }}
+  }
+    
+    

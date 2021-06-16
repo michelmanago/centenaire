@@ -11,7 +11,7 @@ import Nav from "../nav/nav"
 
 
 
-export default function Header () {
+export default function Header ({menu}) {
 
 
     /** Hooks */
@@ -44,7 +44,7 @@ export default function Header () {
             </div>
 
             {/* Top bar */}
-            <Nav/>
+            <Nav menu={menu}/>
             
 
             {/* Logo */}

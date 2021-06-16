@@ -4,8 +4,9 @@ import Image from 'next/image'
 import Header from '../components/header/header'
 import styles from '../styles/pages/home.module.css'
 import AppHome from '../components/apphome'
+import { getMenu } from '../model/menu'
 
-export default function Home() {
+export default function Home({menu}) {
 
   const router = useRouter()
   const { locale, locales, defaultLocale } = router
@@ -18,7 +19,7 @@ export default function Home() {
       </Head>
 
       {/* Header */}
-      <Header/>
+      <Header menu={menu}/>
 
       {/* Page home */}
       <div>
@@ -37,3 +38,15 @@ export default function Home() {
     </div>
   )
 }
+
+
+export async function getStaticProps(context) {
+
+  const menu = await getMenu(context)
+
+  return {props: {
+    menu: menu
+  }}
+}
+  
+  

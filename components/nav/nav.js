@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react"
 // style
 import styles from "./nav.module.css"
 
-const HEADER_DATA = [
+const menu = [
     {
         label: "Historique",
         href: "#",
@@ -84,7 +84,6 @@ const HEADER_DATA = [
     }
 ]
 
-
 const NavLink = ({item}) => {
 
     let has_children = !!item.subMenu
@@ -122,7 +121,7 @@ const NavLink = ({item}) => {
 
 }
 
-const Nav = () => {
+const Nav = ({menu = []}) => {
 
 
     // methods
@@ -140,7 +139,7 @@ const Nav = () => {
         const Navbar = (await import("navbar.js")).default
 
         new Navbar(refContainer.current, {
-            breakpoint: 992,
+            breakpoint: 768,
             toggleSiblings: true,
             delay: 500
         })
@@ -157,7 +156,7 @@ const Nav = () => {
             <div className={styles.navContainer}>
                 <ul className="nav">
                 {
-                    HEADER_DATA.map((item, index) => <NavLink key={"item-" + index} item={item} />)
+                    menu.map((item, index) => <NavLink key={"item-" + index} item={item} />)
                 }
                 </ul>
             </div>
