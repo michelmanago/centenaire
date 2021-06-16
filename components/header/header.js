@@ -7,7 +7,6 @@ import styles from "../../styles/components/header.module.css"
 
 // components
 import Image from "next/image"
-import HeaderNav from "./header-nav"
 import Nav from "../nav/nav"
 
 
@@ -21,36 +20,7 @@ export default function Header () {
 
     /** States */
     const [isLangMenuOpened, setIsLangMenuOpened] = useState(false)
-    const [IsNavOpened, setIsNavOpened] = useState(false)
 
-
-    /** Methods */
-    const toggleMenuLang = () => {
-        setIsLangMenuOpened(!isLangMenuOpened)
-    }
-
-
-    /** Methods */
-    const toggleNavMenu = () => {
-        setIsNavOpened(!IsNavOpened)
-    }
-
-    // Effects
-    useEffect(() => {
-
-        // click outside
-        window.addEventListener("click", event => {
-
-            let clickedElement = event.target
-            let hasClickedOutsideNav = !clickedElement.closest(".js__nav")
-
-            if(hasClickedOutsideNav){
-                setIsNavOpened(false)   
-            }
-
-        })
-
-    }, [])
 
   
     return (
