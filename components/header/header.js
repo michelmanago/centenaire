@@ -9,6 +9,7 @@ import styles from '../../styles/components/header.module.css';
 // components
 import Image from 'next/image';
 import Nav from '../nav/nav';
+import LanguageSwitcher from "../../components/language-switcher/LanguageSwitcher"
 
 export default function Header({menu}) {
     const [session] = useSession();
@@ -32,6 +33,7 @@ export default function Header({menu}) {
                             <span className="ml-2 text-4xl font-bold text-pred font-logotitle">
                                 Centenaire de l'archevêché des églises Orthodoxes
                             </span>
+                            
                         </div>
                         <div>
                             <span className="ml-2 text-4xl font-bold text-pred font-logotitle">
@@ -41,6 +43,10 @@ export default function Header({menu}) {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="container max-w-screen-xl bg-white sm:mx-auto">
+                <LanguageSwitcher/>
             </div>
 
             {/* Top bar */}
