@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
 import Header from '../components/header/header';
+import SelectParoisse from '../components/selectparoisse';
 import Chaville from '../components/paroisses/chaville';
 import Dormition from '../components/paroisses/dormition';
 import Crypte from '../components/paroisses/crypte';
@@ -12,7 +13,6 @@ import { getMenu } from '../model/menu';
 
 export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chaville');
-
     const DisplayContent = () => {
         switch (section) {
             case 'Chaville':
@@ -42,7 +42,11 @@ export default function MaitreSpirituels({menu}) {
             {menu && <Header menu={menu.data}/>}
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
-                <div className="w-3/4 px-10 mx-auto md:w-1/4">
+                <div className="visible md:hidden">
+                    <SelectParoisse paroisse={section} setParoisse={setSection}/>
+                </div>
+
+                <div className="hidden md:block px-10 mx-auto md:w-1/4">
                     <div className="font-bold">Les Paroisses:</div>
                     <ul className="list-disc">
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Chaville')}>

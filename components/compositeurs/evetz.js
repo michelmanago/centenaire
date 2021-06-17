@@ -1,4 +1,4 @@
-export default function Ivanovitch() {
+export default function Evetz() {
     return (
         <div className="px-10 bio-block">
             <h2>Eveguéni Ivanovitch Evetz</h2>

@@ -72,7 +72,8 @@ a {
 h2 {
   font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
   font-weight:700;
-  font-size: 1.5rem;
+  @apply text-2xl;
+  @apply sm:text-3xl;
   padding-bottom: 9px;
 }
 
@@ -86,7 +87,8 @@ p {
 }
 
 .bio-block h2 {
-    @apply text-4xl;
+  @apply text-2xl;
+  @apply sm:text-3xl;
 }
 .bio-block h3 {
     @apply py-4 text-2xl;
