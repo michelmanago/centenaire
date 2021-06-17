@@ -3,6 +3,9 @@
 * Copyright 2016-2021 © thednp
 * Licensed under MIT (https://github.com/thednp/navbar.js/blob/master/LICENSE)
 */
+
+/* --nav-breakpoint: 1024px */
+
 .navbar {
     display: flex;
     flex-direction: row;
@@ -52,7 +55,7 @@
     /* border-color: currentColor; */
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .navbar {
       flex-direction: row;
       flex-wrap: nowrap;
@@ -80,7 +83,7 @@
     color: rgba(255, 255, 255, 1);
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .navbar-content a:not([class]):hover {
       color: rgba(255, 255, 255, 1);
     }
@@ -92,7 +95,7 @@
   .navbar .brand {
     color: rgba(255, 255, 255, 1);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .navbar .brand {
       background: #2c3c44;
       color: rgba(255, 255, 255, 1);
@@ -201,7 +204,7 @@
     cursor: pointer;
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .parent-toggle {
       display: none;
     }
@@ -277,7 +280,7 @@
   .nav li.open-mobile {
     background: rgba(0, 0, 0, 0.075);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .nav > li.open > span,
   .nav > li.open > a,
   .nav > li:hover > span,
@@ -296,7 +299,7 @@
     }
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .subnav {
       background: #dadee0;
       box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25), 1px 1px 0 0 rgba(0, 0, 0, 0.15) inset;
@@ -347,7 +350,7 @@
       color: rgba(0, 0, 0, 0.95);
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .nav li > .subnav {
       top: -99999em;
       left: -99999em;

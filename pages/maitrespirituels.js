@@ -4,7 +4,7 @@ import Header from '../components/header/header';
 import Chrol from '../components/maitrespirituels/chrol';
 import { getMenu } from '../model/menu';
 
-export default function MaitreSpirituels({}) {
+export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chrol');
 
     const DisplayContent = () => {

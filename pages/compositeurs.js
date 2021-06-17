@@ -7,7 +7,7 @@ import Kedrofff from '../components/compositeurs/kedrofff';
 import { getMenu } from '../model/menu';
 import Evetz from '../components/compositeurs/evetz';
 
-export default function Compositeurs({}) {
+export default function Compositeurs({menu}) {
     const [section, setSection] = useState('KedroffP');
 
     const DisplayContent = () => {
@@ -29,7 +29,7 @@ export default function Compositeurs({}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header />
+            {menu && <Header menu={menu.data}/>}
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
                 <div className="visible md:hidden">

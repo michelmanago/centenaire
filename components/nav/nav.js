@@ -1,5 +1,6 @@
 // libs
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from "react"
 
 // style
@@ -7,14 +8,19 @@ import styles from "./nav.module.css"
 
 const NavLink = ({item}) => {
 
-    let has_children = !!item.subMenu
 
+    // hooks
+    const { locale } = useRouter()
+
+
+    let has_children = !!item.subMenu
+    let href = `/${locale}${item.href}`
 
     if(has_children){
   
         return (
             <li> 
-                <a href={item.href}>
+                <a href={href}>
 
                     <span>{item.label}</span>
                     <svg className="parent-icon" viewBox="0 0 1024 1024">
@@ -36,7 +42,7 @@ const NavLink = ({item}) => {
   
     else {
       return (
-        <li><a href={item.href}>{item.label}</a></li> 
+        <li><a href={href}>{item.label}</a></li> 
       )
     }
 
@@ -46,9 +52,6 @@ const Nav = ({menu = []}) => {
 
 
     // methods
-    const renderItem = (item) => {
-
-    }
 
     // ref
     const refContainer = useRef()
@@ -64,7 +67,6 @@ const Nav = ({menu = []}) => {
             toggleSiblings: true,
             delay: 500
         })
-        // console.log({refContainer})
     }, [refContainer])
 
     return (

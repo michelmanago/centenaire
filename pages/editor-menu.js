@@ -157,9 +157,7 @@ export default function EditorMenu({menus}) {
         return {
             id: "new-item" + currentMenu.length,
             title: label,
-            expanded: false,
-            href: href || '#',
-            children: []
+            href: href || '#'
         }
     }
 
@@ -279,6 +277,8 @@ export default function EditorMenu({menus}) {
             )
 
             let responses = await Promise.all(promiseSettingMenu)
+            
+            setCanSave(false)
 
             alert("Menus sauvegardé")
 
