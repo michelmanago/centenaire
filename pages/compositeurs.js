@@ -4,6 +4,7 @@ import Header from '../components/header/header';
 import Kedroffp from '../components/compositeurs/kedroffp';
 import Kedrofff from '../components/compositeurs/kedrofff';
 import Ivanovitch from '../components/compositeurs/ivanovitch';
+import { getMenu } from '../model/menu';
 
 export default function Compositeurs({}) {
     const [section, setSection] = useState('KedroffP');
@@ -49,3 +50,13 @@ export default function Compositeurs({}) {
         </div>
     );
 }
+
+export async function getStaticProps(context) {
+
+    const menu = await getMenu(context.locale)
+  
+    return {props: {
+      menu: menu
+    }}
+  }
+    
