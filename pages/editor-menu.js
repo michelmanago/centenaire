@@ -89,7 +89,7 @@ const HEADER_NAV_DATA = [
 ];
 
 // format
-const getMenuDataToTree = menu => {
+const fromDBDataToTreedata = menu => {
     let format = (menuItem, index, prefix) => {
         let id = prefix + index;
         let hasChildren = menuItem.subMenu && menuItem.subMenu.length;
@@ -107,13 +107,13 @@ const getMenuDataToTree = menu => {
     return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
 };
 
-const getTreeDataToMenuData = menu => {
+const fromTreedataToDBData = menu => {
     let format = (menuItem, index, prefix) => {
         let id = prefix + index;
         let hasChildren = menuItem.children && menuItem.children.length;
 
         return {
-            title: menuItem.label,
+            label: menuItem.title,
             href: menuItem.href || '#',
             subMenu:
                 hasChildren && menuItem.children.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')),
@@ -123,18 +123,18 @@ const getTreeDataToMenuData = menu => {
     return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
 };
 
-export default function EditorMenu({menus, menu, context}) {
+export default function EditorMenu({menus}) {
     
     // states
     const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
-    const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => getMenuDataToTree(menu ? menu.data : [])))
+    const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => fromDBDataToTreedata(menu ? menu.data : [])))
     const currentMenu = editableMenus ? editableMenus[currentMenuIndex] : null
 
     // create form
     const [formCreateLabel, setFormCreateLabel] = useState('');
     const [formCreateHref, setFormCreateHref] = useState('');
     // update form
-    const [editedMenuItem, setEditedMenuItem] = useState({node: currentMenu[0], path: [0]});
+    const [editedMenuItem, setEditedMenuItem] = useState(null);
     const [formUpdateLabel, setFormUpdateLabel] = useState('');
     const [formUpdateHref, setFormUpdateHref] = useState('');
 
@@ -151,6 +151,16 @@ export default function EditorMenu({menus, menu, context}) {
         // reset
         setFormUpdateHref('');
         setFormUpdateLabel('');
+    }
+    const formatNewMenuItem = (label, href) => {
+        
+        return {
+            id: "new-item" + currentMenu.length,
+            title: label,
+            expanded: false,
+            href: href || '#',
+            children: []
+        }
     }
 
     // listeners
@@ -193,9 +203,7 @@ export default function EditorMenu({menus, menu, context}) {
             // update current state menu
             
             updateCurrentMenuState(
-                currentMenu.concat({
-                    title: formCreateLabel,
-                }),
+                [formatNewMenuItem(formCreateLabel, formCreateHref)].concat(currentMenu)
             )
             
 
@@ -224,12 +232,36 @@ export default function EditorMenu({menus, menu, context}) {
         }
     }
 
-    const onSubmitSave = () => {
+    const onSubmitSave = async () => {
 
-        let menuData = getTreeDataToMenuData(currentMenu)
-        menuData = JSON.stringify(menuData)
+        if(confirm("Êtes vous sûr de vouloir sauvegarder les nouveaux menus ? ")){
 
-        alert(menuData)
+            let menusData = editableMenus.map((menu, menuIndex) => ({
+                locale: menus[menuIndex].locale,
+                data: fromTreedataToDBData(menu)
+            }))
+
+            let promiseSettingMenu = menusData.map(menuDataItem => 
+                fetch("/api/menu", {
+                    method: "PUT",
+                    body: JSON.stringify(menuDataItem) 
+                }).then(response => {
+                    if(response.ok){
+                        return response.json()
+                    } else {
+                        throw new Error(response.statusText);
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            )
+
+            let responses = await Promise.all(promiseSettingMenu)
+
+            alert("Menus sauvegardé")
+
+        }
     }
 
     const toggleTab = (selectedIndex) => {
@@ -240,13 +272,14 @@ export default function EditorMenu({menus, menu, context}) {
 
     useEffect(() => {
         // Prevent leaving page without saving
-        // window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
+        window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
     }, []);
 
 
     // other
     const canSave = true
     const count = getVisibleNodeCount({treeData: currentMenu})
+    const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
 
     return (
         <div>
@@ -256,7 +289,7 @@ export default function EditorMenu({menus, menu, context}) {
             </Head>
 
             {/* Header */}
-            {menu && <Header menu={menu.data}/>}
+            {defaultLocaleMenu && <Header menu={defaultLocaleMenu.data}/>}
 
             {/* Page home */}
             <div className="border p-8">
