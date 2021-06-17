@@ -1,7 +1,6 @@
 // libs
 import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import SortableTree, {changeNodeAtPath, getVisibleNodeCount, removeNodeAtPath} from 'react-sortable-tree';
 
 // components
@@ -387,6 +386,7 @@ export default function EditorMenu({menus}) {
 
                                     return (
                                         <button
+                                            key={"tab-button-" + menuIndex}
                                             onClick={() => toggleTab(menuIndex)}
                                             className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-purple-400 font-semibold" : "bg-purple-200")}
                                         >{menu.locale}</button>
