@@ -28,7 +28,7 @@ export const CloseButton = ({onClick}) => {
         <button
             type="button"
             onClick={onClick}
-            className="block bg-gray-400 hover:bg-gray-500 p-3 rounded text-white font-semibold text-lg mt-1"
+            className="block bg-gray-600 hover:bg-gray-700 p-3 rounded text-white font-semibold text-lg mt-1"
         >
             Fermer
         </button>

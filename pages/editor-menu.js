@@ -126,6 +126,7 @@ const fromTreedataToDBData = menu => {
 export default function EditorMenu({menus}) {
     
     // states
+    const [canSave, setCanSave] = useState(false)
     const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
     const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => fromDBDataToTreedata(menu ? menu.data : [])))
     const currentMenu = editableMenus ? editableMenus[currentMenuIndex] : null
@@ -166,7 +167,18 @@ export default function EditorMenu({menus}) {
     // listeners
 
     // via tree
-    const removeTreeItem = path => {
+
+    const onChangeTreedata = treeData => {
+        updateCurrentMenuState(treeData)
+
+        if(!canSave){
+            setCanSave(true)
+        }
+    }
+
+    const removeMenuItem = path => {
+
+        console.log({path})
         if (confirm('Êtes vous sûr ? ')) {
 
             // update current state menu
@@ -175,6 +187,10 @@ export default function EditorMenu({menus}) {
                 path,
                 getNodeKey,
             }))
+
+            if(!canSave){
+                setCanSave(true)
+            }
         }
     };
 
@@ -198,7 +214,6 @@ export default function EditorMenu({menus}) {
     // form
     const submitAddMenuItem = (stateLabel, stateHref) => {
         if (formCreateHref && formCreateLabel) {
-
             // add new item
             // update current state menu
             
@@ -206,10 +221,13 @@ export default function EditorMenu({menus}) {
                 [formatNewMenuItem(formCreateLabel, formCreateHref)].concat(currentMenu)
             )
             
-
             // // reset
             setFormCreateHref('');
             setFormCreateLabel('');
+
+            if(!canSave){
+                setCanSave(true)
+            }
         }
     };
 
@@ -228,6 +246,10 @@ export default function EditorMenu({menus}) {
                     href: formUpdateHref,
                 },
             }))
+
+            if(!canSave){
+                setCanSave(true)
+            }
             
         }
     }
@@ -271,13 +293,16 @@ export default function EditorMenu({menus}) {
     // Effets
 
     useEffect(() => {
-        // Prevent leaving page without saving
-        window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
-    }, []);
+        if(canSave){
+            // Prevent leaving page without saving
+            window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
+        } else {
+            window.onbeforeunload = null
+        }
+    }, [canSave]);
 
 
     // other
-    const canSave = true
     const count = getVisibleNodeCount({treeData: currentMenu})
     const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
 
@@ -363,7 +388,7 @@ export default function EditorMenu({menus}) {
                                     return (
                                         <button
                                             onClick={() => toggleTab(menuIndex)}
-                                            className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-purple-400" : "bg-purple-200")}
+                                            className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-purple-400 font-semibold" : "bg-purple-200")}
                                         >{menu.locale}</button>
                                     )
 
@@ -375,7 +400,7 @@ export default function EditorMenu({menus}) {
                         <div style={{height: count * 62}} className="">
                             <SortableTree
                                 treeData={currentMenu}
-                                onChange={treeData => updateCurrentMenuState(treeData)}
+                                onChange={onChangeTreedata}
                                 generateNodeProps={({node, path}) => {
                                     let isEditing = editedMenuItem && editedMenuItem.node.id === node.id;
 
@@ -385,7 +410,7 @@ export default function EditorMenu({menus}) {
                                                 label={isEditing ? 'Fermer' : 'Modifier'}
                                                 onClick={() => modifiyMenuItem(node, path)}
                                             />,
-                                            <RemoveButton onClick={() => removeTreeItem(path)} />,
+                                            <RemoveButton onClick={() => removeMenuItem(path)} />,
                                         ],
                                         style: {
                                             boxShadow: isEditing ? '0 0 0 4px #34D399' : '',
@@ -401,7 +426,7 @@ export default function EditorMenu({menus}) {
     );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
 
     const {locales} = context
     const menus = await getMenus(locales)

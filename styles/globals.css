@@ -70,7 +70,7 @@ a {
 }
 
 h2 {
-  font-family: 'Alegreya';
+  font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
   font-weight:700;
   font-size: 1.5rem;
   padding-bottom: 9px;
