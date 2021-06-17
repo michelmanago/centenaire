@@ -6,7 +6,7 @@ import Kedrofff from '../components/compositeurs/kedrofff';
 import Ivanovitch from '../components/compositeurs/ivanovitch';
 import { getMenu } from '../model/menu';
 
-export default function Compositeurs({}) {
+export default function Compositeurs({menu}) {
     const [section, setSection] = useState('KedroffP');
 
     const DisplayContent = () => {
@@ -28,7 +28,7 @@ export default function Compositeurs({}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header />
+            {menu && <Header menu={menu.data}/>}
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
                 <div className="w-3/4 px-10 mx-auto md:w-1/4">
