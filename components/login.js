@@ -62,16 +62,16 @@ export default function Login({providers}) {
                         <button
                             type="submit"
                             value="Envoyer"
-                            className="w-full py-3 mt-10 font-medium text-white uppercase bg-gray-800 rounded-sm focus:outline-none hover:bg-gray-700 hover:shadow-none"
+                            className="w-full py-3 mt-10 font-medium text-white uppercase rounded-sm bg-pblue focus:outline-none hover:bg-pblue-dark hover:shadow-none"
                             disabled={loginButtonState}
                         >
                             Login
                         </button>
-                        <div className="mt-4">
+                        {/*<div className="mt-4">
                             <p className="text-center text-gray-500 text-md sm:my-auto">or</p>
-                        </div>
+                            </div>*/}
                         <>
-                            {providers &&
+                            {/*providers &&
                                 Object.values(providers).map(provider => {
                                     if (provider.name != 'CredentialsCustom')
                                         return (
@@ -87,7 +87,7 @@ export default function Login({providers}) {
                                                 </button>
                                             </div>
                                         );
-                                })}
+                                })*/}
                         </>
                         <div className="mt-8 text-sm text-center sm:flex sm:flex-wrap sm:mb-4">
                             <Link href="">
