@@ -12,7 +12,6 @@ import Nav from '../nav/nav';
 
 export default function Header({menu}) {
     const [session] = useSession();
-    console.log(session);
 
     /** Hooks */
     const router = useRouter();

@@ -27,7 +27,7 @@ export default function Login({providerList, menu}) {
 // This is the recommended way for Next.js 9.3 or newer
 export async function getServerSideProps(context) {
     const providerList = await providers();
-    const menu = await getMenu(context);
+    const menu = await getMenu(context.locale);
     console.log(context.locale);
     return {
         props: {providerList, menu},
