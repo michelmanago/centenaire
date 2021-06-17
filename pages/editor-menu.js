@@ -2,13 +2,15 @@
 import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import SortableTree, {changeNodeAtPath, removeNodeAtPath} from 'react-sortable-tree';
+import SortableTree, {changeNodeAtPath, getVisibleNodeCount, removeNodeAtPath} from 'react-sortable-tree';
 
 // components
 import Header from '../components/header/header';
+import {RemoveButton, UpdateButton, CloseButton} from '../components/editor-menu/editor-menu-buttons';
+import FormMenuItem from '../components/editor-menu/editor-menu-form';
 
 // models
-import {getMenu} from '../model/menu';
+import {getMenus} from '../model/menu';
 
 const HEADER_NAV_DATA = [
     {
@@ -121,46 +123,55 @@ const getTreeDataToMenuData = menu => {
     return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
 };
 
-export default function EditorMenu({menu}) {
+export default function EditorMenu({menus, menu, context}) {
     
     // states
-    const [editableMenu, setEditableMenu] = useState(getMenuDataToTree(menu.data));
+    const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
+    const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => getMenuDataToTree(menu ? menu.data : [])))
+    const currentMenu = editableMenus ? editableMenus[currentMenuIndex] : null
 
-    // create
+    // create form
     const [formCreateLabel, setFormCreateLabel] = useState('');
     const [formCreateHref, setFormCreateHref] = useState('');
-    // update
-    const [editedMenuItem, setEditedMenuItem] = useState(null);
+    // update form
+    const [editedMenuItem, setEditedMenuItem] = useState({node: currentMenu[0], path: [0]});
     const [formUpdateLabel, setFormUpdateLabel] = useState('');
     const [formUpdateHref, setFormUpdateHref] = useState('');
 
+    // menu locale
+    const [locale, setLocale] = useState(null)
+
     // utils
     const getNodeKey = ({treeIndex}) => treeIndex;
+    const updateCurrentMenuState = nextState => setEditableMenus(editableMenus.map((menu, menuIndex) => menuIndex === currentMenuIndex ? nextState : menu))
+    const closeModifyForm = () => {
+        // close form
+        setEditedMenuItem(null);
 
-    // methods
+        // reset
+        setFormUpdateHref('');
+        setFormUpdateLabel('');
+    }
+
+    // listeners
 
     // via tree
     const removeTreeItem = path => {
         if (confirm('Êtes vous sûr ? ')) {
-            setEditableMenu(
-                removeNodeAtPath({
-                    treeData: editableMenu,
-                    path,
-                    getNodeKey,
-                }),
-            );
+
+            // update current state menu
+            updateCurrentMenuState(removeNodeAtPath({
+                treeData: currentMenu,
+                path,
+                getNodeKey,
+            }))
         }
     };
 
     const modifiyMenuItem = (node, path) => {
         // close
         if (editedMenuItem && editedMenuItem.node.id === node.id) {
-            // close form
-            setEditedMenuItem(null);
-
-            // reset
-            setFormUpdateHref('');
-            setFormUpdateLabel('');
+            closeModifyForm()
         }
 
         // open
@@ -177,12 +188,16 @@ export default function EditorMenu({menu}) {
     // form
     const submitAddMenuItem = (stateLabel, stateHref) => {
         if (formCreateHref && formCreateLabel) {
+
             // add new item
-            setEditableMenu(
-                editableMenu.concat({
+            // update current state menu
+            
+            updateCurrentMenuState(
+                currentMenu.concat({
                     title: formCreateLabel,
                 }),
-            );
+            )
+            
 
             // // reset
             setFormCreateHref('');
@@ -192,31 +207,33 @@ export default function EditorMenu({menu}) {
 
     const submitModifyMenuItem = () => {
         if (formUpdateHref && formUpdateLabel) {
-            console.log('x');
 
             let {path, node} = editedMenuItem;
 
-            setEditableMenu(
-                changeNodeAtPath({
-                    treeData: editableMenu,
-                    path,
-                    getNodeKey,
-                    newNode: {
-                        ...node,
-                        title: formUpdateLabel,
-                        href: formUpdateHref,
-                    },
-                }),
-            );
+            updateCurrentMenuState(changeNodeAtPath({
+                treeData: currentMenu,
+                path,
+                getNodeKey,
+                newNode: {
+                    ...node,
+                    title: formUpdateLabel,
+                    href: formUpdateHref,
+                },
+            }))
+            
         }
     }
 
     const onSubmitSave = () => {
 
-        let menuData = getTreeDataToMenuData(editableMenu)
+        let menuData = getTreeDataToMenuData(currentMenu)
         menuData = JSON.stringify(menuData)
 
         alert(menuData)
+    }
+
+    const toggleTab = (selectedIndex) => {
+        setCurrentMenuIndex(selectedIndex)
     }
 
     // Effets
@@ -229,26 +246,27 @@ export default function EditorMenu({menu}) {
 
     // other
     const canSave = true
+    const count = getVisibleNodeCount({treeData: currentMenu})
 
     return (
         <div>
             <Head>
-                <title>Editeur - Menu</title>
+                <title>Admin - Editeur de menu</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             {/* Header */}
-            <Header menu={menu.data} />
+            {menu && <Header menu={menu.data}/>}
 
             {/* Page home */}
             <div className="border p-8">
 
                 <h1 className="text-4xl font-bold mb-10">Modifier le menu de navigation</h1>
 
-                <div className="flex">
+                <div className="flex border">
 
                     {/* Column create/edit/save */}
-                    <div className="p-5 w-1/4 flex flex-col justify-between">
+                    <div className="p-5 w-1/4 flex flex-col">
 
                         {/* Form create */}
                         {!editedMenuItem && (
@@ -279,6 +297,12 @@ export default function EditorMenu({menu}) {
                                 onLabelChange={setFormUpdateLabel}
                                 href={formUpdateHref}
                                 onHrefChange={setFormUpdateHref}
+
+                                afterSubmit={
+                                    <CloseButton
+                                        onClick={closeModifyForm}
+                                    />
+                                }
                             />
                         )}
 
@@ -286,7 +310,7 @@ export default function EditorMenu({menu}) {
                         <button 
                             onClick={onSubmitSave}
                             disabled={!canSave}
-                            className={"mt-auto bg-blue-700 rounded px-5 py-4 text-2xl text-white font-bold " + (
+                            className={"mt-10 bg-blue-700 rounded px-5 py-4 text-2xl text-white font-bold " + (
                                 canSave ? 
                                     "hover:bg-blue-800" 
                                     : "bg-gray-300 opacity-50 cursor-not-allowed"
@@ -294,28 +318,49 @@ export default function EditorMenu({menu}) {
                         >Sauvegarder</button>
                     </div>
 
-                    {/* Tree */}
-                    <div style={{height: 500}} className="border flex-1 p-5">
-                        <SortableTree
-                            treeData={editableMenu}
-                            onChange={treeData => setEditableMenu(treeData)}
-                            generateNodeProps={({node, path}) => {
-                                let isEditing = editedMenuItem && editedMenuItem.node.id === node.id;
+                    <div className="flex-1 p-5">
 
-                                return {
-                                    buttons: [
-                                        <UpdateButton
-                                            label={isEditing ? 'Fermer' : 'Modifier'}
-                                            onClick={() => modifiyMenuItem(node, path)}
-                                        />,
-                                        <RemoveButton onClick={() => removeTreeItem(path)} />,
-                                    ],
-                                    style: {
-                                        boxShadow: isEditing ? '0 0 0 4px #34D399' : '',
-                                    },
-                                };
-                            }}
-                        />
+                        {/* Tabs */}
+                        <div className="flex">
+                            {
+                                menus.map((menu, menuIndex) => {
+                                    
+                                    const isCurrentTab = menus[currentMenuIndex].locale === menu.locale
+
+                                    return (
+                                        <button
+                                            onClick={() => toggleTab(menuIndex)}
+                                            className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-purple-400" : "bg-purple-200")}
+                                        >{menu.locale}</button>
+                                    )
+
+                                })
+                            }
+                        </div>
+                                
+                        {/* Tree */}
+                        <div style={{height: count * 62}} className="">
+                            <SortableTree
+                                treeData={currentMenu}
+                                onChange={treeData => updateCurrentMenuState(treeData)}
+                                generateNodeProps={({node, path}) => {
+                                    let isEditing = editedMenuItem && editedMenuItem.node.id === node.id;
+
+                                    return {
+                                        buttons: [
+                                            <UpdateButton
+                                                label={isEditing ? 'Fermer' : 'Modifier'}
+                                                onClick={() => modifiyMenuItem(node, path)}
+                                            />,
+                                            <RemoveButton onClick={() => removeTreeItem(path)} />,
+                                        ],
+                                        style: {
+                                            boxShadow: isEditing ? '0 0 0 4px #34D399' : '',
+                                        },
+                                    };
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -323,92 +368,15 @@ export default function EditorMenu({menu}) {
     );
 }
 
-// Forms
-const FormMenuItem = ({
-    formTitle,
-    formSubmitLabel,
-
-    onSubmit,
-
-    label,
-    onLabelChange,
-    href,
-    onHrefChange,
-}) => {
-    return (
-        <form>
-            <p className="text-xl mb-4 font-bold text-2xl">{formTitle}</p>
-            <hr className="mb-5" />
-
-            <div className="flex items-center mb-5">
-                <label className="font-semibold w-1/3" htmlFor="inputLabel">
-                    Label
-                </label>
-                <input
-                    value={label}
-                    onChange={event => onLabelChange(event.target.value)}
-                    className="ml-auto bg-gray-100 p-3 rounded w-full"
-                    type="text"
-                    id="inputLabel"
-                    placeholder="Titre de page"
-                />
-            </div>
-
-            {/* URL */}
-            <div className="flex items-center">
-                <label className="font-semibold w-1/3" htmlFor="inputHref">
-                    URL
-                </label>
-                <input
-                    value={href}
-                    onChange={event => onHrefChange(event.target.value)}
-                    className="ml-auto bg-gray-100 p-3 rounded w-full"
-                    type="text"
-                    id="inputHref"
-                    placeholder="https://"
-                />
-            </div>
-
-            <button
-                type="button"
-                onClick={onSubmit}
-                className="bg-green-400 hover:bg-green-500 p-3 rounded text-white font-semibold text-lg mt-10"
-            >
-                {formSubmitLabel}
-            </button>
-        </form>
-    );
-};
-
-// Buttons
-const RemoveButton = ({onClick}) => {
-    return (
-        <button
-            onClick={onClick}
-            className="flex items-center justify-center bg-red-600 text-white border rounded px-3 py-0 hover:bg-red-800"
-        >
-            Retirer
-        </button>
-    );
-};
-
-const UpdateButton = ({onClick, label = 'Modifier'}) => {
-    return (
-        <button
-            onClick={onClick}
-            className="flex items-center justify-center bg-gray-600 text-white border rounded px-3 py-0 hover:bg-gray-700"
-        >
-            {label}
-        </button>
-    );
-};
-
 export async function getStaticProps(context) {
-    const menu = await getMenu(context);
+
+    const {locales} = context
+    const menus = await getMenus(locales)
 
     return {
         props: {
-            menu: menu,
+            menu: menus && menus.find(menu => menu.locale === context.defaultLocale),
+            menus: menus
         },
     };
 }

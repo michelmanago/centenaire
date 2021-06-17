@@ -10,8 +10,9 @@ import Marie from '../components/saints/marie';
 import Fondaminsky from '../components/saints/fondaminsky';
 import Skobtsov from '../components/saints/skobtsov';
 import {Medvekov} from '../components/saints/medvekov';
+import { getMenu } from '../model/menu';
 
-export default function Saints() {
+export default function Saints({menu}) {
     const router = useRouter();
     const {locale, locales, defaultLocale} = router;
 
@@ -42,7 +43,7 @@ export default function Saints() {
             </Head>
 
             {/* Header */}
-            <Header />
+            {menu && <Header menu={menu.data}/>}
 
             {/* Page home */}
             <div>
@@ -86,3 +87,13 @@ export default function Saints() {
         </div>
     );
 }
+
+export async function getStaticProps(context) {
+
+    const menu = await getMenu(context.locale)
+  
+    return {props: {
+      menu: menu
+    }}
+  }
+    

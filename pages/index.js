@@ -26,7 +26,7 @@ export default function Home({menu}) {
       </Head>
 
       {/* Header */}
-      <Header menu={menu.data}/>
+      {menu && <Header menu={menu.data}/>}
 
       {/* Page home */}
       <div>
@@ -49,7 +49,7 @@ export default function Home({menu}) {
 
 export async function getStaticProps(context) {
 
-  const menu = await getMenu(context)
+  const menu = await getMenu(context.locale)
 
   return {props: {
     menu: menu
