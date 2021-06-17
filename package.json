@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "autoprefixer": "^10.2.3",
+    "bcryptjs": "^2.4.3",
     "frontend-collective-react-dnd-scrollzone": "^1.0.2",
     "html-react-parser": "^1.2.4",
     "navbar.js": "^2.1.5",
     "next": "10.0.5",
+    "next-auth": "^3.26.1",
     "patch-package": "^6.4.7",
     "postcss": "^8.2.4",
     "react": "17.0.1",
