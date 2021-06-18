@@ -1,7 +1,7 @@
 // libs
-import {useEffect, useState} from 'react';
-import {useRouter} from 'next/router';
-import {signOut, useSession} from 'next-auth/client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/client';
 
 // styles
 import styles from '../../styles/components/header.module.css';
@@ -11,12 +11,12 @@ import Image from 'next/image';
 import Nav from '../nav/nav';
 import LanguageSwitcher from "../../components/language-switcher/LanguageSwitcher"
 
-export default function Header({menu}) {
+export default function Header({ menu }) {
     const [session] = useSession();
 
     /** Hooks */
     const router = useRouter();
-    const {locale, locales, defaultLocale} = router;
+    const { locale, locales, defaultLocale } = router;
 
     /** States */
     const [isLangMenuOpened, setIsLangMenuOpened] = useState(false);
@@ -24,29 +24,24 @@ export default function Header({menu}) {
     return (
         <header className="bg-pyellow">
             <div className="container max-w-screen-xl bg-white sm:mx-auto">
-                <div className="flex sm:items-center">
-                    <div className="flex justify-end w-1/4">
+
+                <div className="flex items-center">
+                    <div className="flex justify-end w-1/5 md:w-1/4">
                         <Image src="/logo.svg" width={124} height={150} alt="logo" />
                     </div>
-                    <div className="w-3/4">
+                    <div className="w-4/5 md:w-3/4">
                         <div>
-                            <span className="ml-2 text-4xl font-bold text-pred font-logotitle">
-                                Centenaire de l'archevêché des églises Orthodoxes
-                            </span>
-                            
+                            <span className="ml-2 text-xl md:text-4xl font-bold text-pred font-logotitle">Centenaire de l'archevêché des églises </span>
                         </div>
                         <div>
-                            <span className="ml-2 text-4xl font-bold text-pred font-logotitle">
-                                {' '}
-                                de tradition russe en Europe occidentale
-                            </span>
+                            <span className="ml-2 text-xl md:text-4xl font-bold text-pred font-logotitle"> Orthodoxes de tradition russe en Europe occidentale</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="container max-w-screen-xl bg-white sm:mx-auto">
-                <LanguageSwitcher/>
+                <LanguageSwitcher />
             </div>
 
             {/* Top bar */}
@@ -55,7 +50,7 @@ export default function Header({menu}) {
             {session && (
                 <div className='flex flex-row items-center justify-center'>
                     {session.user.image && (
-                        <span style={{backgroundImage: `url(${session.user.image})`}} className={''} />
+                        <span style={{ backgroundImage: `url(${session.user.image})` }} className={''} />
                     )}
                     <span className={'mr-2'}>
                         <small>Signed in as</small>

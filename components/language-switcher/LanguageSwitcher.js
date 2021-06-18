@@ -10,7 +10,7 @@ const LanguageSwitcher = () => {
     const { locales, locale } = useRouter()
 
     // utils
-    const removeLocaleFromPathname = pathname => pathname.replace(new RegExp(`\/(?:${locales.join("|")})/`, "i"), "/")
+    const removeLocaleFromPathname = pathname => pathname.replace(new RegExp(`\/(?:${locales.join("|")})/?`, "i"), "/")
 
     const redirectToTranslatedPage = (url, selectedLocale) => {
 

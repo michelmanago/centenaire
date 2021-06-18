@@ -67,7 +67,6 @@ const Nav = ({menu = []}) => {
             toggleSiblings: true,
             delay: 500
         })
-        // console.log({refContainer})
     }, [refContainer])
 
     return (
