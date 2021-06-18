@@ -21,7 +21,7 @@ export async function authUser({username, password}) {
 
 export async function getUserByEmail(email) {
     try {
-        let user = await query('SELECT id, username, email, avatar FROM user_table WHERE email LIKE ?', [email]);
+        let user = await query('SELECT id, username, email, avatar, role FROM user_table WHERE email LIKE ?', [email]);
         return user[0];
     } catch (err) {
         console.log(err);
@@ -30,14 +30,14 @@ export async function getUserByEmail(email) {
 }
 
 export async function createUser(user) {
-    const {username, email, password, provider, avatar} = user;
+    const {username, email, password, provider, avatar, role} = user;
     try {
         const results = await query(
             `
-            INSERT INTO user_table (username, email, password, provider, avatar)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO user_table (username, email, password, provider, avatar, role)
+            VALUES (?, ?, ?, ?, ?, ?)
             `,
-            [username, email, password, provider, avatar],
+            [username, email, password, provider, avatar, role],
         );
 
         return results;

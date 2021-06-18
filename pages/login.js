@@ -28,7 +28,6 @@ export default function Login({providerList, menu}) {
 export async function getServerSideProps(context) {
     const providerList = await providers();
     const menu = await getMenu(context.locale);
-    console.log(context.locale);
     return {
         props: {providerList, menu},
     };
