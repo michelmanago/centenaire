@@ -1,0 +1,16 @@
+
+
+
+.navContainer{
+
+}
+
+@media (min-width: 768px){
+
+    .navContainer{
+        justify-content: center!important;
+    }
+}
+
+/* Libs */
+

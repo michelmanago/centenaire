@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
 import Header from '../components/header/header';
+import SelectParoisse from '../components/selectparoisse';
 import Chaville from '../components/paroisses/chaville';
 import Dormition from '../components/paroisses/dormition';
 import Crypte from '../components/paroisses/crypte';
 import Daru from '../components/paroisses/daru';
 import SaintPrix from '../components/paroisses/saintprix';
 import Troyes from '../components/paroisses/troyes';
+import Olivierdeserres from '../components/paroisses/olivierdeserres';
+import { getMenu } from '../model/menu';
 
 
-export default function MaitreSpirituels({}) {
+export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chaville');
-
     const DisplayContent = () => {
         switch (section) {
             case 'Chaville':
@@ -26,7 +28,8 @@ export default function MaitreSpirituels({}) {
                 return <SaintPrix />;                   
             case 'Troyes':
                 return <Troyes />;                   
-                          
+            case 'Olivierdeserres':
+                return <Olivierdeserres />;                                            
             default:
                 return null;
         }
@@ -38,10 +41,14 @@ export default function MaitreSpirituels({}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header />
+            {menu && <Header menu={menu.data}/>}
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
-                <div className="w-3/4 px-10 mx-auto md:w-1/4">
+                <div className="visible md:hidden">
+                    <SelectParoisse paroisse={section} setParoisse={setSection}/>
+                </div>
+
+                <div className="hidden md:block px-10 mx-auto md:w-1/4">
                     <div className="font-bold">Les Paroisses:</div>
                     <ul className="list-disc">
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Chaville')}>
@@ -62,6 +69,9 @@ export default function MaitreSpirituels({}) {
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Troyes')}>
                             Troyes
                         </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Olivierdeserres')}>
+                            Olivier de Serres
+                        </li>
                      </ul>
                 </div>
                 <div className="md:w-3/4">{DisplayContent()}</div>
@@ -69,3 +79,14 @@ export default function MaitreSpirituels({}) {
         </div>
     );
 }
+
+
+export async function getStaticProps(context) {
+
+    const menu = await getMenu(context.locale)
+  
+    return {props: {
+      menu: menu
+    }}
+  }
+    

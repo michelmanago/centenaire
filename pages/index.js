@@ -1,11 +1,19 @@
-import Head from 'next/head'
+// libs
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import Image from 'next/image'
+
+// components
 import Header from '../components/header/header'
-import styles from '../styles/pages/home.module.css'
 import AppHome from '../components/apphome'
 
-export default function Home() {
+// models
+import { getMenu } from '../model/menu'
+
+// styles
+import styles from '../styles/pages/home.module.css'
+
+export default function Home({menu}) {
 
   const router = useRouter()
   const { locale, locales, defaultLocale } = router
@@ -18,7 +26,7 @@ export default function Home() {
       </Head>
 
       {/* Header */}
-      <Header/>
+      {menu && <Header menu={menu.data}/>}
 
       {/* Page home */}
       <div>
@@ -37,3 +45,15 @@ export default function Home() {
     </div>
   )
 }
+
+
+export async function getStaticProps(context) {
+
+  const menu = await getMenu(context.locale)
+
+  return {props: {
+    menu: menu
+  }}
+}
+  
+  

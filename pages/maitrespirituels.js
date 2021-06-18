@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import Head from 'next/head';
 import Header from '../components/header/header';
 import Chrol from '../components/maitrespirituels/chrol';
+import { getMenu } from '../model/menu';
 
-export default function MaitreSpirituels({}) {
+export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chrol');
 
     const DisplayContent = () => {
@@ -22,7 +23,7 @@ export default function MaitreSpirituels({}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header />
+            {menu && <Header menu={menu.data}/>}
 
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
                 <div className="w-3/4 px-10 mx-auto md:w-1/4">
@@ -38,3 +39,13 @@ export default function MaitreSpirituels({}) {
         </div>
     );
 }
+
+export async function getStaticProps(context) {
+
+    const menu = await getMenu(context.locale)
+  
+    return {props: {
+      menu: menu
+    }}
+  }
+    
