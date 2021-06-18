@@ -14,6 +14,12 @@ const Utils = {
         // full url
         return `${origin}${locale}/${slug}`
 
+    },
+
+
+    // DATABASE
+    getSQLDatatime(data){
+        return data.toISOString().slice(0, 19).replace('T', ' ')
     }
 
 

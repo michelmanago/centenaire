@@ -8,13 +8,17 @@ import { getPageBySlug } from "../../../model/page";
 // components
 import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
+import Utils from "../../../utils/utils";
 
 // utils
-s
+
 export default function PageEditorUpdate({menu, pageSlug, pageData}) {
 
     // methods
     const onSubmit = form => {
+
+        // add last_modified
+        form.last_modified = Utils.getSQLDatatime(new Date())
 
         fetch("/api/page/" + pageData.id, {
             method: "PUT",

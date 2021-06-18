@@ -2,20 +2,20 @@ import {query} from '../lib/db';
 
 
 // Create
-export async function createPage({title, slug, content, category, language, author}) {
+export async function createPage({title, slug, content, category, language, author, created_at}) {
     const res = await query(
         `
             INSERT INTO pagecontent
-            (pageName, pageSlug, blockcontent, page, language, author)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (pageName, pageSlug, blockcontent, page, language, author, created_at, last_modified)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `,
-        [title, slug, content, category, language, author]
+        [title, slug, content, category, language, author, created_at, created_at]
     )
 
     return res.affectedRows ? res.insertId : null
 }
 
-export async function updatePage(id, {title, slug, content, category, language, author}) {
+export async function updatePage(id, {title, slug, content, category, language, author, last_modified}) {
     const res = await query(
         `
             UPDATE pagecontent
@@ -24,11 +24,12 @@ export async function updatePage(id, {title, slug, content, category, language, 
                     blockcontent = ?,
                     page = ?,
                     language = ?,
-                    author = ?
+                    author = ?,
+                    last_modified = ?
                 
             WHERE id = ?
         `,
-        [title, slug, content, category, language, author, id]
+        [title, slug, content, category, language, author, last_modified, /* should always be the last */id]
     )
 
     return res.changedRows ? true : false
