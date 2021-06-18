@@ -2,11 +2,11 @@ import dynamic from 'next/dynamic';
 
 import Header from '../components/header/header';
 import {getMenu} from '../model/menu';
-import {getPageByName, getPageByType} from '../model/page';
+import {getPageBySlug, getPageByType} from '../model/page';
 
 const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
 
-export default function DynPage({pageName, menu, pageData, listPage}) {
+export default function DynPage({pageSlug, menu, pageData, listPage}) {
     return (
         <div>
             <Header menu={menu.data} />
@@ -23,7 +23,7 @@ export default function DynPage({pageName, menu, pageData, listPage}) {
                         <div dangerouslySetInnerHTML={{__html: pageData.blockcontent}}></div>
                     </div>
                 ) : (
-                    <div>Page Dynamique {pageName}</div>
+                    <div>Page Dynamique {pageSlug}</div>
                 )}
             </div>
         </div>
@@ -60,12 +60,12 @@ export async function getStaticPaths({locales}) {
 }
 
 export async function getStaticProps(context) {
-    const {pageName} = context.params;
+    const {pageSlug} = context.params;
     const menu = await getMenu(context.locale);
-    const pageData = await getPageByName(pageName);
+    const pageData = await getPageBySlug(pageSlug);
     let listPage = null;
     if (pageData) {
         listPage = await getPageByType(pageData.page);
     }
-    return {props: {pageName, menu, pageData, listPage}};
+    return {props: {pageSlug, menu, pageData, listPage}};
 }

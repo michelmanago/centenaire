@@ -60,6 +60,7 @@ body {
 }
 
 body{
+    @apply bg-pyellow;
   font-family:'Jost', "Impact";
   font-weight:400;
 }
