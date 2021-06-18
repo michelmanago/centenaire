@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Head from 'next/head';
 import Header from '../components/header/header';
+import styles from '../styles/pages/home.module.css';
+import Image from 'next/image';
 import SelectParoisse from '../components/selectparoisse';
 import Chaville from '../components/paroisses/chaville';
 import Dormition from '../components/paroisses/dormition';
@@ -8,6 +10,7 @@ import Crypte from '../components/paroisses/crypte';
 import Daru from '../components/paroisses/daru';
 import SaintPrix from '../components/paroisses/saintprix';
 import Troyes from '../components/paroisses/troyes';
+import Olivierdeserres from '../components/paroisses/olivierdeserres';
 import { getMenu } from '../model/menu';
 
 
@@ -27,7 +30,8 @@ export default function MaitreSpirituels({menu}) {
                 return <SaintPrix />;                   
             case 'Troyes':
                 return <Troyes />;                   
-                          
+            case 'Olivierdeserres':
+                return <Olivierdeserres />;                                            
             default:
                 return null;
         }
@@ -38,14 +42,24 @@ export default function MaitreSpirituels({menu}) {
                 <title>Les Paroisses:</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
+ 
             {menu && <Header menu={menu.data}/>}
 
+            <header className={styles.header + ' relative'}>
+                    <Image
+                        src="/static/img/paroisses/crypte/bandeau-crypte.jpg"
+                        // width={1400}
+                        // height={360}
+                        objectFit="cover"
+                        layout="fill"
+                    />
+                    </header>
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
+
                 <div className="visible md:hidden">
                     <SelectParoisse paroisse={section} setParoisse={setSection}/>
                 </div>
-
+ 
                 <div className="hidden md:block px-10 mx-auto md:w-1/4">
                     <div className="font-bold">Les Paroisses:</div>
                     <ul className="list-disc">
@@ -66,6 +80,9 @@ export default function MaitreSpirituels({menu}) {
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Troyes')}>
                             Troyes
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Olivierdeserres')}>
+                            Olivier de Serres
                         </li>
                      </ul>
                 </div>

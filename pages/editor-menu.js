@@ -264,7 +264,8 @@ export default function EditorMenu({menus}) {
                 fetch("/api/menu", {
                     method: "PUT",
                     body: JSON.stringify(menuDataItem) 
-                }).then(response => {
+                })
+                .then(response => {
                     if(response.ok){
                         return response.json()
                     } else {
@@ -316,11 +317,11 @@ export default function EditorMenu({menus}) {
             {defaultLocaleMenu && <Header menu={defaultLocaleMenu.data}/>}
 
             {/* Page home */}
-            <div className="border p-8">
+            <div className="bg-white p-8">
 
                 <h1 className="text-4xl font-bold mb-10">Modifier le menu de navigation</h1>
 
-                <div className="flex border">
+                <div className="flex">
 
                     {/* Column create/edit/save */}
                     <div className="p-5 w-1/4 flex flex-col">

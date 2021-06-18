@@ -78,9 +78,20 @@ h2 {
   padding-bottom: 9px;
 }
 
+h3 {
+  font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
+  font-weight:700;
+  @apply text-xl;
+  @apply sm:text-2xl;
+  padding-top: 6px;
+  padding-bottom: 9px;
+}
+
+
 p {
   font-size: 1.125rem;
   line-height: 1.75rem;
+  padding-bottom: 6px;
 }
 
 * {
