@@ -8,6 +8,7 @@ import Crypte from '../components/paroisses/crypte';
 import Daru from '../components/paroisses/daru';
 import SaintPrix from '../components/paroisses/saintprix';
 import Troyes from '../components/paroisses/troyes';
+import Olivierdeserres from '../components/paroisses/olivierdeserres';
 import { getMenu } from '../model/menu';
 
 
@@ -27,7 +28,8 @@ export default function MaitreSpirituels({menu}) {
                 return <SaintPrix />;                   
             case 'Troyes':
                 return <Troyes />;                   
-                          
+            case 'Olivierdeserres':
+                return <Olivierdeserres />;                                            
             default:
                 return null;
         }
@@ -66,6 +68,9 @@ export default function MaitreSpirituels({menu}) {
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Troyes')}>
                             Troyes
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Olivierdeserres')}>
+                            Olivier de Serres
                         </li>
                      </ul>
                 </div>
