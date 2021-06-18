@@ -65,7 +65,7 @@ export default function PageEditor({onFormSubmitted, editedPage}){
         <div className="p-8 bg-white gap-x-8 border flex">
             
             {/* Left */}
-            <div className="w-4/5">
+            <div className="w-4/6">
                 {/* Mode de page */}
                 <h1 className="text-4xl font-bold mb-5">{isEditing ? "Modifier la page" : "Ajouter une nouvelle page"}</h1>
 
@@ -84,7 +84,7 @@ export default function PageEditor({onFormSubmitted, editedPage}){
 
             {/* Right */}
 
-            <div className="w-1/5">
+            <div className="w-2/6">
                 
                 {/* Block publier */}
                 <PageBlock title="Publier">
@@ -116,7 +116,7 @@ export default function PageEditor({onFormSubmitted, editedPage}){
 
                     {/* Publier */}
                     <div className="flex justify-end">
-                        <button onClick={onSubmit} className="bg-blue-600 hover:bg-blue-700 px-3 py-2 text-white font-semibold mt-10 rounded w-full">
+                        <button onClick={onSubmit} className="bg-blue-700 hover:bg-blue-600 px-3 py-2 text-white font-semibold mt-10 rounded w-full">
                             {isEditing ? "Mettre à jour" : "Sauvegarder"}
                         </button>
                     </div>
