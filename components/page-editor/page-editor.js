@@ -84,7 +84,7 @@ export default function PageEditor({onFormSubmitted, editedPage}){
 
             {/* Right */}
 
-            <div className="w-1/5 flex-1">
+            <div className="w-1/5">
                 
                 {/* Block publier */}
                 <PageBlock title="Publier">
