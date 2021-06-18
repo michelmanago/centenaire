@@ -65,7 +65,7 @@ export default function PageEditor({onFormSubmitted, editedPage}){
         <div className="p-8 bg-white gap-x-8 border flex">
             
             {/* Left */}
-            <div className="w-3/5">
+            <div className="w-4/5">
                 {/* Mode de page */}
                 <h1 className="text-4xl font-bold mb-5">{isEditing ? "Modifier la page" : "Ajouter une nouvelle page"}</h1>
 
