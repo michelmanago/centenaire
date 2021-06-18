@@ -1,12 +1,12 @@
 import {query} from '../lib/db';
 
-export async function getPageByName(pageName) {
+export async function getPageBySlug(pageSlug) {
     const res = await query(
         `
         SELECT * FROM pagecontent
-        WHERE pageName = ?
+        WHERE pageSlug = ?
         `,
-        [pageName]
+        [pageSlug]
     )
 
     if (res.length === 1)

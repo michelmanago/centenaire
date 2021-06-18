@@ -7,8 +7,8 @@ export default function NavCompositeur({list}) {
             <ul className="list-disc">
                 {list &&
                     list.map(page => (
-                        <li key={page.pageName}>
-                            <Link href={`/${page.pageName}`}>
+                        <li key={page.pageSlug}>
+                            <Link href={`/${page.pageSlug}`}>
                                 <a>{page.pageName}</a>
                             </Link>
                         </li>
