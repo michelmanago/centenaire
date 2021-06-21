@@ -117,12 +117,12 @@ export default function PageEditor({onFormSubmitted, editedPage}){
                             <>
                                 <div className="flex items-center my-2">
                                     <p className="text-md mr-3 font-semibold" htmlFor="inputAuthor">Date de publication : </p>
-                                    <p className="text-md">{new Date(editedPage.created_at).toLocaleString(locale)}</p>
+                                    <p className="text-md">{editedPage.created_at ? new Date(editedPage.created_at).toLocaleString(locale) : ""}</p>
                                 </div>
 
                                 <div className="flex items-center my-2">
                                     <p className="text-md mr-3 font-semibold" htmlFor="inputAuthor">Dernière modification : </p>
-                                    <p className="text-md">{new Date(editedPage.last_modified).toLocaleString()}</p>
+                                    <p className="text-md">{editedPage.last_modified ? new Date(editedPage.last_modified).toLocaleString() : ""}</p>
                                 </div>
                             
                             </>
