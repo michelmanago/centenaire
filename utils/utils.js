@@ -1,3 +1,9 @@
+function twoDigits(d) {
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+}
+
 const Utils = {
 
 
@@ -5,8 +11,7 @@ const Utils = {
     getPagePermalink: (slug = "/", locale) => {
 
         // origin
-        let url = new URL(window.location)
-        let origin = url.origin
+        let origin = process.env.NEXTAUTH_URL
 
         // locale
         locale = locale ? ("/" + locale) : ""
@@ -16,10 +21,8 @@ const Utils = {
 
     },
 
-
-    // DATABASE
-    getSQLDatatime(data){
-        return data.toISOString().slice(0, 19).replace('T', ' ')
+    toMysqlFormat(date){
+        return date.getFullYear() + "-" + twoDigits(1 + date.getMonth()) + "-" + twoDigits(date.getDate()) + " " + twoDigits(date.getHours()) + ":" + twoDigits(date.getMinutes()) + ":" + twoDigits(date.getSeconds());
     }
 
 

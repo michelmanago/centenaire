@@ -1,13 +1,15 @@
 // libs
 import { useSession } from "next-auth/client"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+// utils
+import cleanForSlug from "../../utils/cleanForSlug"
+import checkSlugExistance from "../../utils/checkSlugExistance"
 import Utils from "../../utils/utils"
 
 // components
 import CustomEditor from "../Slate/customEditor"
-
-let slug = "https://archeveche.eu/pere-rene-doyen-…notre-archeveche/"
 
 const categories = [
     {
@@ -30,53 +32,67 @@ export default function PageEditor({onFormSubmitted, editedPage}){
     // hooks
     const {defaultLocale, locales, locale} = useRouter()
     const [session] = useSession()
-    const usernameFromSession = session && session.userBase ? session.userBase.username : ""
 
     // States
+    // form
     const [title, setTitle] = useState(editedPage ? editedPage.pageName : "")
     const [slug, setSlug] = useState(editedPage ? editedPage.pageSlug : "")
     const [content, setContent] = useState(editedPage ? editedPage.blockcontent : "")
-    const [category, setCategory] = useState(editedPage ? editedPage.page : null)
+    const [category, setCategory] = useState(editedPage ? editedPage.page || "" : "")
     const [language, setLanguage] = useState(editedPage ? editedPage.language :defaultLocale)
-    const [author, setAuthor] = useState(editedPage ? editedPage.author : usernameFromSession)
+    const [author, setAuthor] = useState(editedPage ? editedPage.author : "")
 
     // const [canSave, setCanSave] = useState(false)
 
-
     // methods
-    const onSubmit = () => {
+    const onSubmit = async () => {
+
+
+        const checkedSlug = await checkSlugExistance(slug)
         
         onFormSubmitted({
             title: title,
-            slug: isEditing ? slug : (`mapage-${Date.now()}` || slug),
+            slug: checkedSlug,
             content: content,
             category: category,
             language: language,
             author: author,
-            created_at: Utils.getSQLDatatime(new Date())
         })
+
+    }
+
+    const onChangeTitle = e => {
+
+        setTitle(e.target.value)
+
+
+        setSlug(cleanForSlug(e.target.value))
 
     }
 
     // others
     const languagesLists = locales.map(_locale => ({title: _locale.toUpperCase(), value: _locale}))
+    const pageLink = editedPage ? Utils.getPagePermalink(editedPage.pageSlug, editedPage.language) : null
 
     return (
         <div className="p-8 bg-white gap-x-8 border flex">
-            
+
             {/* Left */}
             <div className="w-2/5 flex-1">
+
                 {/* Mode de page */}
                 <h1 className="text-4xl font-bold mb-5">{isEditing ? "Modifier la page" : "Ajouter une nouvelle page"}</h1>
 
                 {/* Title */}
-                <input onChange={e => setTitle(e.target.value)} value={title} className="border rounded px-5 py-4 w-full mb-5" type="text" placeholder="Titre de la page"/>
+                <input onChange={onChangeTitle} value={title} className="border rounded px-5 py-4 w-full mb-5" type="text" placeholder="Titre de la page"/>
 
                 {/* Slug */}
-                <div className=" flex items-center">
-                    <label className="mr-5" htmlFor="inputSlug">Slug : </label>
-                    <input onChange={e => setSlug(e.target.value)} value={slug} id="inputSlug" className="border rounded px-1 py-2 w-1/2" type="text" placeholder="le-nom-de-ma-page"/>  
-                </div>
+                {slug && (
+                    <InputSlug
+                        slug={slug}
+                        setSlug={setSlug}
+                    />
+                )}
 
                 {/* Content */}
                 <CustomEditor block={content} setContent={setContent} />
@@ -106,17 +122,23 @@ export default function PageEditor({onFormSubmitted, editedPage}){
 
                                 <div className="flex items-center my-2">
                                     <p className="text-md mr-3 font-semibold" htmlFor="inputAuthor">Dernière modification : </p>
-                                    <p className="text-md">{new Date(editedPage.last_modified).toLocaleString(locale)}</p>
+                                    <p className="text-md">{new Date(editedPage.last_modified).toLocaleString()}</p>
                                 </div>
                             
                             </>
                         )
                     }
-                    
+
+                    {/* Permalink */}
+                    {pageLink && (
+                        <div>
+                            <a target="_blank" className="text-blue-500 underline" href={pageLink}>Lien vers la page</a>
+                        </div>
+                    )}
 
                     {/* Publier */}
                     <div className="flex justify-end">
-                        <button onClick={onSubmit} className="bg-blue-700 hover:bg-pblue px-3 py-2 text-white font-semibold mt-10 rounded w-full">
+                        <button onClick={onSubmit} className="bg-blue-700 hover:bg-blue-800 px-3 py-2 text-white font-semibold mt-10 rounded w-full">
                             {isEditing ? "Mettre à jour" : "Sauvegarder"}
                         </button>
                     </div>
@@ -126,8 +148,7 @@ export default function PageEditor({onFormSubmitted, editedPage}){
                 {/* Block langues */}
                 <PageBlock title="Langues">
 
-                    <select value={language} defaultValue={"first"} onChange={e => setLanguage(e.target.value)} className="border rounded px-4 py-3 w-full">
-                        <option disabled value="first"> -- Selectionner une langue -- </option>
+                    <select value={language} onChange={e => setLanguage(e.target.value)} className="border rounded px-4 py-3 w-full">
                         {
                             languagesLists.map(cat => (<option key={cat.value} value={cat.value}>{cat.title}</option>))
                         }
@@ -139,8 +160,8 @@ export default function PageEditor({onFormSubmitted, editedPage}){
                 <PageBlock title="Catégories">
 
                     {/* categorie */}
-                    <select value={category} defaultValue={"first"} onChange={e => setCategory(e.target.value)} className="border rounded px-4 py-3 w-full">
-                        <option disabled value="first"> -- Selectionner une catégorie -- </option>
+                    <select value={category} onChange={e => setCategory(e.target.value)} className="border rounded px-4 py-3 w-full">
+                        <option disabled value=""> -- Selectionner une catégorie -- </option>
                         {
                             categories.map(cat => (<option key={cat.value} value={cat.value}>{cat.title}</option>))
                         }
@@ -166,6 +187,71 @@ const PageBlock = ({title, children}) => {
             {/* Block */}
             <div className="px-4">
                 {children}
+            </div>
+        </div>
+    )
+}
+
+const InputSlug = ({slug, setSlug}) => {
+
+    // state
+    const [opened, setOpened] = useState(false)
+    const [origin, setOrigin] = useState("")
+
+    // effects
+    // find app url
+    useEffect(() => {
+        setOrigin(window.location.origin)        
+    }, [slug])
+
+    // helpers
+    
+
+    // methods
+    const onSubmit = async () => {
+
+        const cleanedSlug = cleanForSlug(slug)
+        const checkedSlug = await checkSlugExistance(cleanedSlug)
+
+        setSlug(checkedSlug)
+        setOpened(false)
+    }
+
+
+    return (
+        <div className=" flex items-center mb-6">
+
+            {/* Label */}
+            <label className="mr-5 w-1/5 font-semibold" htmlFor="inputSlug">Permalien : </label>
+
+            {/* Input container */}
+            <div className={`border rounded px-3 py-2 w-full ${opened ? "border-blue-500" : ""}`}>
+
+                {/* Label */}
+                <label htmlFor="inputSlug" className="text-gray-500">{origin + "/"}</label>
+
+                {/* Input */}
+                <input disabled={!opened} onChange={e => setSlug(e.target.value)} value={slug} id="inputSlug" className="w-1/2 outline-none" type="text" placeholder="le-titre-de-ma-page"/>
+            </div>  
+
+            {/* Actions */}
+            <div className="w-1/4 ml-3">
+                {/* When closed */}
+                {
+                    !opened && (
+                        <button onClick={() => setOpened(true)} className="border rounded bg-blue-500 text-white px-2 py-1 w-full">Modifier</button>
+                    )
+                }
+
+                {/* When open */}
+                {
+                    opened && (
+                        <>
+                            <button onClick={onSubmit} className="border rounded border-gray-500 text-gray-500 px-2 py-1">OK</button>
+                            <button onClick={() => setOpened(false)} className="underline px-2 py-1">Annuler</button>
+                        </>
+                    )
+                }
             </div>
         </div>
     )

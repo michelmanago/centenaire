@@ -1,5 +1,5 @@
 //libs
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // models
 import { getMenu } from "../../../model/menu";
@@ -9,16 +9,28 @@ import { getPageBySlug } from "../../../model/page";
 import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
 import Utils from "../../../utils/utils";
+import { useRouter } from "next/router";
 
 // utils
 
 export default function PageEditorUpdate({menu, pageSlug, pageData}) {
 
+    // states
+    const router = useRouter()
+
+    useEffect(() => {
+
+        if(!pageData || (pageData && Array.isArray(pageData) && !pageData.length)){
+            router.push("/404")
+        }
+
+    }, [])
+
     // methods
     const onSubmit = form => {
 
         // add last_modified
-        form.last_modified = Utils.getSQLDatatime(new Date())
+        form.last_modified = Utils.toMysqlFormat(new Date())
 
         fetch("/api/page/" + pageData.id, {
             method: "PUT",
@@ -33,7 +45,7 @@ export default function PageEditorUpdate({menu, pageSlug, pageData}) {
         })
         .then(body => {
 
-            window.location.reload()
+            window.location = "/admin/page/" + body.pageSlug
 
         })
         .catch(err => {
@@ -42,7 +54,6 @@ export default function PageEditorUpdate({menu, pageSlug, pageData}) {
         })
 
     }
-
 
     return (
         <>

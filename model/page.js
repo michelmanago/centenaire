@@ -61,10 +61,10 @@ export async function getPageBySlug(pageSlug) {
         [pageSlug]
     )
 
-    if (res.length === 1)
+    if (res.length >= 1)
         return JSON.parse(JSON.stringify(res[0]))
     else
-        return null;
+        return []
 }
 
 export async function getPageByType(pageType) {

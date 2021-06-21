@@ -12,6 +12,9 @@ export default function PageEditorCreate({menu}) {
     // methods
     const onSubmit = form => {
 
+        // created at
+        form.created_at = Utils.toMysqlFormat(new Date())
+
         fetch("/api/page", {
             method: "POST",
             body: JSON.stringify(form)
@@ -25,9 +28,8 @@ export default function PageEditorCreate({menu}) {
         })
         .then(body => {
 
-            // navigate to new post
-            const newPostPermalink = Utils.getPagePermalink(body.pageSlug, body.language)
-            window.location = newPostPermalink
+            // navigate to post edition
+            window.location = "/admin/page/" + body.pageSlug
 
         })
         .catch(err => {
