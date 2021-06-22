@@ -1,45 +1,87 @@
-import {useState} from 'react';
-import Header from '../../../components/header/header';
-import CustomEditor from '../../../components/Slate/customEditor';
-import {getPageBySlug} from '../../../model/page';
+//libs
+import { useEffect, useState } from "react";
 
-export default function editPage({pageSlug, pageData}) {
-    const [pageName, setPageName] = useState(() => (pageData ? pageData.pageName : ''));
-    const [newPageSlug, setNewPageSlug] = useState(() => (pageData ? pageData.pageSlug : ''));
-    const [blockContent, setBlockContent] = useState(() => (pageData ? pageData.blockcontent : ''))
+// models
+import { getMenu } from "../../../model/menu";
+import { getPageBySlug } from "../../../model/page";
+
+// components
+import Header from "../../../components/header/header"
+import PageEditor from "../../../components/page-editor/page-editor"
+import Utils from "../../../utils/utils";
+import { useRouter } from "next/router";
+
+// utils
+
+export default function PageEditorUpdate({menu, pageSlug, pageData}) {
+
+    // states
+    const router = useRouter()
+
+    useEffect(() => {
+
+        if(!pageData || (pageData && Array.isArray(pageData) && !pageData.length)){
+            router.push("/404")
+        }
+
+    }, [])
+
+    // methods
+    const onSubmit = form => {
+
+        // add last_modified
+        form.last_modified = Utils.toMysqlFormat(new Date())
+
+        fetch("/api/page/" + pageData.id, {
+            method: "PUT",
+            body: JSON.stringify(form)
+        })
+        .then(response => {
+            if(response.ok){
+                return response.json()
+            } else {
+                throw new Error(response.statusText);
+            }
+        })
+        .then(body => {
+
+            window.location = "/admin/page/" + body.pageSlug
+
+        })
+        .catch(err => {
+            console.log(err)
+            alert("NOT OK")
+        })
+
+    }
+
     return (
-        <div>
-            <Header />
-            <main className="max-w-screen-xl p-4 bg-white sm:mx-auto">
-                <div>Edit Page {pageData ? pageData.pageName : pageSlug}</div>
-
-                {pageData && (
-                    <div>
-                        <div className="flex flex-col">
-                            <label htmlFor="name">Nom de page:</label>
-                            <input
-                                className="border border-black rounded"
-                                type="text"
-                                id="name"
-                                value={pageName}
-                                onChange={e => setPageName(e.currentTarget.value)}
-                            />
-                            <input className="border border-black rounded" type='text' id='slug' value={pageSlug} />
-                        </div>
-
-                        <div>
-                            <CustomEditor block={blockContent} setContent={setBlockContent} />
-                        </div>
-                    </div>
-                )}
+        <>
+            {menu && <Header menu={menu.data}/>}
+            <main className="bg-white">
+                <PageEditor
+                    editedPage={pageData}
+                    onFormSubmitted={onSubmit}
+                />
             </main>
-        </div>
+        </>
     );
 }
 
 export async function getServerSideProps(context) {
+
+    // menu
+    const menu = await getMenu(context.locale)
+  
+    // current page edited
     const {pageSlug} = context.params;
     const pageData = await getPageBySlug(pageSlug);
 
-    return {props: {pageSlug, pageData}};
-}
+    return {props: {
+      menu: menu,
+      pageSlug, 
+      pageData,
+    }}
+  }
+    
+    

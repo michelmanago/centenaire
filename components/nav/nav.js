@@ -65,7 +65,7 @@ const Nav = ({menu = []}) => {
         new Navbar(refContainer.current, {
             breakpoint: 768,
             toggleSiblings: true,
-            delay: 500
+            delay: 0
         })
     }, [refContainer])
 

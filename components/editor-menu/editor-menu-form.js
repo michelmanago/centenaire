@@ -45,6 +45,7 @@ const FormMenuItem = ({
                 />
             </div>
 
+            {/* Submit */}
             <button
                 type="button"
                 onClick={onSubmit}

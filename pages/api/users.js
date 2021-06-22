@@ -3,7 +3,7 @@ import {query} from '../../lib/db';
 import {compare, compareSync, hash} from 'bcryptjs';
 
 export default async function handler(req, res) {
-    const {name, email, password} = req.body;
+    const {name, email, password, role} = req.body;
     //console.log(name, email, password);
     try {
         if (req.method === 'POST') {
@@ -14,10 +14,10 @@ export default async function handler(req, res) {
             hash(password, 10, async function (err, hash) {
                 const results = await query(
                     `
-                    INSERT INTO user_table (username, email, password)
-                    VALUES (?, ?, ?)
+                    INSERT INTO user_table (username, email, password, role)
+                    VALUES (?, ?, ?, ?)
                     `,
-                    [name, email, hash],
+                    [name, email, hash, role],
                 );
 
                 return res.json(results);

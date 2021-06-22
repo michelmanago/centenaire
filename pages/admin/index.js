@@ -1,12 +1,32 @@
-import { getSession } from "next-auth/client";
-import Header from "../../components/header/header";
+import {getSession, useSession} from 'next-auth/client';
+import Link from 'next/link';
+import Header from '../../components/header/header';
 
-export default function AdminIndex(params) {
+export default function AdminIndex({}) {
+    const [session] = useSession();
     return (
         <>
             <Header />
+            <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
+                {session && session.userBase.role === 'admin' ? (
+                    <div className='flex flex-row'>
+                        <Link href="/admin/signup">
+                            <a className='px-2 py-1 mr-2 text-white rounded bg-pblue hover:bg-pblue-dark'>Ajouter un User</a>
+                        </Link>
+                        <Link href="/admin/page">
+                            <a className='px-2 py-1 text-white rounded bg-pblue hover:bg-pblue-dark'>Administrer les pages</a>
+                        </Link>
+                    </div>
+                ) : (
+                    <div>
+                        <Link href="/admin/page">
+                            <a className='px-2 py-1 text-white rounded bg-pblue hover:bg-pblue-dark'>Administrer les pages</a>
+                        </Link>
+                    </div>
+                )}
+            </main>
         </>
-    )
+    );
 }
 
 export async function getServerSideProps(context) {
@@ -21,6 +41,6 @@ export async function getServerSideProps(context) {
             },
         };
     return {
-        props: {}
-    }
+        props: {},
+    };
 }

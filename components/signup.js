@@ -8,12 +8,16 @@ export default function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('admin');
 
     const [signupButtonState, setSignupButtonState] = useState(false);
     const handleSignup = async event => {
         event.preventDefault();
         setSignupButtonState(true);
-        if (password != confirmPassword) return;
+        if (password != confirmPassword) {
+            setSignupButtonState(false);
+            return;
+        }
 
         const resp = await fetch('/api/users', {
             method: 'POST',
@@ -25,6 +29,7 @@ export default function Signup() {
                 email: email,
                 password: password,
                 provider: 'custom',
+                role: role,
             }),
         });
         if (resp.status === 200) {
@@ -105,6 +110,18 @@ export default function Signup() {
                             required
                         />
                     </label>
+
+                    <label htmlFor="role-select" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Rôle</label>
+                    <select
+                        id="role-select"
+                        className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                        defaultValue={role}
+                        onChange={e => setRole(e.currentTarget.value)}
+                    >
+                        <option value="">--Select--</option>
+                        <option value="admin">Admin</option>
+                        <option value="author">Auteur</option>
+                    </select>
 
                     <button
                         type="submit"
