@@ -16,6 +16,30 @@ import { getMenu } from '../model/menu';
 
 export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chaville');
+ 
+    const Bandeau = () => {
+        switch (section) {
+            case 'Chaville':
+                return "/static/img/paroisses/chaville/bandeau-chaville.jpg";
+            case 'Dormition':
+                return "/static/img/paroisses/dormition/bandeau-dormition.jpg";
+            case 'Daru':
+                    return "/static/img/paroisses/daru/bandeau-daru.jpg";               
+            case 'Crypte':
+                return "/static/img/paroisses/crypte/bandeau-crypte.jpg";
+            case 'SaintPrix':
+                return "/static/img/paroisses/crypte/bandeau-crypte.jpg";              
+            case 'Troyes':
+                return "/static/img/paroisses/crypte/bandeau-crypte.jpg";           
+            case 'Olivierdeserres':
+                return "/static/img/paroisses/crypte/bandeau-crypte.jpg";                                
+            default:
+                return null;
+        }
+    };
+
+    console.log("bandeau is "+Bandeau);
+
     const DisplayContent = () => {
         switch (section) {
             case 'Chaville':
@@ -36,6 +60,7 @@ export default function MaitreSpirituels({menu}) {
                 return null;
         }
     };
+
     return (
         <div className="bg-pyellow">
             <Head>
@@ -47,8 +72,7 @@ export default function MaitreSpirituels({menu}) {
 
             <header className={styles.header + ' relative'}>
                     <Image
-                        src="/static/img/paroisses/crypte/bandeau-crypte.jpg"
-                        // width={1400}
+                        src= {Bandeau()}
                         // height={360}
                         objectFit="cover"
                         layout="fill"

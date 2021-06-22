@@ -1,7 +1,7 @@
 export default function Evetz() {
     return (
         <div className="px-10 bio-block">
-            <h2>Eveguéni Ivanovitch Evetz</h2>
+            <h2>Evguéni Ivanovitch Evetz</h2>
             <img className="float-right w-1/3" src="/static/img/evgeni-ivanovich-evetz.jpg" />
             
             <p className="italic">« Je chanterai mon Dieu tant que je serai » (Psaume 103, verset 33) »</p>
@@ -17,7 +17,7 @@ export default function Evetz() {
                 musicale de l'émigration russe. E. Evetz se distingue par son approche éthique de la musique, sa sobriété 
                 et en même temps l'extraordinaire subtilité de son intuition musicale et surtout sa noblesse intérieure.</p>
 
-            <p>Evgueny Ivanovitch Evetz est né le 1er Novembre 1905 dans le village de Dubiny, province de Grodno en 
+            <p>Evgueni Ivanovitch Evetz est né le 1er Novembre 1905 dans le village de Dubiny, province de Grodno en 
                 Biélorussie, dans un environnement rural. Son père était un enseignant. Diplômé du Conservatoire de Varsovie 
                 en 1936, il travaille comme enseignant dans une école primaire de Varsovie. En 1939, il occupa le même poste 
                 à Bielsk Podlaski, où en 1941 il devint chantre principal. Les péripéties de la guerre l'a jeté avec sa femme,
@@ -44,9 +44,9 @@ export default function Evetz() {
             <img className="float-left w-1/3 mr-2 mt-4" src="/static/img/direction-choeur-evetz.jpg" />
             <p>La famille Evetz déménagea à Paris en décembre 1962, où Yevgeny Ivanovitch obtint rapidement le poste de 
                 chantre (psalomchtchik) à la cathédrale Saint-Alexandre-Nevsky. Le chœur était alors dirigé par Pierre 
-                Spassky, chœur qui assurait les services solennels épiscopaux, Evgueny Ivanovitch dirigeant le chœur lors 
+                Spassky, chœur qui assurait les services solennels épiscopaux, Evgueni Ivanovitch dirigeant le chœur lors 
                 des vigiles et en semaine. Au printemps 1963, deux mois après avoir déménagé du Maroc à Paris, 
-                profondément déconcerté par l'absence d'une vie musicale active parmi la jeunesse russe de Paris, Evgueny 
+                profondément déconcerté par l'absence d'une vie musicale active parmi la jeunesse russe de Paris, Evgueni 
                 Ivanovitch fonde « l'Ensemble de la jeunesse russe », composé d'un chœur de jeunes et d'un orchestre à 
                 cordes d’instruments folkloriques (balalaïka, mandoline et guitare). Le premier concert eu lieu le 30 
                 juin 1963 (soit 6 mois après son arrivée), au Conservatoire russe Rachmaninov. Sa première prestation
@@ -65,7 +65,7 @@ export default function Evetz() {
                 </a>
             </div>    
 
-            <p>À la mort de P.V. Spassky en 1968, Evgueny Ivanovitch a été naturellement désigné pour le remplacer. 
+            <p>À la mort de P.V. Spassky en 1968, Evgueni Ivanovitch a été naturellement désigné pour le remplacer. 
                 Le champ de son activité s’élargit et E.I. Evetz se mit au travail avec diligence et persévérance. 
                 Des jeunes forces furent accueillies dans le chœur de la cathédrale. Un changement de génération s’opéra, 
                 comme toujours, non sans grincements de dents et ressentiment... En même temps, il y eu un changement 
@@ -74,15 +74,15 @@ export default function Evetz() {
                 style du sud de la Russie, tandis qu'Evetz, étant diplômé de Varsovie, était plus proche du style de 
                 chant d'église de Saint-Pétersbourg. Cependant, il faut dire qu'Evetz sut parfaitement interpréter 
                 les œuvres non seulement de l'école de Saint-Pétersbourg, mais aussi celles de l'école de Moscou. 
-                Si l’on regarde la liste des pièces enregistrées par le chœur sous la direction d'Evgueny Ivanovitch, 
+                Si l’on regarde la liste des pièces enregistrées par le chœur sous la direction d'Evgueni Ivanovitch, 
                 sur 69 chants 34 appartiennent à l’Ecole de Moscou (Kastalsky, Nikolsky, Tchesnokov, etc.). Les autres 
                 sont des œuvres de l'époque de Bortniansky (6), de l’Ecole de Saint-Pétersbourg (29) dont 6 sont des 
                 œuvres de A. Arkhangelsky, qui de tous les compositeurs d'églises était le plus proche du cœur de Evetz. 
                 Quant au répertoire des chants exécutés lors des offices divins, les proportions changent et viennent 
                 en premier les œuvres de «l'École de Saint-Pétersbourg» (Bortnyansky, Lvov, Lomakine, Arkhangelsky, etc.),
                 puis de celle de Moscou. Cela est dû au fait que souvent les tentatives d'introduction d’œuvres des 
-                compositeurs de l’Ecole de Moscou ont été contrecarrées par le conservatisme et la routine de la majorité des paroissiens de la cathédrale à cette époque. Le chef de chœur dût entendre beaucoup de mots amers de la part de divers "experts" et "amoureux" du chant d'église, qui n'acceptaient rien d'autre que ce qu'ils avaient entendu dans leur enfance avant 1917, au mieux à Saint-Pétersbourg, et plus souvent dans quelque ville provinciale de l'arrière-pays russe, qui ne connaissait rien d'autre que «l’Usuel de Bakhmetev», les concertos de Vedel et consorts. Cependant, avec le temps, Evgueny Ivanovitch sera en mesure de «nettoyer» le répertoire du chœur de l'église et de lui donner un aspect et une unité plus appropriés à la prière.
-                Pendant les 26 ans de son activité musicale et chorale à Paris, Evgueny Ivanovitch Evetz s'est produit 
+                compositeurs de l’Ecole de Moscou ont été contrecarrées par le conservatisme et la routine de la majorité des paroissiens de la cathédrale à cette époque. Le chef de chœur dût entendre beaucoup de mots amers de la part de divers "experts" et "amoureux" du chant d'église, qui n'acceptaient rien d'autre que ce qu'ils avaient entendu dans leur enfance avant 1917, au mieux à Saint-Pétersbourg, et plus souvent dans quelque ville provinciale de l'arrière-pays russe, qui ne connaissait rien d'autre que «l’Usuel de Bakhmetev», les concertos de Vedel et consorts. Cependant, avec le temps, Evgueni Ivanovitch sera en mesure de «nettoyer» le répertoire du chœur de l'église et de lui donner un aspect et une unité plus appropriés à la prière.
+                Pendant les 26 ans de son activité musicale et chorale à Paris, Evgueni Ivanovitch Evetz s'est produit 
                 avec le chœur plus de quatre-vingts fois, à la radio et à la télévision, sur scène, dans des festivals, 
                 dans des églises, interprétant le plus souvent des chants d'église, mais aussi des œuvres classiques et 
                 folkloriques russes. Le chœur sous sa direction a enregistré 5 disques 33 tours d’œuvres liturgiques, 
@@ -107,7 +107,7 @@ export default function Evetz() {
                 Chesnokov, Nikolsky et d'autres maîtres de l'école de Moscou. La transparence de l'accord, la mise en 
                 avant de la mélodie dans diverses harmonisations, le travail sur la coloration des timbres vocaux, 
                 l’expressivité du texte liturgique de la prière, et en même temps, la fidélité à l'intention du 
-                compositeur dans les nuances et l'expression spirituelle. Evgueny Ivanovitch accordait une attention 
+                compositeur dans les nuances et l'expression spirituelle. Evgueni Ivanovitch accordait une attention 
                 particulière à la prononciation du texte par le chœur. En effet, dans les conditions d'exile, il n'était 
                 pas facile de préserver la pureté de la prononciation non seulement du russe, mais surtout du Slavon. 
                 Et Evgueny Ivanovitch surveillait celle-ci de très près.</p>

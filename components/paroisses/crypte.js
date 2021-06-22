@@ -8,10 +8,10 @@ export default function Crypte() {
  
     const imgArray = [
         {url: '/static/img/paroisses/crypte/caféCrypteAnnees60.jpg', legende: 'Café dans les crypte (années 60)'},
-        {url: '/static/img/paroisses/crypte/détente-Bénédiction-maison.jpg', legende: 'Procession pour la consécration de la cathédrale (11/09/1861)'},
+        {url: '/static/img/paroisses/crypte/détente-Bénédiction-maison.jpg', legende: 'Détente de Père Boris après une bénédiction de maison (fin des années 1980)'},
         {url: '/static/img/paroisses/crypte/exposition-icônes-2004.jpg', legende: `Exposition d'icones en 2004)`},
         {url: '/static/img/paroisses/crypte/orarion-double-diacre-Joseph2005.jpg', legende: `Mgr Gabriel remet le double orarion au Père diacre Joseph en 2005`},
-        {url: '/static/img/paroisses/crypte/baptême_2005.jpg', legende: `Père Boris fait entrer Matthias dans l’église (2005)`},
+        {url: '/static/img/paroisses/crypte/bapteme_2005.jpg', legende: `Père Boris fait entrer Matthias dans l’église (2005)`},
         {url: '/static/img/paroisses/crypte/Crypte-24.06.07.jpg', legende: `Le clergé de la crypte en Juin 2007)`},
         {url: '/static/img/paroisses/crypte/Buffet-du-monde-juillet-2010.jpg', legende: `Buffet Juillet 2010)`},
         {url: '/static/img/paroisses/crypte/vendredi-saint-2018.jpg', legende: `Procession du vendredi saint 2018)`},
