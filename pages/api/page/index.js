@@ -1,4 +1,5 @@
 import { createPage, getPageById, getPageBySlug } from "../../../model/page";
+import { createPageModel } from "../../../model/page_model";
 
 export default async function handler(req, res) {
     try {
@@ -9,7 +10,9 @@ export default async function handler(req, res) {
             // body
             const jsonBody = JSON.parse(req.body)
             
-            const createdPageId = await createPage(jsonBody)
+            //const createdPageId = await createPage(jsonBody)
+
+            const createdPageId = await createPageModel(jsonBody)
 
             if(createdPageId){
 

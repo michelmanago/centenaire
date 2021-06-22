@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // models
 import { getMenu } from "../../../model/menu";
-import { getPageBySlug } from "../../../model/page";
+import { getPageModelBySlug } from "../../../model/page_model";
 
 // components
 import Header from "../../../components/header/header"
@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
   
     // current page edited
     const {pageSlug} = context.params;
-    const pageData = await getPageBySlug(pageSlug);
+    const pageData = await getPageModelBySlug(pageSlug);
 
     return {props: {
       menu: menu,
