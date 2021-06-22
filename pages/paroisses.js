@@ -11,6 +11,8 @@ import Daru from '../components/paroisses/daru';
 import SaintPrix from '../components/paroisses/saintprix';
 import Troyes from '../components/paroisses/troyes';
 import Olivierdeserres from '../components/paroisses/olivierdeserres';
+import SaintBrieuc from '../components/paroisses/saintbrieuc';
+import Chalette from '../components/paroisses/chalette';
 import { getMenu } from '../model/menu';
 
 
@@ -33,8 +35,12 @@ export default function MaitreSpirituels({menu}) {
                 return "/static/img/paroisses/crypte/bandeau-crypte.jpg";           
             case 'Olivierdeserres':
                 return "/static/img/paroisses/crypte/bandeau-crypte.jpg";                                
+            case 'SaintBrieuc':
+                return "/static/img/paroisses/saintbrieuc/bandeau-saintbrieuc.jpg";                                
+            case 'Chalette':
+                return "/static/img/paroisses/chalette/bandeau-chalette.jpg";                                
             default:
-                return null;
+              return null;
         }
     };
 
@@ -56,6 +62,10 @@ export default function MaitreSpirituels({menu}) {
                 return <Troyes />;                   
             case 'Olivierdeserres':
                 return <Olivierdeserres />;                                            
+            case 'SaintBrieuc':
+                return <SaintBrieuc />;                                            
+            case 'Chalette':
+                return <Chalette />;                                            
             default:
                 return null;
         }
@@ -107,6 +117,12 @@ export default function MaitreSpirituels({menu}) {
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Olivierdeserres')}>
                             Olivier de Serres
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('SaintBrieuc')}>
+                            Saint Brieuc
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Chalette')}>
+                            Chalette
                         </li>
                      </ul>
                 </div>
