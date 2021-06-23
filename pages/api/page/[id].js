@@ -1,4 +1,4 @@
-import { getPageById, updatePage } from "../../../model/page";
+import { getPageById, updatePage, updateTranslations } from "../../../model/page";
 
 export default async function handler(req, res) {
     try {
@@ -10,18 +10,19 @@ export default async function handler(req, res) {
             
             // body
             const jsonBody = JSON.parse(req.body)
-            
-            const updatedPageId = await updatePage(id, jsonBody)
 
-            if(updatedPageId){
 
-                const updatedPage = await getPageById(id)
+            const updatedPageId = await updateTranslations(jsonBody)
 
-                if(updatedPage){
-                    return res.json(updatedPage)
-                }
+            // if(updatedPageId){
 
-            }
+            //     const updatedPage = await getPageById(id)
+
+            //     if(updatedPage){
+            //         return res.json(updatedPage)
+            //     }
+
+            // }
 
             return res.status(500).json({message: "Operation did not work."})
 

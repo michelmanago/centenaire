@@ -49,7 +49,7 @@ export default function Saints({menu}) {
             <div>
                 <header className={styles.header + ' relative'}>
                     <Image
-                        src="/static/img/bandeau_cathedrale.jpg"
+                        src="/static/img/personalites/bandeau-4-martyrs.jpg"
                         // width={1400}
                         // height={360}
                         objectFit="cover"
@@ -65,19 +65,19 @@ export default function Saints({menu}) {
                             Définitions
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Medvekov')}>
-                            Père Alexis Medvekov (1867-1934)
+                            Père Alexis Medvekov
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Marie')}>
-                            Mère Marie (Skobtsov) (1891-1945)
+                            Mère Marie (Skobtsov)
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Klépinine')}>
-                            Père Dimitri Klépinine (1904-1944)
+                            Père Dimitri Klépinine
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Skobtsov')}>
-                            Georges (Youri) Skobtsov (1921-1944)
+                            Georges (Youri) Skobtsov
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Fondaminsky')}>
-                            Élie Fondaminsky (1880-1942)
+                            Élie Fondaminsky
                         </li>
                     </ul>
                 </div>

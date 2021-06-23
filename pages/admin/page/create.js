@@ -6,18 +6,26 @@ import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
 import { useEffect } from "react";
 import Utils from "../../../utils/utils";
+import { useRouter } from "next/router";
 
 export default function PageEditorCreate({menu}) {
 
+    // hooks
+    const {defaultLocale} = useRouter()
+
     // methods
-    const onSubmit = form => {
+    const onSubmit = async formPages => {
 
-        // created at
-        form.created_at = Utils.toMysqlFormat(new Date())
+        // add created_at
+        const now = Utils.toMysqlFormat(new Date())
+        formPages = formPages.map(formPagesItem => ({
+            ...formPagesItem,
+            created_at: now
+        })) 
 
-        fetch("/api/page", {
+        return fetch("/api/page", {
             method: "POST",
-            body: JSON.stringify(form)
+            body: JSON.stringify(formPages)
         })
         .then(response => {
             if(response.ok){
@@ -26,11 +34,20 @@ export default function PageEditorCreate({menu}) {
                 throw new Error(response.statusText);
             }
         })
-        .then(body => {
+        .then(pages => {
 
-            // navigate to post edition
-            window.location = "/admin/page/" + body.pageSlug
+            // hard-coded :/
+            const originalPage = pages.find(page => page.language === defaultLocale)
+            
+            if(originalPage){
 
+                // navigate to post edition
+                window.location = "/admin/page/" + originalPage.pageSlug
+
+            }
+
+            return pages
+            
         })
         .catch(err => {
             console.log(err)
