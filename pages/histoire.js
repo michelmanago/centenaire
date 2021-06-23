@@ -25,7 +25,7 @@ export default function Histoire({menu}) {
             <div>
                 <header className={styles.header + ' relative'}>
                     <Image
-                        src="/static/img/bandeau_histoire.jpg"
+                        src="/static/img/histoire/bandeau_histoire.jpg"
                         // width={1400}
                         // height={360}
                         objectFit="cover"
@@ -71,7 +71,7 @@ export default function Histoire({menu}) {
                     <p>Les bons rapports de l’Archevêché et les autres juridictions russes ont été certes plutôt officieux qu’officiels, mais ont été respectueux, voire cordiaux. Des contacts personnels réguliers se sont maintenus pendant des années entre prêtres et surtout entre laïcs autour </p>
                     <p>de projets communs importants (humanitaires, culturels, éducatifs). Surtout, de nombreux liens familiaux ou amicaux gommaient nombre de différences. D’innombrables festivités, travaux éducatifs et autres rencontres d’ordre culturel, s’organisèrent lors de moments sinon de réconciliation informelle, du moins dans des moments de dialogue.</p>
                     <p>Les trois juridictions devraient être considérées comme définitivement réconciliées depuis le rattachement de l’Eglise Hors-Frontières au patriarcat de Moscou en 2009 et de l’Archevêché en 2019. </p>
-                    <p>L’Archevêché du 21èmz siècle : dans un nouveau monde .</p>
+                    <p>L’Archevêché du 21ème siècle : dans un nouveau monde .</p>
                     <p>Mondialisation, échanges accélérés entre l’Europe de l’Ouest et les pays slaves de l’Est et  mutation des sociétés de l’Europe Occidentale par la diversification ethnique et religieuse due à l’immigration d’Afrique et d’Asie – voici une situation rapidement changeante et qui rend place l’Archevêché dans un environnement bien différent de celui des années 1930 – des églises de paroissiens ayant tout perdus obligés de s’adapter à une société étrangère – ou de celui des années 1960 et 1970 où on la culture russe semblait s’effacer définitivement et s’adapter à une société encore très catholique ou protestante où les immigrés de couleur n’avaient que peu de visibilité, semblait être l’avenir.</p>
                     <p> Avec une arrivée massive de russophones et d’autres slaves immigrés ou expatriés provisoires, mais aussi, avec l’apparition de paroissiens africains se convertis à l’orthodoxie (y compris de prêtres et des diacres) l’Archevêché, cent ans après sa formation, est face à de nouveaux défis et de nouvelles vocations.</p>
                     <p>L’Archevêché, diocèse rattaché aujourd’hui au Patriarcat de Moscou, bénéficiant de l'autonomie essentielle - théologique, liturgique et pastorale – (mais aussi administrative et financière) dispose de tous les atouts pour poursuivre sa mission qui fut la sienne en définitive depuis ses origines : témoigner de la foi orthodoxe ici et maintenant et œuvrer à son unité dans ce monde « afin que le monde croie ». Sur cette base et dans cette perspective, l'Archevêché, en dépit des difficultés et obstacles d’ordre géopolitique, participera à toute initiative susceptible d’améliorer la situation canonique de l’orthodoxie locale dans le respect de l’ecclésiologie de communion. </p>
