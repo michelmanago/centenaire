@@ -1,5 +1,5 @@
-import { createPage, getPageById, getPageBySlug } from "../../../model/page";
-import { createPageModel } from "../../../model/page_model";
+import { createNewPage, createPage, getPageById, getPageBySlug } from "../../../model/page";
+import { createPageModel, getPageModelById } from "../../../model/page_model";
 
 export default async function handler(req, res) {
     try {
@@ -8,29 +8,19 @@ export default async function handler(req, res) {
         if (req.method === 'POST')  {
             
             // body
+
             const jsonBody = JSON.parse(req.body)
-            
-            //const createdPageId = await createPage(jsonBody)
 
-            const createdPageId = await createPageModel(jsonBody)
+            const ids = await createNewPage(jsonBody)
+            const pages = await Promise.all(ids.map(id => getPageModelById(id)))
+            console.log(pages)
 
-            if(createdPageId){
-
-                const createdPage = await getPageById(createdPageId)
-
-                if(createdPage){
-                    return res.json(createdPage)
-                }
-
-            }
-
-            return res.status(500).json({message: "Operation did not work."})
-
+            return res.json(pages)
         } 
 
         else if(req.method === 'GET'){
 
-            if(!req.query || (req.query && !req.query.slug)){
+            if(!req.query || (req.query && req.query.slug === undefined)){
                 return res.status(400).json({ message: 'no query found' })
             }
 

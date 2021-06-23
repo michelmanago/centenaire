@@ -1,40 +1,95 @@
+import { insertPage, insertTranslation, selectTranslations, updatePage } from '../dao/page';
+import { createBlock, getPageBlock } from '../dao/page_block';
 import {query} from '../lib/db';
 
 
-// Create
-export async function createPage({title, slug, content, category, language, author, created_at}) {
-    const res = await query(
-        `
-            INSERT INTO pagecontent
-            (pageName, pageSlug, blockcontent, page, language, author, created_at, last_modified)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `,
-        [title, slug, content, category, language, author, created_at, created_at]
-    )
+export async function updateTranslations(pages){
 
-    return res.affectedRows ? res.insertId : null
+    // update pages
+    const updatePagePromises = pages.map(page => updatePage(page))
+    await Promise.all(updatePagePromises)
+
+
+    // @TODO update blocks
+        // @TODO check remove blocks
+
+    return true
 }
 
-export async function updatePage(id, {title, slug, content, category, language, author, last_modified}) {
-    const res = await query(
-        `
-            UPDATE pagecontent
-                SET pageName = ?,
-                    pageSlug = ?,
-                    blockcontent = ?,
-                    page = ?,
-                    language = ?,
-                    author = ?,
-                    last_modified = ?
-                
-            WHERE id = ?
-        `,
-        [title, slug, content, category, language, author, last_modified, /* should always be the last */id]
-    )
+export async function getPageTranslations(originalPageId){
+ 
+    const pages = await selectTranslations(originalPageId)
 
-    return res.changedRows ? true : false
+    if(pages.length){
+
+        // fetch blocks for each page 
+        const pagesWithBlocks = await Promise.all(pages.map(page => new Promise((resolve, reject) => {
+            getPageBlock(page.id)
+                .then((blocks) => {
+                    page.blocks = blocks
+                    resolve(page)
+                })
+                .catch(reject)
+        })))
+
+    } else {
+        throw {
+            message: "No translation found",
+            status: 404
+        }
+    }
+
+    return pages
+    
 }
 
+
+
+// create a new page (with 3 translations)
+export async function createNewPage(pages){
+ 
+    // pages
+    const createdPages = pages.map(page => createSinglePage(page).then(createdId => ({...page, id: createdId})))
+    const createdIds = await Promise.all(createdPages)
+
+    // blocks
+    const blockPromises = createdIds.map(page => {
+
+        const blockPromises = page.blocks.map(block => createBlock({...block, page_id: page.id}).then(createdId => ({...block, id: createdId})))
+        return Promise.all(blockPromises).then(blocks => {
+            page.blocks = blocks
+            return page
+        })
+    })
+
+    const pagesWithBlocks = await Promise.all(blockPromises)
+
+    // translations
+    // hard-coded :/
+    const originalPage = createdIds.find(p => p.language === "fr")
+    const translations = await linkTranslations(originalPage.id, createdIds.map(c => c.id))
+
+    return createdIds.map(page => page.id)
+
+}
+
+// create a single page 
+export async function createSinglePage(page) {
+
+    return insertPage(page)
+    .then(id => id)
+    
+}
+
+
+
+// Translations
+
+export async function linkTranslations(originalPageId, childrenIds = []){
+
+    const translatedIds = await Promise.all(childrenIds.map(id => insertTranslation(originalPageId, id)))
+    return translatedIds
+}
 
 // Get
 export async function getPageById(id) {

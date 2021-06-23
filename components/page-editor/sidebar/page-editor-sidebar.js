@@ -2,6 +2,10 @@
 // components
 import PageEditorSidebarBlock from './page-editor-sidebar-block';
 
+// utils
+import Utils from '../../../utils/utils';
+import { useRouter } from 'next/router';
+
 
 const categories = [
     {
@@ -32,6 +36,8 @@ const PageEditorSidebar = ({
 
 }) => {
     
+    // hooks
+    const {locale} = useRouter();
     
     // setters
     const setAuthor = e => updateState({author: e.target.value})

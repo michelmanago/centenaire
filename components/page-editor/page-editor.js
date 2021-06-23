@@ -1,12 +1,11 @@
 // libs
 import {useSession} from 'next-auth/client';
 import {useRouter} from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
 import checkSlugExistance from '../../utils/checkSlugExistance';
-import Utils from '../../utils/utils';
 import { pageFormat, blockFormat} from '../../utils/page-editor-formats';
 
 // components
@@ -18,20 +17,20 @@ import PageEditorSidebar from './sidebar/page-editor-sidebar';
 
 
 
-export default function PageEditor({onFormSubmitted, editedPage}) {
+export default function PageEditor({onFormSubmitted, editedPages}) {
 
 
     // hooks
-    const {defaultLocale, locales, locale} = useRouter();
+    const { locales } = useRouter();
 
     // States
     // form
-    const [pages, setPages] = useState(editedPage ? editedPage : locales.map(_locale => pageFormat(_locale)))
+    const [pages, setPages] = useState(editedPages ? editedPages : locales.map(_locale => pageFormat(_locale)))
     const [currentPageIndex, setCurrentPageIndex] = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     // utils
-    const isEditing = !!editedPage;
+    const isEditing = !!editedPages;
     const currentPage = pages[currentPageIndex]
     const updateCurrentPage = (values) => {
         
@@ -54,19 +53,35 @@ export default function PageEditor({onFormSubmitted, editedPage}) {
     }
 
     // methods
+
     const onSubmitPage = async () => {
 
-
         setIsSubmitting(true)
 
-        // if one slug of one page has been edited
-            const promisesCheckSlugs = pages.map(page => checkSlugExistance(page.pageSlug))
-            await Promise.all(promisesCheckSlugs)
+        // check slugs
+        const notCleanSlugItems = []
+        pages.forEach((page, pageIndex) => {
 
+            if(!isEditing || editedPages[pageIndex].pageSlug !== page.pageSlug){
+                notCleanSlugItems.push({
+                    index: pageIndex,
+                    slug: page.pageSlug
+                })
+            }
+
+        })
+
+        const promises = notCleanSlugItems.map(slugItem => checkSlugExistance(slugItem.slug).then(checkedSlug => ({index: slugItem.index, slug: checkedSlug})))
+        const checkedSlugs = await Promise.all(promises)
+        
         // send pages to form
-        onFormSubmitted(pages);
-
-        setIsSubmitting(true)
+        try{
+            await onFormSubmitted(pages);
+        } catch (err){
+            console.log(err)
+        } finally {
+            setIsSubmitting(false)   
+        }
     };
 
     // others
@@ -78,7 +93,9 @@ export default function PageEditor({onFormSubmitted, editedPage}) {
     const setTitle = e => updateCurrentPage({pageName: e.target.value, pageSlug: cleanForSlug(e.target.value)})
     const addBlockContent = type => {
 
-        const newBlock = blockFormat(editedPage ? editedPage.id : null, currentPage.language, type)
+        // if blocks are draggable we must count each items's postions to compute a new position
+        const newPosition = currentPage.blocks.length
+        const newBlock = blockFormat(editedPages ? currentPage.id : null, currentPage.language, type, newPosition)
 
         updateCurrentPage({
             blocks: [
@@ -88,6 +105,23 @@ export default function PageEditor({onFormSubmitted, editedPage}) {
         })
 
     };
+    const setBlockContent = blockPosition => value => {
+        
+        let blocks = currentPage.blocks.map(block => {
+
+            if(block.position === blockPosition){
+                return {
+                    ...block,
+                    content: value
+                }
+            } else {
+                return block
+            }
+
+        })
+
+        updateCurrentPage({blocks})   
+    }
 
     // listeners
     const onChangeLanguage = e => setCurrentPageIndex(languagesLists.findIndex(v => v.value === e.target.value))
@@ -121,8 +155,13 @@ export default function PageEditor({onFormSubmitted, editedPage}) {
 
                 {/* Content blocks */}
                 {currentPage.blocks && (
-                    currentPage.blocks.map(block => (
-                        <BlockEdit block={block} />
+                    currentPage.blocks.map((block, blockIndex) => (
+                        <BlockEdit 
+                            key={"block-" + block.position} 
+                            type={block.type}
+                            content={block.content}
+                            setContent={setBlockContent(block.position)}
+                        />
                     ))
                 )}
             </div>
@@ -151,17 +190,19 @@ export default function PageEditor({onFormSubmitted, editedPage}) {
 }
 
 
-const BlockEdit = ({block}) => {
-    //const [type, setType] = useState(block.type ? block.type : 'text');
-    const [content, setContent] = useState(block.content ? block.content : '');
+const BlockEdit = ({type, content, setContent}) => {
     return (
         <div>
-            {block.type === 'text' && (
+            
+            {/* HTML EDITOR */}
+            {type === 'text' && (
                 <div>
                     <CustomEditor block={content} setContent={setContent} />
                 </div>
             )}
-            {block.type === 'carousel' && <CarouselEditor block={content} setContent={setContent} />}
+
+            {/* CAROUSEL */}
+            {type === 'carousel' && <CarouselEditor block={content} setContent={setContent} />}
         </div>
     );
 };

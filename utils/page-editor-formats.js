@@ -1,9 +1,9 @@
-export function blockFormat(page_id, lang, type) {
+export function blockFormat(page_id, lang, type, position) {
     return {
         page_id: page_id,
         lang: lang,
         content: '',
-        position: 0,
+        position: position,
         type: type,
     }
 }

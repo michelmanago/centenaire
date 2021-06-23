@@ -1,40 +1,51 @@
 //libs
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 // models
 import { getMenu } from "../../../model/menu";
-import { getPageModelBySlug } from "../../../model/page_model";
+import { getPageTranslations } from "../../../model/page";
 
 // components
 import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
+
+// utils
 import Utils from "../../../utils/utils";
-import { useRouter } from "next/router";
 
 // utils
 
-export default function PageEditorUpdate({menu, pageSlug, pageData}) {
+export default function PageEditorUpdate({menu, pageTranslations}) {
 
     // states
     const router = useRouter()
 
     useEffect(() => {
 
-        if(!pageData || (pageData && Array.isArray(pageData) && !pageData.length)){
-            router.push("/404")
-        }
+        console.warn("redirect if not found")
+        // if(!pageData || (pageData && Array.isArray(pageData) && !pageData.length)){
+        //     router.push("/404")
+        // }
 
     }, [])
 
     // methods
-    const onSubmit = form => {
+    const onSubmit = formPages => {
 
         // add last_modified
-        form.last_modified = Utils.toMysqlFormat(new Date())
 
-        fetch("/api/page/" + pageData.id, {
+        const originalPage = pageTranslations.find(page => page.language === router.defaultLocale)
+
+
+        const now = Utils.toMysqlFormat(new Date())
+        formPages = formPages.map(formPagesItem => ({
+            ...formPagesItem,
+            last_modified: now
+        })) 
+        
+        fetch("/api/page/" + originalPage.id, {
             method: "PUT",
-            body: JSON.stringify(form)
+            body: JSON.stringify(formPages)
         })
         .then(response => {
             if(response.ok){
@@ -45,7 +56,9 @@ export default function PageEditorUpdate({menu, pageSlug, pageData}) {
         })
         .then(body => {
 
-            window.location = "/admin/page/" + body.pageSlug
+            console.log(body)
+
+            // window.location = "/admin/page/" + body.pageSlug
 
         })
         .catch(err => {
@@ -60,7 +73,7 @@ export default function PageEditorUpdate({menu, pageSlug, pageData}) {
             {menu && <Header menu={menu.data}/>}
             <main className="bg-white">
                 <PageEditor
-                    editedPage={pageData}
+                    editedPages={pageTranslations}
                     onFormSubmitted={onSubmit}
                 />
             </main>
@@ -74,13 +87,12 @@ export async function getServerSideProps(context) {
     const menu = await getMenu(context.locale)
   
     // current page edited
-    const {pageSlug} = context.params;
-    const pageData = await getPageModelBySlug(pageSlug);
+    const {id} = context.params;
+    const pageTranslations = await getPageTranslations(id);
 
     return {props: {
-      menu: menu,
-      pageSlug, 
-      pageData,
+        menu: menu,
+        pageTranslations
     }}
   }
     
