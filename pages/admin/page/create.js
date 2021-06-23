@@ -10,14 +10,18 @@ import Utils from "../../../utils/utils";
 export default function PageEditorCreate({menu}) {
 
     // methods
-    const onSubmit = form => {
+    const onSubmit = formPages => {
 
-        // created at
-        form.created_at = Utils.toMysqlFormat(new Date())
+        // add created_at
+        const now = Utils.toMysqlFormat(new Date())
+        formPages = formPages.map(formPagesItem => ({
+            ...formPagesItem,
+            created_at: now
+        })) 
 
         fetch("/api/page", {
             method: "POST",
-            body: JSON.stringify(form)
+            body: JSON.stringify(formPages)
         })
         .then(response => {
             if(response.ok){
