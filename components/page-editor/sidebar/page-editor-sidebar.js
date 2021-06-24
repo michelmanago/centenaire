@@ -46,9 +46,6 @@ const PageEditorSidebar = ({
     const setAuthor = e => updateState({author: e.target.value})
     const setCategory = e => updateState({page: e.target.value})
 
-    // others
-    const pageLink = isEditing ? Utils.getPagePermalink(pageSlug, language) : null;
-
     
     return (
         <div className="w-2/5">
@@ -109,15 +106,6 @@ const PageEditorSidebar = ({
                             </p>
                         </div>
                     </>
-                )}
-
-                {/* Permalink */}
-                {pageLink && (
-                    <div>
-                        <a target="_blank" className="text-blue-500 underline" href={pageLink}>
-                            Lien vers la page
-                        </a>
-                    </div>
                 )}
 
                 {/* Publier */}

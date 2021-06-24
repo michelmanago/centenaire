@@ -24,8 +24,6 @@ const pagesWithSlugsWithoutLocale = pages => pages.map(page => ({...page, pageSl
 const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({...page, slugWithoutLocale: page.pageSlug.replace(page.language + "/", "")}))
 export default function PageEditor({onFormSubmitted, editedPages}) {
 
-    
-
     // hooks
     const { locales } = useRouter();
 

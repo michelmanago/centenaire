@@ -67,7 +67,7 @@ const InputSlug = ({slugWithoutLocale, originalSlug, setSlug, currentLanguage}) 
             <div className={`border rounded px-3 py-2 w-full ${opened ? 'border-blue-500' : ''}`}>
                 {/* Label */}
                 <label htmlFor="inputSlug" className="text-gray-500">
-                    {`${origin}/${slugLocale}`}
+                    {`${origin}/${slugLocale}/`}
                 </label>
 
                 {/* Input */}

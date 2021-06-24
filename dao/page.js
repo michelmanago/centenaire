@@ -35,8 +35,6 @@ export async function insertTranslation(originalId, childId){
 
 export async function selectTranslations(originalPageId){
 
-    originalPageId = Number(originalPageId)
-
     const res = await query(
         `
             SELECT * FROM 
