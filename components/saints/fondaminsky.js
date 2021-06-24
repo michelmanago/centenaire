@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
 
     customWidth: {
-        maxWidth: 2000,
+        maxWidth: 500,
         fontSize: theme.typography.pxToRem(20),
         
     }
