@@ -6,7 +6,7 @@ import styles from '../styles/pages/home.module.css';
 import {useState} from 'react';
 import { getMenu } from '../model/menu';
 
-export default function Histoire({menu}) {
+export default function Cimetiere({menu}) {
     const router = useRouter();
     const {locale, locales, defaultLocale} = router;
 
@@ -14,14 +14,14 @@ export default function Histoire({menu}) {
     return (
         <div className={`bg-pyellow`}>
             <Head>
-                <title>histoire de l'archevêché</title>
+                <title>Le cimetière russe</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             {/* Header */}
             {menu && <Header menu={menu.data}/>}
 
-            {/* Page home */}
+            {/* Page cimetiere */}
             <div>
                 <header className={styles.header + ' relative'}>
                     <Image
