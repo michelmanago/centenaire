@@ -1,6 +1,5 @@
-import { insertPage, insertPageQuery, insertTranslation, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
-import { createBlock, getPageBlock } from '../dao/page_block';
-import {query, transaction} from '../lib/db';
+import { insertPage, insertTranslation, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
+import {query} from '../lib/db';
 
 
 export async function updateTranslations(pages){
