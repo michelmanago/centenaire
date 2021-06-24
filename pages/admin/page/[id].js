@@ -23,9 +23,9 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
     useEffect(() => {
 
         console.warn("redirect if not found")
-        // if(!pageData || (pageData && Array.isArray(pageData) && !pageData.length)){
-        //     router.push("/404")
-        // }
+        if(!pageTranslations || (pageTranslations && !pageTranslations.length)){
+            router.push("/404")
+        }
 
     }, [])
 
@@ -55,9 +55,7 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
         })
         .then(body => {
 
-            console.log(body)
-
-            // window.location = "/admin/page/" + body.pageSlug
+            window.location.reload()
 
         })
         .catch(err => {
@@ -71,10 +69,10 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
         <>
             {menu && <Header menu={menu.data}/>}
             <main className="bg-white">
-                <PageEditor
+                {pageTranslations && pageTranslations.length && <PageEditor
                     editedPages={pageTranslations}
                     onFormSubmitted={onSubmit}
-                />
+                />}
             </main>
         </>
     );

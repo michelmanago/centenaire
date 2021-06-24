@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 // utils
-import checkSlugExistance from '../../../utils/checkSlugExistance';
+import getAvailableSlug from '../../../utils/getAvailableSlug';
 import cleanForSlug from '../../../utils/cleanForSlug';
-const getProperSlug = (slugWithNoLocale, langue) => langue + "/" + slugWithNoLocale
 
-const InputSlug = ({slug, setSlug, currentLanguage}) => {
+const InputSlug = ({slugWithoutLocale, originalSlug, setSlug, currentLanguage}) => {
+
 
     // hooks
     const { defaultLocale} = useRouter()
@@ -21,17 +21,28 @@ const InputSlug = ({slug, setSlug, currentLanguage}) => {
         // find app url
         useEffect(() => {
             setOrigin(window.location.origin);
-        }, [slug]);
+        }, []);
 
     // methods
-    const onSubmit = async () => {
+    const onValidateSlug = async () => {
+
+        // with no locale
+        let ouputSlug = ""
+
+        const cleanedSlugWithoutLocale = cleanForSlug(slugWithoutLocale);
+        const cleanedSlug = currentLanguage + "/" + cleanedSlugWithoutLocale
+
+        if(originalSlug !== cleanedSlug){
+
+            const checkedSlug = await getAvailableSlug(cleanedSlug)
+            ouputSlug = checkedSlug.replace(currentLanguage + "/", "")
+
+        } else {
+            ouputSlug = cleanedSlugWithoutLocale
+        }
 
 
-        const cleanedSlug = cleanForSlug(slug);
-        // const properAndCleanedSlug = getProperSlug(cleanedSlug, currentLanguage)
-        const checkedSlug = await checkSlugExistance(cleanedSlug);
-
-        setSlug(checkedSlug);
+        setSlug(ouputSlug);
         setOpened(false);
     };
 
@@ -56,14 +67,14 @@ const InputSlug = ({slug, setSlug, currentLanguage}) => {
             <div className={`border rounded px-3 py-2 w-full ${opened ? 'border-blue-500' : ''}`}>
                 {/* Label */}
                 <label htmlFor="inputSlug" className="text-gray-500">
-                    {`${origin}/${slugLocale}`}
+                    {`${origin}/${slugLocale}/`}
                 </label>
 
                 {/* Input */}
                 <input
                     disabled={!opened}
                     onChange={e => setSlug(e.target.value)}
-                    value={slug}
+                    value={slugWithoutLocale}
                     id="inputSlug"
                     className="w-1/2 outline-none"
                     type="text"
@@ -86,7 +97,7 @@ const InputSlug = ({slug, setSlug, currentLanguage}) => {
                 {/* When open */}
                 {opened && (
                     <>
-                        <button onClick={onSubmit} className="px-2 py-1 text-gray-500 border border-gray-500 rounded">
+                        <button onClick={onValidateSlug} className="px-2 py-1 text-gray-500 border border-gray-500 rounded">
                             OK
                         </button>
                         <button onClick={() => setOpened(false)} className="px-2 py-1 underline">
