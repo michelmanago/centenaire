@@ -1,4 +1,33 @@
+import React from "react"
+import Tooltip from "@material-ui/core/Tooltip"
+import { makeStyles } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+
+    customWidth: {
+        maxWidth: 500,
+        fontSize: theme.typography.pxToRem(20),
+        
+    }
+}));
+
+const longText1 = `Народная воля (Liberté [ou volonté] du peuple): société révolutionnaire fondée en 1879, qui prônait la terreur.`;
+const longText2 = `Homme politique allemand, Ferdinand Lassalle (1825-1864) participe au mouvement révolutionnaire, puis s&#39;oriente vers le socialisme réformiste.`;
+const longText3 = `Théodore Stefun (1864-1965), philosophe et essayiste, a vécu en Allemagne.`;
+const longText4 = `Vers de Pouchkine, qui évoque ses amis morts ou envoyés en exil.`;
+const longText5 = `En français dans le texte`;
+const longText6 = `personnage de la pièce de Gorki Dans les bas-fonds.`;
+const longText7 = `Vers de Pouchkine`;
+const longText8 = `Les narodniki (populistes) créèrent le parti socialiste révolutionnaire russe (S.R).`;
+const longText9 = `Pierre Lavrov (1825-1900) -professeur de mathématiques, chef de file et idéologue des populistes`;
+const longText10 = `Youri Chirinski-Chikhmatov (1890-1942) - journaliste politique mort à Auschwitz.`;
+const longText11 = `En français dans le texte`;
+
+
+
 export default function Fondaminsky() {
+    const classes = useStyles();
     return (
         <div className="px-10 bio-block">
             <h2>Élie Fondaminsky (1880-1942)</h2>
@@ -6,15 +35,26 @@ export default function Fondaminsky() {
             <p>
                 Il est difficile d'évoquer la figure d'Élie Isidorovitch Fondaminski sans tomber dans le ton
                 hagiographique. Ce fut en vérité un juste dans les sens chrétien aussi bien que laïc de ce terme, en
+<<<<<<< HEAD
                 outre il mourut en martyr. Certes, ses chances d'accéder à la canonisation, lui un juif et un
                 socialiste révolutionnaire, sont minimes. Mais il est une autre canonisation, laïque celle-ci, qui a édulcoré
                 et dépersonnalisé les biographies du plus grand nombre des justes de l'intelligentsia russe.
                 C'est pourquoi il est si important de conserver les traits vivants du visage de l'homme avant
                 qu'ils ne disparaissent, effacés sous la légende héroïque. Une certaine dose d'approche critique
+=======
+                outre il mourut en martyr. Certes, ses chances d&#39;accéder à la canonisation, lui un juif et un
+                socialiste révolutionnaire, sont minimes. Mais il est une autre canonisation, laïque celle-ci, qui,
+                l&#39;intervention du mouvement  <Tooltip disableFocusListener title={longText1} classes={{ tooltip: classes.customWidth }}>
+                <a>Liberté du Peuple</a></Tooltip> aidant, a édulcoré
+                et dépersonnalisé les biographies du plus grand nombre des justes de l&#39;intelligentsia russe.
+                C&#39;est pourquoi il est si important de conserver les traits vivants du visage de l&#39;homme avant
+                qu&#39;ils ne disparaissent, effacés sous la légende héroïque. Une certaine dose d&#39;approche critique
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 à la façon des Bollandistes est ici requise.
             </p>
             <h3>Une rare bonté</h3>
             <p>
+<<<<<<< HEAD
                 Je n'ai jamais rencontré Bunakov-Fondaminski en Russie. Seuls l'écho de sa légende, celle
                 d'un Lassale[efn_note]Homme politique allemand, Ferdinand Lassalle (1825-1864) participe au
                 mouvement révolutionnaire, puis s'oriente vers le socialisme réformiste.[/efn_note], d'un
@@ -22,11 +62,20 @@ export default function Fondaminsky() {
                 Paris que je fis sa connaissance, peu après mon arrivée dans cette ville, tout à la fin de l'année
                 1925 ou au début de l'année 1926. Je ne saurais dire dans quelle circonstance a eu lieu notre
                 rencontre, mais aussi loin que je remonte dans mes souvenirs d'émigration, je me revois dans le
+=======
+                Je n&#39;ai jamais rencontré Bunakov-Fondaminski en Russie. Seuls l&#39;écho de sa légende, celle
+                d&#39;<Tooltip disableFocusListener title={longText2} classes={{ tooltip: classes.customWidth }}><a>un Lassale</a></Tooltip>, d&#39;un
+                Invincible, était parvenu jusqu&#39;à moi en ces temps lointains de la première révolution. C&#39;est à
+                Paris que je fis sa connaissance, peu après mon arrivée dans cette ville, tout à la fin de l&#39;année
+                1925 ou au début de l&#39;année 1926. Je ne saurais dire dans quelle circonstance a eu lieu notre
+                rencontre, mais aussi loin que je remonte dans mes souvenirs d&#39;émigration, je me revois dans le
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 confortable salon des Fondaminski, en train de prendre le thé en compagne de quelques visiteurs, ou
                 encore dans le bureau d'Elie Isidorovitch au milieu d'un conversation d'affaire ou d'un
                 débat d'idée avec le maître des lieux, presque toujours en relation avec l'une ou l'autre de
                 ses innombrables opérations littéraires ou publiques. Pendant quinze ans je fus son collaborateur dans
                 toutes ses entreprises, et en particulier dans la revue La Cité nouvelle (Новый град), où nous avait
+<<<<<<< HEAD
                 rejoint Th.A. Stepun[efn_note]Théodore Stefun (1864-1965), philosophe et essayiste, a vécu en
                 Allemagne.[/efn_note]. J'ai pu observer la vie familiale d'E.I, quand je fus son hôte dans la
                 villa qu'il possédait à Grasse. Ai-je le droit de me dire son ami dans le sens russe du mot ? A vrai
@@ -35,6 +84,16 @@ export default function Fondaminsky() {
                 profondément, mais, j'en ai bien peur, « les uns ne sont plus là, d'autres sont loin »
                 [efn_note]Vers de Pouchkine, qui évoque ses amis morts ou envoyés en exil.[/efn_note]. Aussi me vois je
                 contraint de reconstituer son portrait intérieur à partir de reflets et de fragments d'impressions
+=======
+                rejoint Th.A. <Tooltip disableFocusListener title={longText3} classes={{ tooltip: classes.customWidth }}><a>Stepun</a></Tooltip>. J&#39;
+                ai pu observer la vie familiale d&#39;E.I, quand je fus son hôte dans la
+                villa qu&#39;il possédait à Grasse. Ai-je le droit de me dire son ami dans le sens russe du mot ? A vrai
+                dire, je n&#39;en sais rien. E.I. ne m&#39;associait pas aux aspects intimes de sa vie, parlait peu de
+                lui-même, de son passé. Il ne se plaignait jamais. D&#39;autres l&#39;ont sûrement mieux connu et plus
+                profondément, mais, j&#39;en ai bien peur, « les uns ne sont plus là, d&#39; »
+                <Tooltip disableFocusListener title={longText4} classes={{ tooltip: classes.customWidth }}><a>autres sont loin</a></Tooltip>. Aussi me vois je
+                contraint de reconstituer son portrait intérieur à partir de reflets et de fragments d&#39;impressions
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 extérieures.
             </p>
             <p>
@@ -86,6 +145,7 @@ export default function Fondaminsky() {
                 sourire avait quelque chose de dément.
             </p>
             <p>
+<<<<<<< HEAD
                 Bien sûr, l'optimisme était une qualité précieuse pour un directeur de conscience[efn_note]En
                 français dans le texte[/efn_note] laïc. Par cet optimisme, E. I. faisait davantage penser au Lucas de
                 Gorki qu'aux starets d'Optino. Non qu'il fût, à l'instar de Lucas[efn_note]personnage de
@@ -93,6 +153,18 @@ export default function Fondaminsky() {
                 l'illusion qui nous élève »[efn_note]Vers de Pouchkine[/efn_note]. Mais il était
                 constitutionnellement incapable d'infliger la moindre souffrance à un être humain. La vérité, même
                 la vérité morale, devait s'écarter devant l'homme. L'amour de l'homme exigeait avant
+=======
+                Bien sûr, l&#39;optimisme était une qualité précieuse pour un directeur de
+                <Tooltip disableFocusListener title={longText5} classes={{ tooltip: classes.customWidth }}>
+                <a>conscience</a></Tooltip> laïc. Par cet optimisme, E. I. faisait davantage penser au Lucas de
+                Gorki qu&#39;aux starets d&#39;Optino. Non qu&#39;il fût, à l&#39;
+                <Tooltip disableFocusListener title={longText6} classes={{ tooltip: classes.customWidth }}><a>instar de Lucas</a></Tooltip>
+                ou de Gorki, partisan du « rêve d&#39;or » ou de «
+                l&#39; »<Tooltip disableFocusListener title={longText7} classes={{ tooltip: classes.customWidth }}>
+                <a>illusion qui nous élève</a></Tooltip>. Mais il était
+                constitutionnellement incapable d&#39;infliger la moindre souffrance à un être humain. La vérité, même
+                la vérité morale, devait s&#39;écarter devant l&#39;homme. L&#39;amour de l&#39;homme exigeait avant
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 tout pour E.I. la consolation, le soulagement du malheur.
             </p>
             <p>
@@ -138,12 +210,21 @@ export default function Fondaminsky() {
             <h3>Le Christianisme d'Élie Fondaminski</h3>
 
             <p>
+<<<<<<< HEAD
                 Son passé de narodnik[efn_note]Les narodniki (populistes) créèrent le parti socialiste révolutionnaire
                 russe (S.R).[/efn_note], facilitait pour E.I. son autoéducation dans le christianisme. Il lui fallut
                 apprendre à neuf l'humilité et la patience. Mais la philanthropie pouvait être transplantée en
                 l'état, sans douleur. Dans la science de la charité les justes athées de l'intelligentsia russe
                 n'avaient pas grand chose à apprendre des chrétiens de leur temps. Demeurait aussi la « kénose » des
                 narodnik, cette forme d'ascèse sociale par laquelle l'intelligentsia russe rejoignait les
+=======
+                <Tooltip disableFocusListener title={longText8} classes={{ tooltip: classes.customWidth }}>
+                <a>Son passé de narodnik</a></Tooltip>, facilitait pour E.I. son autoéducation dans le christianisme. Il lui fallut
+                apprendre à neuf l&#39;humilité et la patience. Mais la philanthropie pouvait être transplantée en
+                l&#39;état, sans douleur. Dans la science de la charité les justes athées de l&#39;intelligentsia russe
+                n&#39;avaient pas grand chose à apprendre des chrétiens de leur temps. Demeurait aussi la « kénose » des
+                narodnik, cette forme d&#39;ascèse sociale par laquelle l&#39;intelligentsia russe rejoignait les
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 traditions de sainteté russe. Les « vêtements grossiers » de saint Serge de Radonège trouvaient leur
                 correspondant dans les vestes élimées et les cols froissés qu'E.I arborait dans les réunions ou même
                 au concert, à sa barbe non rasée les jours de semaine.
@@ -336,9 +417,16 @@ export default function Fondaminsky() {
                 l'entendre parler du christianisme, du socialisme, de l'autocratie ; mais ils se bouchaient les
                 oreilles quand il leur parlait de liberté. Privé de liberté, l'idéal n'était plus qu'une
                 variante russe du fascisme, qui infestait tous les nouveaux courants révolutionnaires. Fondaminski
+<<<<<<< HEAD
                 voyait cela, mais ne désespérait pas. Il avait sa propre philosophie de l'histoire, dans laquelle il
                 est aisé de voir les traces des lettres historiques de Lavrov[efn_note]Pierre Lavrov (1825-1900) -
                 professeur de mathématiques, chef de file et idéologue des populistes[/efn_note]. Luttant contre le
+=======
+                voyait cela, mais ne désespérait pas. Il avait sa propre philosophie de l&#39;histoire, dans laquelle il
+                est aisé de voir les traces des lettres historiques de
+                <Tooltip disableFocusListener title={longText9} classes={{ tooltip: classes.customWidth }}>
+                <a>Lavrov</a></Tooltip>. Luttant contre le
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 marxisme et toute forme de matérialisme historique, Fondaminski revenait à la foi en la force invincible
                 des idées et de leurs porteurs : les personnalités héroïques. N'importe quelle idée peut conquérir
                 le monde, dans quelques circonstances historiques que ce soit. Il suffit pour cela de la foi vigoureuse
@@ -356,12 +444,22 @@ export default function Fondaminsky() {
                 accordait moins de prix à la pureté des principes et à la qualité du choix, qu'à la portée de son
                 œuvre de propagande. Il entrait en contact avec tous les groupements politiques et culturels qui le
                 toléraient, tout en organisant les siens propres. Sans même parler de la revue Notes contemporaines
+<<<<<<< HEAD
                 (Современные записки), dont il fut l'un des rédacteurs, il travaillait dans les cercles de
                 l'Action Chrétienne des Étudiants Russes, puis de l'Action Orthodoxe; fréquentait le RDO, les
                 petits-russiens, le Club Post-révolutionnaire de Chirinski-Chikhmatov[efn_note]Youri
                 Chirinski-Chikhmatov (1890-1942) - journaliste politique mort à Auschwitz.[/efn_note]; donnait même des
                 conférences à l'Union de la Noblesse (Союз дворян). Cette liste n'épuise en aucun cas
                 l'ensemble des organisations et des cercles dans lesquels Fondaminski investissait ses efforts
+=======
+                (Современные записки), dont il fut l&#39;un des rédacteurs, il travaillait dans les cercles de
+                l&#39;Action Chrétienne des Étudiants Russes, puis de l&#39;Action Orthodoxe; fréquentait le RDO, les
+                petits-russiens, le Club Post-révolutionnaire de 
+                <Tooltip disableFocusListener title={longText10} classes={{ tooltip: classes.customWidth }}>
+                <a>Chirinski-Chikhmatov</a></Tooltip>; donnait même des
+                conférences à l&#39;Union de la Noblesse (Союз дворян). Cette liste n&#39;épuise en aucun cas
+                l&#39;ensemble des organisations et des cercles dans lesquels Fondaminski investissait ses efforts
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 inlassables. Après avoir fondé La Cité Nouvelle, il cherchait à en faire le centre de son activité
                 organisationnelle. Selon ses conceptions, autour de La Cité Nouvelle et à partir de ses idées devaient
                 se créer par branches professionnelles, parmi les enseignants, les ingénieurs, les médecins, les
@@ -433,6 +531,7 @@ export default function Fondaminsky() {
                 été libérés. On dit qu'il lui fallut subir dans le camp une dernière épreuve : l'antisémitisme
                 de ses compatriotes, qui ne s'adoucissait pas même devant le sort d'innocents condamnés sans
                 défense. Mais sa captivité fut partagée par des amis-chrétiens, grâce auxquels nous savons combien il
+<<<<<<< HEAD
                 s'est raffermi et combien il a grandi en ces temps terribles. Manifestement il avait accepté la mort
                 et s'était préparé à elle. Il écrivait même alors à sa sœur qu'il vivait le meilleur moment de
                 son existence : « Je me sens très bien, et cela fait longtemps, longtemps que je ne m'étais senti
@@ -440,6 +539,16 @@ export default function Fondaminsky() {
                 une entrevue avec lui (en février 1942) : « Il est en bonne humeur, même heureux[efn_note]En français
                 dans le texte[/efn_note] » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
                 conférences pour ses camarades de détention. C'est alors qu'il se décida aussi à recevoir le
+=======
+                s&#39;est raffermi et combien il a grandi en ces temps terribles. Manifestement il avait accepté la mort
+                et s&#39;était préparé à elle. Il écrivait même alors à sa sœur qu&#39;il vivait le meilleur moment de
+                son existence : « Je me sens très bien, et cela fait longtemps, longtemps que je ne m&#39;étais senti
+                aussi tranquille, gai et même heureux. » Ce fut aussi l&#39;impression de sa sœur qui réussit à obtenir
+                une entrevue avec lui (en février 1942) : «
+                 <Tooltip disableFocusListener title={longText11} classes={{ tooltip: classes.customWidth }}>
+                <a> Il est en bonne humeur, même heureux</a></Tooltip> » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
+                conférences pour ses camarades de détention. C&#39;est alors qu&#39;il se décida aussi à recevoir le
+>>>>>>> f69ca30e0cf78e3b816b998a0965fc4a1eab5b76
                 baptême. Aucune pression ne fut exercée sur lui. Ce fut au contraire au prêtre qui le baptisa de
                 ressentir son ascendant, sa supériorité spirituelle et même théologique. Ce prêtre racontait que
                 lorsqu'après le baptême, il célébrait la liturgie au cours de laquelle E.I. devait communier pour la
