@@ -1,41 +1,11 @@
 import React from "react"
-import Tooltip from "@material-ui/core/Tooltip"
-import { makeStyles } from "@material-ui/core/styles";
-
-
-const useStyles = makeStyles((theme) => ({
-
-    customWidth: {
-        maxWidth: 1000,
-        fontSize: theme.typography.pxToRem(20),
-        
-    }
-}));
-
-const longText1 = ` Les précisions concernant les années d'enfance du Père Dimitri sont tirées du Journal manuscrit d'Anne Nicolaévna Hippius, sa tante, dont le
-                    métropolite Euloge (Guéorguiévski) dira, lors d'une réunion à la mémoire du Père Dimitri : « Cette femme 
-                    d'une grande spiritualité, une juste authentique, eut une grande influence spirituelle sur le jeune
-                    Dimitri, qu'elle aimait beaucoup ». (Archives E.D. Klépinine-Arjakovsky, Paris).`;
-const longText2 = ` Serge Jaba, « Pour le quarantième anniversaire de la mort glorieuse du père Dimitri Klépinine », en russe dans la
-                    revue ВСХД 131, (I-II, 1980). `;
-const longText3 = ` Nicholas Zernov (1898-1980) et Sophie (1899-1972) - membres actifs de l Action 
-                    chrétienne des étudiants russes et de la Mission orthodoxe à l'étranger, travailleurs sociaux infatigables.`;
-const longText4 = ` Mgr Benjamin Fédtchenkov (1880-1961) - aumônier de l'Armée Blanche au sud de la Russie, émigre en 1920 en
-                    Yougoslavie, où il fonde à Chabats son propre monastère.`;
-const longText5 = ` Sophie Chidlovskaïa (1903 St-Pétersbourg-2000, New-York) - membre actif de l'Action chrétienne 
-                    des étudiants russes en France ; en 1948, s'installe aux États-Unis.`;
-const longText6 = ` C. Motchoulski (1890-1948) - historien de la littérature russe et critique littéraire.`;
-const longText7 = ` Youri Skobtsov, fils de Mère Marie, né en 1921.`;
-const longText8 = ` Témoignage de la moniale Élisabeth (cf. Serge Hackel, Pearl of Great Price, The Life of Mother Maria Skobtsova 1891-1945, 1981).`;
-const longText9 = ` F. Pratt, La Vie et l'enseignement du Christ.`;
-
-
+import Popup from "reactjs-popup"
 
 
 
 
 export default function Klepinine({}) {
-    const classes = useStyles();
+   
     return (
         <div className="px-10 bio-block">
             <h2>Père Dimitri Klépinine (1904-1944)</h2>
@@ -47,7 +17,20 @@ export default function Klepinine({}) {
                 Dimitri Andréévitch Klépinine naquit le 14 avril 1904 à Piatigorsk, dans le Caucase - troisième enfant
                 de l'architecte André Nicolaévitch Klépinine, bâtisseur d'églises renommé, et de Sophie Alexandrovna
                 Stépanova. Selon le témoignage de sa tante, A.N. 
-                <Tooltip disableFocusListener title={longText1} classes={{ tooltip: classes.customWidth }}><a>Hippius</a></Tooltip>, le chemin
+                 <Popup
+                    trigger={open => (
+                    <button className="button">  Hippius </button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> Les précisions concernant les années d'enfance du Père Dimitri sont tirées du Journal manuscrit d'Anne Nicolaévna Hippius, sa tante, dont le
+                    métropolite Euloge (Guéorguiévski) dira, lors d'une réunion à la mémoire du Père Dimitri : « Cette femme 
+                    d'une grande spiritualité, une juste authentique, eut une grande influence spirituelle sur le jeune
+                    Dimitri, qu'elle aimait beaucoup ». (Archives E.D. Klépinine-Arjakovsky, Paris). </span>
+                </Popup>
+                
+                , le chemin
                 de croix de Dimitri, qui le conduira jusqu'au martyre dans les camps nazis, avait commencé dès son plus
                 jeune âge. À quelques mois seulement, il fut atteint d'une pneumonie si grave qu'on dut annoncer à la
                 mère la probabilité d'une issue fatale. Au moment critique, la famille fut appelée au chevet de
@@ -103,12 +86,31 @@ export default function Klepinine({}) {
             <p>
                 Quand Odessa fut occupée par l'Armée blanche, Dimitri s'engagea comme matelot sur un de ses navires
                 marchands. « Tout l'équipage l'adorait », rapporte S.P. 
-                <Tooltip disableFocusListener title={longText2} classes={{ tooltip: classes.customWidth }}><a> Jaba dans ses Mémoires </a></Tooltip>.
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Jaba dans ses Mémoires </button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Serge Jaba, « Pour le quarantième anniversaire de la mort glorieuse du père Dimitri Klépinine », en russe dans la
+                    revue ВСХД 131, (I-II, 1980). </span>
+                </Popup>
             </p>
             <p>
                 Il retrouva plus tard sa famille à Constantinople, première étape de leur vie d'exil. Dimitri reprendra
                 là ses études, au Collège américain. En 1921, les Klépinine gagnent la Serbie, où ils retrouvent   
-                <Tooltip disableFocusListener title={longText3} classes={{ tooltip: classes.customWidth }}><a> les familles Zernov</a></Tooltip>
+                <Popup
+                    trigger={open => (
+                    <button className="button">  les familles Zernov</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Nicholas Zernov (1898-1980) et Sophie (1899-1972) - membres actifs de l Action chrétienne des étudiants russes et de la Mission orthodoxe à l'étranger, travailleurs sociaux infatigables. </span>
+                </Popup>
                 , Lopoukhine et Troyanov. Ils s'installèrent tous ensemble dans une grande
                 maison, baptisée par eux «L'Arche », dans la banlieue de Belgrade, qui allait devenir le centre de
                 réunion du « Cercle des étudiants orthodoxes ». Cette communauté exceptionnelle, animée par un sentiment
@@ -121,7 +123,17 @@ export default function Klepinine({}) {
             <p>
                 Avec le Cercle orthodoxe, Dimitri se rendait souvent au monastère de Hopovo, où il fit connaissance du
                 Père Alexis Nelioubov, pasteur remarquable, et de 
-                <Tooltip disableFocusListener title={longText4} classes={{ tooltip: classes.customWidth }}><a>  Mgr Benjamin (Fédtchenkov)</a></Tooltip>, 
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Mgr Benjamin (Fédtchenkov)</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Mgr Benjamin Fédtchenkov (1880-1961) - aumônier de l'Armée Blanche au sud de la Russie, émigre en 1920 en
+                    Yougoslavie, où il fonde à Chabats son propre monastère. </span>
+                </Popup>, 
                 qu'il ira voir régulièrement par la suite dans son monastère.
             </p>
             <p>
@@ -129,7 +141,18 @@ export default function Klepinine({}) {
                 spirituelle et rapprochera encore plus Dimitri de l'Église. Même après sa mort, Sophie Alexandrovna
                 restera un guide pour son fils dans les choix de sa voie spirituelle. En septembre 1930, Dimitri parle
                 de cette présence maternelle constante dans sa direction spirituelle dans une lettre à S. 
-                <Tooltip disableFocusListener title={longText5} classes={{ tooltip: classes.customWidth }}><a> Chidlovskaïa</a></Tooltip> : « Je compris pour la
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Chidlovskaïa</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Sophie Chidlovskaïa (1903 St-Pétersbourg-2000, New-York) - membre actif de l'Action chrétienne 
+                    des étudiants russes en France ; en 1948, s'installe aux États-Unis. </span>
+                </Popup> : « Je compris pour la
                 première fois la signification de toute souffrance quand je pris conscience que tout ce sur quoi je
                 fondais mes espoirs dans la vie s'en était allé. [...] Mais un jour, je me rappelai ces paroles du
                 Christ, qui me remplirent d'allégresse : Venez à moi, vous tous qui peinez sous le poids du fardeau, et
@@ -235,7 +258,17 @@ export default function Klepinine({}) {
             </p>
             <p>
                 Pour magnifier les offices, elle brodait aussi les vêtements sacerdotaux du Père Dimitri pour chaque
-                fête. <Tooltip disableFocusListener title={longText6} classes={{ tooltip: classes.customWidth }}><a>  Constantin Motchoulski</a></Tooltip>
+                fête. 
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Constantin Motchoulski </button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    C. Motchoulski (1890-1948) - historien de la littérature russe et critique littéraire. </span>
+                </Popup>
                 décrit ainsi l'office de Pâques 1940 : « Mère Marie avait cousu pour le
                 Père un vêtement pascal de soie blanche sans aucun ornement, si ce n'est, finement brodé de soie rouge
                 sur la chasuble, le monogramme «Jésus-Christ- Alpha et Oméga». La ville était plongée dans les ténèbres.
@@ -287,7 +320,17 @@ export default function Klepinine({}) {
             <h3>Le martyre</h3>
             <p>
                 Le 8 février 1943, la Gestapo fit une descente rue de Lourmel. Durant la perquisition, on trouva dans la
-                poche de  <Tooltip disableFocusListener title={longText7} classes={{ tooltip: classes.customWidth }}><a>  Youri Skobtsov</a></Tooltip>
+                poche de  
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Youri Skobtsov </button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Youri Skobtsov, fils de Mère Marie, né en 1921. </span>
+                </Popup>
                 un billet d'une femme juive à qui Youri portait des colis alimentaires. Elle y priait le Père Dimitri de lui
                 fournir un certificat de baptême. La Gestapo s'empara des papiers du Père et de S.V. Medvédéva, leur
                 intimant l'ordre de se présenter à ses bureaux dès le lendemain. Ils emmenèrent le jeune Youri en otage,
@@ -312,8 +355,18 @@ export default function Klepinine({}) {
                 Dimitri, retrouvant son équilibre et montrant sa croix pectorale, lui dit doucement : « Et ce Juif-là,
                 vous le connaissez ? » Un soufflet le jeta à terre. L'interrogatoire du Père Dimitri dura quatre heures.
                 Finalement, Hoffmann fit ramener père Dimitri à l'avenue Lourmel, afin d'arrêter à son tour mère Marie,
-                et de conclure l'enquête. « Votre pope s'est condamné lui-même », dit Hoffmann en revenant à 
-                <Tooltip disableFocusListener title={longText8} classes={{ tooltip: classes.customWidth }}><a>  Lourmel</a></Tooltip>.
+                et de conclure l'enquête. « Votre pope s'est condamné lui-même », dit Hoffmann en revenant à  
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Lourmel</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Témoignage de la moniale Élisabeth (cf. Serge Hackel, Pearl of Great Price, The Life of Mother Maria Skobtsova 1891-1945, 1981). </span>
+                </Popup>.
             </p>
             <p>
                 Père Dimitri fit ses adieux auprès de sa femme et de ses enfants. Parmi ses derniers mots, il recommanda
@@ -363,7 +416,17 @@ export default function Klepinine({}) {
                 fabriquée à l'aide de tables et de bancs renversés contre les couchettes. Tamara Klépinine parvint à
                 transmettre à son mari un antimension. « Nous célébrons la liturgie tous les jours, et ça change tout !,
                 écrira Père Dimitri à sa femme. 
-                <Tooltip disableFocusListener title={longText9} classes={{ tooltip: classes.customWidth }}><a>   Nous étudions le livre de Pratt</a></Tooltip>. 
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Nous étudions le livre de Pratt</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    F. Pratt, La Vie et l'enseignement du Christ.. </span>
+                </Popup>. 
                 Je travaille un peu avec Youri, qui souhaite se préparer à la prêtrise ».
             </p>
             <p>
