@@ -2,7 +2,7 @@ export default function Chrol() {
     return (
         <div className="px-10 bio-block">
             <h2>Le Père Léonide Chrol (1902-1982)</h2>
-
+            <img className="float-right w-1/3 mt-2 ml-2" src="/static/img/personalites/Pere-Leonide-Chrol.jpg" />
             <p>
                 Léonide Chrol naquit à Saint-Pétersbourg, le 11 août 1 1902. Son père était Trophim Chrol, et sa mère,
                 Parascève, née Biélov. Léonide avait deux sœurs : Antonine et Olga 2 Antonine mourut jeune, tandis
