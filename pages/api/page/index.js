@@ -1,5 +1,6 @@
-import { createNewPage, createPage, getPageById, getPageBySlug, updateTranslations } from "../../../model/page";
-import { createPageModel, getPageModelById } from "../../../model/page_model";
+import { selectPageBySlug } from "../../../dao/page";
+import { createNewPage, updateTranslations } from "../../../model/page";
+import { getPageModelById } from "../../../model/page_model";
 
 export default async function handler(req, res) {
     try {
@@ -37,7 +38,7 @@ export default async function handler(req, res) {
             }
 
             const slug = req.query.slug
-            const page = await getPageBySlug(slug)
+            const page = await selectPageBySlug(slug)
 
             
             return res.json(page)

@@ -1,4 +1,4 @@
-import { insertPage, insertPageQuery, insertTranslation, selectTranslations, updatePage } from '../dao/page';
+import { insertPage, insertPageQuery, insertTranslation, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
 import { createBlock, getPageBlock } from '../dao/page_block';
 import {query, transaction} from '../lib/db';
 
@@ -9,8 +9,6 @@ export async function updateTranslations(pages){
     const updatePagePromises = pages.map(page => updatePage(page))
     const updatedIds = await Promise.all(updatePagePromises)
     
-    console.log("updatedIds", updatedIds)
-
     return pages.map(page => page.id)
 }
 
@@ -75,18 +73,11 @@ export async function getPageById(id) {
 }
 
 export async function getPageBySlug(pageSlug) {
-    const res = await query(
-        `
-        SELECT * FROM pagecontent
-        WHERE pageSlug = ?
-        `,
-        [pageSlug]
-    )
+    
+    let page = await selectPageBySlug(pageSlug)
+    page.blocks = JSON.parse(page.blocks)
 
-    if (res.length >= 1)
-        return JSON.parse(JSON.stringify(res[0]))
-    else
-        return []
+    return page
 }
 
 export async function getPageByType(pageType) {
