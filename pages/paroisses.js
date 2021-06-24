@@ -34,7 +34,7 @@ export default function MaitreSpirituels({menu}) {
             case 'Troyes':
                 return "/static/img/paroisses/crypte/bandeau-crypte.jpg";           
             case 'Olivierdeserres':
-                return "/static/img/paroisses/crypte/bandeau-crypte.jpg";                                
+                return "/static/img/paroisses/olivier-de-serres/bandeau-ods.jpg";    
             case 'SaintBrieuc':
                 return "/static/img/paroisses/saintbrieuc/bandeau-saintbrieuc.jpg";                                
             case 'Chalette':
