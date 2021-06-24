@@ -1,35 +1,47 @@
 // libs
-import {useSession} from 'next-auth/client';
 import {useRouter} from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
-import checkSlugExistance from '../../utils/checkSlugExistance';
+import getAvailableSlug from '../../utils/getAvailableSlug';
 import { pageFormat, blockFormat} from '../../utils/page-editor-formats';
 
 // components
-import CustomEditor from '../Slate/customEditor';
-import CarouselEditor from './carousel-editor';
 import InputSlug from './inputs/InputSlug';
 import InputAddBlock from './inputs/InputAddBlock';
 import PageEditorSidebar from './sidebar/page-editor-sidebar';
+import BlockContentEditor from './blocks/BlockContentEditor';
 
 
+// helpers
+const getSlugWithoutLocale = (slugsWithLocale, langue) => slugsWithLocale.replace(langue + "/", "")
+const pagesWithSlugsWithoutLocale = pages => pages.map(page => ({...page, pageSlug: getSlugWithoutLocale(page.pageSlug, page.language)}))
 
+// create the editable slug with no locale
+const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({...page, slugWithoutLocale: page.pageSlug.replace(page.language + "/", "")}))
 export default function PageEditor({onFormSubmitted, editedPages}) {
-
 
     // hooks
     const { locales } = useRouter();
 
     // States
     // form
-    const [pages, setPages] = useState(editedPages ? editedPages : locales.map(_locale => pageFormat(_locale)))
+    const [pages, setPages] = useState(editedPages ? pagesWithSlugsWithoutLocales(editedPages) : locales.map(_locale => pageFormat(_locale)))
     const [currentPageIndex, setCurrentPageIndex] = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     // utils
+    
+    const notAllowedToSave = () => {
+
+        // one translations empty
+        let oneTitleIsEmpty = pages.map(page => page.pageName).some(n => !n || !n.replace(/\s/g, '').length)
+        oneTitleIsEmpty = oneTitleIsEmpty ? PageEditor.NOT_ALLOWED_TO_SAVE.TRANSLATIONS_EMPTY : false
+
+        return oneTitleIsEmpty
+    }
+
     const isEditing = !!editedPages;
     const currentPage = pages[currentPageIndex]
     const updateCurrentPage = (values) => {
@@ -56,11 +68,14 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     const onSubmitPage = async () => {
 
+        let form = [...pages]
+
         setIsSubmitting(true)
 
         // check slugs
         const notCleanSlugItems = []
-        pages.forEach((page, pageIndex) => {
+        form.forEach((page, pageIndex) => {
+            
 
             if(!isEditing || editedPages[pageIndex].pageSlug !== page.pageSlug){
                 notCleanSlugItems.push({
@@ -71,12 +86,25 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         })
 
-        const promises = notCleanSlugItems.map(slugItem => checkSlugExistance(slugItem.slug).then(checkedSlug => ({index: slugItem.index, slug: checkedSlug})))
+        // check 
+
+        const promises = notCleanSlugItems.map(slugItem => getAvailableSlug(slugItem.slug).then(checkedSlug => {
+
+            return ({index: slugItem.index, slug: checkedSlug})
+
+        }))
+
         const checkedSlugs = await Promise.all(promises)
-        
+
+        checkedSlugs.forEach(slugItem => {
+
+            form[slugItem.index].pageSlug = slugItem.slug
+
+        })
+
         // send pages to form
         try{
-            await onFormSubmitted(pages);
+            await onFormSubmitted(form);
         } catch (err){
             console.log(err)
         } finally {
@@ -89,8 +117,13 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
 
     // setters
-    const setSlug = value => updateCurrentPage({pageSlug: value})
-    const setTitle = e => updateCurrentPage({pageName: e.target.value, pageSlug: cleanForSlug(e.target.value)})
+    const setSlug = value => updateCurrentPage({pageSlug: currentPage.language + "/" + value, slugWithoutLocale: value})
+    const setTitle = e => {
+        
+        const cleanedSlug = cleanForSlug(e.target.value)
+        updateCurrentPage({pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug})
+
+    }
     const addBlockContent = type => {
 
         // if blocks are draggable we must count each items's postions to compute a new position
@@ -123,6 +156,13 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         updateCurrentPage({blocks})   
     }
 
+    const removeBlockContent = blockPosition => value => {
+        
+        let blocks = currentPage.blocks.filter(block => block.position !== blockPosition)
+
+        updateCurrentPage({blocks})   
+    }
+
     // listeners
     const onChangeLanguage = e => setCurrentPageIndex(languagesLists.findIndex(v => v.value === e.target.value))
 
@@ -148,7 +188,17 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 />
 
                 {/* Input - Slug */}
-                {currentPage.pageSlug && <InputSlug slug={currentPage.pageSlug} setSlug={setSlug} />}
+                {currentPage.pageSlug && (
+                    <InputSlug 
+                        currentLanguage={currentPage.language} 
+
+                        originalSlug={editedPages ? editedPages[currentPageIndex].pageSlug : ""}
+                        slug={currentPage.pageSlug} 
+                        slugWithoutLocale={currentPage.slugWithoutLocale}
+
+                        setSlug={setSlug} 
+                    />
+                )}
 
                 {/* Input - add block */}
                 <InputAddBlock addBlock={addBlockContent} />
@@ -156,11 +206,14 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 {/* Content blocks */}
                 {currentPage.blocks && (
                     currentPage.blocks.map((block, blockIndex) => (
-                        <BlockEdit 
+                        <BlockContentEditor 
                             key={"block-" + block.position} 
                             type={block.type}
                             content={block.content}
+
+                            // actions
                             setContent={setBlockContent(block.position)}
+                            removeBlockContent={removeBlockContent(block.position)}
                         />
                     ))
                 )}
@@ -183,27 +236,16 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
                 onChangeLanguage={onChangeLanguage}
 
+                notAllowedToSave={notAllowedToSave()}
+
             />
 
         </div>
     );
 }
 
+PageEditor.NOT_ALLOWED_TO_SAVE = {
 
-const BlockEdit = ({type, content, setContent}) => {
-    return (
-        <div>
-            
-            {/* HTML EDITOR */}
-            {type === 'text' && (
-                <div>
-                    <CustomEditor block={content} setContent={setContent} />
-                </div>
-            )}
+    TRANSLATIONS_EMPTY: "TRANSLATIONS_EMPTY",
 
-            {/* CAROUSEL */}
-            {type === 'carousel' && <CarouselEditor block={content} setContent={setContent} />}
-        </div>
-    );
-};
-
+}

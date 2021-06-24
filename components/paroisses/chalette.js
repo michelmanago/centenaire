@@ -23,11 +23,11 @@ export default function Chalette() {
 
     return (
         <div className="px-10 bio-block">
-            <img className="flex sm:items-center float-left w-1/3 mr-2 mt-2"
+             <h2>L’Eglise orthodoxe de Chalette</h2>
+             <img className="flex sm:items-center float-right w-1/3 ml-2 mt-2"
                 src="/static/img/paroisses/chalette/pretre.jpg" 
                 alt="Prêtre de l\'église de Chalette" />
-             <h2>L’Eglise orthodoxe de Chalette</h2>
-            <p>L’Église Orthodoxe Russe de Chalette a été construite en 1924 grâce aux dons des émigrés et au travail de la confrérie de la Sainte  Trinité. L’église fut édifiée dans l’enceinte de l’usine Hutchinson dans le quartier dit « de Moscou », de nos jours le « quartier de Moscou » existe toujours. C’est l’administration de l’usine qui permit la construction de l’église dans le cadre de la législation Française. Tout cela a été officialisé et inscrit dans le journal officiel N°248 du 22 octobre 1925. L’église était construite en bois et ne possédait pas de clocher.</p>
+           <p>L’Église Orthodoxe Russe de Chalette a été construite en 1924 grâce aux dons des émigrés et au travail de la confrérie de la Sainte  Trinité. L’église fut édifiée dans l’enceinte de l’usine Hutchinson dans le quartier dit « de Moscou », de nos jours le « quartier de Moscou » existe toujours. C’est l’administration de l’usine qui permit la construction de l’église dans le cadre de la législation Française. Tout cela a été officialisé et inscrit dans le journal officiel N°248 du 22 octobre 1925. L’église était construite en bois et ne possédait pas de clocher.</p>
             <p>De 1925 à 1926 le responsable de notre église était le prêtre Jean Filimonovitch Tsereteli descendant de la noblesse Russe. Il avait le grade de colonel dans l’armée impériale. Il était décoré du ruban avec croix d’or. Ce ruban se portait sur le côté lors des offices religieux. Il reçut aussi une calotte et un diplôme de l’archiprêtre du Synode de l’Église Orthodoxe Russe à l’étranger ainsi qu’une croix pectorale en or. </p>
             <p>A l’époque à Chalette était enregistré environ 600 orthodoxes. La majorité était composée de Cosaques du Don et du Kouban ainsi que des membres de la noblesse. Il y avait aussi des orthodoxes dans les villes environnantes comme Sens 200 personnes, Bagneaux 40 personnes, Troyes 70 personnes.</p>
             <p>Les membres de la communauté se mobilisent et s’organisent. En avril 1926 avec l’accord du maire  de Chalette se construit un emplacement pour abriter les cloches. Il se compose de deux poteaux et d’un toit de planches.</p>

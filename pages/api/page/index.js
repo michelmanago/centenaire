@@ -1,5 +1,6 @@
-import { createNewPage, createPage, getPageById, getPageBySlug } from "../../../model/page";
-import { createPageModel, getPageModelById } from "../../../model/page_model";
+import { selectPageBySlug } from "../../../dao/page";
+import { createNewPage, updateTranslations } from "../../../model/page";
+import { getPageModelById } from "../../../model/page_model";
 
 export default async function handler(req, res) {
     try {
@@ -12,22 +13,35 @@ export default async function handler(req, res) {
             const jsonBody = JSON.parse(req.body)
 
             const ids = await createNewPage(jsonBody)
+
+            // retrived created pages
             const pages = await Promise.all(ids.map(id => getPageModelById(id)))
-            console.log(pages)
 
             return res.json(pages)
         } 
 
+        else if(req.method === "PUT"){
+
+            // body
+            const jsonBody = JSON.parse(req.body)
+
+            const updatedPageId = await updateTranslations(jsonBody)
+            
+            return res.json(updatedPageId)
+        }
+
         else if(req.method === 'GET'){
+
 
             if(!req.query || (req.query && req.query.slug === undefined)){
                 return res.status(400).json({ message: 'no query found' })
             }
 
             const slug = req.query.slug
-            const page = await getPageBySlug(slug)
+            const page = await selectPageBySlug(slug)
 
-            return res.json(page)
+            // we must return empty array for getAvailableSlugs()
+            return res.json(page || [])
         }
         
         else {
@@ -35,6 +49,13 @@ export default async function handler(req, res) {
         }
     } catch (e) {
         console.log(e)
-        res.status(500).json({ message: e.message })
+
+        if(e.status){
+            return res.status(e.status)
+        } else {
+            return res.status(500)
+        }
+        
+        return res.json({ message: e.message })
     }
 }

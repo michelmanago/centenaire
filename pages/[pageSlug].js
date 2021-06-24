@@ -1,17 +1,68 @@
-import dynamic from 'next/dynamic';
 
+
+// libs
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
+import DefaultErrorPage from 'next/error'
+import { useRouter } from 'next/router';
+
+// component
 import Header from '../components/header/header';
+import PageTemplate from '../components/page-template/PageTemplate';
+
+// model
 import {getMenu} from '../model/menu';
-import {getPageBySlug, getPageByType} from '../model/page';
+import { getPageBySlug } from '../model/page';
 
 const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
 
-export default function DynPage({pageSlug, menu, pageData, listPage}) {
+export default function DynPage({ menu, page}) {
+
+    if(!page){
+        return <DefaultErrorPage statusCode={404} />
+    }
+
+    // Lifecycle
+    useEffect(() => {
+
+        // redirect 404
+        if(!page || !page.length){
+            // router.push("/404")
+        } else {
+
+            // hack for dev
+            window.DEV_ADMIN_EDIT = `${window.location.origin}/admin/page/${page.id}`
+
+        }
+        
+    }, [])
+
+
+    // utils
+    const pageType = page && page.page
+
+
+    // hoooks
+    const router = useRouter()
+
+
     return (
         <div>
             <Header menu={menu.data} />
 
-            <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
+
+            <main className="border max-w-screen-xl mx-auto py-10 px-10 bg-white">
+
+                {/* Page - NO TYPE */}
+                {
+                    page && !pageType && <PageTemplate page={page}/>
+                }
+
+            </main>
+
+
+
+            {/* <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
                 {pageData && pageData.page === 'compositeur' && (
                     <div className="w-3/4 px-10 mx-auto md:w-1/4">
                         <NavCompositeur list={listPage} />
@@ -25,7 +76,7 @@ export default function DynPage({pageSlug, menu, pageData, listPage}) {
                 ) : (
                     <div>Page Dynamique {pageSlug}</div>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 }
@@ -60,12 +111,18 @@ export async function getStaticPaths({locales}) {
 }
 
 export async function getStaticProps(context) {
+
     const {pageSlug} = context.params;
+
     const menu = await getMenu(context.locale);
-    const pageData = await getPageBySlug(pageSlug);
-    let listPage = null;
-    if (pageData) {
-        listPage = await getPageByType(pageData.page);
-    }
-    return {props: {pageSlug, menu, pageData, listPage}};
+    const page = await getPageBySlug(context.locale + "/" + pageSlug).catch(err => null);
+
+    // let listPage = null;
+    // if (pageData) {
+    //     listPage = await getPageByType(pageData.page);
+    // }
+
+    console.log("pafzf", page)
+    return {props: {page, menu}};
 }
+

@@ -1,14 +1,16 @@
 import { query } from "../lib/db"
 
-export async function insertPage({pageName, pageSlug, category, language, author, created_at}){
+export async function insertPage({pageName, pageSlug, category, language, author, created_at, blocks}){
+
+    const blocksToJson = JSON.stringify(blocks)
 
     const res = await query(
         `
             INSERT INTO pagecontent
-            (pageName, pageSlug, page, language, author, created_at, last_modified)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (pageName, pageSlug, page, language, author, created_at, last_modified, blocks)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `,
-        [pageName, pageSlug, category, language, author, created_at, created_at]
+        [pageName, pageSlug, category, language, author, created_at, created_at, blocksToJson]
     )
 
     return res.affectedRows ? res.insertId : null
@@ -33,8 +35,6 @@ export async function insertTranslation(originalId, childId){
 
 export async function selectTranslations(originalPageId){
 
-    originalPageId = Number(originalPageId)
-
     const res = await query(
         `
             SELECT * FROM 
@@ -48,7 +48,10 @@ export async function selectTranslations(originalPageId){
 
 }
 
-export async function updatePage({id, pageName, pageSlug, content, page, language, author, last_modified}) {
+export async function updatePage({id, pageName, pageSlug, content, page, language, author, last_modified, blocks}) {
+
+    const blocksToJson = JSON.stringify(blocks)
+
     const res = await query(
         `
             UPDATE pagecontent
@@ -58,12 +61,37 @@ export async function updatePage({id, pageName, pageSlug, content, page, languag
                     page = ?,
                     language = ?,
                     author = ?,
-                    last_modified = ?
+                    last_modified = ?,
+                    blocks = ?
                 
             WHERE id = ?
         `,
-        [pageName, pageSlug, content, page, language, author, last_modified, /* should always be the last */id]
+        [pageName, pageSlug, content, page, language, author, last_modified, blocksToJson,/* should always be the last */id]
     )
 
-    return res.changedRows ? true : false
+    if(!res.affectedRows){
+        throw {
+            message: "page not found id: " + id,
+            status: 404
+        }
+    } else {
+        return res.affectedRows
+    }
+
+}
+
+
+export async function selectPageBySlug(pageSlug) {
+    const res = await query(
+        `
+        SELECT * FROM pagecontent
+        WHERE pageSlug = ?
+        `,
+        [pageSlug]
+    )
+
+    if (res.length >= 1)
+        return JSON.parse(JSON.stringify(res[0]))
+    else
+        return null
 }

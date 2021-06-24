@@ -56,7 +56,6 @@ export default function Daru() {
         {url: '/static/img/paroisses/daru/fresques/sermon-sur-la-montagne.jpg', legende: 'Le sermon sur la montagne'},      
         {url: '/static/img/paroisses/daru/fresques/rameaux.jpg', legende: 'L\'entrée à Jérusalem'},      
         {url: '/static/img/paroisses/daru/fresques/nativite.jpg', legende: 'La nativité'},      
-        {url: '/static/img/paroisses/daru/fresques/christ-coupole.jpg', legende: 'La pêche miraculeuse'},      
  
         {url: '/static/img/paroisses/daru/fresques/christ-marchant-sur-eau.jpg', legende: 'Le Christ marchant sur l\'eau'},
         {url: '/static/img/paroisses/daru/fresques/peche-miraculeuse.jpg', legende: 'La pêche miraculeuse'},      

@@ -20,6 +20,15 @@ const LanguageSwitcher = () => {
 
         return newUrl
     }
+
+
+    const redirectToTranslatedHome = (url, selectedLocale) => {
+
+        let originWithNewLocale = url.origin + "/" + selectedLocale
+        let newUrl = originWithNewLocale
+
+        return newUrl
+    }
     
 
     // methods
@@ -36,7 +45,7 @@ const LanguageSwitcher = () => {
         let url = new URL(window.location)
 
         // switch current page to selected locale
-        let newUrl = redirectToTranslatedPage(url, selectedLocale)
+        let newUrl = redirectToTranslatedHome(url, selectedLocale)
 
         // change page
         window.location = newUrl

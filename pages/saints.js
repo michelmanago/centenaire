@@ -62,13 +62,13 @@ export default function Saints({menu}) {
                     <div>Les Saints:</div>
                     <ul className="list-disc">
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('default')}>
-                            Définitions
+                            Les saints de l'archevêché
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Medvekov')}>
                             Père Alexis Medvekov
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Marie')}>
-                            Mère Marie (Skobtsov)
+                            Mère Marie Skobtsov
                         </li>
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Klépinine')}>
                             Père Dimitri Klépinine

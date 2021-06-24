@@ -17,15 +17,20 @@ import Utils from "../../../utils/utils";
 
 export default function PageEditorUpdate({menu, pageTranslations}) {
 
+
+    if(!pageTranslations){
+        return <DefaultErrorPage statusCode={404} />
+    }
+
+
     // states
     const router = useRouter()
 
     useEffect(() => {
 
-        console.warn("redirect if not found")
-        // if(!pageData || (pageData && Array.isArray(pageData) && !pageData.length)){
-        //     router.push("/404")
-        // }
+        if(!pageTranslations || (pageTranslations && !pageTranslations.length)){
+            router.push("/404")
+        }
 
     }, [])
 
@@ -36,14 +41,13 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
 
         const originalPage = pageTranslations.find(page => page.language === router.defaultLocale)
 
-
         const now = Utils.toMysqlFormat(new Date())
         formPages = formPages.map(formPagesItem => ({
             ...formPagesItem,
             last_modified: now
         })) 
         
-        fetch("/api/page/" + originalPage.id, {
+        fetch("/api/page", {
             method: "PUT",
             body: JSON.stringify(formPages)
         })
@@ -56,9 +60,7 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
         })
         .then(body => {
 
-            console.log(body)
-
-            // window.location = "/admin/page/" + body.pageSlug
+            window.location.reload()
 
         })
         .catch(err => {
@@ -72,10 +74,10 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
         <>
             {menu && <Header menu={menu.data}/>}
             <main className="bg-white">
-                <PageEditor
+                {pageTranslations && pageTranslations.length && <PageEditor
                     editedPages={pageTranslations}
                     onFormSubmitted={onSubmit}
-                />
+                />}
             </main>
         </>
     );
