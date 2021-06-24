@@ -42,9 +42,9 @@ export default function Cimetiere({menu}) {
 
                     <h3>Un contexte historique exceptionnel</h3>
                     <div class="float-none sm:float-left mt-2 pt-6 mb-4 pr-4 md:w-96">                     
-                    	<div class="h-52 text-center mb-2"> 		
+                    	<div className="h-52 text-center mb-2"> 		
                             <iframe className="relative h-full w-full" src="https://www.youtube.com/embed/ezBDLAYc0u8" 
-                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                            title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         </div>
                     </div>
 
