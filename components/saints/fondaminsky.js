@@ -23,7 +23,7 @@ export default function Fondaminsky() {
                 l&#39;intervention du mouvement  
                 <Popup
                     trigger={open => (
-                    <button className="button">  Liberté du Peuple </button>
+                    <a className="button">  Liberté du Peuple </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -43,7 +43,7 @@ export default function Fondaminsky() {
                 d&#39;
                 <Popup
                     trigger={open => (
-                    <button className="button">  un Lassale</button>
+                    <a className="button">  un Lassale</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -63,7 +63,7 @@ export default function Fondaminsky() {
                 rejoint Th.A. 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Stepun</button>
+                    <a className="button">  Stepun</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -79,7 +79,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button">  autres sont loin</button>
+                    <a className="button">  autres sont loin</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -143,7 +143,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button"> conscience</button>
+                    <a className="button"> conscience</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -155,7 +155,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button"> instar de Lucas</button>
+                    <a className="button"> instar de Lucas</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -167,7 +167,7 @@ export default function Fondaminsky() {
                 l&#39; »
                 <Popup
                     trigger={open => (
-                    <button className="button"> illusion qui nous élève</button>
+                    <a className="button"> illusion qui nous élève</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -225,7 +225,7 @@ export default function Fondaminsky() {
                
                 <Popup
                     trigger={open => (
-                    <button className="button"> Son passé de narodnik</button>
+                    <a className="button"> Son passé de narodnik</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -433,7 +433,7 @@ export default function Fondaminsky() {
                 est aisé de voir les traces des lettres historiques de
                 <Popup
                     trigger={open => (
-                    <button className="button"> Lavrov</button>
+                    <a className="button"> Lavrov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -464,7 +464,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button"> Chirinski-Chikhmatov</button>
+                    <a className="button"> Chirinski-Chikhmatov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -553,7 +553,7 @@ export default function Fondaminsky() {
                  
                 <Popup
                     trigger={open => (
-                    <button className="button"> Il est en bonne humeur, même heureux</button>
+                    <a className="button"> Il est en bonne humeur, même heureux</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
