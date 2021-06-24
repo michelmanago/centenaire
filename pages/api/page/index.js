@@ -1,4 +1,4 @@
-import { createNewPage, createPage, getPageById, getPageBySlug } from "../../../model/page";
+import { createNewPage, createPage, getPageById, getPageBySlug, updateTranslations } from "../../../model/page";
 import { createPageModel, getPageModelById } from "../../../model/page_model";
 
 export default async function handler(req, res) {
@@ -12,11 +12,23 @@ export default async function handler(req, res) {
             const jsonBody = JSON.parse(req.body)
 
             const ids = await createNewPage(jsonBody)
+
+            // retrived created pages
             const pages = await Promise.all(ids.map(id => getPageModelById(id)))
-            console.log(pages)
 
             return res.json(pages)
         } 
+
+        else if(req.method === "PUT"){
+
+            // body
+            const jsonBody = JSON.parse(req.body)
+
+            const updatedPageId = await updateTranslations(jsonBody)
+            console.log("updatedPageId", updatedPageId)
+            
+            return res.json(updatedPageId)
+        }
 
         else if(req.method === 'GET'){
 
@@ -27,6 +39,7 @@ export default async function handler(req, res) {
             const slug = req.query.slug
             const page = await getPageBySlug(slug)
 
+            
             return res.json(page)
         }
         
@@ -35,6 +48,14 @@ export default async function handler(req, res) {
         }
     } catch (e) {
         console.log(e)
-        res.status(500).json({ message: e.message })
+
+        if(e.status){
+            console.log("x", e.status)
+            res.status(e.status)
+        } else {
+            res.status(500)
+        }
+        
+        return res.json({ message: e.message })
     }
 }
