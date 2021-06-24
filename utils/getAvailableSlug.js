@@ -2,16 +2,19 @@ const MAX_RECURSIVE_FETCH_SLUG = 40
 
 export default function getAvailableSlug(slugString, tryCount = 1){
 
-    if(tryCount > MAX_RECURSIVE_FETCH_SLUG){
-        return Date.now();
-    }
+    // if(tryCount > MAX_RECURSIVE_FETCH_SLUG){
+    //     return Date.now();
+    // }
 
     const slugQuery = slugString + (tryCount > 1 ? `-${tryCount}` : "")
     const url = new URL(window.location.origin + "/api/page")
     url.searchParams.append("slug", slugQuery)
 
-    return fetch(url.toString())
+    const fullUrl = url.toString()
+
+    return fetch(fullUrl)
     .then(response => {
+
         if(response.ok){
             return response.json()
         } else {
@@ -29,9 +32,6 @@ export default function getAvailableSlug(slugString, tryCount = 1){
             return getAvailableSlug(slugString, tryCount + 1)
         }
 
-    })
-    .catch(err => {
-        console.log(err)
     })
 
 }

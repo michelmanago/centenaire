@@ -14,15 +14,6 @@ export async function createPageModel(page) {
     return pageId;
 }
 
-export async function getPageModelBySlug(slug) {
-    var page = await selectPageBySlug(slug);
-
-    //page.info_lang = await getInfoLang(page_id)
-    page.blocks = await getPageBlock(page.id);
-
-    return page;
-}
-
 export async function getPageModelById(page_id) {
     var page = await getPageById(page_id);
 
