@@ -1,6 +1,6 @@
 const MAX_RECURSIVE_FETCH_SLUG = 40
 
-export default function checkSlugExistance(slugString, tryCount = 1){
+export default function getAvailableSlug(slugString, tryCount = 1){
 
     if(tryCount > MAX_RECURSIVE_FETCH_SLUG){
         return Date.now();
@@ -26,7 +26,7 @@ export default function checkSlugExistance(slugString, tryCount = 1){
         } else {
             
             // console.log("not available", slugQuery)
-            return checkSlugExistance(slugString, tryCount + 1)
+            return getAvailableSlug(slugString, tryCount + 1)
         }
 
     })

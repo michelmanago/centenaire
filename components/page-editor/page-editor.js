@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
-import checkSlugExistance from '../../utils/checkSlugExistance';
+import getAvailableSlug from '../../utils/getAvailableSlug';
 import { pageFormat, blockFormat} from '../../utils/page-editor-formats';
 
 // components
@@ -20,8 +20,8 @@ import PageEditorSidebar from './sidebar/page-editor-sidebar';
 const getSlugWithoutLocale = (slugsWithLocale, langue) => slugsWithLocale.replace(langue + "/", "")
 const pagesWithSlugsWithoutLocale = pages => pages.map(page => ({...page, pageSlug: getSlugWithoutLocale(page.pageSlug, page.language)}))
 
-
-
+// create the editable slug with no locale
+const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({...page, slugWithoutLocale: page.pageSlug.replace(page.language + "/", "")}))
 export default function PageEditor({onFormSubmitted, editedPages}) {
 
     
@@ -31,7 +31,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     // States
     // form
-    const [pages, setPages] = useState(editedPages ? editedPages : locales.map(_locale => pageFormat(_locale)))
+    const [pages, setPages] = useState(editedPages ? pagesWithSlugsWithoutLocales(editedPages) : locales.map(_locale => pageFormat(_locale)))
     const [currentPageIndex, setCurrentPageIndex] = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -76,15 +76,6 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         setIsSubmitting(true)
 
-
-        // append slugLocale
-        if(!isEditing){
-            form = form.map(page => ({
-                ...page,
-                pageSlug: (page.language) + "/" + page.pageSlug
-            }))
-        }
-
         // check slugs
         const notCleanSlugItems = []
         form.forEach((page, pageIndex) => {
@@ -101,7 +92,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         // check 
 
 
-        const promises = notCleanSlugItems.map(slugItem => checkSlugExistance(slugItem.slug).then(checkedSlug => ({index: slugItem.index, slug: checkedSlug})))
+        const promises = notCleanSlugItems.map(slugItem => getAvailableSlug(slugItem.slug).then(checkedSlug => ({index: slugItem.index, slug: checkedSlug})))
         const checkedSlugs = await Promise.all(promises)
         
         checkedSlugs.forEach(slugItem => {
@@ -126,8 +117,13 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
 
     // setters
-    const setSlug = value => updateCurrentPage({pageSlug: value})
-    const setTitle = e => updateCurrentPage({pageName: e.target.value, pageSlug: cleanForSlug(e.target.value)})
+    const setSlug = value => updateCurrentPage({pageSlug: currentPage.language + "/" + value, slugWithoutLocale: value})
+    const setTitle = e => {
+        
+        const cleanedSlug = cleanForSlug(e.target.value)
+        updateCurrentPage({pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug})
+
+    }
     const addBlockContent = type => {
 
         // if blocks are draggable we must count each items's postions to compute a new position
@@ -185,7 +181,17 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 />
 
                 {/* Input - Slug */}
-                {currentPage.pageSlug && <InputSlug currentLanguage={currentPage.language} slug={currentPage.pageSlug} setSlug={setSlug} />}
+                {currentPage.pageSlug && (
+                    <InputSlug 
+                        currentLanguage={currentPage.language} 
+
+                        originalSlug={editedPages ? editedPages[currentPageIndex].pageSlug : ""}
+                        slug={currentPage.pageSlug} 
+                        slugWithoutLocale={currentPage.slugWithoutLocale}
+
+                        setSlug={setSlug} 
+                    />
+                )}
 
                 {/* Input - add block */}
                 <InputAddBlock addBlock={addBlockContent} />
