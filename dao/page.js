@@ -93,5 +93,5 @@ export async function selectPageBySlug(pageSlug) {
     if (res.length >= 1)
         return JSON.parse(JSON.stringify(res[0]))
     else
-        return []
+        return null
 }

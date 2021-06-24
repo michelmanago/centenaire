@@ -75,6 +75,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         // check slugs
         const notCleanSlugItems = []
         form.forEach((page, pageIndex) => {
+            
 
             if(!isEditing || editedPages[pageIndex].pageSlug !== page.pageSlug){
                 notCleanSlugItems.push({
@@ -87,16 +88,19 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         // check 
 
+        const promises = notCleanSlugItems.map(slugItem => getAvailableSlug(slugItem.slug).then(checkedSlug => {
 
-        const promises = notCleanSlugItems.map(slugItem => getAvailableSlug(slugItem.slug).then(checkedSlug => ({index: slugItem.index, slug: checkedSlug})))
+            return ({index: slugItem.index, slug: checkedSlug})
+
+        }))
+
         const checkedSlugs = await Promise.all(promises)
-        
+
         checkedSlugs.forEach(slugItem => {
 
             form[slugItem.index].pageSlug = slugItem.slug
 
         })
-
 
         // send pages to form
         try{

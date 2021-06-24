@@ -7,7 +7,7 @@ export default function PageTemplate({page}){
     return (
         <div>
 
-            <h1 className="text-3xl font-bold mb-10">{page.pageName}</h1>
+            <h1 className="text-5xl font-bold mb-10">{page.pageName}</h1>
 
             {/* Render blocks */}
             {

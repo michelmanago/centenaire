@@ -17,12 +17,17 @@ import Utils from "../../../utils/utils";
 
 export default function PageEditorUpdate({menu, pageTranslations}) {
 
+
+    if(!pageTranslations){
+        return <DefaultErrorPage statusCode={404} />
+    }
+
+
     // states
     const router = useRouter()
 
     useEffect(() => {
 
-        console.warn("redirect if not found")
         if(!pageTranslations || (pageTranslations && !pageTranslations.length)){
             router.push("/404")
         }

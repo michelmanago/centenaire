@@ -75,7 +75,10 @@ export async function getPageById(id) {
 export async function getPageBySlug(pageSlug) {
     
     let page = await selectPageBySlug(pageSlug)
-    page.blocks = JSON.parse(page.blocks)
+
+    if(page){
+        page.blocks = JSON.parse(page.blocks)
+    }
 
     return page
 }
