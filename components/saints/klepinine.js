@@ -19,7 +19,7 @@ export default function Klepinine({}) {
                 Stépanova. Selon le témoignage de sa tante, A.N. 
                  <Popup
                     trigger={open => (
-                    <button className="button">  Hippius </button>
+                    <a className="button">  Hippius </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -88,7 +88,7 @@ export default function Klepinine({}) {
                 marchands. « Tout l'équipage l'adorait », rapporte S.P. 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Jaba dans ses Mémoires </button>
+                    <a className="button">  Jaba dans ses Mémoires </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -103,7 +103,7 @@ export default function Klepinine({}) {
                 là ses études, au Collège américain. En 1921, les Klépinine gagnent la Serbie, où ils retrouvent   
                 <Popup
                     trigger={open => (
-                    <button className="button">  les familles Zernov</button>
+                    <a className="button">  les familles Zernov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -125,7 +125,7 @@ export default function Klepinine({}) {
                 Père Alexis Nelioubov, pasteur remarquable, et de 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Mgr Benjamin (Fédtchenkov)</button>
+                    <a className="button">  Mgr Benjamin (Fédtchenkov)</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -144,7 +144,7 @@ export default function Klepinine({}) {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Chidlovskaïa</button>
+                    <a className="button">  Chidlovskaïa</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -261,7 +261,7 @@ export default function Klepinine({}) {
                 fête. 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Constantin Motchoulski </button>
+                    <a className="button">  Constantin Motchoulski </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -323,7 +323,7 @@ export default function Klepinine({}) {
                 poche de  
                 <Popup
                     trigger={open => (
-                    <button className="button">  Youri Skobtsov </button>
+                    <a className="button">  Youri Skobtsov </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -359,7 +359,7 @@ export default function Klepinine({}) {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Lourmel</button>
+                    <a className="button">  Lourmel</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -419,7 +419,7 @@ export default function Klepinine({}) {
                 
                 <Popup
                     trigger={open => (
-                    <button className="button">  Nous étudions le livre de Pratt</button>
+                    <a className="button">  Nous étudions le livre de Pratt</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
