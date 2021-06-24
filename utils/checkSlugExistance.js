@@ -21,11 +21,11 @@ export default function checkSlugExistance(slugString, tryCount = 1){
     .then(body => {
         
         if(!body || (body && Array.isArray(body) && !body.length)){
-            console.log("available", slugQuery)
+            // console.log("available", slugQuery)
             return slugQuery
         } else {
             
-            console.log("not available", slugQuery)
+            // console.log("not available", slugQuery)
             return checkSlugExistance(slugString, tryCount + 1)
         }
 

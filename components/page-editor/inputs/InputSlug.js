@@ -1,38 +1,54 @@
 
 // libs
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 // utils
 import checkSlugExistance from '../../../utils/checkSlugExistance';
 import cleanForSlug from '../../../utils/cleanForSlug';
+const getProperSlug = (slugWithNoLocale, langue) => langue + "/" + slugWithNoLocale
 
+const InputSlug = ({slug, setSlug, currentLanguage}) => {
 
-const InputSlug = ({slug, setSlug}) => {
+    // hooks
+    const { defaultLocale} = useRouter()
+
     // state
     const [opened, setOpened] = useState(false);
     const [origin, setOrigin] = useState('');
 
     // effects
-    // find app url
-    useEffect(() => {
-        setOrigin(window.location.origin);
-    }, [slug]);
-
-    // helpers
+        // find app url
+        useEffect(() => {
+            setOrigin(window.location.origin);
+        }, [slug]);
 
     // methods
     const onSubmit = async () => {
+
+
         const cleanedSlug = cleanForSlug(slug);
+        // const properAndCleanedSlug = getProperSlug(cleanedSlug, currentLanguage)
         const checkedSlug = await checkSlugExistance(cleanedSlug);
 
         setSlug(checkedSlug);
         setOpened(false);
     };
 
+    // utils
+    // escape default language
+    // const slugLocale = currentLanguage !== defaultLocale ? (currentLanguage) : ""
+    const slugLocale = currentLanguage
+
+    // styles
+    const permalinkLabelStyle = {
+        width: 140
+    }
+
     return (
         <div className="flex items-center mb-6 ">
             {/* Label */}
-            <label className="w-1/5 mr-5 font-semibold" htmlFor="inputSlug">
+            <label style={permalinkLabelStyle} className="mr-5 font-semibold" htmlFor="inputSlug">
                 Permalien :{' '}
             </label>
 
@@ -40,7 +56,7 @@ const InputSlug = ({slug, setSlug}) => {
             <div className={`border rounded px-3 py-2 w-full ${opened ? 'border-blue-500' : ''}`}>
                 {/* Label */}
                 <label htmlFor="inputSlug" className="text-gray-500">
-                    {origin + '/'}
+                    {`${origin}/${slugLocale}`}
                 </label>
 
                 {/* Input */}

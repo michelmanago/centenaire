@@ -36,14 +36,13 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
 
         const originalPage = pageTranslations.find(page => page.language === router.defaultLocale)
 
-
         const now = Utils.toMysqlFormat(new Date())
         formPages = formPages.map(formPagesItem => ({
             ...formPagesItem,
             last_modified: now
         })) 
         
-        fetch("/api/page/" + originalPage.id, {
+        fetch("/api/page", {
             method: "PUT",
             body: JSON.stringify(formPages)
         })

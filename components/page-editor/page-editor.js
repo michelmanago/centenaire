@@ -16,9 +16,15 @@ import InputAddBlock from './inputs/InputAddBlock';
 import PageEditorSidebar from './sidebar/page-editor-sidebar';
 
 
+// helpers
+const getSlugWithoutLocale = (slugsWithLocale, langue) => slugsWithLocale.replace(langue + "/", "")
+const pagesWithSlugsWithoutLocale = pages => pages.map(page => ({...page, pageSlug: getSlugWithoutLocale(page.pageSlug, page.language)}))
+
+
 
 export default function PageEditor({onFormSubmitted, editedPages}) {
 
+    
 
     // hooks
     const { locales } = useRouter();
@@ -30,6 +36,16 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     // utils
+    
+    const notAllowedToSave = () => {
+
+        // one translations empty
+        let oneTitleIsEmpty = pages.map(page => page.pageName).some(n => !n || !n.replace(/\s/g, '').length)
+        oneTitleIsEmpty = oneTitleIsEmpty ? PageEditor.NOT_ALLOWED_TO_SAVE.TRANSLATIONS_EMPTY : false
+
+        return oneTitleIsEmpty
+    }
+
     const isEditing = !!editedPages;
     const currentPage = pages[currentPageIndex]
     const updateCurrentPage = (values) => {
@@ -56,11 +72,22 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     const onSubmitPage = async () => {
 
+        let form = [...pages]
+
         setIsSubmitting(true)
+
+
+        // append slugLocale
+        if(!isEditing){
+            form = form.map(page => ({
+                ...page,
+                pageSlug: (page.language) + "/" + page.pageSlug
+            }))
+        }
 
         // check slugs
         const notCleanSlugItems = []
-        pages.forEach((page, pageIndex) => {
+        form.forEach((page, pageIndex) => {
 
             if(!isEditing || editedPages[pageIndex].pageSlug !== page.pageSlug){
                 notCleanSlugItems.push({
@@ -71,12 +98,22 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         })
 
+        // check 
+
+
         const promises = notCleanSlugItems.map(slugItem => checkSlugExistance(slugItem.slug).then(checkedSlug => ({index: slugItem.index, slug: checkedSlug})))
         const checkedSlugs = await Promise.all(promises)
         
+        checkedSlugs.forEach(slugItem => {
+
+            form[slugItem.index].pageSlug = slugItem.slug
+
+        })
+
+
         // send pages to form
         try{
-            await onFormSubmitted(pages);
+            await onFormSubmitted(form);
         } catch (err){
             console.log(err)
         } finally {
@@ -148,7 +185,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 />
 
                 {/* Input - Slug */}
-                {currentPage.pageSlug && <InputSlug slug={currentPage.pageSlug} setSlug={setSlug} />}
+                {currentPage.pageSlug && <InputSlug currentLanguage={currentPage.language} slug={currentPage.pageSlug} setSlug={setSlug} />}
 
                 {/* Input - add block */}
                 <InputAddBlock addBlock={addBlockContent} />
@@ -183,12 +220,19 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
                 onChangeLanguage={onChangeLanguage}
 
+                notAllowedToSave={notAllowedToSave()}
+
             />
 
         </div>
     );
 }
 
+PageEditor.NOT_ALLOWED_TO_SAVE = {
+
+    TRANSLATIONS_EMPTY: "TRANSLATIONS_EMPTY",
+
+}
 
 const BlockEdit = ({type, content, setContent}) => {
     return (

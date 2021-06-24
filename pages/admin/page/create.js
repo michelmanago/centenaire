@@ -42,7 +42,7 @@ export default function PageEditorCreate({menu}) {
             if(originalPage){
 
                 // navigate to post edition
-                window.location = "/admin/page/" + originalPage.pageSlug
+                window.location = "/admin/page/" + originalPage.id
 
             }
 
