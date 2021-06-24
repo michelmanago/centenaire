@@ -1,34 +1,17 @@
 import React from "react"
-import Tooltip from "@material-ui/core/Tooltip"
-import { makeStyles } from "@material-ui/core/styles";
+import Popup from "reactjs-popup"
 
 
-const useStyles = makeStyles((theme) => ({
 
-    customWidth: {
-        maxWidth: 500,
-        fontSize: theme.typography.pxToRem(20),
-        
-    }
-}));
 
-const longText1 = `Народная воля (Liberté [ou volonté] du peuple): société révolutionnaire fondée en 1879, qui prônait la terreur.`;
-const longText2 = `Homme politique allemand, Ferdinand Lassalle (1825-1864) participe au mouvement révolutionnaire, puis s&#39;oriente vers le socialisme réformiste.`;
-const longText3 = `Théodore Stefun (1864-1965), philosophe et essayiste, a vécu en Allemagne.`;
-const longText4 = `Vers de Pouchkine, qui évoque ses amis morts ou envoyés en exil.`;
-const longText5 = `En français dans le texte`;
-const longText6 = `personnage de la pièce de Gorki Dans les bas-fonds.`;
-const longText7 = `Vers de Pouchkine`;
-const longText8 = `Les narodniki (populistes) créèrent le parti socialiste révolutionnaire russe (S.R).`;
-const longText9 = `Pierre Lavrov (1825-1900) -professeur de mathématiques, chef de file et idéologue des populistes`;
-const longText10 = `Youri Chirinski-Chikhmatov (1890-1942) - journaliste politique mort à Auschwitz.`;
-const longText11 = `En français dans le texte`;
 
 
 
 export default function Fondaminsky() {
-    const classes = useStyles();
+
+    
     return (
+        
         <div className="px-10 bio-block">
             <h2>Élie Fondaminsky (1880-1942)</h2>
 
@@ -36,9 +19,18 @@ export default function Fondaminsky() {
                 Il est difficile d&#39;évoquer la figure d&#39;Élie Isidorovitch Fondaminski sans tomber dans le ton
                 hagiographique. Ce fut en vérité un juste dans les sens chrétien aussi bien que laïc de ce terme, en
                 outre il mourut en martyr. Certes, ses chances d&#39;accéder à la canonisation, lui un juif et un
-                socialiste révolutionnaire, sont minimes. Mais il est une autre canonisation, laïque celle-ci, qui,
-                l&#39;intervention du mouvement  <Tooltip disableFocusListener title={longText1} classes={{ tooltip: classes.customWidth }}>
-                <a>Liberté du Peuple</a></Tooltip> aidant, a édulcoré
+                socialiste révolutionnaire, sont minimes. Mais il est une autre canonisation, laïque celle-ci, qui, 
+                l&#39;intervention du mouvement  
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Liberté du Peuple </button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Народная воля (Liberté [ou volonté] du peuple): société révolutionnaire fondée en 1879, qui prônait la terreur. </span>
+                </Popup> aidant, a édulcoré
                 et dépersonnalisé les biographies du plus grand nombre des justes de l&#39;intelligentsia russe.
                 C&#39;est pourquoi il est si important de conserver les traits vivants du visage de l&#39;homme avant
                 qu&#39;ils ne disparaissent, effacés sous la légende héroïque. Une certaine dose d&#39;approche critique
@@ -48,7 +40,17 @@ export default function Fondaminsky() {
             <h3>Une rare bonté</h3>
             <p>
                 Je n&#39;ai jamais rencontré Bunakov-Fondaminski en Russie. Seuls l&#39;écho de sa légende, celle
-                d&#39;<Tooltip disableFocusListener title={longText2} classes={{ tooltip: classes.customWidth }}><a>un Lassale</a></Tooltip>, d&#39;un
+                d&#39;
+                <Popup
+                    trigger={open => (
+                    <button className="button">  un Lassale</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Homme politique allemand, Ferdinand Lassalle (1825-1864) participe au mouvement révolutionnaire, puis s&#39;oriente vers le socialisme réformiste. </span>
+                </Popup>, d&#39;un
                 Invincible, était parvenu jusqu&#39;à moi en ces temps lointains de la première révolution. C&#39;est à
                 Paris que je fis sa connaissance, peu après mon arrivée dans cette ville, tout à la fin de l&#39;année
                 1925 ou au début de l&#39;année 1926. Je ne saurais dire dans quelle circonstance a eu lieu notre
@@ -58,13 +60,33 @@ export default function Fondaminsky() {
                 débat d&#39;idée avec le maître des lieux, presque toujours en relation avec l&#39;une ou l&#39;autre de
                 ses innombrables opérations littéraires ou publiques. Pendant quinze ans je fus son collaborateur dans
                 toutes ses entreprises, et en particulier dans la revue La Cité nouvelle (Новый град), où nous avait
-                rejoint Th.A. <Tooltip disableFocusListener title={longText3} classes={{ tooltip: classes.customWidth }}><a>Stepun</a></Tooltip>. J&#39;
+                rejoint Th.A. 
+                <Popup
+                    trigger={open => (
+                    <button className="button">  Stepun</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Théodore Stefun (1864-1965), philosophe et essayiste, a vécu en Allemagne. </span>
+                </Popup>. J&#39;
                 ai pu observer la vie familiale d&#39;E.I, quand je fus son hôte dans la
                 villa qu&#39;il possédait à Grasse. Ai-je le droit de me dire son ami dans le sens russe du mot ? A vrai
                 dire, je n&#39;en sais rien. E.I. ne m&#39;associait pas aux aspects intimes de sa vie, parlait peu de
                 lui-même, de son passé. Il ne se plaignait jamais. D&#39;autres l&#39;ont sûrement mieux connu et plus
                 profondément, mais, j&#39;en ai bien peur, « les uns ne sont plus là, d&#39; »
-                <Tooltip disableFocusListener title={longText4} classes={{ tooltip: classes.customWidth }}><a>autres sont loin</a></Tooltip>. Aussi me vois je
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button">  autres sont loin</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Vers de Pouchkine, qui évoque ses amis morts ou envoyés en exil. </span>
+                </Popup>. Aussi me vois je
                 contraint de reconstituer son portrait intérieur à partir de reflets et de fragments d&#39;impressions
                 extérieures.
             </p>
@@ -118,13 +140,41 @@ export default function Fondaminsky() {
             </p>
             <p>
                 Bien sûr, l&#39;optimisme était une qualité précieuse pour un directeur de
-                <Tooltip disableFocusListener title={longText5} classes={{ tooltip: classes.customWidth }}>
-                <a>conscience</a></Tooltip> laïc. Par cet optimisme, E. I. faisait davantage penser au Lucas de
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button"> conscience</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    En français dans le texte. </span>
+                </Popup> laïc. Par cet optimisme, E. I. faisait davantage penser au Lucas de
                 Gorki qu&#39;aux starets d&#39;Optino. Non qu&#39;il fût, à l&#39;
-                <Tooltip disableFocusListener title={longText6} classes={{ tooltip: classes.customWidth }}><a>instar de Lucas</a></Tooltip>
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button"> instar de Lucas</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    personnage de la pièce de Gorki Dans les bas-fonds. </span>
+                </Popup>
                 ou de Gorki, partisan du « rêve d&#39;or » ou de «
-                l&#39; »<Tooltip disableFocusListener title={longText7} classes={{ tooltip: classes.customWidth }}>
-                <a>illusion qui nous élève</a></Tooltip>. Mais il était
+                l&#39; »
+                <Popup
+                    trigger={open => (
+                    <button className="button"> illusion qui nous élève</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Vers de Pouchkine </span>
+                </Popup>. Mais il était
                 constitutionnellement incapable d&#39;infliger la moindre souffrance à un être humain. La vérité, même
                 la vérité morale, devait s&#39;écarter devant l&#39;homme. L&#39;amour de l&#39;homme exigeait avant
                 tout pour E.I. la consolation, le soulagement du malheur.
@@ -172,8 +222,17 @@ export default function Fondaminsky() {
             <h3>Le Christianisme d&#39;Élie Fondaminski</h3>
 
             <p>
-                <Tooltip disableFocusListener title={longText8} classes={{ tooltip: classes.customWidth }}>
-                <a>Son passé de narodnik</a></Tooltip>, facilitait pour E.I. son autoéducation dans le christianisme. Il lui fallut
+               
+                <Popup
+                    trigger={open => (
+                    <button className="button"> Son passé de narodnik</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Les narodniki (populistes) créèrent le parti socialiste révolutionnaire russe (S.R). </span>
+                </Popup>, facilitait pour E.I. son autoéducation dans le christianisme. Il lui fallut
                 apprendre à neuf l&#39;humilité et la patience. Mais la philanthropie pouvait être transplantée en
                 l&#39;état, sans douleur. Dans la science de la charité les justes athées de l&#39;intelligentsia russe
                 n&#39;avaient pas grand chose à apprendre des chrétiens de leur temps. Demeurait aussi la « kénose » des
@@ -372,8 +431,16 @@ export default function Fondaminsky() {
                 variante russe du fascisme, qui infestait tous les nouveaux courants révolutionnaires. Fondaminski
                 voyait cela, mais ne désespérait pas. Il avait sa propre philosophie de l&#39;histoire, dans laquelle il
                 est aisé de voir les traces des lettres historiques de
-                <Tooltip disableFocusListener title={longText9} classes={{ tooltip: classes.customWidth }}>
-                <a>Lavrov</a></Tooltip>. Luttant contre le
+                <Popup
+                    trigger={open => (
+                    <button className="button"> Lavrov</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Pierre Lavrov (1825-1900) -professeur de mathématiques, chef de file et idéologue des populistes </span>
+                </Popup>. Luttant contre le
                 marxisme et toute forme de matérialisme historique, Fondaminski revenait à la foi en la force invincible
                 des idées et de leurs porteurs : les personnalités héroïques. N&#39;importe quelle idée peut conquérir
                 le monde, dans quelques circonstances historiques que ce soit. Il suffit pour cela de la foi vigoureuse
@@ -394,8 +461,17 @@ export default function Fondaminsky() {
                 (Современные записки), dont il fut l&#39;un des rédacteurs, il travaillait dans les cercles de
                 l&#39;Action Chrétienne des Étudiants Russes, puis de l&#39;Action Orthodoxe; fréquentait le RDO, les
                 petits-russiens, le Club Post-révolutionnaire de 
-                <Tooltip disableFocusListener title={longText10} classes={{ tooltip: classes.customWidth }}>
-                <a>Chirinski-Chikhmatov</a></Tooltip>; donnait même des
+                
+                <Popup
+                    trigger={open => (
+                    <button className="button"> Chirinski-Chikhmatov</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    Youri Chirinski-Chikhmatov (1890-1942) - journaliste politique mort à Auschwitz. </span>
+                </Popup>; donnait même des
                 conférences à l&#39;Union de la Noblesse (Союз дворян). Cette liste n&#39;épuise en aucun cas
                 l&#39;ensemble des organisations et des cercles dans lesquels Fondaminski investissait ses efforts
                 inlassables. Après avoir fondé La Cité Nouvelle, il cherchait à en faire le centre de son activité
@@ -474,8 +550,17 @@ export default function Fondaminsky() {
                 son existence : « Je me sens très bien, et cela fait longtemps, longtemps que je ne m&#39;étais senti
                 aussi tranquille, gai et même heureux. » Ce fut aussi l&#39;impression de sa sœur qui réussit à obtenir
                 une entrevue avec lui (en février 1942) : «
-                 <Tooltip disableFocusListener title={longText11} classes={{ tooltip: classes.customWidth }}>
-                <a> Il est en bonne humeur, même heureux</a></Tooltip> » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
+                 
+                <Popup
+                    trigger={open => (
+                    <button className="button"> Il est en bonne humeur, même heureux</button>
+                    )}
+                    position="bottom center"
+                    on={["hover", "focus"]}
+                >
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    En français dans le texte </span>
+                </Popup> » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
                 conférences pour ses camarades de détention. C&#39;est alors qu&#39;il se décida aussi à recevoir le
                 baptême. Aucune pression ne fut exercée sur lui. Ce fut au contraire au prêtre qui le baptisa de
                 ressentir son ascendant, sa supériorité spirituelle et même théologique. Ce prêtre racontait que
@@ -521,5 +606,7 @@ export default function Fondaminsky() {
                 l&#39;Église.
             </p>
         </div>
+        
     );
+    
 }
