@@ -49,11 +49,11 @@ const PageEditorSidebar = ({
     
     return (
         <div className="w-2/5">
-            {/* Block langues */}
 
+            {/* Block langues */}
             <PageEditorSidebarBlock title="Langues">
                 <select
-                    value={language}
+                    value={language || ""}
                     onChange={onChangeLanguage}
                     className="w-full px-4 py-3 border rounded"
                 >
@@ -69,7 +69,7 @@ const PageEditorSidebar = ({
             <PageEditorSidebarBlock title="Publier">
                 {/* Author */}
                 <div className="flex items-center w-full my-2">
-                    <label className="mr-3 text-lg font-semibold" htmlFor="inputAuthor">
+                    <label className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                         Auteur :{' '}
                     </label>
                     <input
@@ -85,10 +85,10 @@ const PageEditorSidebar = ({
                 {isEditing && (
                     <>
                         <div className="flex items-center my-2">
-                            <p className="mr-3 font-semibold text-md" htmlFor="inputAuthor">
+                            <p className="mr-3 font-semibold text-sm" htmlFor="inputAuthor">
                                 Date de publication :{' '}
                             </p>
-                            <p className="text-md">
+                            <p className="text-sm">
                                 {created_at
                                     ? new Date(created_at).toLocaleString(locale)
                                     : ''}
@@ -96,10 +96,10 @@ const PageEditorSidebar = ({
                         </div>
 
                         <div className="flex items-center my-2">
-                            <p className="mr-3 font-semibold text-md" htmlFor="inputAuthor">
+                            <p className="mr-3 font-semibold text-sm" htmlFor="inputAuthor">
                                 Dernière modification :{' '}
                             </p>
-                            <p className="text-md">
+                            <p className="text-sm">
                                 {last_modified
                                     ? new Date(last_modified).toLocaleString()
                                     : ''}
@@ -123,7 +123,7 @@ const PageEditorSidebar = ({
             <PageEditorSidebarBlock title="Catégories">
                 {/* categorie */}
                 <select
-                    value={category}
+                    value={category || ""}
                     onChange={setCategory}
                     className="w-full px-4 py-3 border rounded"
                 >

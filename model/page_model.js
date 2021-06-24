@@ -1,5 +1,6 @@
+import { selectPageBySlug } from '../dao/page';
 import {createBlock, getPageBlock} from '../dao/page_block';
-import {createPage, getPageById, getPageBySlug} from './page';
+import {createPage, getPageById} from './page';
 
 export async function createPageModel(page) {
     const pageId = await createPage(page);
@@ -14,7 +15,7 @@ export async function createPageModel(page) {
 }
 
 export async function getPageModelBySlug(slug) {
-    var page = await getPageBySlug(slug);
+    var page = await selectPageBySlug(slug);
 
     //page.info_lang = await getInfoLang(page_id)
     page.blocks = await getPageBlock(page.id);

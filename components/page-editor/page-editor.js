@@ -1,7 +1,6 @@
 // libs
-import {useSession} from 'next-auth/client';
 import {useRouter} from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
@@ -9,11 +8,10 @@ import getAvailableSlug from '../../utils/getAvailableSlug';
 import { pageFormat, blockFormat} from '../../utils/page-editor-formats';
 
 // components
-import CustomEditor from '../Slate/customEditor';
-import CarouselEditor from './carousel-editor';
 import InputSlug from './inputs/InputSlug';
 import InputAddBlock from './inputs/InputAddBlock';
 import PageEditorSidebar from './sidebar/page-editor-sidebar';
+import BlockContentEditor from './blocks/BlockContentEditor';
 
 
 // helpers
@@ -154,6 +152,13 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         updateCurrentPage({blocks})   
     }
 
+    const removeBlockContent = blockPosition => value => {
+        
+        let blocks = currentPage.blocks.filter(block => block.position !== blockPosition)
+
+        updateCurrentPage({blocks})   
+    }
+
     // listeners
     const onChangeLanguage = e => setCurrentPageIndex(languagesLists.findIndex(v => v.value === e.target.value))
 
@@ -197,11 +202,14 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 {/* Content blocks */}
                 {currentPage.blocks && (
                     currentPage.blocks.map((block, blockIndex) => (
-                        <BlockEdit 
+                        <BlockContentEditor 
                             key={"block-" + block.position} 
                             type={block.type}
                             content={block.content}
+
+                            // actions
                             setContent={setBlockContent(block.position)}
+                            removeBlockContent={removeBlockContent(block.position)}
                         />
                     ))
                 )}
@@ -237,21 +245,3 @@ PageEditor.NOT_ALLOWED_TO_SAVE = {
     TRANSLATIONS_EMPTY: "TRANSLATIONS_EMPTY",
 
 }
-
-const BlockEdit = ({type, content, setContent}) => {
-    return (
-        <div>
-            
-            {/* HTML EDITOR */}
-            {type === 'text' && (
-                <div>
-                    <CustomEditor block={content} setContent={setContent} />
-                </div>
-            )}
-
-            {/* CAROUSEL */}
-            {type === 'carousel' && <CarouselEditor block={content} setContent={setContent} />}
-        </div>
-    );
-};
-

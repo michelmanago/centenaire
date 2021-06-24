@@ -79,3 +79,19 @@ export async function updatePage({id, pageName, pageSlug, content, page, languag
     }
 
 }
+
+
+export async function selectPageBySlug(pageSlug) {
+    const res = await query(
+        `
+        SELECT * FROM pagecontent
+        WHERE pageSlug = ?
+        `,
+        [pageSlug]
+    )
+
+    if (res.length >= 1)
+        return JSON.parse(JSON.stringify(res[0]))
+    else
+        return []
+}
