@@ -22,7 +22,7 @@ export default function MenuEditorSidebarBlock({title, children}){
                 <p className="font-medium pb-0 mr-auto">{title}</p>
 
                 {/* Trigger */}
-                <button onClick={() => setOpened(!opened)} className="border rounded">
+                <button onClick={() => setOpened(!opened)} className="">
                     {opened ? <IconArrowUp/> : <IconArrowDown/>}
                 </button>
             </div>

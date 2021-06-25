@@ -60,7 +60,7 @@ export default function PageEditorCreate({menu}) {
     return (
         <>
             {menu && <Header menu={menu.data}/>}
-            <main className="bg-white">
+            <main className="">
                 <PageEditor
                     onFormSubmitted={onSubmit}
                 />

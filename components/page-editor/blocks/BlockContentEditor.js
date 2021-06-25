@@ -19,7 +19,7 @@ const ButtonPositionArrow = ({children, onClick}) => (
 const BlockContentEditor = ({type, position ,content, setContent, removeBlockContent, setBlockPosition}) => {
     
     return (
-        <div className="mb-6 border-r-4 pr-5 flex flex-col items-end">
+        <div className="mb-10 border-r-4 pr-5 flex flex-col items-end">
 
             {/* Position */}
             <div class="border mb-3 flex">
@@ -36,7 +36,7 @@ const BlockContentEditor = ({type, position ,content, setContent, removeBlockCon
             </button>
             
             {/* Block */}
-            <div className="border w-full">
+            <div className="w-full">
 
                 {/* Fallback */}
                 

@@ -203,7 +203,9 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     // console.log("redner", currentPage.blocks)
 
     return (
-        <div className="flex p-8 bg-white border gap-x-8">
+        <div className="max-w-screen-xl mx-auto py-10 px-10 border bg-white">
+
+            <div className="flex p-8 gap-x-8">
 
             {/* Left */}
             <div className="flex-1 w-2/5">
@@ -221,7 +223,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                     type="text"
                     placeholder="Titre de la page"
                 />
-e
+            
                 {/* Input - Slug */}
                 {currentPage.pageSlug && (
                     <InputSlug 
@@ -244,10 +246,10 @@ e
 
             {/* Right */}
             <PageEditorSidebar
-            
+
                 updateState={updateCurrentPage}
                 isEditing={isEditing}
-            
+
                 language={currentPage.language} languagesLists={languagesLists}
                 pageSlug={currentPage.pageSlug}
                 author={currentPage.author}
@@ -263,6 +265,7 @@ e
 
             />
 
+            </div>
         </div>
     );
 }

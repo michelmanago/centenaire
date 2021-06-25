@@ -243,7 +243,7 @@ export default function EditorMenu({menus}) {
             {defaultLocaleMenu && <Header menu={defaultLocaleMenu.data}/>}
 
             {/* Page home */}
-            <div className="bg-white p-8 pb-20">
+            <div className="bg-white p-8 pb-20 max-w-screen-xl mx-auto py-10 px-10 border">
 
                 <h1 className="text-4xl font-bold mb-10">Modifier le menu de navigation</h1>
 
