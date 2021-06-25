@@ -1,15 +1,16 @@
 // libs
 import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
-import SortableTree, {changeNodeAtPath, getVisibleNodeCount, removeNodeAtPath} from 'react-sortable-tree';
+import {changeNodeAtPath, removeNodeAtPath} from 'react-sortable-tree';
 
 // components
 import Header from '../components/header/header';
-import {RemoveButton, UpdateButton, CloseButton} from '../components/editor-menu/editor-menu-buttons';
-import FormMenuItem from '../components/editor-menu/editor-menu-form';
+import MenuEditorSubmit from '../components/editor-menu/inputs/MenuEditorSubmit';
+import MenuEditorTree from '../components/editor-menu/tree/menu-editor-tree';
 
 // models
 import {getMenus} from '../model/menu';
+import MenuEditorSidebar from '../components/editor-menu/sidebar/MenuEditorSidebar';
 
 const HEADER_NAV_DATA = [
     {
@@ -106,21 +107,6 @@ const fromDBDataToTreedata = menu => {
     return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
 };
 
-const fromTreedataToDBData = menu => {
-    let format = (menuItem, index, prefix) => {
-        let id = prefix + index;
-        let hasChildren = menuItem.children && menuItem.children.length;
-
-        return {
-            label: menuItem.title,
-            href: menuItem.href || '#',
-            subMenu:
-                hasChildren && menuItem.children.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')),
-        };
-    };
-
-    return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
-};
 
 export default function EditorMenu({menus}) {
     
@@ -129,10 +115,7 @@ export default function EditorMenu({menus}) {
     const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
     const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => fromDBDataToTreedata(menu ? menu.data : [])))
     const currentMenu = editableMenus ? editableMenus[currentMenuIndex] : null
-
     // create form
-    const [formCreateLabel, setFormCreateLabel] = useState('');
-    const [formCreateHref, setFormCreateHref] = useState('');
     // update form
     const [editedMenuItem, setEditedMenuItem] = useState(null);
     const [formUpdateLabel, setFormUpdateLabel] = useState('');
@@ -175,7 +158,6 @@ export default function EditorMenu({menus}) {
 
     const removeMenuItem = path => {
 
-        console.log({path})
         if (confirm('Êtes vous sûr ? ')) {
 
             // update current state menu
@@ -191,7 +173,8 @@ export default function EditorMenu({menus}) {
         }
     };
 
-    const modifiyMenuItem = (node, path) => {
+    const toggleModifySection = (node, path) => {
+        
         // close
         if (editedMenuItem && editedMenuItem.node.id === node.id) {
             closeModifyForm()
@@ -208,86 +191,9 @@ export default function EditorMenu({menus}) {
         }
     };
 
-    // form
-    const submitAddMenuItem = (stateLabel, stateHref) => {
-        if (formCreateHref && formCreateLabel) {
-            // add new item
-            // update current state menu
-            
-            updateCurrentMenuState(
-                [formatNewMenuItem(formCreateLabel, formCreateHref)].concat(currentMenu)
-            )
-            
-            // // reset
-            setFormCreateHref('');
-            setFormCreateLabel('');
-
-            if(!canSave){
-                setCanSave(true)
-            }
-        }
-    };
-
-    const submitModifyMenuItem = () => {
-        if (formUpdateHref && formUpdateLabel) {
-
-            let {path, node} = editedMenuItem;
-
-            updateCurrentMenuState(changeNodeAtPath({
-                treeData: currentMenu,
-                path,
-                getNodeKey,
-                newNode: {
-                    ...node,
-                    title: formUpdateLabel,
-                    href: formUpdateHref,
-                },
-            }))
-
-            if(!canSave){
-                setCanSave(true)
-            }
-            
-        }
-    }
-
-    const onSubmitSave = async () => {
-
-        if(confirm("Êtes vous sûr de vouloir sauvegarder les nouveaux menus ? ")){
-
-            let menusData = editableMenus.map((menu, menuIndex) => ({
-                locale: menus[menuIndex].locale,
-                data: fromTreedataToDBData(menu)
-            }))
-
-            let promiseSettingMenu = menusData.map(menuDataItem => 
-                fetch("/api/menu", {
-                    method: "PUT",
-                    body: JSON.stringify(menuDataItem) 
-                })
-                .then(response => {
-                    if(response.ok){
-                        return response.json()
-                    } else {
-                        throw new Error(response.statusText);
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-            )
-
-            let responses = await Promise.all(promiseSettingMenu)
-            
-            setCanSave(false)
-
-            alert("Menus sauvegardé")
-
-        }
-    }
-
-    const toggleTab = (selectedIndex) => {
+    const onChangeLocale = (selectedIndex) => {
         setCurrentMenuIndex(selectedIndex)
+        closeModifyForm()
     }
 
     // Effets
@@ -303,7 +209,6 @@ export default function EditorMenu({menus}) {
 
 
     // other
-    const count = getVisibleNodeCount({treeData: currentMenu})
     const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
 
     return (
@@ -317,109 +222,44 @@ export default function EditorMenu({menus}) {
             {defaultLocaleMenu && <Header menu={defaultLocaleMenu.data}/>}
 
             {/* Page home */}
-            <div className="bg-white p-8">
+            <div className="bg-white p-8 pb-20">
 
                 <h1 className="text-4xl font-bold mb-10">Modifier le menu de navigation</h1>
 
                 <div className="flex">
 
-                    {/* Column create/edit/save */}
-                    <div className="p-5 w-1/4 flex flex-col">
+                    {/* Bottom bar */}
+                    <MenuEditorSubmit
+                        menuLocales={menus.map(m => m.locale)}
+                        form={editableMenus}
+                        canSave={canSave}
+                        setCanSave={setCanSave}
+                    />
 
-                        {/* Form create */}
-                        {!editedMenuItem && (
-                            <FormMenuItem
-                                // text
-                                formTitle="Ajouter un lien"
-                                formSubmitLabel="Ajouter au menu"
-                                // submit
-                                onSubmit={submitAddMenuItem}
-                                // values
-                                label={formCreateLabel}
-                                onLabelChange={setFormCreateLabel}
-                                href={formCreateHref}
-                                onHrefChange={setFormCreateHref}
-                            />
-                        )}
 
-                        {/* Form modify */}
-                        {editedMenuItem && (
-                            <FormMenuItem
-                                // text
-                                formTitle="Modifier un lien"
-                                formSubmitLabel="Modifier le lien"
-                                // submit
-                                onSubmit={submitModifyMenuItem}
-                                // values
-                                label={formUpdateLabel}
-                                onLabelChange={setFormUpdateLabel}
-                                href={formUpdateHref}
-                                onHrefChange={setFormUpdateHref}
-
-                                afterSubmit={
-                                    <CloseButton
-                                        onClick={closeModifyForm}
-                                    />
-                                }
-                            />
-                        )}
-
-                        {/* Save */}
-                        <button 
-                            onClick={onSubmitSave}
-                            disabled={!canSave}
-                            className={"mt-10 bg-blue-700 rounded px-5 py-4 text-2xl text-white font-bold " + (
-                                canSave ? 
-                                    "hover:bg-blue-800" 
-                                    : "bg-gray-300 opacity-50 cursor-not-allowed"
-                            )}
-                        >Sauvegarder</button>
+                    {/* Sidebar */}
+                    <div className="p-5 w-1/3 flex flex-col">
+                        <MenuEditorSidebar
+                            editedItem={editedMenuItem}
+                            canSave={canSave}
+                        />
                     </div>
 
+                    {/* Tree */}
                     <div className="flex-1 p-5">
+                        <MenuEditorTree
+                            currentLocale={menus[currentMenuIndex].locale}
+                            currentMenuData={currentMenu}
 
-                        {/* Tabs */}
-                        <div className="flex">
-                            {
-                                menus.map((menu, menuIndex) => {
-                                    
-                                    const isCurrentTab = menus[currentMenuIndex].locale === menu.locale
+                            locales={menus.map(menu => menu.locale)}
 
-                                    return (
-                                        <button
-                                            key={"tab-button-" + menuIndex}
-                                            onClick={() => toggleTab(menuIndex)}
-                                            className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-purple-400 font-semibold" : "bg-purple-200")}
-                                        >{menu.locale}</button>
-                                    )
+                            editedMenuItem={editedMenuItem}
 
-                                })
-                            }
-                        </div>
-                                
-                        {/* Tree */}
-                        <div style={{height: count * 62}} className="">
-                            <SortableTree
-                                treeData={currentMenu}
-                                onChange={onChangeTreedata}
-                                generateNodeProps={({node, path}) => {
-                                    let isEditing = editedMenuItem && editedMenuItem.node.id === node.id;
-
-                                    return {
-                                        buttons: [
-                                            <UpdateButton
-                                                label={isEditing ? 'Fermer' : 'Modifier'}
-                                                onClick={() => modifiyMenuItem(node, path)}
-                                            />,
-                                            <RemoveButton onClick={() => removeMenuItem(path)} />,
-                                        ],
-                                        style: {
-                                            boxShadow: isEditing ? '0 0 0 4px #34D399' : '',
-                                        },
-                                    };
-                                }}
-                            />
-                        </div>
+                            onChangeTreedata={onChangeTreedata}
+                            onChangeLocale={onChangeLocale}
+                            onModifyItem={toggleModifySection}
+                            onRemoveItem={removeMenuItem}
+                        />
                     </div>
                 </div>
             </div>

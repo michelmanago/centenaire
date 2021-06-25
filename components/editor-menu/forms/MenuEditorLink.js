@@ -1,4 +1,4 @@
-const FormMenuItem = ({
+const MenuEditorLink = ({
     formTitle,
     formSubmitLabel,
 
@@ -13,9 +13,8 @@ const FormMenuItem = ({
 }) => {
     return (
         <form>
-            <p className="text-xl mb-4 font-bold text-2xl">{formTitle}</p>
-            <hr className="mb-5" />
 
+            {/* Label */}
             <div className="flex items-center mb-5">
                 <label className="font-semibold w-1/3" htmlFor="inputLabel">
                     Label
@@ -59,4 +58,4 @@ const FormMenuItem = ({
     );
 };
 
-export default FormMenuItem
+export default MenuEditorLink

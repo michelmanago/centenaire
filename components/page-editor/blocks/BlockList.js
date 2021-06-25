@@ -80,7 +80,7 @@ export default function BlockList({blockList, updateCurrentPage}){
         const newPosition = initialPosition + direction
 
         if(newPosition <= blockList.length && newPosition > 0){
-
+git 
 
             const blocks = blockList.map(block => {
 
