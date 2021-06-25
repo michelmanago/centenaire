@@ -8,6 +8,11 @@ const Utils = {
 
     toMysqlFormat(date){
         return date.getFullYear() + "-" + twoDigits(1 + date.getMonth()) + "-" + twoDigits(date.getDate()) + " " + twoDigits(date.getHours()) + ":" + twoDigits(date.getMinutes()) + ":" + twoDigits(date.getSeconds());
+    },
+
+
+    inRange(x, min, max) {
+        return ((x-min)*(x-max) <= 0)
     }
 
 

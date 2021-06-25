@@ -1,0 +1,148 @@
+// components
+import { blockFormat } from '../../../utils/page-editor-formats';
+import BlockContentEditor from '../blocks/BlockContentEditor';
+
+// utils
+import InputAddBlock from '../inputs/InputAddBlock';
+
+export default function BlockList({blockList, updateCurrentPage}){
+
+    // utils
+
+    const sortedBlocks = (blocks) => {
+
+        const sortedBlocks = [...blocks]
+        sortedBlocks.sort((a, b) => a.position - b.position)
+
+        return sortedBlocks
+
+    }
+
+    // listeners
+
+    const addBlockContent = type => {
+
+        // if blocks are draggable we must count each items's postions to compute a new position
+        const newPosition = blockList.length + 1
+        const newBlock = blockFormat(type, newPosition)
+
+        updateCurrentPage({
+            blocks: [
+                ...blockList,
+                newBlock
+            ]
+        })
+
+    };
+
+    const setBlockContent = blockPosition => value => {
+        
+        let blocks = blockList.map(block => {
+
+            if(block.position === blockPosition){
+                return {
+                    ...block,
+                    content: value
+                }
+            } else {
+                return block
+            }
+
+        })
+
+        updateCurrentPage({blocks})   
+    }
+
+    const removeBlockContent = initialBlock => e => {
+        
+        let blocks = blockList.filter(block => block.position !== initialBlock)
+        
+        // reorder
+        blocks = blocks.map(block => {
+
+            if(block.position > initialBlock){
+                return {
+                    ...block,
+                    position: block.position - 1
+                }
+            } else {
+                return block
+            }
+
+        })
+        
+
+        updateCurrentPage({blocks})   
+    }
+
+    const setBlockPosition = initialPosition => direction => {
+
+        const newPosition = initialPosition + direction
+
+        if(newPosition <= blockList.length && newPosition > 0){
+
+
+            const blocks = blockList.map(block => {
+
+                if(block.position === initialPosition){
+                    return {
+                        ...block,
+                        position: newPosition,
+                    }
+                } 
+                
+                else if(block.position === newPosition){
+                    return {
+                        ...block,
+                        position: initialPosition
+                    }
+                }
+                
+                else {
+                    return {
+                        ...block
+                    }
+                }
+
+            })
+
+            updateCurrentPage({blocks})   
+
+        } else {
+            console.log("OUT")
+        }
+        
+
+    }
+
+    return (
+        <div>
+            {/* Input - add block */}
+            <InputAddBlock addBlock={addBlockContent} />
+
+            {/* List */}
+            {
+                blockList && (
+                    sortedBlocks(blockList).map((block, blockIndex) => {
+    
+                        return (
+                            <BlockContentEditor 
+                                key={"block-" + block.position} 
+                                type={block.type}
+                                content={block.content}
+                                position={block.position}
+    
+                                // actions
+                                setContent={setBlockContent(block.position)}
+                                removeBlockContent={removeBlockContent(block.position)}
+                                setBlockPosition={setBlockPosition(block.position)}
+                            />
+                        )
+    
+                    })
+                )
+            }
+        </div>
+    )
+
+}

@@ -5,13 +5,12 @@ import { useState } from 'react';
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
 import getAvailableSlug from '../../utils/getAvailableSlug';
-import { pageFormat, blockFormat} from '../../utils/page-editor-formats';
+import { pageFormat} from '../../utils/page-editor-formats';
 
 // components
 import InputSlug from './inputs/InputSlug';
-import InputAddBlock from './inputs/InputAddBlock';
 import PageEditorSidebar from './sidebar/page-editor-sidebar';
-import BlockContentEditor from './blocks/BlockContentEditor';
+import BlockList from './blocks/BlockList';
 
 
 // helpers
@@ -53,6 +52,9 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
             setPages(pages.map((page, pageIndex) => {
 
                 if(pageIndex === currentPageIndex){
+
+                    console.log(currentPage.blocks.map(b => b.position), values.blocks.map(v => v.position))
+                    
                     return {
                         ...currentPage,
                         ...values
@@ -193,48 +195,12 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         updateCurrentPage({pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug})
 
     }
-    const addBlockContent = type => {
 
-        // if blocks are draggable we must count each items's postions to compute a new position
-        const newPosition = currentPage.blocks.length
-        const newBlock = blockFormat(editedPages ? currentPage.id : null, currentPage.language, type, newPosition)
-
-        updateCurrentPage({
-            blocks: [
-                ...currentPage.blocks,
-                newBlock
-            ]
-        })
-
-    };
-    const setBlockContent = blockPosition => value => {
-        
-        let blocks = currentPage.blocks.map(block => {
-
-            if(block.position === blockPosition){
-                return {
-                    ...block,
-                    content: value
-                }
-            } else {
-                return block
-            }
-
-        })
-
-        updateCurrentPage({blocks})   
-    }
-
-    const removeBlockContent = blockPosition => value => {
-        
-        let blocks = currentPage.blocks.filter(block => block.position !== blockPosition)
-
-        updateCurrentPage({blocks})   
-    }
 
     // listeners
     const onChangeLanguage = e => setCurrentPageIndex(languagesLists.findIndex(v => v.value === e.target.value))
 
+    // console.log("redner", currentPage.blocks)
 
     return (
         <div className="flex p-8 bg-white border gap-x-8">
@@ -255,7 +221,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                     type="text"
                     placeholder="Titre de la page"
                 />
-
+e
                 {/* Input - Slug */}
                 {currentPage.pageSlug && (
                     <InputSlug 
@@ -269,23 +235,11 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                     />
                 )}
 
-                {/* Input - add block */}
-                <InputAddBlock addBlock={addBlockContent} />
-
                 {/* Content blocks */}
-                {currentPage.blocks && (
-                    currentPage.blocks.map((block, blockIndex) => (
-                        <BlockContentEditor 
-                            key={"block-" + block.position} 
-                            type={block.type}
-                            content={block.content}
-
-                            // actions
-                            setContent={setBlockContent(block.position)}
-                            removeBlockContent={removeBlockContent(block.position)}
-                        />
-                    ))
-                )}
+                <BlockList
+                    blockList={currentPage.blocks}
+                    updateCurrentPage={updateCurrentPage}
+                />
             </div>
 
             {/* Right */}
