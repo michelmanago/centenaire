@@ -230,6 +230,7 @@ export default function EditorMenu({menus}) {
 
     // other
     const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
+    const currentLocale = menus[currentMenuIndex].locale
 
     return (
         <div>
@@ -265,6 +266,7 @@ export default function EditorMenu({menus}) {
                             setCanSave={setCanSave}
                             updateCurrentMenuState={updateCurrentMenuState}
                             currentMenu={currentMenu}
+                            currentLocale={currentLocale}
                         />
                     </div>
 

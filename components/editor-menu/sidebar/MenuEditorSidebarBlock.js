@@ -9,7 +9,7 @@ import IconArrowDown from "../../icons/IconArrowDown"
 export default function MenuEditorSidebarBlock({title, children}){
 
     // states
-    const [opened, setOpened] = useState(false)
+    const [opened, setOpened] = useState(true)
 
 
     return(

@@ -95,3 +95,19 @@ export async function selectPageBySlug(pageSlug) {
     else
         return null
 }
+
+export async function selectAllPages(locale = null){
+
+    const res = await query(
+        `
+        SELECT * FROM pagecontent
+        ${locale ? "WHERE language = ?" : ""}
+        `,
+        locale ? [locale] : []
+    )
+
+    if (res.length >= 1)
+        return JSON.parse(JSON.stringify(res))
+    else
+        return null
+} 

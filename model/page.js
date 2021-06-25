@@ -1,4 +1,4 @@
-import { insertPage, insertTranslation, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
+import { insertPage, insertTranslation, selectAllPages, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
 import {query} from '../lib/db';
 
 
@@ -92,4 +92,14 @@ export async function getPageByType(pageType) {
     );
 
     return JSON.parse(JSON.stringify(res));
+}
+
+
+
+export async function getAllPages(locale){
+
+    const pages = await selectAllPages(locale)
+
+    return pages
+
 }

@@ -28,7 +28,7 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
                             <button
                                 key={"tab-button-" + index}
                                 onClick={() => onChangeLocale(index)}
-                                className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-purple-400 font-semibold" : "bg-purple-200")}
+                                className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-blue-400 font-medium" : "bg-blue-200")}
                             >{locale}</button>
                         )
 

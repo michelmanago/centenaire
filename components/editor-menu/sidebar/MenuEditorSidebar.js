@@ -4,60 +4,75 @@ import { useState } from "react";
 
 // components
 import MenuEditorLink from "../forms/MenuEditorLink";
+import MenuEditorPageList from "./MenuEditorPageList";
 import MenuEditorSidebarBlock from "./MenuEditorSidebarBlock";
 
 // utils
 
 
-export default function MenuEditorSidebar({editedItem, updateCurrentMenuState, currentMenu, canSave, setCanSave}){
+export default function MenuEditorSidebar({updateCurrentMenuState, currentMenu, currentLocale, canSave, setCanSave}){
 
-        // states
-        const [formCreateLabel, setFormCreateLabel] = useState('');
-        const [formCreateHref, setFormCreateHref] = useState('');
+    // states
+    const [formCreateLabel, setFormCreateLabel] = useState('');
+    const [formCreateHref, setFormCreateHref] = useState('');
 
-        // utils
-        const formatNewMenuItem = (label, href) => {
-        
-            return {
-                id: "new-item" + currentMenu.length,
-                title: label,
-                href: href || '#'
+    // utils
+    const formatNewMenuItem = (label, href) => {
+    
+        return {
+            id: "new-item" + currentMenu.length,
+            title: label,
+            href: href || '#'
+        }
+    }
+
+    // form
+    const addCustomLink = (stateLabel, stateHref) => {
+        if (formCreateHref && formCreateLabel) {
+            // add new item
+            // update current state menu
+            
+            updateCurrentMenuState([
+                formatNewMenuItem(formCreateLabel, formCreateHref),
+                ...currentMenu,
+            ])
+            
+            // reset
+            setFormCreateHref('');
+            setFormCreateLabel('');
+
+            if(!canSave){
+                setCanSave(true)
             }
         }
+    };
 
-        // form
-        const submitAddMenuItem = (stateLabel, stateHref) => {
-            if (formCreateHref && formCreateLabel) {
-                // add new item
-                // update current state menu
-                
-                updateCurrentMenuState(
-                    [formatNewMenuItem(formCre^ateLabel, formCreateHref)].concat(currentMenu)
-                )
-                
-                // // reset
-                setFormCreateHref('');
-                setFormCreateLabel('');
+    const addPageLinks = links => {
+
+
+        console.log({links})
+        updateCurrentMenuState([
+            ...links.map(link => formatNewMenuItem(link.label, link.href)),
+            ...currentMenu
+        ])
+
+    }
+
     
-                if(!canSave){
-                    setCanSave(true)
-                }
-            }
-        };
     
 
     return (
         <div className="">
 
+            {/* Lien personnalisés */}
             <MenuEditorSidebarBlock title="Liens personnalisés">
 
-                {/* Lien personnalisés */}
                 <MenuEditorLink
                     // text
                     formTitle="Ajouter un lien"
                     formSubmitLabel="Ajouter au menu"
                     // submit
-                    onSubmit={submitAddMenuItem}
+                    onSubmit={addCustomLink}
                     // values
                     label={formCreateLabel}
                     onLabelChange={setFormCreateLabel}
@@ -65,6 +80,14 @@ export default function MenuEditorSidebar({editedItem, updateCurrentMenuState, c
                     onHrefChange={setFormCreateHref}
                 />
 
+            </MenuEditorSidebarBlock>
+
+            {/* Pages */}
+            <MenuEditorSidebarBlock title="Pages existantes">
+                <MenuEditorPageList
+                    currentLocale={currentLocale}
+                    addPageLinks={addPageLinks}
+                />
             </MenuEditorSidebarBlock>
         </div>
     )
