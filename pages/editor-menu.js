@@ -127,7 +127,7 @@ export default function EditorMenu({menus}) {
     // utils
     const getNodeKey = ({treeIndex}) => treeIndex;
     const updateCurrentMenuState = nextState => setEditableMenus(editableMenus.map((menu, menuIndex) => menuIndex === currentMenuIndex ? nextState : menu))
-    const closeModifyForm = () => {
+    const closeEditModal = () => {
         // close form
         setEditedMenuItem(null);
 
@@ -135,18 +135,37 @@ export default function EditorMenu({menus}) {
         setFormUpdateHref('');
         setFormUpdateLabel('');
     }
-    const formatNewMenuItem = (label, href) => {
-        
-        return {
-            id: "new-item" + currentMenu.length,
-            title: label,
-            href: href || '#'
-        }
-    }
+
 
     // listeners
 
     // via tree
+
+    const submitModifyMenuItem = () => {
+        if (formUpdateHref && formUpdateLabel) {
+
+            let {path, node} = editedMenuItem;
+
+            updateCurrentMenuState(changeNodeAtPath({
+                treeData: currentMenu,
+                path,
+                getNodeKey,
+                newNode: {
+                    ...node,
+                    title: formUpdateLabel,
+                    href: formUpdateHref,
+                },
+            }))
+
+            if(!canSave){
+                setCanSave(true)
+            }
+            
+            console.log("ffafa")
+            closeEditModal()
+            
+        }
+    }
 
     const onChangeTreedata = treeData => {
         updateCurrentMenuState(treeData)
@@ -175,9 +194,10 @@ export default function EditorMenu({menus}) {
 
     const toggleModifySection = (node, path) => {
         
+
         // close
         if (editedMenuItem && editedMenuItem.node.id === node.id) {
-            closeModifyForm()
+            closeEditModal()
         }
 
         // open
@@ -193,19 +213,19 @@ export default function EditorMenu({menus}) {
 
     const onChangeLocale = (selectedIndex) => {
         setCurrentMenuIndex(selectedIndex)
-        closeModifyForm()
+        closeEditModal()
     }
 
     // Effets
 
-    useEffect(() => {
-        if(canSave){
-            // Prevent leaving page without saving
-            window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
-        } else {
-            window.onbeforeunload = null
-        }
-    }, [canSave]);
+    // useEffect(() => {
+    //     if(canSave){
+    //         // Prevent leaving page without saving
+    //         window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
+    //     } else {
+    //         window.onbeforeunload = null
+    //     }
+    // }, [canSave]);
 
 
     // other
@@ -242,6 +262,9 @@ export default function EditorMenu({menus}) {
                         <MenuEditorSidebar
                             editedItem={editedMenuItem}
                             canSave={canSave}
+                            setCanSave={setCanSave}
+                            updateCurrentMenuState={updateCurrentMenuState}
+                            currentMenu={currentMenu}
                         />
                     </div>
 
@@ -259,6 +282,13 @@ export default function EditorMenu({menus}) {
                             onChangeLocale={onChangeLocale}
                             onModifyItem={toggleModifySection}
                             onRemoveItem={removeMenuItem}
+                            closeEditModal={closeEditModal}
+                            onSubmitEdit={submitModifyMenuItem}
+
+                            label={formUpdateLabel}
+                            href={formUpdateHref}
+                            setHref={setFormUpdateHref}
+                            setLabel={setFormUpdateLabel}
                         />
                     </div>
                 </div>

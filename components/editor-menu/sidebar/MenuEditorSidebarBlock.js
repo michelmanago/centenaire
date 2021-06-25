@@ -19,16 +19,16 @@ export default function MenuEditorSidebarBlock({title, children}){
             <div className="bg-gray-100 flex items-center px-3 py-2">
 
                 {/* Title */}
-                <p className="font-semibold pb-0 mr-auto">{title}</p>
+                <p className="font-medium pb-0 mr-auto">{title}</p>
 
                 {/* Trigger */}
-                <button onClick={() => setOpened(!opened)} className="border">
+                <button onClick={() => setOpened(!opened)} className="border rounded">
                     {opened ? <IconArrowUp/> : <IconArrowDown/>}
                 </button>
             </div>
 
             {/* Body */}
-            <div style={{height: opened ? "" : 0}} className="px-3 mt-5 overflow-hidden">
+            <div style={{height: opened ? "" : 0}} className={`px-3 overflow-hidden ${opened ? "py-5" : ""}`}>
                 {children}
             </div>
         </div>

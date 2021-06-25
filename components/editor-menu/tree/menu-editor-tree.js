@@ -2,15 +2,21 @@
 import SortableTree, { getVisibleNodeCount} from 'react-sortable-tree';
 
 // components
-import {RemoveButton, UpdateButton, CloseButton} from '../editor-menu-buttons';
+import {RemoveButton} from '../editor-menu-buttons';
+import ModalEditLink from './ModalEditLink';
 
-export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLocale, currentMenuData, currentLocale, locales, onChangeTreedata, editedMenuItem}){
+export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLocale, currentMenuData, currentLocale, locales, onChangeTreedata, editedMenuItem, label, href, setHref, setLabel, closeEditModal, onSubmitEdit}){
 
     // others
     const count = getVisibleNodeCount({treeData: currentMenuData})
+
+
+    // form
     
     return (
         <div>
+
+            
             {/* Tabs */}
             <div className="flex">
                 {
@@ -37,18 +43,24 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
                     onChange={onChangeTreedata}
                     generateNodeProps={({node, path}) => {
 
-                        let isEditing = editedMenuItem && editedMenuItem.node.id === node.id;
+                        let isCurrentEditingNode = editedMenuItem && editedMenuItem.node.id === node.id;
 
                         return {
                             buttons: [
-                                <UpdateButton
-                                    label={isEditing ? 'Fermer' : 'Modifier'}
-                                    onClick={() => onModifyItem(node, path)}
+                                <ModalEditLink 
+                                    onClick={() => onModifyItem(node, path)} 
+                                    label={label}
+                                    href={href}
+                                    setHref={setHref}
+                                    setLabel={setLabel}
+                                    isEditing={isCurrentEditingNode}
+                                    closeEditModal={closeEditModal}
+                                    onSubmitEdit={onSubmitEdit}
                                 />,
                                 <RemoveButton onClick={() => onRemoveItem(path)} />,
                             ],
                             style: {
-                                boxShadow: isEditing ? '0 0 0 4px #34D399' : '',
+                                boxShadow: isCurrentEditingNode ? '0 0 0 4px #34D399' : '',
                             },
                         };
                     }}

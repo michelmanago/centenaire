@@ -6,11 +6,24 @@ import { useState } from "react";
 import MenuEditorLink from "../forms/MenuEditorLink";
 import MenuEditorSidebarBlock from "./MenuEditorSidebarBlock";
 
-export default function MenuEditorSidebar({editedItem}){
+// utils
+
+
+export default function MenuEditorSidebar({editedItem, updateCurrentMenuState, currentMenu, canSave, setCanSave}){
 
         // states
         const [formCreateLabel, setFormCreateLabel] = useState('');
         const [formCreateHref, setFormCreateHref] = useState('');
+
+        // utils
+        const formatNewMenuItem = (label, href) => {
+        
+            return {
+                id: "new-item" + currentMenu.length,
+                title: label,
+                href: href || '#'
+            }
+        }
 
         // form
         const submitAddMenuItem = (stateLabel, stateHref) => {
@@ -19,7 +32,7 @@ export default function MenuEditorSidebar({editedItem}){
                 // update current state menu
                 
                 updateCurrentMenuState(
-                    [formatNewMenuItem(formCreateLabel, formCreateHref)].concat(currentMenu)
+                    [formatNewMenuItem(formCre^ateLabel, formCreateHref)].concat(currentMenu)
                 )
                 
                 // // reset
@@ -32,34 +45,13 @@ export default function MenuEditorSidebar({editedItem}){
             }
         };
     
-        const submitModifyMenuItem = () => {
-            if (formUpdateHref && formUpdateLabel) {
-    
-                let {path, node} = editedMenuItem;
-    
-                updateCurrentMenuState(changeNodeAtPath({
-                    treeData: currentMenu,
-                    path,
-                    getNodeKey,
-                    newNode: {
-                        ...node,
-                        title: formUpdateLabel,
-                        href: formUpdateHref,
-                    },
-                }))
-    
-                if(!canSave){
-                    setCanSave(true)
-                }
-                
-            }
-        }
-    
+
     return (
         <div className="">
 
             <MenuEditorSidebarBlock title="Liens personnalisés">
 
+                {/* Lien personnalisés */}
                 <MenuEditorLink
                     // text
                     formTitle="Ajouter un lien"
@@ -74,28 +66,6 @@ export default function MenuEditorSidebar({editedItem}){
                 />
 
             </MenuEditorSidebarBlock>
-
-            {/* Form modify */}
-            {/* {editedItem && (
-                <FormMenuItem
-                    // text
-                    formTitle="Modifier un lien"
-                    formSubmitLabel="Modifier le lien"
-                    // submit
-                    onSubmit={submitModifyMenuItem}
-                    // values
-                    label={formUpdateLabel}
-                    onLabelChange={setFormUpdateLabel}
-                    href={formUpdateHref}
-                    onHrefChange={setFormUpdateHref}
-
-                    afterSubmit={
-                        <CloseButton
-                            onClick={closeModifyForm}
-                        />
-                    }
-                />
-            )} */}
         </div>
     )
 }

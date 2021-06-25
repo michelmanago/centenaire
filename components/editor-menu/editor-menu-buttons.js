@@ -21,16 +21,3 @@ export const UpdateButton = ({onClick, label = 'Modifier'}) => {
         </button>
     );
 };
-
-
-export const CloseButton = ({onClick}) => {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            className="block bg-gray-600 hover:bg-gray-700 p-3 rounded text-white font-semibold text-lg mt-1"
-        >
-            Fermer
-        </button>
-    );
-};
