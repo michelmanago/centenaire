@@ -27,7 +27,7 @@ export default function MenuEditorSubmit({canSave, setCanSave, form, menuLocales
         if(confirm("Êtes vous sûr de vouloir sauvegarder les nouveaux menus ? ")){
 
             let menusData = form.map((menu, menuIndex) => ({
-                locale: menus[menuIndex].locale,
+                locale: menuLocales[menuIndex],
                 data: fromTreedataToDBData(menu)
             }))
 

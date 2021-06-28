@@ -49,12 +49,13 @@ export default function MenuEditorPageList({currentLocale, addPageLinks}){
 
         const selectedPages = pages.filter(page => page.selected).map(page => ({
             label: page.pageName,
-            href: getPagePermalien(page)
+            href: page.pageSlug
         }))
         
-
+        // call parent props
         addPageLinks(selectedPages)
 
+        // reset page list
         setPages(pages.map(page => ({...page, selected: false})))
     }
 

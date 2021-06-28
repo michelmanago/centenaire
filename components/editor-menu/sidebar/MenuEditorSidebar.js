@@ -49,8 +49,6 @@ export default function MenuEditorSidebar({updateCurrentMenuState, currentMenu, 
 
     const addPageLinks = links => {
 
-
-        console.log({links})
         updateCurrentMenuState([
             ...links.map(link => formatNewMenuItem(link.label, link.href)),
             ...currentMenu

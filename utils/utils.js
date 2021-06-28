@@ -27,6 +27,11 @@ export function getPagePermalien(page){
     return `${window.location.origin}/${page.pageSlug}` 
 }
 
+// Menu
+export function resolveMenuHref(href){
+    return href
+}
+
 const Utils = {
 
     toMysqlFormat,

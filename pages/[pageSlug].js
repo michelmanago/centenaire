@@ -25,15 +25,8 @@ export default function DynPage({ menu, page}) {
     // Lifecycle
     useEffect(() => {
 
-        // redirect 404
-        if(!page || !page.length){
-            // router.push("/404")
-        } else {
-
-            // hack for dev
-            window.DEV_ADMIN_EDIT = `${window.location.origin}/admin/page/${page.id}`
-
-        }
+        // hack for dev
+        window.EDIT_THIS_PAGE = `${window.location.origin}/admin/page/${page.id}`
         
     }, [])
 
@@ -117,12 +110,8 @@ export async function getStaticProps(context) {
     const menu = await getMenu(context.locale);
     const page = await getPageBySlug(context.locale + "/" + pageSlug).catch(err => null);
 
-    // let listPage = null;
-    // if (pageData) {
-    //     listPage = await getPageByType(pageData.page);
-    // }
+    console.log("back p ", page)
 
-    console.log("pafzf", page)
     return {props: {page, menu}};
 }
 
