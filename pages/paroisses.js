@@ -15,6 +15,7 @@ import SaintBrieuc from '../components/paroisses/saintbrieuc';
 import Chalette from '../components/paroisses/chalette';
 import Grenoble from '../components/paroisses/grenoble';
 import Maastricht from '../components/paroisses/maastricht';
+import Marseille from '../components/paroisses/marseille';
 import { getMenu } from '../model/menu';
 
 
@@ -43,6 +44,8 @@ export default function MaitreSpirituels({menu}) {
                 return "/static/img/paroisses/chalette/bandeau-chalette.jpg";                                
             case 'Maastricht':
                 return "/static/img/paroisses/maastricht/bandeau-maastricht.jpg";                                
+            case 'Marseille':
+                return "/static/img/paroisses/marseille/bandeau-marseille.jpg";                                
             default:
                return null;
         }
@@ -74,7 +77,9 @@ export default function MaitreSpirituels({menu}) {
                 return <Grenoble />;  
             case 'Maastricht':
                 return <Maastricht />;                                            
-                                            
+            case 'Marseille':
+                return <Marseille />;                                            
+                                                
             default:
                 return null;
         }
@@ -140,7 +145,10 @@ export default function MaitreSpirituels({menu}) {
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Maastricht')}>
                             Maastricht
                         </li>
-                        </ul>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Marseille')}>
+                            Marseille
+                        </li>
+                       </ul>
                 </div>
                 <div className="md:w-3/4">{DisplayContent()}</div>
             </div>
