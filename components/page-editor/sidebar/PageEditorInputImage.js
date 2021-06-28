@@ -115,6 +115,8 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
 
     }
     
+    console.log("si endpoint", getServerImageEndpoint())
+    
     return (
         <div className="">
             
