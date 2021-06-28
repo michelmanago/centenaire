@@ -24,7 +24,7 @@ export function handleResponse(){
 // Page
 export function getPagePermalien(page){
 
-    return `${window.location.origin}/${page.pageSlug}` 
+    return `${process.env.NEXTAUTH_URL}/${page.pageSlug}` 
 }
 
 // Menu
@@ -38,7 +38,6 @@ const Utils = {
     inRange,
     twoDigits,
     handleResponse,
-    getPagePermalien
 }
 
 export default Utils

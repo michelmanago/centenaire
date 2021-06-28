@@ -44,11 +44,11 @@ export default function DynPage({ menu, page}) {
             <Header menu={menu.data} />
 
 
-            <main className="border max-w-screen-xl mx-auto py-10 px-10 bg-white">
+            <main className="">
 
                 {/* Page - NO TYPE */}
                 {
-                    page && !pageType && <PageTemplate page={page}/>
+                    page && <PageTemplate page={page}/>
                 }
 
             </main>
@@ -108,9 +108,7 @@ export async function getStaticProps(context) {
     const {pageSlug} = context.params;
 
     const menu = await getMenu(context.locale);
-    const page = await getPageBySlug(context.locale + "/" + pageSlug).catch(err => null);
-
-    console.log("back p ", page)
+    const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
 
     return {props: {page, menu}};
 }

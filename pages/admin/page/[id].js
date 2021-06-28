@@ -1,6 +1,7 @@
 //libs
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import DefaultErrorPage from 'next/error'
 
 // models
 import { getMenu } from "../../../model/menu";
@@ -18,21 +19,12 @@ import Utils from "../../../utils/utils";
 export default function PageEditorUpdate({menu, pageTranslations}) {
 
 
-    if(!pageTranslations){
+    if(!pageTranslations || Array.isArray(pageTranslations) && !pageTranslations.length){
         return <DefaultErrorPage statusCode={404} />
     }
 
-
     // states
     const router = useRouter()
-
-    useEffect(() => {
-
-        if(!pageTranslations || (pageTranslations && !pageTranslations.length)){
-            router.push("/404")
-        }
-
-    }, [])
 
     // methods
     const onSubmit = formPages => {

@@ -11,6 +11,7 @@ import { pageFormat} from '../../utils/page-editor-formats';
 import InputSlug from './inputs/InputSlug';
 import PageEditorSidebar from './sidebar/page-editor-sidebar';
 import BlockList from './blocks/BlockList';
+import { getPagePermalien } from '../../utils/utils';
 
 
 // helpers
@@ -25,7 +26,7 @@ const isTitleEmpty = title => (!title || !title.replace(/\s/g, '').length)
 export default function PageEditor({onFormSubmitted, editedPages}) {
 
     // hooks
-    const { locales } = useRouter();
+    const { locales, defaultLocale } = useRouter();
 
     // States
     // form
@@ -52,8 +53,6 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
             setPages(pages.map((page, pageIndex) => {
 
                 if(pageIndex === currentPageIndex){
-
-                    console.log(currentPage.blocks.map(b => b.position), values.blocks.map(v => v.position))
                     
                     return {
                         ...currentPage,
@@ -160,6 +159,57 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     // methods
 
+    const onRemoveMedia = () => {
+        setPages(pages.map(page => ({
+            ...page,
+            bandeau_id: null
+        })))
+    }
+
+    const onMediaUploaded = mediaId => {
+
+        setPages(pages.map(page => ({
+            ...page,
+            bandeau_id: mediaId
+        })))
+
+    }
+
+    const onRemovePage = () => {
+
+        if(confirm("Êtes vous sûr de vouloir supprimer cette page et ses traductions.")){
+
+            const originalPage = editedPages.find(p => p.language === defaultLocale)
+            const id = originalPage ? originalPage.id : null
+            
+            if(id){
+
+                fetch("/api/page/" + id, {
+                    method: "DELETE",
+                })
+                .then(response => {
+                    if(response.ok){
+                        return response.json()
+                    } else {
+                        throw new Error(response.statusText);
+                    }
+                })
+                .then(body => {
+
+                    // go home
+                    window.location.href = window.location.origin
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+            }
+
+        }
+        
+    }
+
     const onSubmitPage = async () => {
 
 
@@ -255,9 +305,14 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 author={currentPage.author}
                 category={currentPage.page}
                 created_at={currentPage.created_at} last_modified={currentPage.last_modified}
+                pagePermalien={getPagePermalien(currentPage)}
+                bandeau_id={currentPage.bandeau_id}
                 
                 onSubmit={onSubmitPage}
+                onRemovePage={onRemovePage}
                 isSubmitting={isSubmitting}
+                onMediaUploaded={onMediaUploaded}
+                onRemoveMedia={onRemoveMedia}
 
                 onChangeLanguage={onChangeLanguage}
 

@@ -1,6 +1,19 @@
-import { insertPage, insertTranslation, selectAllPages, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
+import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
 import {query} from '../lib/db';
+import { getServeurImageMedia } from '../utils/utils-serveur-image';
 
+
+export async function removePage(pageId){
+
+    const translations = await getPageTranslations(pageId)
+    
+    // delete pages
+    const deletesPages = await deletePages(translations.map(translation => translation.id))
+    const deletedTranslations = await deleteTranslations(translations.map(translation => translation.translation_id))
+
+    return [deletesPages, deleteTranslations]
+    
+}
 
 export async function updateTranslations(pages){
 
@@ -71,11 +84,31 @@ export async function getPageById(id) {
         return null;
 }
 
-export async function getPageBySlug(pageSlug) {
+export async function getPageBySlug(pageSlug, specificContext = "") {
     
     let page = await selectPageBySlug(pageSlug)
 
-    if(page){
+    // in context of show/displaying a page we need more information
+    if(specificContext === "render"){
+
+        // we must pre-fetch bandeau
+        if(page.bandeau_id){
+
+            try {
+                
+                const bandeau = await getServeurImageMedia(page.bandeau_id)
+                page.bandeau = bandeau
+
+            } catch (error) {
+                console.log("Error fetching bandeau", error)
+            }
+
+        }
+        
+    }
+
+    // so that we can directly manipulate JS object in Components
+    if(page && page.blocks){
         page.blocks = JSON.parse(page.blocks)
     }
 
