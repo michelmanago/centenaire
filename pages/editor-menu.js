@@ -107,9 +107,8 @@ const fromDBDataToTreedata = menu => {
     return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
 };
 
-
 export default function EditorMenu({menus}) {
-    
+
     // states
     const [canSave, setCanSave] = useState(false)
     const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
