@@ -4,39 +4,37 @@ import Carousel from '../carousel';
 import Image from 'next/image';
 
 export default function Dormition() {
-    const imgArraySanctuaire = [
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo1.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo2.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo3.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo4.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo5.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo6.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo7.jpg', legende: ''},
-        {url: '/static/img/paroisses/chaville/Sanctuaire/photo8.jpg', legende: ''},
-    ];
-    const imgArrayPose = [
+     const imgArrayPose = [
         {url: '/static/img/paroisses/dormition/Pose/photo1.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Pose/photo2.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Pose/photo3.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Pose/photo4.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Pose/photo5.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Pose/photo6.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Pose/photo7.jpg', legende: ''},
     ];
 
     const imgArrayToday = [
+        {url: '/static/img/paroisses/dormition/Today/portail.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/face.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/arriere.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/clocher1.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/clocher2.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Today/photo1.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo2.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Today/photo3.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo4.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/portes-sanctuaire.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Today/photo5.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/icone-christ.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/icone-vierge-marie.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/archange-gabriel.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/archange-michel.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/photo2.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/photo4.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Today/photo6.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo7.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo8.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo9.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo10.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/photo10.jpg', legende: 'Pâques 2021'},
         {url: '/static/img/paroisses/dormition/Today/photo11.jpg', legende: ''},
         {url: '/static/img/paroisses/dormition/Today/photo12.jpg', legende: ''},
-        {url: '/static/img/paroisses/dormition/Today/photo13.jpg', legende: ''},
+        {url: '/static/img/paroisses/dormition/Today/photo13.jpg', legende: 'bénédiction des koulitchs'},
     ];
     return (
         <div className="px-10 bio-block">

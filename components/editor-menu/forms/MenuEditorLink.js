@@ -1,4 +1,4 @@
-const FormMenuItem = ({
+const MenuEditorLink = ({
     formTitle,
     formSubmitLabel,
 
@@ -13,11 +13,10 @@ const FormMenuItem = ({
 }) => {
     return (
         <form>
-            <p className="text-xl mb-4 font-bold text-2xl">{formTitle}</p>
-            <hr className="mb-5" />
 
+            {/* Label */}
             <div className="flex items-center mb-5">
-                <label className="font-semibold w-1/3" htmlFor="inputLabel">
+                <label className="font-medium w-1/3" htmlFor="inputLabel">
                     Label
                 </label>
                 <input
@@ -32,7 +31,7 @@ const FormMenuItem = ({
 
             {/* URL */}
             <div className="flex items-center">
-                <label className="font-semibold w-1/3" htmlFor="inputHref">
+                <label className="font-medium w-1/3" htmlFor="inputHref">
                     URL
                 </label>
                 <input
@@ -45,18 +44,23 @@ const FormMenuItem = ({
                 />
             </div>
 
-            {/* Submit */}
-            <button
-                type="button"
-                onClick={onSubmit}
-                className="bg-green-400 hover:bg-green-500 p-3 rounded text-white font-semibold text-lg mt-10"
-            >
-                {formSubmitLabel}
-            </button>
+            {/* Actions*/}
+            <div className="flex mt-5">
 
-            {afterSubmit}
+                {/* Submit */}
+                <button
+                    type="button"
+                    onClick={onSubmit}
+                    className="h-10 bg-green-400 hover:bg-green-500 px-3 py-1 rounded text-white font-medium text-md mr-3"
+                >
+                    {formSubmitLabel}
+                </button>
+
+                {/* After */}
+                {afterSubmit}
+            </div>
         </form>
     );
 };
 
-export default FormMenuItem
+export default MenuEditorLink

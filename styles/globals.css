@@ -61,7 +61,7 @@ body {
 
 body{
     @apply bg-pyellow;
-  font-family:'Jost', "Impact";
+  font-family:'Jost', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight:400;
 }
 

@@ -13,6 +13,9 @@ import Troyes from '../components/paroisses/troyes';
 import Olivierdeserres from '../components/paroisses/olivierdeserres';
 import SaintBrieuc from '../components/paroisses/saintbrieuc';
 import Chalette from '../components/paroisses/chalette';
+import Grenoble from '../components/paroisses/grenoble';
+import Maastricht from '../components/paroisses/maastricht';
+import Marseille from '../components/paroisses/marseille';
 import { getMenu } from '../model/menu';
 
 
@@ -39,8 +42,12 @@ export default function MaitreSpirituels({menu}) {
                 return "/static/img/paroisses/saintbrieuc/bandeau-saintbrieuc.jpg";                                
             case 'Chalette':
                 return "/static/img/paroisses/chalette/bandeau-chalette.jpg";                                
+            case 'Maastricht':
+                return "/static/img/paroisses/maastricht/bandeau-maastricht.jpg";                                
+            case 'Marseille':
+                return "/static/img/paroisses/marseille/bandeau-marseille.jpg";                                
             default:
-              return null;
+               return null;
         }
     };
 
@@ -66,10 +73,18 @@ export default function MaitreSpirituels({menu}) {
                 return <SaintBrieuc />;                                            
             case 'Chalette':
                 return <Chalette />;                                            
+            case 'Grenoble':
+                return <Grenoble />;  
+            case 'Maastricht':
+                return <Maastricht />;                                            
+            case 'Marseille':
+                return <Marseille />;                                            
+                                                
             default:
                 return null;
         }
     };
+
 
     return (
         <div className="bg-pyellow">
@@ -80,14 +95,14 @@ export default function MaitreSpirituels({menu}) {
  
             {menu && <Header menu={menu.data}/>}
 
-            <header className={styles.header + ' relative'}>
+            {Bandeau() && <header className={styles.header + ' relative'}>
                     <Image
                         src= {Bandeau()}
                         // height={360}
                         objectFit="cover"
                         layout="fill"
                     />
-                    </header>
+            </header>}
             <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
 
                 <div className="visible md:hidden">
@@ -124,7 +139,16 @@ export default function MaitreSpirituels({menu}) {
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Chalette')}>
                             Chalette
                         </li>
-                     </ul>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Grenoble')}>
+                            Grenoble
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Maastricht')}>
+                            Maastricht
+                        </li>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('Marseille')}>
+                            Marseille
+                        </li>
+                       </ul>
                 </div>
                 <div className="md:w-3/4">{DisplayContent()}</div>
             </div>

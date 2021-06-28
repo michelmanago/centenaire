@@ -1,20 +1,20 @@
 // libs
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from "react"
 
 // style
 import styles from "./nav.module.css"
 
+// utils
+import { resolveMenuHref } from '../../utils/utils'
+
+
+
+
 const NavLink = ({item}) => {
 
-
-    // hooks
-    const { locale } = useRouter()
-
-
     let has_children = !!item.subMenu
-    let href = `/${locale}${item.href}`
+    let href = resolveMenuHref(item.href)
 
     if(has_children){
   

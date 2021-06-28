@@ -51,9 +51,9 @@ export default async function handler(req, res) {
         console.log(e)
 
         if(e.status){
-            return res.status(e.status)
+            res.status(e.status)
         } else {
-            return res.status(500)
+            res.status(500)
         }
         
         return res.json({ message: e.message })
