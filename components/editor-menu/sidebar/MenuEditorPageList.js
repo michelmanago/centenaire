@@ -1,40 +1,21 @@
 // libs
 import { useEffect, useState } from "react"
 
-export default function MenuEditorPageList({currentLocale, addPageLinks}){
+// utils
+import { onSubmitPreventForm } from "../../../utils/utils"
 
-    const [pages, setPages] = useState([])
 
-    // lifecylce
-    useEffect(() => {
+export default function MenuEditorPageList({setAvailablePages, availablePages, currentLocale, addPageLinks}){
 
-        const url = new URL(window.location.origin + "/api/page/all")
-        url.searchParams.append("locale", currentLocale)
 
-        fetch(url.toString())
-        .then(response => {
-            if(response.ok){
-                return response.json()
-            } else {
-                throw new Error(response.statusText);
-            }
-        })
-        .then(body => (
-            setPages(body.map(page => ({...page, selected: false})))
-        ))
-        .catch(err => {
-            console.log("err", err)
-        })
-
-    }, [currentLocale])
-
+    
 
     // listeners
     const onAddPage = page => event => {
 
         const isAdding = event.target.checked
 
-        setPages(pages.map(p => {
+        setAvailablePages(availablePages.map(p => {
             if(p.id === page.id){
                 return {...p, selected: isAdding}
             } else {
@@ -46,30 +27,28 @@ export default function MenuEditorPageList({currentLocale, addPageLinks}){
 
     const onSubmitPages = () => {
 
-        const selectedPages = pages.filter(page => page.selected).map(page => ({
-            label: page.pageName,
-            href: page.pageSlug
-        }))
-        
+        const selectedPages = availablePages.filter(page => page.selected)
+
         // call parent props
         addPageLinks(selectedPages)
 
         // reset page list
-        setPages(pages.map(page => ({...page, selected: false})))
+        setAvailablePages(availablePages.map(page => ({...page, selected: false})))
     }
 
     return (
-        <div className="">
+        <form onSubmit={onSubmitPreventForm} className="">
 
             {/* List */}
-            <div className="border rounded px-5 py-3">
+            <div className="border rounded px-5 py-3 overflow-scroll">
                 {
-                    pages.map(page => {
+                    // show only pages from current language
+                    availablePages.filter(page => page.language === currentLocale).map(page => {
 
                         const permalien = page.pageSlug
 
                         return (
-                            <div key={"link" + page.id} className="flex items-center">
+                            <div key={"link" + page.id} className="flex items-center whitespace-nowrap">
     
                                 {/* Checkbox */}
                                 <input checked={page.selected} onChange={onAddPage(page)} className="mr-5" type="checkbox" />
@@ -78,7 +57,7 @@ export default function MenuEditorPageList({currentLocale, addPageLinks}){
                                 <a className="inline-block text-blue-400 underline min-w-max" target="_blank" href={permalien} >{page.pageName}</a>
     
                                 {/* Preview link */}
-                                <span className="text-xs ml-5 truncate">{permalien}</span>
+                                <span className="text-xs ml-5">{permalien}</span>
     
                             </div>
                         )
@@ -88,13 +67,13 @@ export default function MenuEditorPageList({currentLocale, addPageLinks}){
 
             {/* Add button */}
             <button
-                type="button"
+                type="submit"
                 onClick={onSubmitPages}
                 className="h-10 bg-green-400 hover:bg-green-500 px-3 py-1 rounded text-white font-medium text-md mr-3 mt-4"
             >
                Ajouter au menu 
             </button>
-        </div>
+        </form>
     )
 
 }

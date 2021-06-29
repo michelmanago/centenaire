@@ -1,7 +1,7 @@
 // libs
 import React, {useEffect, useState} from 'react';
 import Head from 'next/head';
-import {changeNodeAtPath, removeNodeAtPath} from 'react-sortable-tree';
+import {changeNodeAtPath, insertNode, removeNodeAtPath, getNodeAtPath} from 'react-sortable-tree';
 
 // components
 import Header from '../components/header/header';
@@ -12,133 +12,114 @@ import MenuEditorTree from '../components/editor-menu/tree/menu-editor-tree';
 import {getMenus} from '../model/menu';
 import MenuEditorSidebar from '../components/editor-menu/sidebar/MenuEditorSidebar';
 
-const HEADER_NAV_DATA = [
-    {
-        label: 'Historique',
-        href: '#',
-        subMenu: [{label: 'Avant 1917', href: '/', subMenu: [{label: 'XXXX  - - Avant 1917', href: '/'}]}],
-    },
-    {
-        label: 'Personnalités',
-        href: '#',
-        subMenu: [
-            {label: 'Les saints', href: '/saints'},
-            {label: 'Les primats', href: '/'},
-            {label: 'Les évêques', href: '/'},
-            {label: 'Les maîtres spirituels', href: '/maitrespirituels'},
-            {label: 'Les laïcs', href: '/'},
-        ],
-    },
-    {
-        label: 'Paroisses',
-        href: '#',
-        subMenu: [
-            {
-                label: 'Liste de toutes les paroisses actuelles',
-                href: '/paroisses',
-                subMenu: [
-                    {label: 'Notre-Dame Souveraine à Chaville', href: '/'},
-                    {label: 'Notre Dame de la Dormition', href: '/'},
-                    {label: 'Cathédrale Saint Alexandre Nevski', href: '/'},
-                ],
-            },
-            {
-                label: 'Profil des paroisses les plus typiques/intéressantes/ dynamiques (critères de sélection à débattre)',
-                href: '/',
-            },
-            {label: 'La vie quotidienne', href: '/'},
-        ],
-    },
-    {
-        label: 'la théologie',
-        href: '#',
-        subMenu: [
-            {label: "l'Institut Saint-Serge", href: '/'},
-            {label: 'les grands théologiens et philosophes', href: '/'},
-            {label: 'la querelle de la sophiologie', href: '/'},
-            {label: 'les publications', href: '/'},
-        ],
-    },
-    {
-        label: 'Patrimoine artistique',
-        href: '#',
-        subMenu: [
-            {label: 'les monuments historiques', href: '/'},
-            {label: "l' œuvre architecturale", href: '/'},
-            {label: 'les iconographes', href: '/'},
-            {label: 'les compositeurs de musique liturgique', href: '/compositeurs'},
-            {label: "artistes ayant collaboré à la vie culturelle de l'archevêché", href: '/'},
-            {label: 'œuvre artistique mettant en valeur la vie des églises', href: '/'},
-        ],
-    },
-    {
-        label: "l'action culturelle",
-        href: '#',
-        subMenu: [
-            {label: 'Les écoles paroissiales', href: '/'},
-            {label: 'YMCA Press et les Editeurs Réunis', href: '/'},
-            {label: 'les mouvements de jeunesse', href: '/'},
-            {label: 'l’émission Orthodoxie', href: '/'},
-            {label: 'Les pèlerinages', href: '/'},
-        ],
-    },
-    {
-        label: 'l’oecuménisme',
-        href: '/',
-    },
-];
-
 // format
-const fromDBDataToTreedata = menu => {
-    let format = (menuItem, index, prefix) => {
-        let id = prefix + index;
-        let hasChildren = menuItem.subMenu && menuItem.subMenu.length;
+import { formatNewMenuItem, fromDBDataToTreedata } from '../utils/editor-menu-formats';
+import { recursiveMapTreeData } from '../utils/utils';
 
-        return {
-            id: id,
-            title: menuItem.label,
-            expanded: hasChildren ? true : false,
-            href: menuItem.href || '#',
-            children:
-                hasChildren ? menuItem.subMenu.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')) : null,
-        };
-    };
+// utils
+const retrieveTranslationsFrom = (pages = [], original_id, language) => {
 
-    return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
-};
+    // all translations of page
+    let translations = pages.filter(page => page.original_id === original_id)
+
+
+    // translation with language = language
+    return translations.find(page => page.language === language)
+}
 
 export default function EditorMenu({menus}) {
 
     // states
-    const [canSave, setCanSave] = useState(false)
-    const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
-    const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => fromDBDataToTreedata(menu ? menu.data : [])))
-    const currentMenu = editableMenus ? editableMenus[currentMenuIndex] : null
-    // create form
-    // update form
-    const [editedMenuItem, setEditedMenuItem] = useState(null);
-    const [formUpdateLabel, setFormUpdateLabel] = useState('');
-    const [formUpdateHref, setFormUpdateHref] = useState('');
+        const [canSave, setCanSave] = useState(false)
+        const [currentMenuIndex, setCurrentMenuIndex] = useState(0)
+        const [editableMenus, setEditableMenus] = useState(menus && menus.map(menu => fromDBDataToTreedata(menu ? menu.data : [])))
+        const [synchronizedActions, setSynchronizedActions] = useState([])
+        const currentMenu = editableMenus ? editableMenus[currentMenuIndex] : null
 
-    // menu locale
-    const [locale, setLocale] = useState(null)
+        // create form
+        // update form
+        const [editedMenuItem, setEditedMenuItem] = useState(null);
+        const [formUpdateLabel, setFormUpdateLabel] = useState('');
+        const [formUpdateHref, setFormUpdateHref] = useState('');
+
+        // menu locale
+        const [locale, setLocale] = useState(null)
+
+        // existing pages - pages created by admin/page/create
+        const [availablePages, setAvailablePages] = useState([])
+
 
     // utils
-    const getNodeKey = ({treeIndex}) => treeIndex;
-    const updateCurrentMenuState = nextState => setEditableMenus(editableMenus.map((menu, menuIndex) => menuIndex === currentMenuIndex ? nextState : menu))
-    const closeEditModal = () => {
-        // close form
-        setEditedMenuItem(null);
+        const getNodeKey = ({treeIndex}) => treeIndex
+        const updateCurrentMenuState = nextState => setEditableMenus(editableMenus.map((menu, menuIndex) => menuIndex === currentMenuIndex ? nextState : menu))
+        const closeEditModal = () => {
+            // close form
+            setEditedMenuItem(null);
 
-        // reset
-        setFormUpdateHref('');
-        setFormUpdateLabel('');
-    }
+            // reset
+            setFormUpdateHref('');
+            setFormUpdateLabel('');
+        }
 
 
-    // listeners
+
+
+    // lifecyle
+        // fetch all pages
+        useEffect(() => {
+
+            const url = new URL(window.location.origin + "/api/page/all")
+    
+            fetch(url.toString())
+            .then(response => {
+                if(response.ok){
+                    return response.json()
+                } else {
+                    throw new Error(response.statusText);
+                }
+            })
+            .then(body => (
+                setAvailablePages(body.map(page => ({...page, selected: false})))
+            ))
+            .catch(err => {
+                console.log("err", err)
+            })
+    
+        }, [])
 
     // via tree
+
+    const onAddLinks = (links = []) => {
+
+        const menusWithNewLinks = (editableMenus.map((menuLinks, menuIndex) => {
+
+            let addedLinks = links.map(link => {
+
+                // link is existing page and have translation
+                // synchronize pages translations
+                if(link.original_id){
+
+                    const retrievedTranslationLink = retrieveTranslationsFrom(availablePages, link.original_id, menus[menuIndex].locale)
+                    return retrievedTranslationLink ? formatNewMenuItem(retrievedTranslationLink.pageName, retrievedTranslationLink.pageSlug) : null
+                }
+
+                return link
+
+            })
+
+            // in case one link has not been found just ignore translation
+            addedLinks = addedLinks.filter(f => f)
+
+            return [...addedLinks, ...menuLinks]
+
+        }))
+
+        setEditableMenus(menusWithNewLinks)
+        
+        if(!canSave){
+            setCanSave(true)
+        }
+    }
 
     const submitModifyMenuItem = () => {
         if (formUpdateHref && formUpdateLabel) {
@@ -160,31 +141,108 @@ export default function EditorMenu({menus}) {
                 setCanSave(true)
             }
             
-            console.log("ffafa")
             closeEditModal()
             
         }
     }
 
-    const onChangeTreedata = treeData => {
-        updateCurrentMenuState(treeData)
+    const onVisibilityToggle = ({path, expanded, node}) => {
+
+        // not synchronized
+        setEditableMenus(editableMenus.map(menu => {
+
+            let correspondingNode = getNodeAtPath({
+                treeData: menu,
+                path: path,
+                getNodeKey,
+            })
+
+            if(correspondingNode && correspondingNode.node){
+
+                correspondingNode = correspondingNode.node
+
+                const changedTree = changeNodeAtPath({
+                    treeData: menu,
+                    path: path,
+                    newNode: {
+                        ...correspondingNode,
+                        expanded: expanded
+                    },
+                    getNodeKey, 
+                })
+
+                return changedTree
+            }
+
+            return menu
+        }))
+    }
+    const onMoveNode = ({prevPath, nextPath, nextTreeIndex }) => {
+
+
+        // moving nodes is synchronized
+        const menus = editableMenus.map(menu => {
+
+            let correspondingNode = getNodeAtPath({
+                treeData: menu,
+                path: prevPath,
+                getNodeKey,
+            })
+
+            if(correspondingNode && correspondingNode.node){
+
+                correspondingNode = correspondingNode.node
+
+                const treeTheWithoutNode = removeNodeAtPath({
+                    treeData: menu,
+                    path: prevPath,
+                    getNodeKey,
+                })
+    
+    
+                const finalTreeData = insertNode({
+                    treeData: treeTheWithoutNode,
+                    newNode: correspondingNode,
+                    depth: nextPath.length - 1,
+                    minimumTreeIndex: nextTreeIndex,
+                    expandParent: true,
+                    getNodeKey: getNodeKey,
+                })
+
+                return finalTreeData.treeData
+
+            }
+    
+            return menu
+
+        })
+        
+
+        setEditableMenus(menus)
 
         if(!canSave){
             setCanSave(true)
         }
+
     }
+
 
     const removeMenuItem = path => {
 
-        if (confirm('Êtes vous sûr ? ')) {
+        if (confirm('Êtes vous sûr de vouloir supprimer cet élements et ses enfants dans toutes les traductions ?')) {
 
             // update current state menu
-            updateCurrentMenuState(removeNodeAtPath({
-                treeData: currentMenu,
-                path,
-                getNodeKey,
-            }))
+            
+            // remove is synchronized
+            // remove in all languages
+            setEditableMenus(editableMenus.map(menuData => 
+                removeNodeAtPath({
+                    treeData: menuData,
+                    path,
+                    getNodeKey,
+            })))
 
+            
             if(!canSave){
                 setCanSave(true)
             }
@@ -193,9 +251,8 @@ export default function EditorMenu({menus}) {
 
     const toggleModifySection = (node, path) => {
         
-
         // close
-        if (editedMenuItem && editedMenuItem.node.id === node.id) {
+        if (editedMenuItem && editedMenuItem.node.uuid === node.uuid) {
             closeEditModal()
         }
 
@@ -260,12 +317,11 @@ export default function EditorMenu({menus}) {
                     {/* Sidebar */}
                     <div className="p-5 w-1/3 flex flex-col">
                         <MenuEditorSidebar
-                            editedItem={editedMenuItem}
-                            canSave={canSave}
-                            setCanSave={setCanSave}
-                            updateCurrentMenuState={updateCurrentMenuState}
+                            onAddLinks={onAddLinks}
                             currentMenu={currentMenu}
                             currentLocale={currentLocale}
+                            availablePages={availablePages}
+                            setAvailablePages={setAvailablePages}
                         />
                     </div>
 
@@ -279,12 +335,13 @@ export default function EditorMenu({menus}) {
 
                             editedMenuItem={editedMenuItem}
 
-                            onChangeTreedata={onChangeTreedata}
                             onChangeLocale={onChangeLocale}
                             onModifyItem={toggleModifySection}
                             onRemoveItem={removeMenuItem}
                             closeEditModal={closeEditModal}
                             onSubmitEdit={submitModifyMenuItem}
+                            onMoveNode={onMoveNode}
+                            onVisibilityToggle={onVisibilityToggle}
 
                             label={formUpdateLabel}
                             href={formUpdateHref}

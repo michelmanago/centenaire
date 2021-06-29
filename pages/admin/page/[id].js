@@ -12,7 +12,7 @@ import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
 
 // utils
-import Utils from "../../../utils/utils";
+import {toMysqlFormat} from "../../../utils/utils";
 
 // utils
 
@@ -33,7 +33,7 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
 
         const originalPage = pageTranslations.find(page => page.language === router.defaultLocale)
 
-        const now = Utils.toMysqlFormat(new Date())
+        const now = toMysqlFormat(new Date())
         formPages = formPages.map(formPagesItem => ({
             ...formPagesItem,
             last_modified: now

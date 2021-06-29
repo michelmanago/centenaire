@@ -4,9 +4,13 @@ import { getMenu } from "../../../model/menu";
 // components
 import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
+
+// libs
 import { useEffect } from "react";
-import Utils from "../../../utils/utils";
 import { useRouter } from "next/router";
+
+// utils
+import { toMysqlFormat } from "../../../utils/utils";
 
 export default function PageEditorCreate({menu}) {
 
@@ -17,7 +21,7 @@ export default function PageEditorCreate({menu}) {
     const onSubmit = async formPages => {
 
         // add created_at
-        const now = Utils.toMysqlFormat(new Date())
+        const now = toMysqlFormat(new Date())
         formPages = formPages.map(formPagesItem => ({
             ...formPagesItem,
             created_at: now
