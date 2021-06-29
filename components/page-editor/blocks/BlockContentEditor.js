@@ -44,10 +44,10 @@ const BlockContentEditor = ({type, position ,content, setContent, removeBlockCon
 
                 {/* HTML EDITOR */}
                 {(type === 'text' && position) && (
-                    // <div>
-                    //     <CustomEditor block={content} setContent={setContent} />
-                    // </div>
-                    <textarea className="w-full h-20" onChange={e => setContent(e.target.value)} value={content} name="" id="" cols="30" rows="10"></textarea>
+                     <div>
+                         <CustomEditor block={content} setContent={setContent} />
+                     </div>
+                    //<textarea className="w-full h-20" onChange={e => setContent(e.target.value)} value={content} name="" id="" cols="30" rows="10"></textarea>
                 )}
 
                 {/* CAROUSEL */}
