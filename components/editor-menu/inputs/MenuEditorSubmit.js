@@ -9,7 +9,7 @@ const fromTreedataToDBData = menu => {
             label: menuItem.title,
             href: menuItem.href || '#',
             subMenu:
-                hasChildren && menuItem.children.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')),
+                hasChildren ? menuItem.children.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')) : null,
         };
     };
 

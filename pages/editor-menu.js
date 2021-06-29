@@ -100,7 +100,7 @@ const fromDBDataToTreedata = menu => {
             expanded: hasChildren ? true : false,
             href: menuItem.href || '#',
             children:
-                hasChildren && menuItem.subMenu.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')),
+                hasChildren ? menuItem.subMenu.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')) : null,
         };
     };
 
