@@ -39,11 +39,6 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
             {/* Tree */}
             <div style={{height: count * 62}} className="">
                 <SortableTree
-                    treeData={[
-                        {title: "POMME"}
-                    ]}
-                />
-                {/* <SortableTree
                     treeData={currentMenuData}
                     onChange={onChangeTreedata}
                     generateNodeProps={({node, path}) => {
@@ -69,7 +64,7 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
                             },
                         };
                     }}
-                /> */}
+                />
             </div>
         </div>
     )
