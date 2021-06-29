@@ -17,27 +17,35 @@ export function inRange(x, min, max) {
 }
 
 // FETCH
-export function handleResponse(){
-
-}
-
-// Page
-export function getPagePermalien(page){
-
-    return `${process.env.NEXTAUTH_URL}/${page.pageSlug}` 
-}
 
 // Menu
 export function resolveMenuHref(href){
     return href
 }
 
-const Utils = {
+// Tree data
+export function recursiveMapTreeData(treeData, cb){
 
-    toMysqlFormat,
-    inRange,
-    twoDigits,
-    handleResponse,
+    return treeData.map(treeDataItem => {
+
+        const item = cb(treeDataItem)
+
+        if(item.children && item.children.length){
+            item.children = recursiveMapTreeData(item.children)
+        }
+
+        return item
+
+    })
+
 }
 
-export default Utils
+// HTML
+
+// form
+export function onSubmitPreventForm(event){
+    event.preventDefault();
+    event.stopPropagation();
+}
+
+export function voidFunction(){}

@@ -1,15 +1,18 @@
 // libs
 import SortableTree, { getVisibleNodeCount} from 'react-sortable-tree';
+import { voidFunction } from '../../../utils/utils';
 
 // components
 import {RemoveButton} from '../editor-menu-buttons';
 import ModalEditLink from './ModalEditLink';
 
-export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLocale, currentMenuData, currentLocale, locales, onChangeTreedata, editedMenuItem, label, href, setHref, setLabel, closeEditModal, onSubmitEdit}){
+
+const MAX_TREE_DEPTH = 3
+
+export default function MenuEditorTree({onVisibilityToggle, onMoveNode, onRemoveItem, onModifyItem, onChangeLocale, currentMenuData, currentLocale, locales, editedMenuItem, label, href, setHref, setLabel, closeEditModal, onSubmitEdit}){
 
     // others
     const count = getVisibleNodeCount({treeData: currentMenuData})
-
 
     // form
     
@@ -35,15 +38,21 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
                     })
                 }
             </div>
+
+
+            
                     
             {/* Tree */}
-            <div style={{height: count* 62}} className="">
+            <div style={{height: count * 62}} className="">
                 <SortableTree
+                    onChange={voidFunction} // this props is required
+                    maxDepth={MAX_TREE_DEPTH}
                     treeData={currentMenuData}
-                    onChange={onChangeTreedata}
-                    generateNodeProps={({node, path}) => {
+                    onMoveNode={onMoveNode}
+                    onVisibilityToggle={onVisibilityToggle}
+                    generateNodeProps={({node, path, treeIndex}) => {
 
-                        let isCurrentEditingNode = editedMenuItem && editedMenuItem.node.id === node.id;
+                        let isCurrentEditingNode = editedMenuItem && editedMenuItem.node.uuid === node.uuid;
 
                         return {
                             buttons: [

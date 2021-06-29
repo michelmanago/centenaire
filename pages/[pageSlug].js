@@ -26,7 +26,7 @@ export default function DynPage({ menu, page}) {
     useEffect(() => {
 
         // hack for dev
-        window.EDIT_THIS_PAGE = `${window.location.origin}/admin/page/${page.id}`
+        window.EDIT_THIS_PAGE = `${window.location.origin}/admin/page/${page.originalPageId}`
         
     }, [])
 

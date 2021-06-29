@@ -4,8 +4,8 @@ import InputSubmitPage from '../inputs/InputSubmitPage';
 import PageEditorInputImage from './PageEditorInputImage';
 
 // utils
-import Utils, {getPagePermalien} from '../../../utils/utils';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
+
 
 const categories = [
     {

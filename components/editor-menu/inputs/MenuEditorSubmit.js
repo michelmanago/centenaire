@@ -1,20 +1,5 @@
 // utils
-
-const fromTreedataToDBData = menu => {
-    let format = (menuItem, index, prefix) => {
-        let id = prefix + index;
-        let hasChildren = menuItem.children && menuItem.children.length;
-
-        return {
-            label: menuItem.title,
-            href: menuItem.href || '#',
-            subMenu:
-                hasChildren && menuItem.children.map((subMenuItem, subIndex) => format(subMenuItem, subIndex, id + '-')),
-        };
-    };
-
-    return menu.map((menuItem, index) => format(menuItem, index, 'item-'));
-};
+import { fromTreedataToDBData } from "../../../utils/editor-menu-formats"
 
 
 export default function MenuEditorSubmit({canSave, setCanSave, form, menuLocales}){
