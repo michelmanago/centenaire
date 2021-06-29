@@ -166,11 +166,11 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         })))
     }
 
-    const onMediaUploaded = mediaId => {
+    const onMediaUploaded = media => {
 
         setPages(pages.map(page => ({
             ...page,
-            bandeau_id: mediaId
+            bandeau_id: media.id
         })))
 
     }
@@ -253,7 +253,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     // console.log("redner", currentPage.blocks)
 
     return (
-        <div className="max-w-screen-xl mx-auto py-10 px-10 border bg-white">
+        <div className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
 
             <div className="flex p-8 gap-x-8">
 

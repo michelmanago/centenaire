@@ -31,7 +31,7 @@ export default function PageTemplate({page}) {
                         } else if (block.type === 'carousel') {
                             return (
                                 <Fragment key={block.id}>
-                                    <CarouselParam imgList={block.content} id={block.id} />
+                                    <CarouselParam imgList={block.content.data} legende={block.content.legende} id={block.id} />
                                 </Fragment>
                             );
                         }
