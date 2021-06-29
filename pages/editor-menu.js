@@ -231,6 +231,8 @@ export default function EditorMenu({menus}) {
     const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
     const currentLocale = menus[currentMenuIndex].locale
 
+    console.log(process.env.NEXTAUTH_URL)
+
     return (
         <div>
             <Head>
