@@ -17,21 +17,22 @@ const ButtonPositionArrow = ({children, onClick}) => (
 )
 
 const BlockContentEditor = ({type, position ,content, setContent, removeBlockContent, setBlockPosition}) => {
+    console.log('content', content);
     
     return (
-        <div className="mb-10 border-r-4 pr-5 flex flex-col items-end">
+        <div className="flex flex-col items-end pr-5 mb-10 border-r-4">
 
             {/* Position */}
             <div class="border mb-3 flex">
                 {/* Up */}
                 <ButtonPositionArrow onClick={() => setBlockPosition(- 1)}><IconArrowUp/></ButtonPositionArrow>
-                <span className="w-6 flex justify-center items-center">{position}</span>
+                <span className="flex items-center justify-center w-6">{position}</span>
                 {/* Down */}
                 <ButtonPositionArrow onClick={() => setBlockPosition(+ 1)}><IconArrowDown/></ButtonPositionArrow>
             </div>
 
             {/* Remove */}
-            <button onClick={removeBlockContent} className="flex text-red-600 hover:text-red-700 items-center justify-center mb-3">
+            <button onClick={removeBlockContent} className="flex items-center justify-center mb-3 text-red-600 hover:text-red-700">
                 <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
             </button>
             
@@ -50,7 +51,7 @@ const BlockContentEditor = ({type, position ,content, setContent, removeBlockCon
                 )}
 
                 {/* CAROUSEL */}
-                {type === 'carousel' && <CarouselEditor block={content} setContent={setContent} />}
+                {type === 'carousel' && <CarouselEditor content={content} setContent={setContent} />}
             </div>
         </div>
     );
