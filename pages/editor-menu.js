@@ -231,7 +231,8 @@ export default function EditorMenu({menus}) {
     const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
     const currentLocale = menus[currentMenuIndex].locale
 
-    console.log(process.env.NEXTAUTH_URL)
+
+    console.log("le env", process.env.NEXTAUTH_URL)
 
     return (
         <div>
@@ -273,7 +274,7 @@ export default function EditorMenu({menus}) {
 
                     {/* Tree */}
                     <div className="flex-1 p-5">
-                        {/* <MenuEditorTree
+                        <MenuEditorTree
                             currentLocale={menus[currentMenuIndex].locale}
                             currentMenuData={currentMenu}
 
@@ -292,7 +293,7 @@ export default function EditorMenu({menus}) {
                             href={formUpdateHref}
                             setHref={setFormUpdateHref}
                             setLabel={setFormUpdateLabel}
-                        /> */}
+                        />
                     </div>
                 </div>
             </div>
