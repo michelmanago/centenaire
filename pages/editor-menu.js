@@ -271,7 +271,7 @@ export default function EditorMenu({menus}) {
 
                     {/* Tree */}
                     <div className="flex-1 p-5">
-                        <MenuEditorTree
+                        {/* <MenuEditorTree
                             currentLocale={menus[currentMenuIndex].locale}
                             currentMenuData={currentMenu}
 
@@ -290,7 +290,7 @@ export default function EditorMenu({menus}) {
                             href={formUpdateHref}
                             setHref={setFormUpdateHref}
                             setLabel={setFormUpdateLabel}
-                        />
+                        /> */}
                     </div>
                 </div>
             </div>
