@@ -217,22 +217,19 @@ export default function EditorMenu({menus}) {
 
     // Effets
 
-    // useEffect(() => {
-    //     if(canSave){
-    //         // Prevent leaving page without saving
-    //         window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
-    //     } else {
-    //         window.onbeforeunload = null
-    //     }
-    // }, [canSave]);
+    useEffect(() => {
+        if(canSave){
+            // Prevent leaving page without saving
+            window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
+        } else {
+            window.onbeforeunload = null
+        }
+    }, [canSave]);
 
 
     // other
     const defaultLocaleMenu = menus && menus.length && menus.find(menu => menu.locale === "fr")
     const currentLocale = menus[currentMenuIndex].locale
-
-
-    console.log("le env", process.env.NEXTAUTH_URL)
 
     return (
         <div>

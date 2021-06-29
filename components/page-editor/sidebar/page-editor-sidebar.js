@@ -5,7 +5,6 @@ import InputSubmitPage from '../inputs/InputSubmitPage';
 import PageEditorInputImage from "./PageEditorInputImage"
 
 // utils
-import Utils, { getPagePermalien } from '../../../utils/utils';
 import { useRouter } from 'next/router';
 
 
@@ -131,7 +130,7 @@ const PageEditorSidebar = ({
 
                 {/* Remove page */}
                 {isEditing && <div>
-                    <button onClick={onRemovePage} target="_blank" className="underline text-red-500" href={pagePermalien}>Supprimer la page et ses traductions.</button>
+                    <button onClick={onRemovePage} target="_blank" className="underline text-red-500">Supprimer la page et ses traductions.</button>
                 </div>}
 
                 {/* Publier */}

@@ -12,8 +12,6 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
 
 
     // form
-
-    console.log("the tree", currentMenuData)
     
     return (
         <div>

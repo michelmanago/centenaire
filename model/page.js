@@ -1,4 +1,4 @@
-import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
+import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectOriginalPageId, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
 import {query} from '../lib/db';
 import { getServeurImageMedia } from '../utils/utils-serveur-image';
 
@@ -104,7 +104,10 @@ export async function getPageBySlug(pageSlug, specificContext = "") {
             }
 
         }
-        
+
+        // fetchOriginalPageId
+        const originalPageId = await selectOriginalPageId(page.id)
+        page.originalPageId = originalPageId ? originalPageId.original_id : null 
     }
 
     // so that we can directly manipulate JS object in Components

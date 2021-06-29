@@ -11,7 +11,6 @@ import { pageFormat} from '../../utils/page-editor-formats';
 import InputSlug from './inputs/InputSlug';
 import PageEditorSidebar from './sidebar/page-editor-sidebar';
 import BlockList from './blocks/BlockList';
-import { getPagePermalien } from '../../utils/utils';
 
 
 // helpers
@@ -305,7 +304,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 author={currentPage.author}
                 category={currentPage.page}
                 created_at={currentPage.created_at} last_modified={currentPage.last_modified}
-                pagePermalien={getPagePermalien(currentPage)}
+                pagePermalien={currentPage.pageSlug}
                 bandeau_id={currentPage.bandeau_id}
                 
                 onSubmit={onSubmitPage}

@@ -21,12 +21,6 @@ export function handleResponse(){
 
 }
 
-// Page
-export function getPagePermalien(page){
-
-    return `${process.env.NEXTAUTH_URL}/${page.pageSlug}` 
-}
-
 // Menu
 export function resolveMenuHref(href){
     return href
