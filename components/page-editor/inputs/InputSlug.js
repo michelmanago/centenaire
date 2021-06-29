@@ -60,7 +60,7 @@ const InputSlug = ({slugWithoutLocale, originalSlug, setSlug, currentLanguage}) 
         <div className="flex items-center mb-6 ">
             {/* Label */}
             <label style={permalinkLabelStyle} className="mr-5 font-semibold" htmlFor="inputSlug">
-                Permalien :{' '}
+                Permalien :
             </label>
 
             {/* Input container */}

@@ -2,9 +2,9 @@
 // components
 import PageEditorSidebarBlock from './page-editor-sidebar-block';
 import InputSubmitPage from '../inputs/InputSubmitPage';
+import PageEditorInputImage from "./PageEditorInputImage"
 
 // utils
-import Utils from '../../../utils/utils';
 import { useRouter } from 'next/router';
 
 
@@ -30,10 +30,15 @@ const PageEditorSidebar = ({
     author,
     category,
     created_at, last_modified,
+    pagePermalien,
+    bandeau_id,
     
     onSubmit,
+    onRemovePage,
     isSubmitting,
     onChangeLanguage,
+    onMediaUploaded,
+    onRemoveMedia,
 
     notAllowedToSave
 
@@ -50,6 +55,16 @@ const PageEditorSidebar = ({
     return (
         <div className="w-2/5">
 
+
+            {/* Block bandeau */}
+            <PageEditorSidebarBlock title="Bandeau de page">
+                <PageEditorInputImage
+                    onMediaUploaded={onMediaUploaded}
+                    onRemoveMedia={onRemoveMedia}
+                    mediaId={bandeau_id}
+                />
+            </PageEditorSidebarBlock>
+            
             {/* Block langues */}
             <PageEditorSidebarBlock title="Langues">
                 <select
@@ -107,6 +122,16 @@ const PageEditorSidebar = ({
                         </div>
                     </>
                 )}
+
+                {/* Permalien */}
+                <div>
+                    <a target="_blank" className="underline" href={pagePermalien}>Lien vers la page</a>
+                </div>
+
+                {/* Remove page */}
+                {isEditing && <div>
+                    <button onClick={onRemovePage} target="_blank" className="underline text-red-500">Supprimer la page et ses traductions.</button>
+                </div>}
 
                 {/* Publier */}
                 <div className="flex justify-end">

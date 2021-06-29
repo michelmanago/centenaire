@@ -1,6 +1,5 @@
 // libs
 import { useEffect, useState } from "react"
-import { getPagePermalien } from "../../../utils/utils"
 
 export default function MenuEditorPageList({currentLocale, addPageLinks}){
 
@@ -67,7 +66,7 @@ export default function MenuEditorPageList({currentLocale, addPageLinks}){
                 {
                     pages.map(page => {
 
-                        const permalien = getPagePermalien(page)
+                        const permalien = page.pageSlug
 
                         return (
                             <div key={"link" + page.id} className="flex items-center">
