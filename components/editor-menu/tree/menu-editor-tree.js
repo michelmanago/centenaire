@@ -42,7 +42,9 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
             <div style={{height: count* 62}} className="">
                 fez
                 <SortableTree
-                    treeData={[]}
+                    treeData={[
+                        {title: "POMME"}
+                    ]}
                 />
                 fezfez
                 {/* <SortableTree
