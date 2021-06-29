@@ -2,7 +2,7 @@
 import htmlParse from 'html-react-parser';
 import {Fragment} from 'react';
 import {getMediaLink} from '../../utils/utils-serveur-image';
-import Carousel from '../carousel';
+import CarouselParam from '../carouselParam';
 
 export default function PageTemplate({page}) {
     return (
@@ -31,7 +31,7 @@ export default function PageTemplate({page}) {
                         } else if (block.type === 'carousel') {
                             return (
                                 <Fragment key={block.id}>
-                                    <Carousel imgList={block.content} id={block.id} />
+                                    <CarouselParam imgList={block.content} id={block.id} />
                                 </Fragment>
                             );
                         }
