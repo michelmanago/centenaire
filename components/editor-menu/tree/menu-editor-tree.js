@@ -12,8 +12,6 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
 
 
     // form
-
-    console.log("la lib", SortableTree)
     
     return (
         <div>
@@ -39,14 +37,12 @@ export default function MenuEditorTree({onRemoveItem, onModifyItem, onChangeLoca
             </div>
                     
             {/* Tree */}
-            <div style={{height: count* 62}} className="">
-                fez
+            <div style={{height: count * 62}} className="">
                 <SortableTree
                     treeData={[
                         {title: "POMME"}
                     ]}
                 />
-                fezfez
                 {/* <SortableTree
                     treeData={currentMenuData}
                     onChange={onChangeTreedata}
