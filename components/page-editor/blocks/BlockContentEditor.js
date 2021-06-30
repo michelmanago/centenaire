@@ -17,7 +17,6 @@ const ButtonPositionArrow = ({children, onClick}) => (
 )
 
 const BlockContentEditor = ({type, position ,content, setContent, removeBlockContent, setBlockPosition}) => {
-    console.log('content', content);
     
     return (
         <div className="flex flex-col items-end pr-5 mb-10 border-r-4">

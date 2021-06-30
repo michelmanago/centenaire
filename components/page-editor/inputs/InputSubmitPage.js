@@ -30,7 +30,7 @@ export default function InputSubmitPage({onSubmitPage, isSubmitting, isEditing, 
                     </svg>}
 
                     {/* Label */}
-                    {isEditing ? 'Mettre à jour' : 'Sauvegarder'}
+                    {isEditing ? 'Mettre à jour' : 'Publier'}
                 </button>
             }
             position="left top"

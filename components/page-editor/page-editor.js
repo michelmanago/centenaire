@@ -78,6 +78,17 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         
     }
 
+    const updatePages = (values = {}) => {
+        if(pages && pages.length){
+            setPages(pages.map(page => {
+                return {
+                    ...page,
+                    ...values
+                }    
+            }))
+        }
+    }
+
     const generateEmptyTitles = form => {
 
         let output = []
@@ -261,8 +272,6 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     // listeners
     const onChangeLanguage = value => setCurrentPageIndex(languagesLists.findIndex(v => v.value === value))
 
-    // console.log("redner", currentPage.blocks)
-
     return (
         <div className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
 
@@ -308,7 +317,8 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
             {/* Right */}
             <PageEditorSidebar
 
-                updateState={updateCurrentPage}
+                updateCurrentPage={updateCurrentPage}
+                updatePages={updatePages}
                 isEditing={isEditing}
 
                 language={currentPage.language} languagesLists={languagesLists}

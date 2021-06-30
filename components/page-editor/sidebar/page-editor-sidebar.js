@@ -5,6 +5,7 @@ import PageEditorInputImage from './PageEditorInputImage';
 
 // utils
 import { useRouter } from 'next/router';
+import PageEditCategory from './PageEditCategory';
 
 
 const categories = [
@@ -20,7 +21,7 @@ const categories = [
 ];
 
 const PageEditorSidebar = ({
-    updateState,
+    updateCurrentPage,
     isEditing,
 
     language,
@@ -38,15 +39,16 @@ const PageEditorSidebar = ({
     onChangeLanguage,
     onMediaUploaded,
     onRemoveMedia,
+    updatePages,
 
     notAllowedToSave,
 }) => {
+
     // hooks
     const {locale} = useRouter();
 
     // setters
-    const setAuthor = e => updateState({author: e.target.value});
-    const setCategory = e => updateState({page: e.target.value});
+    const setAuthor = e => updatePages({author: e.target.value});
 
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
     
@@ -80,7 +82,7 @@ const PageEditorSidebar = ({
             {/* Block publier */}
             <PageEditorSidebarBlock title="Publier">
                 {/* Author */}
-                <div className="flex items-center w-full my-2">
+                <div className="flex items-center w-full mb-2">
                     <label className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                         Auteur :{' '}
                     </label>
@@ -96,14 +98,14 @@ const PageEditorSidebar = ({
                 {/* Created at */}
                 {isEditing && (
                     <>
-                        <div className="flex items-center my-2">
+                        <div className="flex items-center mb-2">
                             <p className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                                 Date de publication :{' '}
                             </p>
                             <p className="text-sm">{created_at ? new Date(created_at).toLocaleString(locale) : ''}</p>
                         </div>
 
-                        <div className="flex items-center my-2">
+                        <div className="flex items-center mb-2">
                             <p className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                                 Dernière modification :{' '}
                             </p>
@@ -112,26 +114,29 @@ const PageEditorSidebar = ({
                     </>
                 )}
 
-                {/* Permalien */}
-                {isEditing && <div>
-                    <a target="_blank" className="underline" href={permalien}>
-                        Lien vers la page
-                    </a>
-                </div>}
+                <div className="mt-4">
 
-                {/* Remove page */}
-                {isEditing && (
-                    <div>
-                        <button
-                            onClick={onRemovePage}
-                            target="_blank"
-                            className="text-red-500 underline"
-                        >
-                            Supprimer la page et ses traductions.
-                        </button>
-                    </div>
-                )}
+                    {/* Permalien */}
+                    {isEditing && <div>
+                        <a target="_blank" className="underline" href={permalien}>
+                            Lien vers la page
+                        </a>
+                    </div>}
 
+                    {/* Remove page */}
+                    {isEditing && (
+                        <div>
+                            <button
+                                onClick={onRemovePage}
+                                target="_blank"
+                                className="text-red-500 underline"
+                            >
+                                Supprimer la page et ses traductions.
+                            </button>
+                        </div>
+                    )}
+
+                </div>
                 {/* Publier */}
                 <div className="flex justify-end">
                     <InputSubmitPage
@@ -144,20 +149,11 @@ const PageEditorSidebar = ({
             </PageEditorSidebarBlock>
 
             {/* Block categorie */}
-            <PageEditorSidebarBlock title="Catégories">
-                {/* categorie */}
-                <select value={category || ''} onChange={setCategory} className="w-full px-4 py-3 border rounded">
-                    <option disabled value="">
-                        {' '}
-                        -- Selectionner une catégorie --{' '}
-                    </option>
-                    {categories.map(cat => (
-                        <option key={cat.value} value={cat.value}>
-                            {cat.title}
-                        </option>
-                    ))}
-                </select>
-            </PageEditorSidebarBlock>
+            <PageEditCategory 
+                updatePages={updatePages} 
+                category={category}
+                categories={categories}
+            />
         </div>
     );
 };
