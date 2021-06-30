@@ -20,6 +20,7 @@ import Montpellier from '../components/paroisses/montpellier';
 import { getMenu } from '../model/menu';
 
 
+
 export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chaville');
  
