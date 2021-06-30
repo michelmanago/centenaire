@@ -17,6 +17,7 @@ import Grenoble from '../components/paroisses/grenoble';
 import Maastricht from '../components/paroisses/maastricht';
 import Marseille from '../components/paroisses/marseille';
 import Montpellier from '../components/paroisses/montpellier';
+import SainteFoy from '../components/paroisses/saintefoy';
 import { getMenu } from '../model/menu';
 
 
@@ -81,6 +82,8 @@ export default function MaitreSpirituels({menu}) {
                 return <Marseille />;                                            
             case 'Montpellier':
                     return <Montpellier />;                                    
+            case 'SainteFoy':
+                return <SainteFoy />;
             default:
                 return null;
         }
@@ -152,7 +155,10 @@ export default function MaitreSpirituels({menu}) {
                         <li className="cursor-pointer hover:underline" onClick={() => setSection('Montpellier')}>
                             Montpellier
                         </li>
-                       </ul>
+                        <li className="cursor-pointer hover:underline" onClick={() => setSection('SainteFoy')}>
+                            SainteFoy   
+                        </li>                        
+                    </ul>
                 </div>
                 <div className="md:w-3/4">{DisplayContent()}</div>
             </div>

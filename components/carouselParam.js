@@ -12,7 +12,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 export default function Carousel({imgList, legende, id}) {
     const mediaUrl = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
     return (
-        <div className="h-auto mx-auto my-6 overflow-hidden bg-white md:w-3/4 rounded-xl md:max-w-full mb-9">
+        <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9">
             <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
