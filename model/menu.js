@@ -8,16 +8,15 @@ export async function getMenu(locale = ""){
 
         // fetch
         const menu = await query(`
-            SELECT * FROM pagecontent
-            WHERE page = ? AND language = ?
-            ORDER BY blockid
-        `,["menu", locale])
+            SELECT * FROM menus
+            WHERE language = ?
+        `,[locale])
 
         menuRow = menu && menu[0]
     }
 
     return menuRow ? {
-        data: JSON.parse(menuRow.blockcontent),
+        data: JSON.parse(menuRow.links),
         id: menuRow.id,
         locale: menuRow.language
     } : null
@@ -42,9 +41,9 @@ export async function setMenu(nextBlockContent = [], menuLocale){
     const jsonData = JSON.stringify(nextBlockContent)
 
     const menu = await query(`
-        UPDATE pagecontent SET blockcontent = ?
-        WHERE page = ? AND language = ?
-    `, [jsonData, "menu", menuLocale])
+        UPDATE menus SET links = ?
+        WHERE language = ?
+    `, [jsonData, menuLocale])
 
     return menu.affectedRows
 }

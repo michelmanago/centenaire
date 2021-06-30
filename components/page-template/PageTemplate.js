@@ -1,22 +1,42 @@
 // libs
-import htmlParse from 'html-react-parser'
+import htmlParse from 'html-react-parser';
+import {Fragment} from 'react';
+import {getMediaLink} from '../../utils/utils-serveur-image';
+import CarouselParam from '../carouselParam';
 
-
-export default function PageTemplate({page}){
-
+export default function PageTemplate({page}) {
     return (
-        <div>
+        <div className="">
+            {/* Banner */}
+            {page.bandeau && (
+                <div style={{height: 300}} className="border">
+                    <img
+                        className="block object-cover w-full h-full"
+                        src={getMediaLink(page.bandeau.public_path)}
+                        alt=""
+                    />
+                </div>
+            )}
 
-            <h1 className="text-3xl font-bold mb-10">{page.pageName}</h1>
+            {/* Content */}
 
-            {/* Render blocks */}
-            {
-                page && page.blocks.map(block => (
-                    htmlParse(block.content)
-                ))
-            }
+            <div className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
+                <h1 className="mb-10 text-5xl font-bold">{page.pageName}</h1>
 
+                {/* Render blocks */}
+                {page &&
+                    page.blocks.map(block => {
+                        if (block.type === 'text') {
+                            return <Fragment key={block.id}>{htmlParse(block.content)}</Fragment>;
+                        } else if (block.type === 'carousel') {
+                            return (
+                                <Fragment key={block.id}>
+                                    <CarouselParam imgList={block.content.data} legende={block.content.legende} id={block.id} />
+                                </Fragment>
+                            );
+                        }
+                    })}
+            </div>
         </div>
-    )
-
+    );
 }

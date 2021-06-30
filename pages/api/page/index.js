@@ -26,12 +26,12 @@ export default async function handler(req, res) {
             const jsonBody = JSON.parse(req.body)
 
             const updatedPageId = await updateTranslations(jsonBody)
-            console.log("updatedPageId", updatedPageId)
             
             return res.json(updatedPageId)
         }
 
         else if(req.method === 'GET'){
+
 
             if(!req.query || (req.query && req.query.slug === undefined)){
                 return res.status(400).json({ message: 'no query found' })
@@ -40,8 +40,8 @@ export default async function handler(req, res) {
             const slug = req.query.slug
             const page = await selectPageBySlug(slug)
 
-            
-            return res.json(page)
+            // we must return empty array for getAvailableSlugs()
+            return res.json(page || [])
         }
         
         else {
@@ -51,7 +51,6 @@ export default async function handler(req, res) {
         console.log(e)
 
         if(e.status){
-            console.log("x", e.status)
             res.status(e.status)
         } else {
             res.status(500)

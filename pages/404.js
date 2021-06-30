@@ -11,7 +11,8 @@ export default function Page404({menu}){
             {menu && <Header menu={menu.data}/>}
             <main className="border max-w-screen-xl p-4 bg-white md:mx-auto">
                 <div className="p-10">
-                    <h1 className="text-2xl">Vous tentez de modifier un contenu qui n’existe pas. Peut-être a-t-il été supprimé ?</h1>
+                    <h1 className="text-4xl mb-4">404</h1>
+                    <h1 className="text-xl">Vous tentez de modifier un contenu qui n’existe pas. Peut-être a-t-il été supprimé ?</h1>
                 </div>
             </main>
         </>

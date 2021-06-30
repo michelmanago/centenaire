@@ -1,6 +1,7 @@
 //libs
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import DefaultErrorPage from 'next/error'
 
 // models
 import { getMenu } from "../../../model/menu";
@@ -11,23 +12,19 @@ import Header from "../../../components/header/header"
 import PageEditor from "../../../components/page-editor/page-editor"
 
 // utils
-import Utils from "../../../utils/utils";
+import {toMysqlFormat} from "../../../utils/utils";
 
 // utils
 
 export default function PageEditorUpdate({menu, pageTranslations}) {
 
+
+    if(!pageTranslations || Array.isArray(pageTranslations) && !pageTranslations.length){
+        return <DefaultErrorPage statusCode={404} />
+    }
+
     // states
     const router = useRouter()
-
-    useEffect(() => {
-
-        console.warn("redirect if not found")
-        if(!pageTranslations || (pageTranslations && !pageTranslations.length)){
-            router.push("/404")
-        }
-
-    }, [])
 
     // methods
     const onSubmit = formPages => {
@@ -36,7 +33,7 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
 
         const originalPage = pageTranslations.find(page => page.language === router.defaultLocale)
 
-        const now = Utils.toMysqlFormat(new Date())
+        const now = toMysqlFormat(new Date())
         formPages = formPages.map(formPagesItem => ({
             ...formPagesItem,
             last_modified: now

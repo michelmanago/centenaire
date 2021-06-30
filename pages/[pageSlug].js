@@ -3,6 +3,8 @@
 // libs
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
+import DefaultErrorPage from 'next/error'
+import { useRouter } from 'next/router';
 
 // component
 import Header from '../components/header/header';
@@ -16,14 +18,25 @@ const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
 
 export default function DynPage({ menu, page}) {
 
-    // utils
-    const pageType = page.page
+    if(!page){
+        return <DefaultErrorPage statusCode={404} />
+    }
 
-    // effecst
-
+    // Lifecycle
     useEffect(() => {
-        window.DEV_ADMIN_EDIT = `${window.location.origin}/admin/page/${page.id}`
+
+        // hack for dev
+        window.EDIT_THIS_PAGE = `${window.location.origin}/admin/page/${page.originalPageId}`
+        
     }, [])
+
+
+    // utils
+    const pageType = page && page.page
+
+
+    // hoooks
+    const router = useRouter()
 
 
     return (
@@ -31,11 +44,11 @@ export default function DynPage({ menu, page}) {
             <Header menu={menu.data} />
 
 
-            <main className="border max-w-screen-xl mx-auto pt-10 px-10  bg-white">
+            <main className="">
 
                 {/* Page - NO TYPE */}
                 {
-                    !pageType && <PageTemplate page={page}/>
+                    page && <PageTemplate page={page}/>
                 }
 
             </main>
@@ -95,12 +108,7 @@ export async function getStaticProps(context) {
     const {pageSlug} = context.params;
 
     const menu = await getMenu(context.locale);
-    const page = await getPageBySlug(context.locale + "/" + pageSlug);
-
-    // let listPage = null;
-    // if (pageData) {
-    //     listPage = await getPageByType(pageData.page);
-    // }
+    const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
 
     return {props: {page, menu}};
 }

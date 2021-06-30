@@ -91,7 +91,7 @@ export default function SlateEditor({block, setContent, defuntId}) {
     let initValue = [
         {
             type: 'paragraph',
-            children: [{text: 'A line of text in a paragraph.'}],
+            children: [{text: ''}],
         },
     ];
     if (typeof window !== 'undefined') {

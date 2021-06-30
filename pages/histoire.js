@@ -6,7 +6,7 @@ import styles from '../styles/pages/home.module.css';
 import {useState} from 'react';
 import { getMenu } from '../model/menu';
 
-export default function Histoire({menu}) {
+export default function Cimetiere({menu}) {
     const router = useRouter();
     const {locale, locales, defaultLocale} = router;
 
@@ -14,14 +14,14 @@ export default function Histoire({menu}) {
     return (
         <div className={`bg-pyellow`}>
             <Head>
-                <title>histoire de l'archevêché</title>
+                <title>Le cimetière russe</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             {/* Header */}
             {menu && <Header menu={menu.data}/>}
 
-            {/* Page home */}
+            {/* Page cimetiere */}
             <div>
                 <header className={styles.header + ' relative'}>
                     <Image
@@ -42,9 +42,9 @@ export default function Histoire({menu}) {
 
                     <h3>Un contexte historique exceptionnel</h3>
                     <div class="float-none sm:float-left mt-2 pt-6 mb-4 pr-4 md:w-96">                     
-                    	<div class="h-52 text-center mb-2"> 		
+                    	<div className="h-52 text-center mb-2"> 		
                             <iframe className="relative h-full w-full" src="https://www.youtube.com/embed/ezBDLAYc0u8" 
-                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                            title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         </div>
                     </div>
 

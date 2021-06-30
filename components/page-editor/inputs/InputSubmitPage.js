@@ -42,7 +42,7 @@ export default function InputSubmitPage({onSubmitPage, isSubmitting, isEditing, 
             position="left top"
             on={notAllowedToSave ? ["hover", "focus"] : []}
         >
-            <span className="text-sm">Vous devez au moins remplir le titre des {locales.length} traductions.</span>
+            <span className="text-sm">Vous devez au moins remplir le titre d'une traduction.</span>
         </Popup>
     )
 
