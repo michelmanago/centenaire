@@ -1,6 +1,9 @@
+
 import Carousel from '../carousel';
 
+
 export default function Chaville() {
+    
     const imgArraySanctuaire = [
         {url: '/static/img/paroisses/chaville/Sanctuaire/photo1.jpg', legende: ''},
         {url: '/static/img/paroisses/chaville/Sanctuaire/photo2.jpg', legende: ''},
@@ -82,7 +85,9 @@ export default function Chaville() {
                 Le métropolite Euloge vient le 9 juin 1935 consacrer l’autel et célébrer l’office de la pose de la
                 première pierre.
             </p>
+            
             <Carousel imgList={imgArrayPose} legende="Pose de la 1ère pierre et construction de l'église" id='pose' />
+            
             <p>
                 Le père Jean Maximenko, élevé à la dignité d’archiprêtre mitré, sera le recteur de la paroisse jusqu’en
                 1954.

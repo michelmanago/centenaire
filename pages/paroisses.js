@@ -21,6 +21,7 @@ import SainteFoy from '../components/paroisses/saintefoy';
 import { getMenu } from '../model/menu';
 
 
+
 export default function MaitreSpirituels({menu}) {
     const [section, setSection] = useState('Chaville');
  

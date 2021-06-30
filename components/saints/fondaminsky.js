@@ -23,12 +23,12 @@ export default function Fondaminsky() {
                 l&#39;intervention du mouvement  
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Liberté du Peuple </strong>
+                    <a className="pointille">  Liberté du Peuple </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Народная воля (Liberté [ou volonté] du peuple): société révolutionnaire fondée en 1879, qui prônait la terreur. </span>
                 </Popup> aidant, a édulcoré
                 et dépersonnalisé les biographies du plus grand nombre des justes de l&#39;intelligentsia russe.
@@ -43,12 +43,12 @@ export default function Fondaminsky() {
                 d&#39;
                 <Popup
                     trigger={open => (
-                    <strong className="button">  un Lassale</strong>
+                    <a className="pointille">  un Lassale</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Homme politique allemand, Ferdinand Lassalle (1825-1864) participe au mouvement révolutionnaire, puis s&#39;oriente vers le socialisme réformiste. </span>
                 </Popup>, d&#39;un
                 Invincible, était parvenu jusqu&#39;à moi en ces temps lointains de la première révolution. C&#39;est à
@@ -63,12 +63,12 @@ export default function Fondaminsky() {
                 rejoint Th.A. 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Stepun</strong>
+                    <a className="pointille">  Stepun</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Théodore Stefun (1864-1965), philosophe et essayiste, a vécu en Allemagne. </span>
                 </Popup>. J&#39;
                 ai pu observer la vie familiale d&#39;E.I, quand je fus son hôte dans la
@@ -79,12 +79,12 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  autres sont loin</strong>
+                    <a className="pointille">  autres sont loin</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Vers de Pouchkine, qui évoque ses amis morts ou envoyés en exil. </span>
                 </Popup>. Aussi me vois je
                 contraint de reconstituer son portrait intérieur à partir de reflets et de fragments d&#39;impressions
@@ -143,36 +143,36 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button"> conscience</strong>
+                    <a className="pointille"> conscience</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     En français dans le texte. </span>
                 </Popup> laïc. Par cet optimisme, E. I. faisait davantage penser au Lucas de
                 Gorki qu&#39;aux starets d&#39;Optino. Non qu&#39;il fût, à l&#39;
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button"> instar de Lucas</strong>
+                    <a className="pointille"> instar de Lucas</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     personnage de la pièce de Gorki Dans les bas-fonds. </span>
                 </Popup>
                 ou de Gorki, partisan du « rêve d&#39;or » ou de «
                 l&#39; »
                 <Popup
                     trigger={open => (
-                    <strong className="button"> illusion qui nous élève</strong>
+                    <a className="pointille"> illusion qui nous élève</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Vers de Pouchkine </span>
                 </Popup>. Mais il était
                 constitutionnellement incapable d&#39;infliger la moindre souffrance à un être humain. La vérité, même
@@ -225,12 +225,12 @@ export default function Fondaminsky() {
                
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Son passé de narodnik</strong>
+                    <a className="pointille"> Son passé de narodnik</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Les narodniki (populistes) créèrent le parti socialiste révolutionnaire russe (S.R). </span>
                 </Popup>, facilitait pour E.I. son autoéducation dans le christianisme. Il lui fallut
                 apprendre à neuf l&#39;humilité et la patience. Mais la philanthropie pouvait être transplantée en
@@ -433,12 +433,12 @@ export default function Fondaminsky() {
                 est aisé de voir les traces des lettres historiques de
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Lavrov</strong>
+                    <a className="pointille"> Lavrov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Pierre Lavrov (1825-1900) -professeur de mathématiques, chef de file et idéologue des populistes </span>
                 </Popup>. Luttant contre le
                 marxisme et toute forme de matérialisme historique, Fondaminski revenait à la foi en la force invincible
@@ -464,12 +464,12 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Chirinski-Chikhmatov</strong>
+                    <a className="pointille"> Chirinski-Chikhmatov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Youri Chirinski-Chikhmatov (1890-1942) - journaliste politique mort à Auschwitz. </span>
                 </Popup>; donnait même des
                 conférences à l&#39;Union de la Noblesse (Союз дворян). Cette liste n&#39;épuise en aucun cas
@@ -553,14 +553,15 @@ export default function Fondaminsky() {
                  
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Il est en bonne humeur, même heureux</strong>
+                    <a className="pointille"> Il est en bonne humeur, même heureux</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     En français dans le texte </span>
-                </Popup> » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
+                </Popup>
+                 » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
                 conférences pour ses camarades de détention. C&#39;est alors qu&#39;il se décida aussi à recevoir le
                 baptême. Aucune pression ne fut exercée sur lui. Ce fut au contraire au prêtre qui le baptisa de
                 ressentir son ascendant, sa supériorité spirituelle et même théologique. Ce prêtre racontait que

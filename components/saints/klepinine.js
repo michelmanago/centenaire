@@ -19,12 +19,12 @@ export default function Klepinine({}) {
                 Stépanova. Selon le témoignage de sa tante, A.N. 
                  <Popup
                     trigger={open => (
-                    <strong className="button">  Hippius </strong>
+                    <a className="pointille">  Hippius </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> Les précisions concernant les années d'enfance du Père Dimitri sont tirées du Journal manuscrit d'Anne Nicolaévna Hippius, sa tante, dont le
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> Les précisions concernant les années d'enfance du Père Dimitri sont tirées du Journal manuscrit d'Anne Nicolaévna Hippius, sa tante, dont le
                     métropolite Euloge (Guéorguiévski) dira, lors d'une réunion à la mémoire du Père Dimitri : « Cette femme 
                     d'une grande spiritualité, une juste authentique, eut une grande influence spirituelle sur le jeune
                     Dimitri, qu'elle aimait beaucoup ». (Archives E.D. Klépinine-Arjakovsky, Paris). </span>
@@ -88,12 +88,12 @@ export default function Klepinine({}) {
                 marchands. « Tout l'équipage l'adorait », rapporte S.P. 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Jaba dans ses Mémoires </strong>
+                    <a className="pointille">  Jaba dans ses Mémoires </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Serge Jaba, « Pour le quarantième anniversaire de la mort glorieuse du père Dimitri Klépinine », en russe dans la
                     revue ВСХД 131, (I-II, 1980). </span>
                 </Popup>
@@ -103,12 +103,12 @@ export default function Klepinine({}) {
                 là ses études, au Collège américain. En 1921, les Klépinine gagnent la Serbie, où ils retrouvent   
                 <Popup
                     trigger={open => (
-                    <strong className="button">  les familles Zernov</strong>
+                    <a className="pointille">  les familles Zernov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Nicholas Zernov (1898-1980) et Sophie (1899-1972) - membres actifs de l Action chrétienne des étudiants russes et de la Mission orthodoxe à l'étranger, travailleurs sociaux infatigables. </span>
                 </Popup>
                 , Lopoukhine et Troyanov. Ils s'installèrent tous ensemble dans une grande
@@ -125,12 +125,12 @@ export default function Klepinine({}) {
                 Père Alexis Nelioubov, pasteur remarquable, et de 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Mgr Benjamin (Fédtchenkov)</strong>
+                    <a className="pointille">  Mgr Benjamin (Fédtchenkov)</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Mgr Benjamin Fédtchenkov (1880-1961) - aumônier de l'Armée Blanche au sud de la Russie, émigre en 1920 en
                     Yougoslavie, où il fonde à Chabats son propre monastère. </span>
                 </Popup>, 
@@ -144,12 +144,12 @@ export default function Klepinine({}) {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Chidlovskaïa</strong>
+                    <a className="pointille">  Chidlovskaïa</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Sophie Chidlovskaïa (1903 St-Pétersbourg-2000, New-York) - membre actif de l'Action chrétienne 
                     des étudiants russes en France ; en 1948, s'installe aux États-Unis. </span>
                 </Popup> : « Je compris pour la
@@ -261,12 +261,12 @@ export default function Klepinine({}) {
                 fête. 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Constantin Motchoulski </strong>
+                    <a className="pointille">  Constantin Motchoulski </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     C. Motchoulski (1890-1948) - historien de la littérature russe et critique littéraire. </span>
                 </Popup>
                 décrit ainsi l'office de Pâques 1940 : « Mère Marie avait cousu pour le
@@ -323,12 +323,12 @@ export default function Klepinine({}) {
                 poche de  
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Youri Skobtsov </strong>
+                    <a className="pointille">  Youri Skobtsov </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Youri Skobtsov, fils de Mère Marie, né en 1921. </span>
                 </Popup>
                 un billet d'une femme juive à qui Youri portait des colis alimentaires. Elle y priait le Père Dimitri de lui
@@ -359,12 +359,12 @@ export default function Klepinine({}) {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Lourmel</strong>
+                    <a className="pointille">  Lourmel</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     Témoignage de la moniale Élisabeth (cf. Serge Hackel, Pearl of Great Price, The Life of Mother Maria Skobtsova 1891-1945, 1981). </span>
                 </Popup>.
             </p>
@@ -419,12 +419,12 @@ export default function Klepinine({}) {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Nous étudions le livre de Pratt</strong>
+                    <a className="pointille">  Nous étudions le livre de Pratt</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
-                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
+                    <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm   rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     F. Pratt, La Vie et l'enseignement du Christ.. </span>
                 </Popup>. 
                 Je travaille un peu avec Youri, qui souhaite se préparer à la prêtrise ».
