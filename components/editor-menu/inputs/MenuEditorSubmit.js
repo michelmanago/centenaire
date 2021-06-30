@@ -9,37 +9,38 @@ export default function MenuEditorSubmit({canSave, setCanSave, form, menuLocales
     // listener
     const onSubmitSave = async () => {
     
-        if(confirm("Êtes vous sûr de vouloir sauvegarder les nouveaux menus ? ")){
+        let menusData = form.map((menu, menuIndex) => ({
+            locale: menuLocales[menuIndex],
+            data: fromTreedataToDBData(menu)
+        }))
 
-            let menusData = form.map((menu, menuIndex) => ({
-                locale: menuLocales[menuIndex],
-                data: fromTreedataToDBData(menu)
-            }))
+        let promiseSettingMenu = menusData.map(menuDataItem => 
+            fetch("/api/menu", {
+                method: "PUT",
+                body: JSON.stringify(menuDataItem) 
+            })
+            .then(response => {
+                if(response.ok){
+                    return response.json()
+                } else {
+                    throw new Error(response.statusText);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        )
 
-            let promiseSettingMenu = menusData.map(menuDataItem => 
-                fetch("/api/menu", {
-                    method: "PUT",
-                    body: JSON.stringify(menuDataItem) 
-                })
-                .then(response => {
-                    if(response.ok){
-                        return response.json()
-                    } else {
-                        throw new Error(response.statusText);
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-            )
+        let responses = await Promise.all(promiseSettingMenu)
+        
+        setCanSave(false)
 
-            let responses = await Promise.all(promiseSettingMenu)
-            
-            setCanSave(false)
+        // do not prevent leaving page anymore
+        window.onbeforeunload = null
 
-            alert("Menus sauvegardé")
+        // reload page to see changes
+        window.location.reload()
 
-        }
     }
 
 

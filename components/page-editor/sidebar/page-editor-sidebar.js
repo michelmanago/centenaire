@@ -5,6 +5,7 @@ import PageEditorInputImage from './PageEditorInputImage';
 
 // utils
 import { useRouter } from 'next/router';
+import PageEditCategory from './PageEditCategory';
 
 
 const categories = [
@@ -20,12 +21,11 @@ const categories = [
 ];
 
 const PageEditorSidebar = ({
-    updateState,
+    updateCurrentPage,
     isEditing,
 
     language,
     languagesLists,
-    pageSlug,
     author,
     category,
     created_at,
@@ -39,27 +39,35 @@ const PageEditorSidebar = ({
     onChangeLanguage,
     onMediaUploaded,
     onRemoveMedia,
+    updatePages,
 
     notAllowedToSave,
 }) => {
+
     // hooks
     const {locale} = useRouter();
 
     // setters
-    const setAuthor = e => updateState({author: e.target.value});
-    const setCategory = e => updateState({page: e.target.value});
+    const setAuthor = e => updatePages({author: e.target.value});
 
+    const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
+    
     return (
         <div className="w-2/5">
             {/* Block langues */}
             <PageEditorSidebarBlock title="Langues">
-                <select value={language || ''} onChange={onChangeLanguage} className="w-full px-4 py-3 border rounded">
-                    {languagesLists.map(cat => (
-                        <option key={cat.value} value={cat.value}>
-                            {cat.title}
-                        </option>
-                    ))}
-                </select>
+                {
+                    languagesLists.map(cat => {
+
+                        const catIsSelected = cat.value === language
+
+                        return (
+                            <button key={cat.value} onClick={() => onChangeLanguage(cat.value)} className={`bg-gray-200 px-4 py-2 font-medium ${catIsSelected ? "bg-gray-400" : ""}`}>
+                                {cat.title}
+                            </button>
+                        )
+                    })
+                }
             </PageEditorSidebarBlock>
 
             {/* Block bandeau */}
@@ -74,7 +82,7 @@ const PageEditorSidebar = ({
             {/* Block publier */}
             <PageEditorSidebarBlock title="Publier">
                 {/* Author */}
-                <div className="flex items-center w-full my-2">
+                <div className="flex items-center w-full mb-2">
                     <label className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                         Auteur :{' '}
                     </label>
@@ -90,14 +98,14 @@ const PageEditorSidebar = ({
                 {/* Created at */}
                 {isEditing && (
                     <>
-                        <div className="flex items-center my-2">
+                        <div className="flex items-center mb-2">
                             <p className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                                 Date de publication :{' '}
                             </p>
                             <p className="text-sm">{created_at ? new Date(created_at).toLocaleString(locale) : ''}</p>
                         </div>
 
-                        <div className="flex items-center my-2">
+                        <div className="flex items-center mb-2">
                             <p className="mr-3 text-sm font-semibold" htmlFor="inputAuthor">
                                 Dernière modification :{' '}
                             </p>
@@ -106,27 +114,29 @@ const PageEditorSidebar = ({
                     </>
                 )}
 
-                {/* Permalien */}
-                <div>
-                    <a target="_blank" className="underline" href={pagePermalien}>
-                        Lien vers la page
-                    </a>
+                <div className="mt-4">
+
+                    {/* Permalien */}
+                    {isEditing && <div>
+                        <a target="_blank" className="underline" href={permalien}>
+                            Lien vers la page
+                        </a>
+                    </div>}
+
+                    {/* Remove page */}
+                    {isEditing && (
+                        <div>
+                            <button
+                                onClick={onRemovePage}
+                                target="_blank"
+                                className="text-red-500 underline"
+                            >
+                                Supprimer la page et ses traductions.
+                            </button>
+                        </div>
+                    )}
+
                 </div>
-
-                {/* Remove page */}
-                {isEditing && (
-                    <div>
-                        <button
-                            onClick={onRemovePage}
-                            target="_blank"
-                            className="text-red-500 underline"
-                            href={pagePermalien}
-                        >
-                            Supprimer la page et ses traductions.
-                        </button>
-                    </div>
-                )}
-
                 {/* Publier */}
                 <div className="flex justify-end">
                     <InputSubmitPage
@@ -139,20 +149,11 @@ const PageEditorSidebar = ({
             </PageEditorSidebarBlock>
 
             {/* Block categorie */}
-            <PageEditorSidebarBlock title="Catégories">
-                {/* categorie */}
-                <select value={category || ''} onChange={setCategory} className="w-full px-4 py-3 border rounded">
-                    <option disabled value="">
-                        {' '}
-                        -- Selectionner une catégorie --{' '}
-                    </option>
-                    {categories.map(cat => (
-                        <option key={cat.value} value={cat.value}>
-                            {cat.title}
-                        </option>
-                    ))}
-                </select>
-            </PageEditorSidebarBlock>
+            <PageEditCategory 
+                updatePages={updatePages} 
+                category={category}
+                categories={categories}
+            />
         </div>
     );
 };

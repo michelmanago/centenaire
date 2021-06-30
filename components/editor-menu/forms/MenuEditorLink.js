@@ -15,6 +15,9 @@ const MenuEditorLink = ({
     afterSubmit
 }) => {
 
+
+    const isSubmitDisabled = !label && !href
+
     
     return (
         <form onSubmit={onSubmitPreventForm}>
@@ -54,9 +57,10 @@ const MenuEditorLink = ({
 
                 {/* Submit */}
                 <button
+                    disabled={isSubmitDisabled}
                     type="submit"
                     onClick={onSubmit}
-                    className="h-10 bg-green-400 hover:bg-green-500 px-3 py-1 rounded text-white font-medium text-md mr-3"
+                    className={`h-10 bg-green-400 px-3 py-1 rounded text-white font-medium text-md mr-3 ${isSubmitDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-green-500"}`}
                 >
                     {formSubmitLabel}
                 </button>

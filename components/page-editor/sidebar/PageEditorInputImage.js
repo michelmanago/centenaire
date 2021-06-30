@@ -98,8 +98,6 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
                 insertMedia(file)
                 .then(media => {
 
-                    console.log(media)
-
                     setError(false)
                     onMediaUploaded(media)
                 })
@@ -114,9 +112,7 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
         }
 
     }
-    
-    console.log("si endpoint", getServerImageEndpoint())
-    
+        
     return (
         <div className="">
             

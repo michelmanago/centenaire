@@ -17,6 +17,8 @@ import { formatNewMenuItem, fromDBDataToTreedata } from '../utils/editor-menu-fo
 import { recursiveMapTreeData } from '../utils/utils';
 
 // utils
+import addUUIDToLinks from "../utils/scripts/addUUIDToLinks"
+
 const retrieveTranslationsFrom = (pages = [], original_id, language) => {
 
     // all translations of page
@@ -65,11 +67,11 @@ export default function EditorMenu({menus}) {
 
 
     // lifecyle
-        // fetch all pages
         useEffect(() => {
 
             const url = new URL(window.location.origin + "/api/page/all")
     
+            // fetch all pages
             fetch(url.toString())
             .then(response => {
                 if(response.ok){
@@ -84,6 +86,21 @@ export default function EditorMenu({menus}) {
             .catch(err => {
                 console.log("err", err)
             })
+
+
+            // scripts
+            window.addUUId = () => {
+
+                const menuWithUUID = addUUIDToLinks(menus)
+
+                // print
+                menuWithUUID.forEach(m => {
+
+                    console.log(m.locale)
+                    console.log(JSON.stringify(m.data))
+
+                })
+            }
     
         }, [])
 
@@ -268,8 +285,15 @@ export default function EditorMenu({menus}) {
     };
 
     const onChangeLocale = (selectedIndex) => {
+
+        // change index
         setCurrentMenuIndex(selectedIndex)
+
+        // close modal
         closeEditModal()
+
+        // reset pages list form
+        setAvailablePages(availablePages.map(p => ({...p, selected: false})))
     }
 
     // Effets
