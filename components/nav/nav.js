@@ -51,6 +51,7 @@ const NavLink = ({item}) => {
 
 const Nav = ({menu = []}) => {
 
+    console.log("menu", menu)
 
     // methods
 
