@@ -32,14 +32,14 @@ export default function Carousel({ imgList, legende, id }) {
     return (
         <div className="screen">
             <div className="h-auto mx-auto my-6 overflow-hidden bg-white md:w-3/4 rounded-xl md:max-w-full mb-9">
-                <Swiper
+                <Swiper 
                     spaceBetween={50}
                     slidesPerView={1}
                     loop={true}
                     navigation={{ clickable: true }}
                     /*onSlideChange={() => console.log('slide change')}*/
                     /*onSwiper={swiper => console.log(swiper)}*/
-                    style={{ '--swiper-navigation-color': 'transparent' }}
+                    style={{  '--swiper-navigation-color': 'transparent' }}
                 >
                     {imgList.map((img, i) => (
                         <SwiperSlide key={id + '-' + i}>

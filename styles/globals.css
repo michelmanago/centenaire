@@ -149,7 +149,7 @@ button{
 .swiper-button-next {
   background-image: url(/static/img/flechedroite.svg);
   background-repeat: no-repeat;
-  background-size:  100% auto;
+  width: 50px!important;
   background-position: center;
  
  
@@ -158,7 +158,7 @@ button{
 .swiper-button-prev {
   background-image: url(/static/img/flechegauche.svg);
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  width: 50px!important;
   background-position: center;
 }
 
