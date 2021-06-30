@@ -5,7 +5,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper styles
 import 'swiper/swiper-bundle.css';
-
+import Image from 'next/image';
 import Popup from 'reactjs-popup';
 
 // install Swiper components
@@ -39,7 +39,7 @@ export default function Carousel({ imgList, legende, id }) {
                     navigation={{ clickable: true }}
                     /*onSlideChange={() => console.log('slide change')}*/
                     /*onSwiper={swiper => console.log(swiper)}*/
-                    style={{ '--swiper-navigation-color': 'yellow' }}
+                    style={{ '--swiper-navigation-color': 'transparent' }}
                 >
                     {imgList.map((img, i) => (
                         <SwiperSlide key={id + '-' + i}>

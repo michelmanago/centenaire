@@ -146,6 +146,22 @@ button{
   text-decoration: underline dotted;
 }
 
+.swiper-button-next {
+  background-image: url(/static/img/flechedroite.svg);
+  background-repeat: no-repeat;
+  background-size:  100% auto;
+  background-position: center;
+ 
+ 
+}
+
+.swiper-button-prev {
+  background-image: url(/static/img/flechegauche.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
 @media screen {
 
 
@@ -160,7 +176,7 @@ button{
     color: rgb(255, 255, 255);
   }
   [role='tooltip'].popup-content {
-    width: 200px;
+    width: 500px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
   }
   
