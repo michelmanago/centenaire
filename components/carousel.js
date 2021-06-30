@@ -5,7 +5,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper styles
 import 'swiper/swiper-bundle.css';
-
+import Image from 'next/image'
 import Popup from 'reactjs-popup';
 
 // install Swiper components
@@ -45,13 +45,19 @@ export default function Carousel({ imgList, legende, id }) {
                         <SwiperSlide key={id + '-' + i}>
                             <div className='flex flex-col items-center' >
                                 <button type="button" className="button" onClick={() => openModal(i)}>
-                                    <img className="full rounded-xl" src={img.url} alt={`slide ${i + 1}`} />
+                                    <div className='rounded-xl'>
+                                        <Image className="full rounded-xl" src={img.url} alt={`slide ${i + 1}`}
+                                            layout="intrinsic"
+                                            width={1280}
+                                            height={960}
+                                        />
+                                    </div>
                                     {img.legende && <div className="flex justify-center">{img.legende}</div>
                                     }
                                 </button>
                                 <Popup open={openArray[i]} closeOnDocumentClick onClose={() => closeModal(i)}>
                                     <div className="modal">
-                                        <button className="close" onClick={() =>  closeModal(i)}>
+                                        <button className="close" onClick={() => closeModal(i)}>
                                             &times;
                                         </button>
                                         <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />

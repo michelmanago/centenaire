@@ -6,16 +6,16 @@ import Image from 'next/image';
 export default function SainteFoy() {
  
     const imgArray = [
-        {url: '/static/img/paroisses/saintefoy/serie1/1-skite.jpg', legende: ''},
-        {url: '/static/img/paroisses/saintefoy/serie1/2-skite-sud.jpg', legende: ''},
-        {url: '/static/img/paroisses/saintefoy/serie1/3-skite-toit.jpg', legende: ''},
+       {url: '/static/img/paroisses/saintefoy/serie1/0-essai.jpg', legende: ''},
+       {url: '/static/img/paroisses/saintefoy/serie1/2-skite-sud.jpg', legende: ''},
+/*        {url: '/static/img/paroisses/saintefoy/serie1/3-skite-toit.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/4-portail.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/5-cellules-moines.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/6-chambre-pelerin.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/7-bibliotheque.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/8-art-sacre.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/9-higoumene-gerasime.jpg', legende: ''},
-  ];
+ */  ];
     return (
         <div className="px-10 bio-block">
             <h2>Le Skite Sainte Foy </h2>
