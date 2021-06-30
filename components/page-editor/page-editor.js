@@ -325,6 +325,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 pageSlug={currentPage.pageSlug}
                 author={currentPage.author}
                 category={currentPage.page}
+                order={currentPage.order}
                 created_at={currentPage.created_at} last_modified={currentPage.last_modified}
                 pagePermalien={currentPage.pageSlug}
                 bandeau_id={currentPage.bandeau_id}
