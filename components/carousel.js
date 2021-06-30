@@ -50,12 +50,12 @@ export default function Carousel({ imgList, legende, id }) {
                                     }
                                 </button>
                                 <Popup open={openArray[i]} closeOnDocumentClick onClose={() => closeModal(i)}>
-                                    <div className="modal flex justify-between ">
-                                        <button className="close stroke-current text-red-600 absolute -top-6 -right-5  "  onClick={() =>  closeModal(i)}>
+                                    <div className="modal flex justify-between w-1-4 ">
+                                        <button className="closeModal  m-10 close stroke-current text-black-600 "  onClick={() =>  closeModal(i)}>
                                             &times;
                                         </button>
                                         <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />
-                                        {img.legende && <div className="flex justify-center ">{img.legende}</div>
+                                        {img.legende && <div className="flex justify-center  ">{img.legende}</div>
                                         }
                                     </div>
                                 </Popup>
@@ -64,8 +64,9 @@ export default function Carousel({ imgList, legende, id }) {
                         </SwiperSlide>
                     ))}
                 </Swiper>
+                </div>
                 <div className="flex justify-center">{legende}</div>
-            </div>
+            
         </div>
     );
 }
