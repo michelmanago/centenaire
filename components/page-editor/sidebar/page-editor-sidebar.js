@@ -25,7 +25,6 @@ const PageEditorSidebar = ({
 
     language,
     languagesLists,
-    pageSlug,
     author,
     category,
     created_at,
@@ -49,17 +48,24 @@ const PageEditorSidebar = ({
     const setAuthor = e => updateState({author: e.target.value});
     const setCategory = e => updateState({page: e.target.value});
 
+    const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
+    
     return (
         <div className="w-2/5">
             {/* Block langues */}
             <PageEditorSidebarBlock title="Langues">
-                <select value={language || ''} onChange={onChangeLanguage} className="w-full px-4 py-3 border rounded">
-                    {languagesLists.map(cat => (
-                        <option key={cat.value} value={cat.value}>
-                            {cat.title}
-                        </option>
-                    ))}
-                </select>
+                {
+                    languagesLists.map(cat => {
+
+                        const catIsSelected = cat.value === language
+
+                        return (
+                            <button key={cat.value} onClick={() => onChangeLanguage(cat.value)} className={`bg-gray-200 px-4 py-2 font-medium ${catIsSelected ? "bg-gray-400" : ""}`}>
+                                {cat.title}
+                            </button>
+                        )
+                    })
+                }
             </PageEditorSidebarBlock>
 
             {/* Block bandeau */}
@@ -107,11 +113,11 @@ const PageEditorSidebar = ({
                 )}
 
                 {/* Permalien */}
-                <div>
-                    <a target="_blank" className="underline" href={pagePermalien}>
+                {isEditing && <div>
+                    <a target="_blank" className="underline" href={permalien}>
                         Lien vers la page
                     </a>
-                </div>
+                </div>}
 
                 {/* Remove page */}
                 {isEditing && (
@@ -120,7 +126,6 @@ const PageEditorSidebar = ({
                             onClick={onRemovePage}
                             target="_blank"
                             className="text-red-500 underline"
-                            href={pagePermalien}
                         >
                             Supprimer la page et ses traductions.
                         </button>

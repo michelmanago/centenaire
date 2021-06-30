@@ -1,6 +1,6 @@
 // libs
 import {useRouter} from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
@@ -42,6 +42,18 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         return allTitlesAreEmpty ? true : false
     }
+
+    const canSave = !notAllowedToSave()
+
+    // lifecycle
+    useEffect(() => {
+        if(canSave && !isEditing){
+            // Prevent leaving page without saving
+            window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
+        } else {
+            window.onbeforeunload = null
+        }
+    }, [canSave]);
 
     const isEditing = !!editedPages;
     const currentPage = pages[currentPageIndex]
@@ -214,7 +226,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         let form = [...pages]
 
-        // setIsSubmitting(true)
+        setIsSubmitting(true)
 
         // generate empty titles
         form = generateEmptyTitles(form)
@@ -247,7 +259,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
 
     // listeners
-    const onChangeLanguage = e => setCurrentPageIndex(languagesLists.findIndex(v => v.value === e.target.value))
+    const onChangeLanguage = value => setCurrentPageIndex(languagesLists.findIndex(v => v.value === value))
 
     // console.log("redner", currentPage.blocks)
 
@@ -268,7 +280,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 <input
                     onChange={setTitle}
                     value={currentPage.pageName}
-                    className="w-full px-5 py-4 mb-5 border rounded"
+                    className="w-full px-5 py-4 mb-5 border rounded text-xl"
                     type="text"
                     placeholder="Titre de la page"
                 />
@@ -315,7 +327,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
                 onChangeLanguage={onChangeLanguage}
 
-                notAllowedToSave={notAllowedToSave()}
+                notAllowedToSave={!canSave}
 
             />
 

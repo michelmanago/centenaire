@@ -3,28 +3,22 @@ import { useRouter } from "next/router";
 import Popup from "reactjs-popup"
 
 // styles
-const contentStyle = { background: '#000' };
-const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-const arrowStyle = { color: '#000' };
+const submittingclassNames = "cursor-wait opacity-50"
+const notAllowedClassNames = "cursor-not-allowed opacity-50"
+const notDisabledClassNames = "hover:bg-blue-800"
 
 export default function InputSubmitPage({onSubmitPage, isSubmitting, isEditing, notAllowedToSave}){
-
-    // router
-    const {locales} = useRouter()
 
     // utils
     const disabled = isSubmitting || notAllowedToSave
     
-    // styles
-    const submittingclassNames = "cursor-wait opacity-50"
-    const notAllowedClassNames = "cursor-not-allowed opacity-50"
-    const notDisabledClassNames = "hover:bg-blue-800"
 
     return (
 
         <Popup
             trigger={
                 <button
+                    type="button"
                     onClick={disabled ? undefined : onSubmitPage}
                     className={`mt-10 w-full px-3 py-3 font-semibold text-white bg-blue-700 rounded flex items-center justify-center ${isSubmitting ? submittingclassNames : ""} ${notAllowedToSave ? notAllowedClassNames : ""} ${disabled ? "" : notDisabledClassNames}`}
                 >

@@ -52,6 +52,10 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
         })
         .then(body => {
 
+            // do not prevent from leaving page
+            window.onbeforeunload = null
+
+            // force reload
             window.location.reload()
 
         })

@@ -35,7 +35,11 @@ export default function MenuEditorSubmit({canSave, setCanSave, form, menuLocales
         
         setCanSave(false)
 
-        alert("Menus sauvegardé")
+        // do not prevent leaving page anymore
+        window.onbeforeunload = null
+
+        // reload page to see changes
+        window.location.reload()
 
     }
 

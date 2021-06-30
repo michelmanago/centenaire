@@ -45,6 +45,9 @@ export default function PageEditorCreate({menu}) {
             
             if(originalPage){
 
+                // do not prevent from leaving page
+                window.onbeforeunload = null
+
                 // navigate to post edition
                 window.location = "/admin/page/" + originalPage.id
 
