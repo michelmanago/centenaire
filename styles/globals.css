@@ -76,6 +76,7 @@ h2 {
   @apply text-2xl;
   @apply sm:text-3xl;
   padding-bottom: 9px;
+  
 }
 
 h3 {
@@ -140,6 +141,38 @@ button{
   background-color: springgreen;
   color: white
 }
+
+.pointille{
+  text-decoration: underline dotted;
+}
+
+@media screen {
+
+
+  .popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    
+  
+    width: 1000px;
+  }
+  .popup-arrow {
+    color: rgb(255, 255, 255);
+  }
+  [role='tooltip'].popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+  }
+  
+  .popup-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    
+  }
+  [data-popup='tooltip'].popup-overlay {
+    background: transparent;
+  }
+}
+
 /* Libs */
 
 @import "./libs/navbar.css";

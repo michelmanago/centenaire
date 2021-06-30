@@ -23,7 +23,7 @@ export default function Fondaminsky() {
                 l&#39;intervention du mouvement  
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Liberté du Peuple </strong>
+                    <a className="pointille">  Liberté du Peuple </a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -43,7 +43,7 @@ export default function Fondaminsky() {
                 d&#39;
                 <Popup
                     trigger={open => (
-                    <strong className="button">  un Lassale</strong>
+                    <a className="pointille">  un Lassale</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -63,7 +63,7 @@ export default function Fondaminsky() {
                 rejoint Th.A. 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  Stepun</strong>
+                    <a className="pointille">  Stepun</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -79,7 +79,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button">  autres sont loin</strong>
+                    <a className="pointille">  autres sont loin</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -143,7 +143,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button"> conscience</strong>
+                    <a className="pointille"> conscience</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -155,7 +155,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button"> instar de Lucas</strong>
+                    <a className="pointille"> instar de Lucas</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -167,7 +167,7 @@ export default function Fondaminsky() {
                 l&#39; »
                 <Popup
                     trigger={open => (
-                    <strong className="button"> illusion qui nous élève</strong>
+                    <a className="pointille"> illusion qui nous élève</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -225,7 +225,7 @@ export default function Fondaminsky() {
                
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Son passé de narodnik</strong>
+                    <a className="pointille"> Son passé de narodnik</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -433,7 +433,7 @@ export default function Fondaminsky() {
                 est aisé de voir les traces des lettres historiques de
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Lavrov</strong>
+                    <a className="pointille"> Lavrov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -464,7 +464,7 @@ export default function Fondaminsky() {
                 
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Chirinski-Chikhmatov</strong>
+                    <a className="pointille"> Chirinski-Chikhmatov</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
@@ -553,14 +553,15 @@ export default function Fondaminsky() {
                  
                 <Popup
                     trigger={open => (
-                    <strong className="button"> Il est en bonne humeur, même heureux</strong>
+                    <a className="pointille"> Il est en bonne humeur, même heureux</a>
                     )}
                     position="bottom center"
                     on={["hover", "focus"]}
                 >
                     <span className="text-white bg-gray-500 inline-block py-8 px-8 max-w-sm  bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> 
                     En français dans le texte </span>
-                </Popup> » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
+                </Popup>
+                 » Dans le camp, Élie Isidorovitch travaillait beaucoup ; il fit même des
                 conférences pour ses camarades de détention. C&#39;est alors qu&#39;il se décida aussi à recevoir le
                 baptême. Aucune pression ne fut exercée sur lui. Ce fut au contraire au prêtre qui le baptisa de
                 ressentir son ascendant, sa supériorité spirituelle et même théologique. Ce prêtre racontait que
