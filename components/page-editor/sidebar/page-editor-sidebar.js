@@ -2,10 +2,11 @@
 import PageEditorSidebarBlock from './page-editor-sidebar-block';
 import InputSubmitPage from '../inputs/InputSubmitPage';
 import PageEditorInputImage from './PageEditorInputImage';
+import PageEditCategory from './PageEditCategory';
+import PageEditCategoryOrder from './PageEditCategoryOrder';
 
 // utils
 import { useRouter } from 'next/router';
-import PageEditCategory from './PageEditCategory';
 
 
 const categories = [
@@ -32,6 +33,7 @@ const PageEditorSidebar = ({
     last_modified,
     pagePermalien,
     bandeau_id,
+    order,
 
     onSubmit,
     onRemovePage,
@@ -148,8 +150,15 @@ const PageEditorSidebar = ({
                 </div>
             </PageEditorSidebarBlock>
 
+            {/* Block categorie order */}
+            <PageEditCategoryOrder
+                updatePages={updatePages} 
+                order={order}
+            />
+
+
             {/* Block categorie */}
-            <PageEditCategory 
+            <PageEditCategory
                 updatePages={updatePages} 
                 category={category}
                 categories={categories}

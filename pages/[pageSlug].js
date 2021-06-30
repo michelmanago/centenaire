@@ -18,6 +18,8 @@ const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
 
 export default function DynPage({ menu, page}) {
 
+
+    // redirect 404
     if(!page){
         return <DefaultErrorPage statusCode={404} />
     }
@@ -33,9 +35,16 @@ export default function DynPage({ menu, page}) {
 
     // utils
     const pageType = page && page.page
+    const renderPage = page => {
 
+        switch(page.type){
+            default:
+                return <PageTemplate page={page}/>
+        }
 
-    // hoooks
+    }
+
+    // hooks
     const router = useRouter()
 
 
@@ -46,9 +55,8 @@ export default function DynPage({ menu, page}) {
 
             <main className="">
 
-                {/* Page - NO TYPE */}
                 {
-                    page && <PageTemplate page={page}/>
+                    renderPage(page)
                 }
 
             </main>

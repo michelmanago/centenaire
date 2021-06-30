@@ -26,7 +26,7 @@ export default function Troyes() {
             <p>Ce rêve ne se sera pas réalisé fortuitement : il est en quelque sorte la concrétisation de l’engagement sans faille, de la grande valeur morale de la communauté, qui a accepté de relever le défi, qui n’a pas ménagé sa peine dans les diverses activités mises en place afin de recueillir des fonds pour financer les travaux. La participation aux kermesses diocésaines catholiques (permanences, réalisation de produits destinés à la vente….), la longue préparation des repas œcuméniques, les travaux de déblaiement de la grange ont concerné tout le monde. Est-ce étonnant quand on voit l’esprit de famille, la solidarité qui nous unissent à chaque rencontre, à chaque liturgie, aux agapes, le bonheur ressenti chaque fois après les tâches accomplies ? C’est aussi une façon de témoigner au Père André notre affection et de le remercier pour l’abnégation et le dynamisme qui le caractérisent, qui nous portent et nous donnent la force d’entreprendre.</p>
             <p>Nous sommes une grande famille sans aucun doute représentée par toutes les tranches d’âge. Cela nous donne une grande confiance en l’avenir, comme le fait de voir apparaître régulièrement de nouveaux visages aux liturgies. Espérons que cette nouvelle église contribuera au rayonnement toujours plus grand de notre communauté orthodoxe.</p>
 
-            <Carousel imgList={imgArray} legende="" id="crypte" />
+            <Carousel imgList={imgArray} legende="" id="troyes" />
         </div>
     );
 }
