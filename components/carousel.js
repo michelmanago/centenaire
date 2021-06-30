@@ -50,8 +50,8 @@ export default function Carousel({ imgList, legende, id }) {
                                     }
                                 </button>
                                 <Popup open={openArray[i]} closeOnDocumentClick onClose={() => closeModal(i)}>
-                                    <div className="modal">
-                                        <button className="close" onClick={() =>  closeModal(i)}>
+                                    <div className="modal flex justify-between ">
+                                        <button className="close stroke-current text-red-600 absolute -top-6 -right-5  "  onClick={() =>  closeModal(i)}>
                                             &times;
                                         </button>
                                         <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />
