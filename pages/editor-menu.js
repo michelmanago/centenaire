@@ -285,8 +285,15 @@ export default function EditorMenu({menus}) {
     };
 
     const onChangeLocale = (selectedIndex) => {
+
+        // change index
         setCurrentMenuIndex(selectedIndex)
+
+        // close modal
         closeEditModal()
+
+        // reset pages list form
+        setAvailablePages(availablePages.map(p => ({...p, selected: false})))
     }
 
     // Effets

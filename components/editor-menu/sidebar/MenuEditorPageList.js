@@ -36,6 +36,10 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
         setAvailablePages(availablePages.map(page => ({...page, selected: false})))
     }
 
+    // other
+    const pages = availablePages.filter(page => page.language === currentLocale)
+    const isSubmittingDisabled = !pages.filter(p => p.selected).length
+
     return (
         <form onSubmit={onSubmitPreventForm} className="">
 
@@ -43,7 +47,7 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
             <div className="border rounded px-5 py-3 overflow-scroll">
                 {
                     // show only pages from current language
-                    availablePages.filter(page => page.language === currentLocale).map(page => {
+                    pages.map(page => {
 
                         const permalien = page.pageSlug
 
@@ -67,9 +71,10 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
 
             {/* Add button */}
             <button
+                disabled={isSubmittingDisabled}
                 type="submit"
-                onClick={onSubmitPages}
-                className="h-10 bg-green-400 hover:bg-green-500 px-3 py-1 rounded text-white font-medium text-md mr-3 mt-4"
+                onClick={(onSubmitPages)}
+                className={`h-10 bg-green-400 px-3 py-1 rounded text-white font-medium text-md mr-3 mt-4 ${isSubmittingDisabled ? "opacity-50 cursor-" : "hover:bg-green-500"}`}
             >
                Ajouter au menu 
             </button>
