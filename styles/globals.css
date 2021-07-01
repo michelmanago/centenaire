@@ -52,8 +52,6 @@
   src: url('/static/fonts/Alegreya/Alegreya-Bold.ttf');
 }
 
-@import "./pagecontent.css";
-
 html,
 body {
   padding: 0;
@@ -133,21 +131,23 @@ button{
   background-position: center;
 }
 
-@media screen {
 
 
-  .popup-content {
+
+
+  .popimage-content {
     margin: auto;
     background: rgb(255, 255, 255);
-    
+    height: 90vh;
     border: rgb(255, 255, 255) solid;
   }
-  .popup-arrow {
+
+  .popimage-arrow {
     color: rgb(255, 255, 255);
   }
+
   
-  
-  .popup-overlay {
+  .popimage-overlay {
     background: rgba(0, 0, 0, 0.719);
     
   }
@@ -167,8 +167,12 @@ button{
   [data-popup='tooltip'].popup-overlay {
     background: transparent;
   }
-}
+
+
+
+
 
 /* Libs */
 
+@import "./pagecontent.css";
 @import "./libs/navbar.css";
