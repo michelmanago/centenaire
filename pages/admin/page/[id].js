@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DefaultErrorPage from 'next/error'
+import Head from "next/head"
 
 // models
 import { getMenu } from "../../../model/menu";
@@ -41,6 +42,9 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
         
         fetch("/api/page", {
             method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(formPages)
         })
         .then(response => {
@@ -68,6 +72,11 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
 
     return (
         <>
+            <Head>
+                <title>Edition de page - {pageTranslations[0] && pageTranslations[0].pageName}</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
             {menu && <Header menu={menu.data}/>}
             <main className="bg-white">
                 {pageTranslations && pageTranslations.length && <PageEditor

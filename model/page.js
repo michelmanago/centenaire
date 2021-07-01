@@ -86,36 +86,48 @@ export async function getPageById(id) {
 
 export async function getPageBySlug(pageSlug, specificContext = "") {
     
-    let page = await selectPageBySlug(pageSlug)
+    try {
+        
+        let page = await selectPageBySlug(pageSlug)
 
-    // in context of show/displaying a page we need more information
-    if(specificContext === "render"){
+        // in context of show/displaying a page we need more information
+        if(specificContext === "render"){
 
-        // we must pre-fetch bandeau
-        if(page.bandeau_id){
+            // we must pre-fetch bandeau
+            if(page.bandeau_id){
 
-            try {
-                
-                const bandeau = await getServeurImageMedia(page.bandeau_id)
-                page.bandeau = bandeau
+                try {
+                    
+                    const bandeau = await getServeurImageMedia(page.bandeau_id)
+                    page.bandeau = bandeau
 
-            } catch (error) {
-                console.log("Error fetching bandeau", error)
+                } catch (error) {
+                    console.log("Error fetching bandeau", error)
+                }
+
             }
+
+            // fetchOriginalPageId
+            const originalPageId = await selectOriginalPageId(page.id)
+            page.originalPageId = originalPageId ? originalPageId.original_id : null 
+
+            // fetch nav list
+            const nav = await getAllPages(page.language, page.page)
+            page.nav = nav
 
         }
 
-        // fetchOriginalPageId
-        const originalPageId = await selectOriginalPageId(page.id)
-        page.originalPageId = originalPageId ? originalPageId.original_id : null 
-    }
+        // so that we can directly manipulate JS object in Components
+        if(page && page.blocks){
+            page.blocks = JSON.parse(page.blocks)
+        }
 
-    // so that we can directly manipulate JS object in Components
-    if(page && page.blocks){
-        page.blocks = JSON.parse(page.blocks)
-    }
+        return page
 
-    return page
+    } catch (error) {
+        console.log(error)
+        return null
+    }
 }
 
 export async function getPageByType(pageType) {
@@ -132,9 +144,9 @@ export async function getPageByType(pageType) {
 
 
 
-export async function getAllPages(locale){
+export async function getAllPages(locale, category){
 
-    const pages = await selectAllPages(locale)
+    const pages = await selectAllPages(locale, category)
 
     return pages
 

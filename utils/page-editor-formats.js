@@ -22,6 +22,6 @@ export function pageFormat(locale){
         created_at: null,
         last_modified: null,
         blocks: [],
-        order: 0,
+        position: 0,
     })
 }

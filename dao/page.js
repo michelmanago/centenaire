@@ -1,4 +1,5 @@
 import { query } from "../lib/db"
+import { filterObj } from "../utils/utils"
 
 
 export async function selectOriginalPageId(childId){
@@ -43,17 +44,17 @@ export async function deleteTranslations(translationsIds){
 
 }
 
-export async function insertPage({pageName, pageSlug, category, language, author, created_at, blocks, bandeau_id}){
+export async function insertPage({pageName, pageSlug, page, language, author, created_at, blocks, bandeau_id, position}){
 
     const blocksToJson = JSON.stringify(blocks)
 
     const res = await query(
         `
             INSERT INTO pagecontent
-            (pageName, pageSlug, page, language, author, created_at, last_modified, blocks, bandeau_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (pageName, pageSlug, page, language, author, created_at, last_modified, blocks, bandeau_id, position)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-        [pageName, pageSlug, category, language, author, created_at, created_at, blocksToJson, bandeau_id]
+        [pageName, pageSlug, page, language, author, created_at, created_at, blocksToJson, bandeau_id, position]
     )
 
     return res.affectedRows ? res.insertId : null
@@ -91,35 +92,85 @@ export async function selectTranslations(originalPageId){
 
 }
 
-export async function updatePage({id, pageName, pageSlug, content, page, language, author, last_modified, blocks, bandeau_id}) {
+export async function updatePage({id, pageName, pageSlug, content, page, language, author, last_modified, blocks, bandeau_id, position}) {
 
-    const blocksToJson = JSON.stringify(blocks)
+    const updatableFields = {
+        pageName, 
+        pageSlug, 
+        content, 
+        page, 
+        language, 
+        author, 
+        last_modified, 
+        blocks, 
+        bandeau_id, 
+        position
+    }
 
-    const res = await query(
-        `
-            UPDATE pagecontent
-                SET pageName = ?,
-                    pageSlug = ?,
-                    blockcontent = ?,
-                    page = ?,
-                    language = ?,
-                    author = ?,
-                    last_modified = ?,
-                    blocks = ?,
-                    bandeau_id = ?
-                
-            WHERE id = ?
-        `,
-        [pageName, pageSlug, content, page, language, author, last_modified, blocksToJson, bandeau_id,/* should always be the last */id]
-    )
+    const valid_fields = filterObj(updatableFields, (key, val) => val !== undefined)
+    const fields_count = valid_fields.length
 
-    if(!res.affectedRows){
-        throw {
-            message: "page not found id: " + id,
-            status: 404
+    // there is no fields
+    if(fields_count === 0){
+        throw new Error("no fields found")
+    } else {
+
+
+        // SETTERS
+        let setters = ""
+    
+        const fieldsKey = Object.keys(valid_fields)
+        
+        fieldsKey.map((key, index) => {
+    
+            if(index === 0){
+                setters += key + " = ?"
+            }  else {
+                setters += "," + key + " = ?"
+            }
+
+        })
+
+
+        // VALUES
+        let values = []
+        
+        fieldsKey.forEach(key => {
+
+            let val = updatableFields[key]
+
+            // maybe needs to stringify json
+            if(key === "blocks" && typeof val !== "string"){
+                val = JSON.stringify(val)
+            }
+
+            // add to values
+            values.push(val)
+
+        })
+
+        // finally add id
+        values.push(id)
+
+        const res = await query(
+            `
+                UPDATE pagecontent
+                    SET ${setters}
+                    
+                WHERE id = ?
+            `,
+            values
+        )
+    
+        if(!res.affectedRows){
+            throw {
+                message: "page not found id: " + id,
+                status: 404
+            }
+        } else {
+            return res.affectedRows
         }
-    } else {
-        return res.affectedRows
+
     }
 
 }
@@ -140,14 +191,30 @@ export async function selectPageBySlug(pageSlug) {
         return null
 }
 
-export async function selectAllPages(locale = null){
+export async function selectAllPages(locale = null, category = ""){
+
+
+    let parameters = []
+    let conditionalWhere = ""
+
+    if(locale) {
+        parameters.push(locale)
+        conditionalWhere += " AND language = ? "
+    }
+
+    if(category) {
+        parameters.push(category)
+        conditionalWhere += " AND page = ? "
+    }
 
     const res = await query(
         `
         SELECT p.*, t.original_id as original_id FROM pagecontent p, page_translations t
-        WHERE t.child_id = p.id ${locale ? "language = ?" : ""}
+        WHERE t.child_id = p.id ${conditionalWhere}
+
+        ORDER BY p.position
         `,
-        locale ? [locale] : []
+        parameters
     )
 
     if (res.length >= 1)
