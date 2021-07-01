@@ -20,9 +20,10 @@ export default function PageContent({pageName, blocks}){
             <p className="text-red-600">Impossive d'afficher les blocks de cette page.</p>
         )
     } else {
-        blockList = list && list.map(block => {
+        blockList = list && list.map((block, index) => {
+
             if (block.type === 'text') {
-                return <div key={block.id}>{htmlParse(block.content)}</div>;
+                return <div key={index}>{htmlParse(block.content)}</div>;
             } else if (block.type === 'carousel') {
                 return (
                     <div key={block.id}>

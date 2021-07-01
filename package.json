@@ -24,7 +24,7 @@
     "react-dnd": "^7.7.0",
     "react-dom": "17.0.1",
     "react-player": "^2.9.0",
-    "react-sortable-tree": "^2.8.0",
+    "react-sortable-tree": "2.3.0",
     "reactjs-popup": "^2.0.4",
     "serverless-mysql": "^1.5.4",
     "slate": "^0.63.0",
