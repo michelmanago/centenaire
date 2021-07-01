@@ -6,16 +6,16 @@ import Image from 'next/image';
 export default function SainteFoy() {
  
     const imgArray = [
-       {url: '/static/img/paroisses/saintefoy/serie1/0-essai.jpg', legende: ''},
        {url: '/static/img/paroisses/saintefoy/serie1/2-skite-sud.jpg', legende: ''},
-/*        {url: '/static/img/paroisses/saintefoy/serie1/3-skite-toit.jpg', legende: ''},
+       {url: '/static/img/paroisses/saintefoy/serie1/1-skite.jpg', legende: ''},
+        {url: '/static/img/paroisses/saintefoy/serie1/3-skite-toit.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/4-portail.jpg', legende: ''},
-        {url: '/static/img/paroisses/saintefoy/serie1/5-cellules-moines.jpg', legende: ''},
+        {url: '/static/img/paroisses/saintefoy/serie1/5-porte-chapelle.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/6-chambre-pelerin.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/7-bibliotheque.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/8-art-sacre.jpg', legende: ''},
         {url: '/static/img/paroisses/saintefoy/serie1/9-higoumene-gerasime.jpg', legende: ''},
- */  ];
+  ];
     return (
         <div className="px-10 bio-block">
             <h2>Le Skite Sainte Foy </h2>
@@ -39,7 +39,7 @@ export default function SainteFoy() {
             <p>Il est possible d’assister chaque jour aux offices monastiques ou à la divine Liturgie. Il faut toujours téléphoner avant de venir. La visite du monastère se fait sur rendez-vous : 04 66 45 42 93 du mardi au vendredi de 14h à 17h. Il est demandé d’avoir une tenue décente.</p>
 
 
-            <Carousel imgList={imgArray} legende="" id="crypte" />
+            <Carousel imgList={imgArray} legende="" id="saintefoy" />
         </div>
     );
 }

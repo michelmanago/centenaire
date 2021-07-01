@@ -31,7 +31,7 @@ export default function Carousel({ imgList, legende, id }) {
     }
     return (
         <div className="screen">
-            <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9">
+            <div className="h-auto my-6 overflow-hidden bg-white md:max-w-full mb-9">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
@@ -45,9 +45,10 @@ export default function Carousel({ imgList, legende, id }) {
                         <SwiperSlide key={id + '-' + i}>
                             <div className='flex flex-col items-center' >
                                 <button type="button" className="button" onClick={() => openModal(i)}>
-                                    <div className='rounded-xl'>
-                                        <Image className="full rounded-xl" src={img.url} alt={`slide ${i + 1}`}
+                                    <div className=''>
+                                        <Image className="full" src={img.url} alt={`slide ${i + 1}`}
                                             layout="intrinsic"
+                                            priority="true"
                                             width={1280}
                                             height={960}
                                         />
@@ -60,7 +61,7 @@ export default function Carousel({ imgList, legende, id }) {
                                         <button className="close stroke-current text-red-600 absolute -top-6 -right-5  "  onClick={() =>  closeModal(i)}>
                                             &times;
                                         </button>
-                                        <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />
+                                        <img className="full" src={img.url} alt={`slide ${i + 1}`} />
                                         {img.legende && <div className="flex justify-center ">{img.legende}</div>
                                         }
                                     </div>

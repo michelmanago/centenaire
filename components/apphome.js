@@ -23,11 +23,6 @@ export default function AppHome ({currentLanguage}) {
                         <p>
                      </p>
 
-                     <div className="ml-175px"><Image src='/static/img/paroisses/saintefoy/serie1/1-skite.jpg'
-                        layout="responsive"
-                        width="788"
-                        height="1050"></Image>
-                    </div>
                 </main>
             </div>
         </div>
