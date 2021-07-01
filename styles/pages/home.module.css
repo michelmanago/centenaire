@@ -1,3 +1,13 @@
 .header{
     height: 360px;
 }
+
+.homeBandeauVideoContainer{
+    height: 360px;
+}
+
+.homeBandeauVideo{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
