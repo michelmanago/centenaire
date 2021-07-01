@@ -12,6 +12,7 @@ export default function Daru() {
         {url: '/static/img/paroisses/daru/gravures/1861-09-21-cathedrale.jpg', legende: 'La nouvelle cathédrale russe de Paris'},
         {url: '/static/img/paroisses/daru/gravures/1894-jour-de-lan.jpg', legende: 'Jour de l an à l église russe'},
         {url: '/static/img/paroisses/daru/gravures/1894-Serment-au-Tsar.jpg', legende: 'serment de fidélité au nouveau Tsar (1894)'},
+        {url: '/static/img/paroisses/daru/gravures/decret.jpg', legende: 'Décret du métropolite Vladimir du 2 février 1951 élevant l’église au rang de cathédrale.'},
    ];
 
    const imgArrayExterieur = [

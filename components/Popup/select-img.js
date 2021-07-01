@@ -13,11 +13,11 @@ export default function Toolbar({defuntId, cb}) {
     const pjUrl = `${process.env.NEXT_PUBLIC_UPLOAD_SERVER_HOST}/uploads/`;
 
     // fetch data
-    useEffect(() => {
-        fetch(`/api/defunts/pj/${defuntId}`)
-            .then(res => res.json())
-            .then(data => setDefuntPj(data));
-    }, []);
+    // useEffect(() => {
+    //     fetch(`/api/defunts/pj/${defuntId}`)
+    //         .then(res => res.json())
+    //         .then(data => setDefuntPj(data));
+    // }, []);
 
     const handleImg = e => {
         e.preventDefault();

@@ -114,6 +114,9 @@ export default function BlockList({blockList, updateCurrentPage}){
 
     }
 
+    // prevent from mapping String
+    const list = blockList && Array.isArray(blockList) ? blockList : []
+
     return (
         <div>
             {/* Input - add block */}
@@ -121,8 +124,8 @@ export default function BlockList({blockList, updateCurrentPage}){
 
             {/* List */}
             {
-                blockList && (
-                    sortedBlocks(blockList).map((block, blockIndex) => {
+                list && (
+                    sortedBlocks(list).map((block, blockIndex) => {
     
                         
                         return (

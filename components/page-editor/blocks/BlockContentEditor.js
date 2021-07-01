@@ -22,7 +22,7 @@ const BlockContentEditor = ({type, position ,content, setContent, removeBlockCon
         <div className="flex flex-col items-end pr-5 mb-10 border-r-4">
 
             {/* Position */}
-            <div class="border mb-3 flex">
+            <div className="border mb-3 flex">
                 {/* Up */}
                 <ButtonPositionArrow onClick={() => setBlockPosition(- 1)}><IconArrowUp/></ButtonPositionArrow>
                 <span className="flex items-center justify-center w-6">{position}</span>
