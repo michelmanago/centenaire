@@ -52,8 +52,6 @@
   src: url('/static/fonts/Alegreya/Alegreya-Bold.ttf');
 }
 
-@import "./pagecontent.css";
-
 html,
 body {
   padding: 0;
@@ -171,4 +169,5 @@ button{
 
 /* Libs */
 
+@import "./pagecontent.css";
 @import "./libs/navbar.css";

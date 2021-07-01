@@ -29,7 +29,7 @@ export default function Home({menu}) {
       {menu && <Header menu={menu.data}/>}
 
       {/* Page home */}
-      <div>
+      <div className={styles.home}>
         <header className={styles.header + " relative"}>
           <div className={styles.homeBandeauVideoContainer}>
             <video className={styles.homeBandeauVideo} loop muted autoPlay src="/static/videos/bandeau-centenaire.mp4"></video>
