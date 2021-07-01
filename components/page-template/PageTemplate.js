@@ -1,34 +1,42 @@
 // libs
-import htmlParse from 'html-react-parser'
-import { getMediaLink } from '../../utils/utils-serveur-image'
+import htmlParse from 'html-react-parser';
+import {Fragment} from 'react';
+import {getMediaLink} from '../../utils/utils-serveur-image';
+import CarouselParam from '../carouselParam';
 
-
-export default function PageTemplate({page}){
-
+export default function PageTemplate({page}) {
     return (
         <div className="">
-            
             {/* Banner */}
             {page.bandeau && (
                 <div style={{height: 300}} className="border">
-                    <img className="block h-full w-full object-cover" src={getMediaLink(page.bandeau.public_path)} alt="" />
+                    <img
+                        className="block object-cover w-full h-full"
+                        src={getMediaLink(page.bandeau.public_path)}
+                        alt=""
+                    />
                 </div>
             )}
 
             {/* Content */}
 
-            <div className="border max-w-screen-xl mx-auto py-10 px-10 bg-white">
-                <h1 className="text-5xl font-bold mb-10">{page.pageName}</h1>
+            <div className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
+                <h1 className="mb-10 text-5xl font-bold">{page.pageName}</h1>
 
                 {/* Render blocks */}
-                {
-                    page && page.blocks.map(block => (
-                        htmlParse(block.content)
-                    ))
-                }
-
+                {page &&
+                    page.blocks.map(block => {
+                        if (block.type === 'text') {
+                            return <Fragment key={block.id}>{htmlParse(block.content)}</Fragment>;
+                        } else if (block.type === 'carousel') {
+                            return (
+                                <Fragment key={block.id}>
+                                    <CarouselParam imgList={block.content.data} legende={block.content.legende} id={block.id} />
+                                </Fragment>
+                            );
+                        }
+                    })}
             </div>
         </div>
-    )
-
+    );
 }

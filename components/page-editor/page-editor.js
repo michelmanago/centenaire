@@ -1,6 +1,6 @@
 // libs
 import {useRouter} from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
@@ -43,6 +43,18 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         return allTitlesAreEmpty ? true : false
     }
 
+    const canSave = !notAllowedToSave()
+
+    // lifecycle
+    useEffect(() => {
+        if(canSave && !isEditing){
+            // Prevent leaving page without saving
+            window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
+        } else {
+            window.onbeforeunload = null
+        }
+    }, [canSave]);
+
     const isEditing = !!editedPages;
     const currentPage = pages[currentPageIndex]
     const updateCurrentPage = (values) => {
@@ -64,6 +76,17 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
             }))
         }
         
+    }
+
+    const updatePages = (values = {}) => {
+        if(pages && pages.length){
+            setPages(pages.map(page => {
+                return {
+                    ...page,
+                    ...values
+                }    
+            }))
+        }
     }
 
     const generateEmptyTitles = form => {
@@ -165,11 +188,11 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         })))
     }
 
-    const onMediaUploaded = mediaId => {
+    const onMediaUploaded = media => {
 
         setPages(pages.map(page => ({
             ...page,
-            bandeau_id: mediaId
+            bandeau_id: media.id
         })))
 
     }
@@ -214,7 +237,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         let form = [...pages]
 
-        // setIsSubmitting(true)
+        setIsSubmitting(true)
 
         // generate empty titles
         form = generateEmptyTitles(form)
@@ -247,12 +270,10 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
 
     // listeners
-    const onChangeLanguage = e => setCurrentPageIndex(languagesLists.findIndex(v => v.value === e.target.value))
-
-    // console.log("redner", currentPage.blocks)
+    const onChangeLanguage = value => setCurrentPageIndex(languagesLists.findIndex(v => v.value === value))
 
     return (
-        <div className="max-w-screen-xl mx-auto py-10 px-10 border bg-white">
+        <div className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
 
             <div className="flex p-8 gap-x-8">
 
@@ -268,7 +289,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 <input
                     onChange={setTitle}
                     value={currentPage.pageName}
-                    className="w-full px-5 py-4 mb-5 border rounded"
+                    className="w-full px-5 py-4 mb-5 border rounded text-xl"
                     type="text"
                     placeholder="Titre de la page"
                 />
@@ -296,13 +317,15 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
             {/* Right */}
             <PageEditorSidebar
 
-                updateState={updateCurrentPage}
+                updateCurrentPage={updateCurrentPage}
+                updatePages={updatePages}
                 isEditing={isEditing}
 
                 language={currentPage.language} languagesLists={languagesLists}
                 pageSlug={currentPage.pageSlug}
                 author={currentPage.author}
                 category={currentPage.page}
+                order={currentPage.order}
                 created_at={currentPage.created_at} last_modified={currentPage.last_modified}
                 pagePermalien={currentPage.pageSlug}
                 bandeau_id={currentPage.bandeau_id}
@@ -315,7 +338,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
                 onChangeLanguage={onChangeLanguage}
 
-                notAllowedToSave={notAllowedToSave()}
+                notAllowedToSave={!canSave}
 
             />
 

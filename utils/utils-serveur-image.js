@@ -9,7 +9,6 @@ export function getServerImageEndpoint(){
 }
 
 // fetch
-
 export function getServeurImageMedia(mediaId){
 
     const endpoint = getServerImageEndpoint() + "/" + mediaId

@@ -6,13 +6,13 @@ import Image from 'next/image';
 export default function Marseille() {
  
     const imgArray = [
-        {url: '/static/img/paroisses/marseille/Iconostase-Pâques-2018.jpg', legende: 'Iconostase à Pâques 2018'},
+        {url: '/static/img/paroisses/marseille/iconostase-paques-2018.jpg', legende: 'Iconostase à Pâques 2018'},
         {url: '/static/img/paroisses/marseille/pantocrator.jpg', legende: 'Pantocrator'},
-        {url: '/static/img/paroisses/marseille/2018-Pâques.jpg', legende: 'Pâques 2018'},
-        {url: '/static/img/paroisses/marseille/2020-Mgr-Jean-de-Doubna.jpg', legende: 'Visite de Monseigneur Jean de Doubna en 2020'},
-        {url: '/static/img/paroisses/marseille/clergé-de-la-paroisse.jpg', legende: 'Clergé de la paroisse en 2021 - Père Jean Gueit et Diacre Stéphane Sevila'},
-        {url: '/static/img/paroisses/marseille/1985-Bapteme-Marie-Mejekovskaya.jpg', legende: 'Baptême d\'adulte en 1985'},
-        {url: '/static/img/paroisses/marseille/cathéchèse.jpg', legende: 'Cathéchèse des enfants'},
+        {url: '/static/img/paroisses/marseille/2018-Paques.jpg', legende: 'Pâques 2018'},
+        {url: '/static/img/paroisses/marseille/2020-Mgr-jean-de-doubna.jpg', legende: 'Visite de Monseigneur Jean de Doubna en 2020'},
+        {url: '/static/img/paroisses/marseille/clerge-de-la-paroisse.jpg', legende: 'Clergé de la paroisse en 2021 - Père Jean Gueit et Diacre Stéphane Sevila'},
+        {url: '/static/img/paroisses/marseille/1985-bapteme-marie-mejekovskaya.jpg', legende: 'Baptême d\'adulte en 1985'},
+        {url: '/static/img/paroisses/marseille/cathechese.jpg', legende: 'Cathéchèse des enfants'},
     ];
     return (
         <div className="px-10 bio-block">

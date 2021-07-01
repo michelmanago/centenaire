@@ -124,6 +124,7 @@ export default function BlockList({blockList, updateCurrentPage}){
                 blockList && (
                     sortedBlocks(blockList).map((block, blockIndex) => {
     
+                        
                         return (
                             <BlockContentEditor 
                                 key={"block-" + block.position} 

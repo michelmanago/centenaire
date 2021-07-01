@@ -6,6 +6,9 @@ import {UpdateButton} from '../editor-menu-buttons';
 import MenuEditorLink from '../forms/MenuEditorLink';
 
 
+const overlayStyle = {
+    background: 'rgba(0,0,0,0.75)'
+}
 export default function ModalEditLink({isEditing, onClick, label, href, setHref, setLabel, closeEditModal, onSubmitEdit}){
 
     return (
@@ -22,10 +25,12 @@ export default function ModalEditLink({isEditing, onClick, label, href, setHref,
                 modal
                 closeOnDocumentClick
                 onClose={closeEditModal}
+                overlayStyle={overlayStyle}
             >
                 {
                     close => (
                         <div style={{width: 400}} className="bg-white border-2 rounded px-6 py-4">
+                            <h4 className="text-xl font-semibold mb-4">Edition du lien</h4>
                             <MenuEditorLink
                                 // text
                                 formTitle="Modifier un lien"

@@ -1,59 +1,43 @@
 // libs
 import { useState } from "react";
 
+// utils
+import { formatNewMenuItem } from "../../../utils/editor-menu-formats";
+import generateUUID from "../../../utils/generateUUID";
+
 
 // components
 import MenuEditorLink from "../forms/MenuEditorLink";
 import MenuEditorPageList from "./MenuEditorPageList";
 import MenuEditorSidebarBlock from "./MenuEditorSidebarBlock";
 
-// utils
 
-
-export default function MenuEditorSidebar({updateCurrentMenuState, currentMenu, currentLocale, canSave, setCanSave}){
+export default function MenuEditorSidebar({availablePages, setAvailablePages, onAddLinks, currentMenu, currentLocale}){
 
     // states
     const [formCreateLabel, setFormCreateLabel] = useState('');
     const [formCreateHref, setFormCreateHref] = useState('');
 
-    // utils
-    const formatNewMenuItem = (label, href) => {
-    
-        return {
-            id: "new-item" + currentMenu.length,
-            title: label,
-            href: href || '#'
-        }
-    }
-
     // form
     const addCustomLink = (stateLabel, stateHref) => {
         if (formCreateHref && formCreateLabel) {
+
             // add new item
-            // update current state menu
-            
-            updateCurrentMenuState([
-                formatNewMenuItem(formCreateLabel, formCreateHref),
-                ...currentMenu,
-            ])
+            onAddLinks([formatNewMenuItem(formCreateLabel, formCreateHref)])
             
             // reset
             setFormCreateHref('');
             setFormCreateLabel('');
-
-            if(!canSave){
-                setCanSave(true)
-            }
         }
     };
 
-    const addPageLinks = links => {
+    const addPageLinks = pages => {
 
-        updateCurrentMenuState([
-            ...links.map(link => formatNewMenuItem(link.label, link.href)),
-            ...currentMenu
-        ])
-
+        // add all pages
+        onAddLinks(pages.map(page => ({
+            ...formatNewMenuItem(page.pageName, page.pageSlug),
+            original_id: page.original_id
+        })))
     }
 
     
@@ -85,6 +69,8 @@ export default function MenuEditorSidebar({updateCurrentMenuState, currentMenu, 
                 <MenuEditorPageList
                     currentLocale={currentLocale}
                     addPageLinks={addPageLinks}
+                    setAvailablePages={setAvailablePages}
+                    availablePages={availablePages}
                 />
             </MenuEditorSidebarBlock>
         </div>

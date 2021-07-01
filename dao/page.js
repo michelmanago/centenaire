@@ -144,8 +144,8 @@ export async function selectAllPages(locale = null){
 
     const res = await query(
         `
-        SELECT * FROM pagecontent
-        ${locale ? "WHERE language = ?" : ""}
+        SELECT p.*, t.original_id as original_id FROM pagecontent p, page_translations t
+        WHERE t.child_id = p.id ${locale ? "language = ?" : ""}
         `,
         locale ? [locale] : []
     )
