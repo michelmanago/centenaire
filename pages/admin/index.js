@@ -38,7 +38,6 @@ export async function getServerSideProps(context) {
     const session = await getSession({req});
 
     console.warn("ENLEVER FALSE")
-    console.info("ENLEVER FALSE")
     if (false && !session)
         return {
             redirect: {
