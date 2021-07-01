@@ -167,10 +167,9 @@ button{
 
   .popup-content {
     margin: auto;
-  
+    background: rgb(255, 255, 255);
     
-  
-    width: 1000px;
+    border: rgb(255, 255, 255) solid;
   }
   .popup-arrow {
     color: rgb(255, 255, 255);
@@ -178,8 +177,21 @@ button{
   
   
   .popup-overlay {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.719);
     
+  }
+  .closeModal {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
   }
   [data-popup='tooltip'].popup-overlay {
     background: transparent;
