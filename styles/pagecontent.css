@@ -1,23 +1,9 @@
-.header{
-    height: 360px;
-}
-
-.homeBandeauVideoContainer{
-    height: 360px;
-}
-
-.homeBandeauVideo{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.home a {
+.pagecontent a {
     color: inherit;
     text-decoration: none;
   }
   
-.home h2 {
+.pagecontent h2 {
     font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
     font-weight:700;
     @apply text-2xl;
@@ -26,7 +12,7 @@
     
   }
   
-.home h3 {
+.pagecontent h3 {
     font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
     font-weight:700;
     @apply text-xl;
@@ -35,31 +21,31 @@
     padding-bottom: 9px;
   }
   
-.home ul {
+.pagecontent ul {
     font-size: 1.125rem;  
     list-style: disc;
     padding-bottom: 6px;
   }
   
-.home ol {
+.pagecontent ol {
     font-size: 1.125rem;
     list-style: decimal;
     padding-bottom: 6px;
     padding-left: 18px;
   }
   
-.home li {
+.pagecontent li {
     line-height: 1.75rem;
     padding-bottom: 6px;
     padding-left: 18px;
   }
   
-.home ol li {
+.pagecontent ol li {
     @apply text-justify;
   }
   
   
-.home p {
+.pagecontent p {
     font-size: 1.125rem;
     line-height: 1.75rem;
     padding-bottom: 6px;

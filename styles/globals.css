@@ -52,7 +52,6 @@
   src: url('/static/fonts/Alegreya/Alegreya-Bold.ttf');
 }
 
-
 html,
 body {
   padding: 0;
@@ -63,50 +62,6 @@ body{
     @apply bg-pyellow;
   font-family:'Jost', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight:400;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-h2 {
-  font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
-  font-weight:700;
-  @apply text-2xl;
-  @apply sm:text-3xl;
-  padding-bottom: 9px;
-  
-}
-
-h3 {
-  font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
-  font-weight:700;
-  @apply text-xl;
-  @apply sm:text-2xl;
-  padding-top: 6px;
-  padding-bottom: 9px;
-}
-
-ul {
-    list-style: disc;
-    @apply pl-10 my-4;
-}
-
-ol {
-    list-style: decimal;
-    @apply pl-10 my-4;
-}
-
-li {
-  @apply leading-tight;
-}
-
-
-p {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  padding-bottom: 6px;
 }
 
 * {
@@ -176,21 +131,23 @@ button{
   background-position: center;
 }
 
-@media screen {
 
 
-  .popup-content {
+
+
+  .popimage-content {
     margin: auto;
     background: rgb(255, 255, 255);
-    
+    height: 90vh;
     border: rgb(255, 255, 255) solid;
   }
-  .popup-arrow {
+
+  .popimage-arrow {
     color: rgb(255, 255, 255);
   }
+
   
-  
-  .popup-overlay {
+  .popimage-overlay {
     background: rgba(0, 0, 0, 0.719);
     
   }
@@ -210,8 +167,12 @@ button{
   [data-popup='tooltip'].popup-overlay {
     background: transparent;
   }
-}
+
+
+
+
 
 /* Libs */
 
+@import "./pagecontent.css";
 @import "./libs/navbar.css";

@@ -35,7 +35,7 @@ export default function PageContent({pageName, blocks}){
     }
 
     return (
-        <div className="">
+        <div className="pagecontent">
 
             {/* Title */}
             <h1 className="mb-10 text-5xl font-bold">{pageName}</h1>
