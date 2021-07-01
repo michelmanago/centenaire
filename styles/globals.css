@@ -88,6 +88,20 @@ h3 {
   padding-bottom: 9px;
 }
 
+ul {
+    list-style: disc;
+    @apply pl-10 my-4;
+}
+
+ol {
+    list-style: decimal;
+    @apply pl-10 my-4;
+}
+
+li {
+  @apply leading-tight;
+}
+
 
 p {
   font-size: 1.125rem;
