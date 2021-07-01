@@ -9,7 +9,7 @@ export default function SortedNavList({list}){
                     list.map(page => {
 
                         return (
-                            <li key={page.id}><a className="text-blue-400 underline" href={page.pageSlug}>{page.pageName}</a></li>
+                            <li key={page.id}><a className="text-blue-400 underline" href={"/" + page.pageSlug}>{page.pageName}</a></li>
                         )
 
                     })
