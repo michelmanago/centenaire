@@ -72,5 +72,17 @@ export function capitalize(s){
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
+export function isHome(){
+    switch(window.location.pathname){
+        case "/":
+        case "/fr":
+        case "/en":
+        case "/ru":
+            return true
+        default:
+            return false
+    }
+}
+
 
 export function voidFunction(){}

@@ -115,6 +115,10 @@ export async function getPageBySlug(pageSlug, specificContext = "") {
             const nav = await getAllPages(page.language, page.page)
             page.nav = nav
 
+            // fetch translations
+            let translations = await getPageTranslations(page.originalPageId)
+            page.translations = translations
+
         }
 
         // so that we can directly manipulate JS object in Components
