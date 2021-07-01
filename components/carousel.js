@@ -61,13 +61,8 @@ export default function Carousel({ imgList, legende, id }) {
                                         <button className="closeModal  m-10 close stroke-current text-black-600 "  onClick={() =>  closeModal(i)}>
                                             &times;
                                         </button>
-<<<<<<< HEAD
-                                        <img className="full" src={img.url} alt={`slide ${i + 1}`} />
-                                        {img.legende && <div className="flex justify-center ">{img.legende}</div>
-=======
                                         <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />
                                         {img.legende && <div className="flex justify-center  ">{img.legende}</div>
->>>>>>> c24cd803d6938948413d0127f0fc7ccf17b3c23d
                                         }
                                     </div>
                                 </Popup>
