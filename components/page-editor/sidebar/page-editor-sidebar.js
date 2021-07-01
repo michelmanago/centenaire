@@ -3,23 +3,13 @@ import PageEditorSidebarBlock from './page-editor-sidebar-block';
 import InputSubmitPage from '../inputs/InputSubmitPage';
 import PageEditorInputImage from './PageEditorInputImage';
 import PageEditCategory from './PageEditCategory';
-import PageEditCategoryOrder from './PageEditCategoryOrder';
 
 // utils
 import { useRouter } from 'next/router';
+import { CATEGORIES } from '../../../utils/parameters';
 
 
-const categories = [
-    {
-        title: 'Compositeurs',
-        value: 'compositeurs',
-    },
-
-    {
-        title: 'Paroisses',
-        value: 'paroisses',
-    },
-];
+const categories = Object.values(CATEGORIES);
 
 const PageEditorSidebar = ({
     updateCurrentPage,
@@ -33,8 +23,6 @@ const PageEditorSidebar = ({
     last_modified,
     pagePermalien,
     bandeau_id,
-    order,
-
     onSubmit,
     onRemovePage,
     isSubmitting,
@@ -129,6 +117,7 @@ const PageEditorSidebar = ({
                     {isEditing && (
                         <div>
                             <button
+                                type="button"
                                 onClick={onRemovePage}
                                 target="_blank"
                                 className="text-red-500 underline"
@@ -149,13 +138,6 @@ const PageEditorSidebar = ({
                     />
                 </div>
             </PageEditorSidebarBlock>
-
-            {/* Block categorie order */}
-            <PageEditCategoryOrder
-                updatePages={updatePages} 
-                order={order}
-            />
-
 
             {/* Block categorie */}
             <PageEditCategory

@@ -22,11 +22,7 @@ export default async function handler(req, res) {
 
         else if(req.method === "PUT"){
 
-            // body
-            const jsonBody = JSON.parse(req.body)
-
-            const updatedPageId = await updateTranslations(jsonBody)
-            
+            const updatedPageId = await updateTranslations(req.body)            
             return res.json(updatedPageId)
         }
 

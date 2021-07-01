@@ -1,6 +1,7 @@
 // libs
 
 // components
+import { capitalize } from "../../../utils/utils"
 import PageEditorSidebarBlock from "./page-editor-sidebar-block"
 
 
@@ -22,8 +23,8 @@ export default function PageEditCategory({updatePages, category, categories}){
                     -- Selectionner une catégorie --{' '}
                 </option>
                 {categories.map(cat => (
-                    <option key={cat.value} value={cat.value}>
-                        {cat.title}
+                    <option key={cat} value={cat}>
+                        {capitalize(cat)}
                     </option>
                 ))}
             </select>

@@ -57,14 +57,14 @@ const InputSlug = ({slugWithoutLocale, originalSlug, setSlug, currentLanguage}) 
     }
 
     return (
-        <div className=" mb-6 ">
+        <div className=" flex mb-6 ">
             {/* Label */}
             <label style={permalinkLabelStyle} className="mr-5 mb-1 block font-medium" htmlFor="inputSlug">
                 Permalien
             </label>
 
             {/* Input container */}
-            <div className={`border rounded px-3 py-2 w-full ${opened ? 'border-blue-500' : ''}`}>
+            <div className={`border rounded px-3 py-2 w-full flex ${opened ? 'border-blue-500' : ''}`}>
                 {/* Label */}
                 <label htmlFor="inputSlug" className="text-gray-500">
                     {`${slugLocale}/`}
@@ -76,14 +76,14 @@ const InputSlug = ({slugWithoutLocale, originalSlug, setSlug, currentLanguage}) 
                     onChange={e => setSlug(e.target.value)}
                     value={slugWithoutLocale}
                     id="inputSlug"
-                    className="w-1/2 outline-none"
+                    className="flex-1 outline-none"
                     type="text"
                     placeholder="le-titre-de-ma-page"
                 />
             </div>
 
             {/* Actions */}
-            <div className="w-2/4 mt-1">
+            <div className="flex items-center pl-5">
                 {/* When closed */}
                 {!opened && (
                     <button

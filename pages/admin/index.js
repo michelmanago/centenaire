@@ -22,6 +22,10 @@ export default function AdminIndex({}) {
                         <Link href="/admin/page">
                             <a className='px-2 py-1 text-white rounded bg-pblue hover:bg-pblue-dark'>Administrer les pages</a>
                         </Link>
+                        <br />
+                        <Link href="/admin/category">
+                            <a className='inline-block mt-5 px-2 py-1 text-white rounded bg-pblue hover:bg-pblue-dark'>Administrer les catégories</a>
+                        </Link>
                     </div>
                 )}
             </main>
@@ -33,7 +37,9 @@ export async function getServerSideProps(context) {
     const {req} = context;
     const session = await getSession({req});
 
-    if (!session)
+    console.warn("ENLEVER FALSE")
+    console.info("ENLEVER FALSE")
+    if (false && !session)
         return {
             redirect: {
                 permanent: false,
