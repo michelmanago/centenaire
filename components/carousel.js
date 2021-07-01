@@ -5,7 +5,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper styles
 import 'swiper/swiper-bundle.css';
-
+import Image from 'next/image';
 import Popup from 'reactjs-popup';
 
 // install Swiper components
@@ -39,7 +39,7 @@ export default function Carousel({ imgList, legende, id }) {
                     navigation={{ clickable: true }}
                     /*onSlideChange={() => console.log('slide change')}*/
                     /*onSwiper={swiper => console.log(swiper)}*/
-                    style={{ '--swiper-navigation-color': 'yellow' }}
+                    style={{  '--swiper-navigation-color': 'transparent' }}
                 >
                     {imgList.map((img, i) => (
                         <SwiperSlide key={id + '-' + i}>
@@ -50,12 +50,12 @@ export default function Carousel({ imgList, legende, id }) {
                                     }
                                 </button>
                                 <Popup open={openArray[i]} closeOnDocumentClick onClose={() => closeModal(i)}>
-                                    <div className="modal">
-                                        <button className="close" onClick={() =>  closeModal(i)}>
+                                    <div className="modal flex justify-between w-1-4 ">
+                                        <button className="closeModal  m-10 close stroke-current text-black-600 "  onClick={() =>  closeModal(i)}>
                                             &times;
                                         </button>
                                         <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />
-                                        {img.legende && <div className="flex justify-center ">{img.legende}</div>
+                                        {img.legende && <div className="flex justify-center  ">{img.legende}</div>
                                         }
                                     </div>
                                 </Popup>
@@ -64,8 +64,9 @@ export default function Carousel({ imgList, legende, id }) {
                         </SwiperSlide>
                     ))}
                 </Swiper>
+                </div>
                 <div className="flex justify-center">{legende}</div>
-            </div>
+            
         </div>
     );
 }
