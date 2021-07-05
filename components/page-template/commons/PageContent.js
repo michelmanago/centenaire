@@ -23,6 +23,7 @@ export default function PageContent({pageName, blocks}){
     } else {
         blockList = list && list.map((block, index) => {
 
+
             if (block.type === 'text') {
                 return (
                     <div 
@@ -39,8 +40,6 @@ export default function PageContent({pageName, blocks}){
 
                                         const text = domNode.firstChild.data
                                         const note = domNode.attribs["data-note"]
-
-                                        console.log({text, note})
 
                                         return <TexteAnnote  texte={text} note={note} />
 

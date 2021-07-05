@@ -7,7 +7,7 @@ export default function AppHome ({currentLanguage}) {
     return (
         <div className="bg-pyellow">
             <div className="container sm:mx-auto bg-pwhite max-w-screen-xl">
-                <main className="bg-white pt-4 sm:px-48">
+                <main className="bg-white pt-4 px-5 sm:px-48">
                    <h2 className=""    >Centenaire de l'Archevêché</h2>
  
                     <p className="pb-2">
