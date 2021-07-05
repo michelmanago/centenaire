@@ -10,6 +10,7 @@ import Header from '../../../components/header/header';
 
 // parameters
 import { CATEGORIES } from "../../../utils/parameters"
+import { capitalize } from '../../../utils/utils';
 
 export default function AdminCategory({menu}) {
 
@@ -21,14 +22,16 @@ export default function AdminCategory({menu}) {
                 <title>Admin - Catégories</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
             {menu && <Header menu={menu.data} />}
+
             <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
                 <h1 className="mb-3 text-4xl font-semibold">Modifier les catégories</h1>
                 <ul className="pl-5">
                     {
                         categories.map(cat => (
-                            <li>
-                                <a className="text-blue-500 underline text-lg" key={cat} href={`/admin/category/${cat}`} >{cat}</a>
+                            <li key={cat}>
+                                <a className="text-blue-500 underline text-lg" key={cat} href={`/admin/category/${cat}`} >{capitalize(cat)}</a>
                             </li>
                         ))
                     }

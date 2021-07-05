@@ -24,6 +24,7 @@ const format = page => {
     })
 }
 
+// styles
 const containerStyle = {paddingBottom: 80}
 const bottomBarStyle = {height: 80}
 
@@ -120,10 +121,12 @@ export default function AdminCategory({pages, menu, categoryName}) {
                         generateNodeProps={({node}) => {
 
                             const permalien = node.pageSlug.startsWith("/") ? node.pageSlug : "/" + node.pageSlug
+                            const editLink = `/admin/page/${node.original_id}`
 
                             return {
                                 buttons: [
-                                    <a target="_blank" className="text-gray-600 underline px-4" href={permalien}>Lien vers la page</a>
+                                    <a target="_blank" className="text-gray-600 underline pr-2" href={permalien}>Voir</a>,
+                                    <a target="_blank" className="text-blue-600 underline pr-2" href={editLink}>Editer</a>,
                                 ]
                             }
                         }}
