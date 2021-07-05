@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import DefaultErrorPage from 'next/error'
 import { useRouter } from 'next/router';
 import Head from "next/head"
+
 // component
 import Header from '../components/header/header';
 import PageDefault from '../components/page-template/PageDefault';

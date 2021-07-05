@@ -5,6 +5,7 @@ import htmlParse from 'html-react-parser';
 
 // components
 import CarouselParam from '../../carouselParam';
+import TexteAnnote from '../../Popup/texteannote';
 
 
 export default function PageContent({pageName, blocks}){
@@ -22,8 +23,35 @@ export default function PageContent({pageName, blocks}){
     } else {
         blockList = list && list.map((block, index) => {
 
+
             if (block.type === 'text') {
-                return <div key={index}>{htmlParse(block.content)}</div>;
+                return (
+                    <div 
+                        key={index}
+                    >
+                        {htmlParse(block.content, {
+                            replace: domNode => {
+
+                                // Render Tooltip {TexteAnnote}
+                                if(domNode.attribs && domNode.attribs["data-js-tooltip"] !== undefined){
+
+                                    
+                                    if(domNode.firstChild && domNode.firstChild.type === "text"){
+
+                                        const text = domNode.firstChild.data
+                                        const note = domNode.attribs["data-note"]
+
+                                        return <TexteAnnote  texte={text} note={note} />
+
+                                    } else {
+                                        console.warn("First child is not type text")
+                                    }
+
+                                }
+                            }
+                        })}
+                    </div>
+                )
             } else if (block.type === 'carousel') {
                 return (
                     <div key={block.id}>
