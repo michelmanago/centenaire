@@ -3,7 +3,7 @@
     text-decoration: none;
   }
   
-.pagecontent h2 {
+.pagecontent h1 {
     font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
     font-weight:700;
     @apply text-2xl;
@@ -12,7 +12,7 @@
     
   }
   
-.pagecontent h3 {
+.pagecontent h2 {
     font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
     font-weight:700;
     @apply text-xl;
