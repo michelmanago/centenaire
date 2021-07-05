@@ -72,7 +72,7 @@ export default function DynPage({ menu, page}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header menu={menu.data} />
+            <Header menu={menu.data} translations={page.translations}/>
 
 
             {/* Banner */}
@@ -134,6 +134,11 @@ export async function getStaticProps(context) {
     const menu = await getMenu(context.locale);
     const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
 
-    return {props: {page, menu}};
+    return {
+        props: {
+            page, menu
+        },
+        revalidate: 10,
+    };
 }
 

@@ -1,9 +1,10 @@
 // libs
 import { useRouter } from "next/router"
 import React from "react"
+import { isHome } from "../../utils/utils"
 
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({translations}) => {
     
 
     // hooks
@@ -43,9 +44,29 @@ const LanguageSwitcher = () => {
         }
 
         let url = new URL(window.location)
+        let newUrl = ""
 
-        // switch current page to selected locale
-        let newUrl = redirectToTranslatedHome(url, selectedLocale)
+        // if home
+        // or not home but there is no translations
+        if(isHome() || !translations){
+
+            // switch current page to selected locale
+            newUrl = redirectToTranslatedHome(url, selectedLocale)
+        }
+
+        // if there is translations
+        else{
+
+            let requestedTranslation = translations.find(t => t.language === selectedLocale)
+
+            if(requestedTranslation){
+                newUrl = "/" + requestedTranslation.pageSlug
+            } else {
+
+                // switch current page to selected locale
+                newUrl = redirectToTranslatedHome(url, selectedLocale)
+            }
+        }
 
         // change page
         window.location = newUrl
