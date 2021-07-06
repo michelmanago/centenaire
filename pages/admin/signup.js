@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
     const session = await getSession({req});
 
     if (!session)
-        return {
+    return {
             redirect: {
                 permanent: false,
                 destination: '/login?redirect=admin/signup',

@@ -111,7 +111,7 @@ p {
 }
 
 .link {
-    color: #418DBB;
+    color: #418dbb;
     text-decoration: underline;
 }
 
@@ -175,36 +175,35 @@ button {
     background-position: center;
 }
 
-@media screen {
-    .popup-content {
-        margin: auto;
-        background: rgb(255, 255, 255);
+.popimage-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    height: 90vh;
+    border: rgb(255, 255, 255) solid;
+}
 
-        border: rgb(255, 255, 255) solid;
-    }
-    .popup-arrow {
-        color: rgb(255, 255, 255);
-    }
+.popimage-arrow {
+    color: rgb(255, 255, 255);
+}
 
-    .popup-overlay {
-        background: rgba(0, 0, 0, 0.719);
-    }
-    .closeModal {
-        cursor: pointer;
-        position: absolute;
-        display: block;
-        padding: 2px 5px;
-        line-height: 20px;
-        right: -10px;
-        top: -10px;
-        font-size: 24px;
-        background: #ffffff;
-        border-radius: 18px;
-        border: 1px solid #cfcece;
-    }
-    [data-popup='tooltip'].popup-overlay {
-        background: transparent;
-    }
+.popimage-overlay {
+    background: rgba(0, 0, 0, 0.719);
+}
+.closeModal {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+}
+[data-popup='tooltip'].popup-overlay {
+    background: transparent;
 }
 
 /* Image Popup*/
@@ -214,6 +213,8 @@ button {
     width: 80%;
     padding: 5px;
 }
+
 /* Libs */
 
+@import './pagecontent.css';
 @import './libs/navbar.css';

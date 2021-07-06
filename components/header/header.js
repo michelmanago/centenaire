@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Nav from '../nav/nav';
 import LanguageSwitcher from "../../components/language-switcher/LanguageSwitcher"
 
-export default function Header({ menu }) {
+export default function Header({ menu, translations }) {
     const [session] = useSession();
 
     /** Hooks */
@@ -41,7 +41,7 @@ export default function Header({ menu }) {
             </div>
 
             <div className="container max-w-screen-xl bg-white sm:mx-auto">
-                <LanguageSwitcher />
+                <LanguageSwitcher translations={translations}/>
             </div>
 
             {/* Top bar */}

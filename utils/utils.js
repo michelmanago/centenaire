@@ -48,4 +48,41 @@ export function onSubmitPreventForm(event){
     event.stopPropagation();
 }
 
+
+// Misc
+export function filterObj(obj, filter){
+  
+    let output = {}
+
+    Object.keys(obj).map(key => {
+      
+      let val = obj[key]
+      
+      if(filter(key, val)){
+         output[key] = val
+      }
+    })
+    
+    return output
+
+}
+
+export function capitalize(s){
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+export function isHome(){
+    switch(window.location.pathname){
+        case "/":
+        case "/fr":
+        case "/en":
+        case "/ru":
+            return true
+        default:
+            return false
+    }
+}
+
+
 export function voidFunction(){}

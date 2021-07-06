@@ -8,6 +8,7 @@ import PageEditor from "../../../components/page-editor/page-editor"
 // libs
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head"
 
 // utils
 import { toMysqlFormat } from "../../../utils/utils";
@@ -66,6 +67,10 @@ export default function PageEditorCreate({menu}) {
 
     return (
         <>
+            <Head>
+                <title>Creation de page</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             {menu && <Header menu={menu.data}/>}
             <main className="">
                 <PageEditor

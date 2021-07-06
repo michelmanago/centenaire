@@ -6,6 +6,7 @@ export default async function handler(req, res) {
 
             // query
             const locale = req.query.locale
+            const category = req.query.category
 
             // model
             const pages = await getAllPages(locale)

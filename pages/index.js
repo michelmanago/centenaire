@@ -29,15 +29,11 @@ export default function Home({menu}) {
       {menu && <Header menu={menu.data}/>}
 
       {/* Page home */}
-      <div>
+      <div className={styles.home}>
         <header className={styles.header + " relative"}>
-          <Image
-            src="/static/img/bandeau_cathedrale.jpg"
-            // width={1400}
-            // height={927}
-            objectFit="cover"
-            layout="fill"
-          />
+          <div className={styles.homeBandeauVideoContainer}>
+            <video className={styles.homeBandeauVideo} loop muted autoPlay src="/static/videos/bandeau-centenaire.mp4"></video>
+          </div>          
         </header>
         <AppHome  currentLanguage={locale} />
       </div>

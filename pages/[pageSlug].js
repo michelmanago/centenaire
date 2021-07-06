@@ -5,16 +5,30 @@ import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import DefaultErrorPage from 'next/error'
 import { useRouter } from 'next/router';
+import Head from "next/head"
 
 // component
 import Header from '../components/header/header';
-import PageTemplate from '../components/page-template/PageTemplate';
+import PageDefault from '../components/page-template/PageDefault';
+import PageCategory from '../components/page-template/PageCategory';
 
 // model
 import {getMenu} from '../model/menu';
 import { getPageBySlug } from '../model/page';
 
+// utils
+import {CATEGORIES} from "../utils/parameters"
+import { getMediaLink } from '../utils/utils-serveur-image';
+
 const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
+
+
+// styles
+const bannerStyles = {
+    height: 360
+}
+
+
 
 export default function DynPage({ menu, page}) {
 
@@ -34,12 +48,17 @@ export default function DynPage({ menu, page}) {
 
 
     // utils
-    const pageType = page && page.page
     const renderPage = page => {
 
-        switch(page.type){
-            default:
-                return <PageTemplate page={page}/>
+        const hasCategory = !!page.page
+
+
+        if(hasCategory){
+            return <PageCategory page={page}/>
+        } 
+
+        else {
+            return <PageDefault page={page}/>
         }
 
     }
@@ -47,37 +66,35 @@ export default function DynPage({ menu, page}) {
     // hooks
     const router = useRouter()
 
-
     return (
         <div>
-            <Header menu={menu.data} />
+            <Head>
+                <title>{page && page.pageName}</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
+            <Header menu={menu.data} translations={page.translations}/>
 
 
-            <main className="">
+            {/* Banner */}
+            {page.bandeau && (
+                <div style={bannerStyles} className="">
+                    <img
+                        className="block object-cover w-full h-full"
+                        src={getMediaLink(page.bandeau.public_path)}
+                        alt=""
+                    />
+                </div>
+            )}
 
+            <main className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
+                
                 {
                     renderPage(page)
                 }
 
             </main>
 
-
-
-            {/* <div className="max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap">
-                {pageData && pageData.page === 'compositeur' && (
-                    <div className="w-3/4 px-10 mx-auto md:w-1/4">
-                        <NavCompositeur list={listPage} />
-                    </div>
-                )}
-
-                {pageData && pageData.blockcontent ? (
-                    <div className="md:w-3/4">
-                        <div dangerouslySetInnerHTML={{__html: pageData.blockcontent}}></div>
-                    </div>
-                ) : (
-                    <div>Page Dynamique {pageSlug}</div>
-                )}
-            </div> */}
         </div>
     );
 }
@@ -118,6 +135,11 @@ export async function getStaticProps(context) {
     const menu = await getMenu(context.locale);
     const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
 
-    return {props: {page, menu}};
+    return {
+        props: {
+            page, menu
+        },
+        revalidate: 10,
+    };
 }
 
