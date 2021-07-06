@@ -20,10 +20,10 @@ export default function SlateEditor({block, setContent}) {
         },
     ];
     if (block) {
-        const blockSerialize = serializer(block);
+        //const blockSerialize = serializer(block);
         initValue = [
             {
-                children: [{text: blockSerialize}],
+                children: [{text: block}],
             },
         ];
     }
@@ -82,13 +82,14 @@ export default function SlateEditor({block, setContent}) {
                         else if (i != 0) textElt = `<p>${elt.children[0].text}</p>`;
                         content = `${content} ${textElt}`;
                     });*/
-                    localStorage.setItem('contentSerialize', content);
-                    const html = content;
-                    const document = new DOMParser().parseFromString(html, 'text/html');
-                    const fragment = deserialize(document.body);
+                    //localStorage.setItem('contentSerialize', content);
+                    //const html = content;
+                    //const document = new DOMParser().parseFromString(html, 'text/html');
+                    //const fragment = deserialize(document.body);
 
-                    setContent(fragment);
-                    localStorage.setItem('content', JSON.stringify(fragment));
+                    //setContent(fragment);
+                    setContent(content);
+                    //localStorage.setItem('content', JSON.stringify(fragment));
                 }}
             >
                 <Editable
