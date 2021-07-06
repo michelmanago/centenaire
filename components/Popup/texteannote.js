@@ -5,7 +5,7 @@ export default function TexteAnnote({texte, note}) {
     return (
         <Popup
             trigger={open => (
-            <a className="pointille">{texte}</a>
+                <span className="pointille">{texte}</span>
             )}
             position="bottom center"
             on={["hover", "focus"]}
