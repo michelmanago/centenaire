@@ -16,7 +16,6 @@ function isValidImage(type) {
 
 
 export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, mediaId}){
-
     
     // states
     const [src, setSrc] = useState(null)
@@ -82,7 +81,7 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
             onMediaUploaded(media)
         })
         .catch(err => {
-            
+            console.log("err", err)
         })
 
         // close

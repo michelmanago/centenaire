@@ -20,6 +20,7 @@ export default function CarouselEditor({content, setContent}) {
         setContent(newContent);
     };
     const onMediaUploaded = media => {
+
         //refreshMediaList();
         var newContent = content ? {...content} : {legende: '', data: []};
         newContent.data.push(media);
@@ -85,6 +86,7 @@ export default function CarouselEditor({content, setContent}) {
                 position="top center"
                 modal="true"
                 closeOnDocumentClick
+                nested
                 onClose={e => {
                     setOpen(false);
                 }}
