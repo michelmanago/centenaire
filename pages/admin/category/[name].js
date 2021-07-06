@@ -24,6 +24,21 @@ const format = page => {
     })
 }
 
+const getSortedFormatedPageList = (pages, defaultLocale) => {
+    
+    // filter default locale
+    let list = pages.filter(p => p.language === defaultLocale)
+
+    // sort by position
+    list.sort((a, b) => a.position - b.position)
+
+    // format data
+    list = list.map(page => format(page))
+
+    return list
+
+}
+
 // styles
 const containerStyle = {paddingBottom: 80}
 const bottomBarStyle = {height: 80}
@@ -31,10 +46,12 @@ const bottomBarStyle = {height: 80}
 export default function AdminCategory({pages, menu, categoryName}) {
 
 
+
+
     const {defaultLocale} = useRouter()
 
     // only store default language pages (only fr)
-    const [treedata, setTreedata] = useState(pages ? pages.filter(p => p.language === defaultLocale).map(page => format(page)) : [])
+    const [treedata, setTreedata] = useState(pages ? getSortedFormatedPageList(pages, defaultLocale) : [])
 
     // listeners
     const onMoveNode = nextTreeData => setTreedata(nextTreeData)
