@@ -14,6 +14,18 @@ export default function PageContent({pageName, blocks}){
     const list = blocks && Array.isArray(blocks) ? blocks : null
 
 
+    // Helpers
+    const sortedBlocks = (blocks) => {
+
+        const sortedBlocks = [...blocks]
+        sortedBlocks.sort((a, b) => a.position - b.position)
+
+        return sortedBlocks
+
+    }
+
+
+
     let blockList = ""
 
     if(!list && blocks){
@@ -21,8 +33,8 @@ export default function PageContent({pageName, blocks}){
             <p className="text-red-600">Impossive d'afficher les blocks de cette page.</p>
         )
     } else {
-        blockList = list && list.map((block, index) => {
 
+        blockList = list && sortedBlocks(list).map((block, index) => {
 
             if (block.type === 'text') {
                 return (
