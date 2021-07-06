@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Popup from "reactjs-popup";
+import {useRouter} from 'next/router';
 
 // utils
 import {getMediaLink, getServerImageEndpoint, getServeurImageMedia} from "../../../utils/utils-serveur-image"
@@ -17,20 +18,29 @@ function isValidImage(type) {
 
 export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, mediaId}){
     
+
+
+    // ref
+    const refInputFile = useRef()
+
+    // hooks
+    const {locales} = useRouter()
+
+    // utils
+    const getDefaultLegendes = () => locales.map(locale => ({locale, value: ""}))
+
     // states
     const [src, setSrc] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
 
     // Form
-    const [legende, setLegende] = useState("")
+    const [legendes, setLegendes] = useState(getDefaultLegendes())
     const [credit, setCredit] = useState("")
 
-    // when user submit a file we save it to state until he complete (legende, credit) then we uplaod it to the server
+    // when user submit a file we save it to state until he complete (legende, csredit) then we uplaod it to the server
     const [uploadingMedia, setUploadingMedia] = useState(false)
 
-    // ref
-    const refInputFile = useRef()
 
     // lifecycle
     useEffect(() => {
@@ -56,13 +66,28 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
 
     // methods
 
+    const setLegendesState = locale => e => {
+        setLegendes(legendes.map(legende => {
+
+            if(legende.locale === locale){
+                return {
+                    ...legende,
+                    value: e.target.value
+                }
+            } else {
+                return legende
+            }
+
+        }))
+    }
+
     const closeModal = () => {
 
         // close
         setUploadingMedia(false)
 
         // reset form
-        setLegende("")
+        setLegendes(getDefaultLegendes())
         setCredit("")
 
         // reset input
@@ -98,8 +123,8 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
         // form
         const formdata = new FormData()
         formdata.append("file", file, file.name)
-        formdata.append("legende", file, legende)
-        formdata.append("credit", file, credit)
+        formdata.append("legende", JSON.stringify(legendes))
+        formdata.append("credit", credit)
 
         return fetch(serverImage, {
             method: "POST",
@@ -164,8 +189,23 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
                 modal
             >
                 <div className="p-5 rounded">
-                    <label className="font-medium mb-1 block" htmlFor="legende">Legende : </label>
-                    <input className="px-3 border rounded w-full mb-4 py-1" onChange={e => setLegende(e.target.value)} value={legende} type="text" name="" id="legende" />
+
+                    {/* Legendes */}
+                    {
+                        legendes.map(legende => {
+
+                            const key = legende.locale
+                            const id = "legende" + key
+
+                            return (
+                                <div key={key}>
+                                    <label className="font-medium mb-1 block" htmlFor={id}>Legende {legende.locale}: </label>
+                                    <input maxLength="60" className="px-3 border rounded w-full mb-4 py-1" onChange={setLegendesState(legende.locale)} value={legende.value} type="text"id={id} />
+                                </div>
+                            )
+                        })
+                    }
+                    
 
                     <label className="font-medium mb-1 block" htmlFor="credit">Crédit : </label>
                     <input className="px-3 border rounded w-full mb-4 py-1" onChange={e => setCredit(e.target.value)} value={credit} type="text" name="" id="credit" />
