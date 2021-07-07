@@ -3,10 +3,12 @@ import PageEditorSidebarBlock from './page-editor-sidebar-block';
 import InputSubmitPage from '../inputs/InputSubmitPage';
 import PageEditorInputImage from './PageEditorInputImage';
 import PageEditCategory from './PageEditCategory';
+import ModalMedia from '../../modal-media/ModalMedia';
 
 // utils
 import { useRouter } from 'next/router';
 import { CATEGORIES } from '../../../utils/parameters';
+import { useEffect, useState } from 'react';
 
 
 const categories = Object.values(CATEGORIES);
@@ -40,6 +42,19 @@ const PageEditorSidebar = ({
     // setters
     const setAuthor = e => updatePages({author: e.target.value});
 
+    // states
+    const [opened, setOpened] = useState(false)
+
+    // methods
+    const openMedia = () => {
+        setOpened(true)
+    }
+
+    useEffect(() => {
+        openMedia()
+    }, [])
+
+    // others
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
     
     return (
@@ -62,11 +77,15 @@ const PageEditorSidebar = ({
 
             {/* Block bandeau */}
             <PageEditorSidebarBlock title="Bandeau de page">
-                <PageEditorInputImage
+                <button onClick={openMedia} className="text-blue-500 underline">Ajouter une image</button>
+                <ModalMedia
+                    opened={opened}
+                />
+                {/* <PageEditorInputImage
                     onMediaUploaded={onMediaUploaded}
                     onRemoveMedia={onRemoveMedia}
                     mediaId={bandeau_id}
-                />
+                /> */}
             </PageEditorSidebarBlock>
 
             {/* Block publier */}
