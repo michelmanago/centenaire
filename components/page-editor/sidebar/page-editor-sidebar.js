@@ -1,20 +1,20 @@
 // components
 import PageEditorSidebarBlock from './page-editor-sidebar-block';
 import InputSubmitPage from '../inputs/InputSubmitPage';
-import PageEditorInputImage from './PageEditorInputImage';
 import PageEditCategory from './PageEditCategory';
-import ModalMedia from '../../modal-media/ModalMedia';
 
 // utils
 import { useRouter } from 'next/router';
 import { CATEGORIES } from '../../../utils/parameters';
 import { useEffect, useState } from 'react';
+import BlockBandeau from './BlockBandeau';
 
 
 const categories = Object.values(CATEGORIES);
 
 const PageEditorSidebar = ({
     updateCurrentPage,
+    addAttributedMedia,
     isEditing,
 
     language,
@@ -42,18 +42,6 @@ const PageEditorSidebar = ({
     // setters
     const setAuthor = e => updatePages({author: e.target.value});
 
-    // states
-    const [opened, setOpened] = useState(false)
-
-    // methods
-    const openMedia = () => {
-        setOpened(true)
-    }
-
-    useEffect(() => {
-        openMedia()
-    }, [])
-
     // others
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
     
@@ -76,17 +64,11 @@ const PageEditorSidebar = ({
             </PageEditorSidebarBlock>
 
             {/* Block bandeau */}
-            <PageEditorSidebarBlock title="Bandeau de page">
-                <button onClick={openMedia} className="text-blue-500 underline">Ajouter une image</button>
-                <ModalMedia
-                    opened={opened}
-                />
-                {/* <PageEditorInputImage
-                    onMediaUploaded={onMediaUploaded}
-                    onRemoveMedia={onRemoveMedia}
-                    mediaId={bandeau_id}
-                /> */}
-            </PageEditorSidebarBlock>
+            <BlockBandeau
+                updatePages={updatePages}
+                addAttributedMedia={addAttributedMedia}
+                bandeau_id={bandeau_id}
+            />
 
             {/* Block publier */}
             <PageEditorSidebarBlock title="Publier">

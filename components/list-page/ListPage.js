@@ -41,10 +41,10 @@ export default function ListPage({pages}){
                     Filtrer par : 
                     {
                         categories.map((cat, index) => (
-                            <>
+                            <span key={cat}>
                                 {index !== 0 ? " - " : ""}
                                 <a className="mx-2 underline" href={`/admin/page?cat=${cat}`}>{cat}</a>
-                            </>
+                            </span>
                         ))
                     }
                 </span>

@@ -20,10 +20,10 @@ const tabContentStyles = {
 }
 
 
-export default function ModalMedia({opened}){
+export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel}){
 
     // states
-    const [tab, setTab] = useState(TAB_UPLOAD)
+    const [tab, setTab] = useState(TAB_MEDIA_LIST)
 
         // list section
         const [list, setList] = useState([])
@@ -32,6 +32,11 @@ export default function ModalMedia({opened}){
     // utils
 
     // methods
+
+    const onSubmitMedia = () => {
+        onMediaSelected(edited)
+    }
+
     const onMediaUploaded = media => {
 
         // change tab
@@ -62,6 +67,7 @@ export default function ModalMedia({opened}){
             
         }
     }
+    const canSubmit = !!edited
 
     // lifecycle
     useEffect(async () => {
@@ -78,13 +84,14 @@ export default function ModalMedia({opened}){
             lockScroll={true}
             open={opened}
             contentStyle={contentStyles}
+            onClose={onClose}
         >
             <div className="">
                 
                 {/* Header */}
                 <div className="px-5 pt-2">
 
-                    <h1 className="text-3xl font-medium mb-5">Ajouter un média</h1>
+                    <h1 className="text-3xl font-medium mb-3">Ajouter un média</h1>
 
                     {/* Tabs */}
                     <div className="">
@@ -96,10 +103,21 @@ export default function ModalMedia({opened}){
 
                 {/* Body */}
 
-                <div style={tabContentStyles} className="border-2">
+                <div style={tabContentStyles} className="border-2 pb-16">
                     {
                         renderTabContent()
                     }
+                </div>
+
+                {/* Bottom */}
+                <div className="absolute border-t-2 border-gray-300 bottom-0 left-0 w-full bg-white h-16 py-2 px-3 flex">
+
+                    {/* Submit main action */}
+                    <button 
+                        disabled={!canSubmit}
+                        onClick={onSubmitMedia} 
+                        className={`ml-auto font-medium text-lg bg-blue-600 h-full text-white px-5 rounded ${canSubmit ? "hover:bg-blue-700" : "opacity-50 cursor-not-allowed"} `}
+                    >{submitLabel || "Valider"}</button>
                 </div>
 
                 

@@ -50,7 +50,7 @@ export default function ModalMediaList({list, edited, setEdited}){
                                 type="button"
                                 key={image.id}
                                 onClick={onSelectMedia(image)} 
-                                className={`w-1/3 p-2 rounded`}
+                                className={`w-1/2 md:w-1/3 lg:w-1/4 p-2 rounded`}
                             >
                                 <div
                                  style={imageItemContainerStyles} 

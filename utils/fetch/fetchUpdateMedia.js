@@ -3,9 +3,6 @@ export default async function fetchUpdateMedia(media_id, fields){
 
     try {
 
-        console.log(fields)
-
-        
         let results = null
 
         // Fetch

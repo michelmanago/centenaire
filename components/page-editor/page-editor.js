@@ -90,6 +90,15 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         }
     }
 
+    const addAttributedMedia = media_id => {
+
+        setAttributedMedia([
+            ...attributedMedia,
+            media_id,
+        ])
+
+    }
+
     const generateEmptyTitles = form => {
 
         let output = []
@@ -323,6 +332,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
                 updateCurrentPage={updateCurrentPage}
                 updatePages={updatePages}
+                addAttributedMedia={addAttributedMedia}
                 isEditing={isEditing}
 
                 language={currentPage.language} languagesLists={languagesLists}
