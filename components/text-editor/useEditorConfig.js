@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {DefaultElement} from 'slate-react';
 import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
+import TexteAnnote from '../Popup/texteannote';
 const KeyBindings = {
     onKeyDown: (editor, event) => {
         if (isHotkey('mod+b', event)) {
@@ -78,6 +79,10 @@ function renderElement(props) {
 
 function renderLeaf({attributes, children, leaf}) {
     let el = <>{children}</>;
+
+    if (leaf.tooltip) {
+        el = <TexteAnnote texte={children} note={leaf.tooltip} />
+    }
 
     if (leaf.bold) {
         el = <strong>{el}</strong>;
