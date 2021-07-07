@@ -7,7 +7,7 @@ import useEditorConfig from './useEditorConfig';
 import useSelection from './useSelection';
 import {serializer, deserialize} from '../../lib/Slate/serialize';
 
-import {wrapLink, insertImage} from './EditorUtils';
+import {wrapLink, insertImage, isImageUrl} from './EditorUtils';
 
 const withLinks = editor => {
     const {insertData, insertText, isInline} = editor;
@@ -89,6 +89,7 @@ export default function Editor({document, onChange}) {
             //setContent(contentSerialize);
             //console.log(contentSerialize)
             //localStorage.setItem('contentSerialize', contentSerialize);
+            console.log(document);
             onChange(document);
             setSelection(editor.selection);
         },

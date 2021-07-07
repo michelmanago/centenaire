@@ -8,6 +8,7 @@ import {
     insertLink,
     isLinkActive,
     unwrapLink,
+    toggleTooltip,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -25,6 +26,11 @@ const MEDIA_STYLES = ['image', 'video'];
 export default function Toolbar({selection, previousSelection}) {
     const [openImagePopup, setOpenImagePopup] = useState(false);
     const [openVideoPopup, setOpenVideoPopup] = useState(false);
+
+    const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
+    const [tooltipNote, setTooltipNote] = useState('');
+    const [tmpSelection, setTmpSelection] = useState(null);
+
     const editor = useSlateStatic();
     const onBlockTypeChange = useCallback(
         targetType => {
@@ -36,7 +42,13 @@ export default function Toolbar({selection, previousSelection}) {
         [editor],
     );
     const blockType = getTextBlockStyle(editor);
-    console.log(blockType);
+    //console.log(blockType, editor);
+
+    const addTooltip = () => {
+        console.log(editor, selection, previousSelection);
+        toggleTooltip(editor, tooltipNote);
+        setOpenTooltipPopup(false);
+    };
     return (
         <div className="text-black toolbar">
             {/* Dropdown for paragraph styles */}
@@ -76,6 +88,59 @@ export default function Toolbar({selection, previousSelection}) {
                     }}
                 />
             ))}
+            <ToolBarButton
+                key={'tooltip'}
+                icon={'note'}
+                isActive={getActiveStyles(editor).has('tooltip')}
+                onMouseDown={event => {
+                    event.preventDefault();
+                    //toggleBlockEffect(editor, effect);
+                    //console.log(editor, selection);
+                    setOpenTooltipPopup(true);
+                }}
+            />
+            <Popup
+                className=""
+                open={openTooltipPopup}
+                position="bottom center"
+                modal="true"
+                closeOnDocumentClick={false}
+                onClose={e => {
+                    setOpenTooltipPopup(false);
+                }}
+            >
+                <div className="flex flex-col gap-1">
+                    <div className="flex flex-row-reverse">
+                        <button
+                            className="p-1 text-white bg-red-500 rounded hover:bg-red-600"
+                            onClick={() => setOpenTooltipPopup(false)}
+                        >
+                            Fermer
+                        </button>
+                    </div>
+                    <div className="flex flex-row items-center gap-1">
+                        <label className="w-1/6 text-center" htmlFor="tooltip-note">
+                            Note
+                        </label>
+                        <textarea
+                            id="tooltip-note"
+                            className="w-5/6 px-1 border border-black"
+                            value={tooltipNote}
+                            onChange={e => setTooltipNote(e.currentTarget.value)}
+                        ></textarea>
+                    </div>
+                    <div className="flex flex-row justify-center">
+                        <button
+                            className="p-1 text-white bg-green-500 rounded hover:bg-green-600"
+                            onClick={() => {
+                                addTooltip();
+                            }}
+                        >
+                            Ajouter
+                        </button>
+                    </div>
+                </div>
+            </Popup>
             {EFFECT_STYLES.map(effect => (
                 <ToolBarButton
                     key={effect}

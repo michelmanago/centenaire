@@ -1,5 +1,6 @@
 // src/utils/EditorUtils.js
 
+import isUrl from 'is-url';
 import {Editor, Range, Transforms, Element as SlateElement} from 'slate';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
@@ -23,6 +24,15 @@ export function toggleStyle(editor, style) {
         Editor.removeMark(editor, style);
     } else {
         Editor.addMark(editor, style, true);
+    }
+}
+
+export function toggleTooltip(editor, note) {
+    const activeStyles = getActiveStyles(editor);
+    if (activeStyles.has('tooltip')) {
+        Editor.removeMark(editor, 'tooltip');
+    } else {
+        Editor.addMark(editor, 'tooltip', note);
     }
 }
 
