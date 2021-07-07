@@ -33,11 +33,11 @@ export default function useEditorConfig(editor) {
 function getClassForEffect(effect) {
     switch (effect) {
         case 'align-left':
-            return 'text-left';
+            return ' text-left';
         case 'align-center':
-            return 'text-center';
+            return ' text-center';
         case 'align-right':
-            return 'text-right';
+            return ' text-right';
         default:
             break;
     }
