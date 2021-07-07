@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {createEditor} from 'slate';
 import {Editable, Slate, withReact} from 'slate-react';
 import isUrl from 'is-url';
@@ -76,6 +76,7 @@ export default function Editor({document, onChange}) {
     const editor = useMemo(() => withLinks(withImages(withReact(createEditor()))), []);
     const {renderElement, renderLeaf, onKeyDown} = useEditorConfig(editor);
     const [selection, setSelection] = useSelection(editor);
+    const [previousSelection, setPreviousSelection] = useState(editor);
 
     const onChangeHandler = useCallback(
         document => {
@@ -91,6 +92,9 @@ export default function Editor({document, onChange}) {
             //localStorage.setItem('contentSerialize', contentSerialize);
             console.log(document);
             onChange(document);
+            /*if (editor.selection != selection) {
+                setPreviousSelection(selection);
+            }*/
             setSelection(editor.selection);
         },
         [editor.selection, onChange, setSelection],

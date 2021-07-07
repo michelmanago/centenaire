@@ -46,7 +46,9 @@ export default function Toolbar({selection, previousSelection}) {
 
     const addTooltip = () => {
         console.log(editor, selection, previousSelection);
-        toggleTooltip(editor, tooltipNote);
+        var editorTmp = {...editor};
+        editorTmp.selection = tmpSelection;
+        toggleTooltip(editorTmp, tooltipNote);
         setOpenTooltipPopup(false);
     };
     return (
@@ -94,9 +96,13 @@ export default function Toolbar({selection, previousSelection}) {
                 isActive={getActiveStyles(editor).has('tooltip')}
                 onMouseDown={event => {
                     event.preventDefault();
-                    //toggleBlockEffect(editor, effect);
-                    //console.log(editor, selection);
-                    setOpenTooltipPopup(true);
+                    if (getActiveStyles(editor).has('tooltip')) {
+                        toggleTooltip(editor, null);
+                    } else {
+                        console.log(editor, selection);
+                        setTmpSelection(editor.selection);
+                        setOpenTooltipPopup(true);
+                    }
                 }}
             />
             <Popup
