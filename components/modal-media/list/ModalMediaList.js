@@ -1,6 +1,5 @@
 // libs
 import { useEffect, useState } from "react"
-import fetchMediaList from "../../../utils/fetch/fetchMediaList"
 import { getMediaLink } from "../../../utils/utils-serveur-image"
 
 // components
@@ -15,11 +14,9 @@ const imageItemStyles = {
     
 }
 
-export default function ModalMediaList({}){
+export default function ModalMediaList({list, edited, setEdited}){
 
     // states
-    const [list, setList] = useState([])
-    const [edited, setEdited] = useState(null)
 
     // methods
     const onSelectMedia = (media) => e => {
@@ -36,15 +33,6 @@ export default function ModalMediaList({}){
     }
 
     // others
-
-    // lifecycle
-    useEffect(async () => {
-
-        console.log("fetchMediaList")
-        const media = await fetchMediaList(null)
-        setList(media)
-
-    }, [])
 
     return (
         <div className="h-full flex">

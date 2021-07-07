@@ -15,7 +15,6 @@ export default async function fetchMediaList(page_id = null){
         // Fetch
         const response = await fetch(route)
 
-
         // Decode
         if(response.ok){
             results = await response.json()

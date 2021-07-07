@@ -1,10 +1,14 @@
 // libs
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Popup from "reactjs-popup"
 
 // components
 import ModalMediaList from "./list/ModalMediaList"
 import ModalMediaUpload from "./upload/ModalMediaUpload"
+
+// utils
+import fetchMediaList from "../../utils/fetch/fetchMediaList"
+
 
 // styles
 const contentStyles = {
@@ -19,24 +23,54 @@ const tabContentStyles = {
 export default function ModalMedia({opened}){
 
     // states
-    const [tab, setTab] = useState(TAB_MEDIA_LIST)
+    const [tab, setTab] = useState(TAB_UPLOAD)
+
+        // list section
+        const [list, setList] = useState([])
+        const [edited, setEdited] = useState(null)
 
     // utils
+
+    // methods
+    const onMediaUploaded = media => {
+
+        // change tab
+        setTab(TAB_MEDIA_LIST)
+
+        // add new media to list
+        setList([
+            media,
+            ...list
+        ])
+
+        // select the media
+        setEdited(media)
+    }
+
 
     // others
     const renderTabContent = () => {
         switch(tab){
             case TAB_UPLOAD:
-                return <ModalMediaUpload/>
+                return <ModalMediaUpload onMediaUploaded={onMediaUploaded}/>
             break;
             case TAB_MEDIA_LIST:
-                return <ModalMediaList/>
+                return <ModalMediaList edited={edited} setEdited={setEdited} list={list}/>
             break;
             default:
                 return ""
             
         }
     }
+
+    // lifecycle
+    useEffect(async () => {
+
+        console.log("fetchMediaList")
+        const media = await fetchMediaList(null)
+        setList(media)
+
+    }, [])
 
 
     return (
@@ -62,7 +96,7 @@ export default function ModalMedia({opened}){
 
                 {/* Body */}
 
-                <div style={tabContentStyles} className="">
+                <div style={tabContentStyles} className="border-2">
                     {
                         renderTabContent()
                     }
