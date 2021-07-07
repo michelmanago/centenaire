@@ -2,7 +2,7 @@ const ExampleDocument = [
     {
         type: 'paragraph',
         children: [
-            {text: 'nouveau paragraphe.'},
+            {text: 'Commencez à ajouter du contenu.'},
         ],
     },
 ];

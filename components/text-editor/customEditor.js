@@ -5,7 +5,7 @@ import SlateHtmlEditor from './slateHtmlEditor';
 
 import 'reactjs-popup/dist/index.css';
 import {deserialize, serializer} from '../../lib/Slate/serialize';
-import SampleDocument from './ExampleDocument';
+import SampleDocument from './SampleDocument';
 
 export default function CustomEditor({block, setContent}) {
     const [isSlateView, setIsSlateView] = useState(true);
