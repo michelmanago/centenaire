@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import Popup from "reactjs-popup";
+import {useRouter} from 'next/router';
 
 // utils
 import {getMediaLink, getServerImageEndpoint, getServeurImageMedia} from "../../../utils/utils-serveur-image"
@@ -15,15 +17,30 @@ function isValidImage(type) {
 
 
 export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, mediaId}){
-
     
+
+
+    // ref
+    const refInputFile = useRef()
+
+    // hooks
+    const {locales} = useRouter()
+
+    // utils
+    const getDefaultLegendes = () => locales.map(locale => ({locale, value: ""}))
+
     // states
     const [src, setSrc] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
 
-    // ref
-    const refInputFile = useRef()
+    // Form
+    const [legendes, setLegendes] = useState(getDefaultLegendes())
+    const [credit, setCredit] = useState("")
+
+    // when user submit a file we save it to state until he complete (legende, csredit) then we uplaod it to the server
+    const [uploadingMedia, setUploadingMedia] = useState(false)
+
 
     // lifecycle
     useEffect(() => {
@@ -49,13 +66,65 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
 
     // methods
 
-    const insertMedia = file => {
+    const setLegendesState = locale => e => {
+        setLegendes(legendes.map(legende => {
+
+            if(legende.locale === locale){
+                return {
+                    ...legende,
+                    value: e.target.value
+                }
+            } else {
+                return legende
+            }
+
+        }))
+    }
+
+    const closeModal = () => {
+
+        // close
+        setUploadingMedia(false)
+
+        // reset form
+        setLegendes(getDefaultLegendes())
+        setCredit("")
+
+        // reset input
+        if(refInputFile && refInputFile.current){
+            refInputFile.current.value = ""
+        }
+
+    }
+
+    const validateUpload = async () => {
+
+        // request PUT media
+        await insertMedia()
+        .then(media => {
+            setError(false)
+            onMediaUploaded(media)
+        })
+        .catch(err => {
+            console.log("err", err)
+        })
+
+        // close
+        closeModal()
+
+    }
+
+    const insertMedia = () => {
 
         const serverImage = getServerImageEndpoint()
 
+        const file = uploadingMedia.file
+
         // form
         const formdata = new FormData()
-        formdata.append("file", file, file.name);
+        formdata.append("file", file, file.name)
+        formdata.append("legende", JSON.stringify(legendes))
+        formdata.append("credit", credit)
 
         return fetch(serverImage, {
             method: "POST",
@@ -94,17 +163,15 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
             const file = input.files[0]
 
             if(isValidImage(file.type)){
-                
-                insertMedia(file)
-                .then(media => {
 
-                    setError(false)
-                    onMediaUploaded(media)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-
+                const reader = new FileReader()
+                reader.onload = () => {
+                    setUploadingMedia({
+                        src: reader.result,
+                        file: file
+                    })
+                }
+                reader.readAsDataURL(file)
             } else {
                 alert("Les formats acceptés sont: .png, .jpg et .jpeg")
                 setError(true)
@@ -115,7 +182,42 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
         
     return (
         <div className="">
-            
+
+            {/* Input media info */}
+            <Popup
+                open={!!uploadingMedia}
+                modal
+            >
+                <div className="p-5 rounded">
+
+                    {/* Legendes */}
+                    {
+                        legendes.map(legende => {
+
+                            const key = legende.locale
+                            const id = "legende" + key
+
+                            return (
+                                <div key={key}>
+                                    <label className="font-medium mb-1 block" htmlFor={id}>Legende {legende.locale}: </label>
+                                    <input maxLength="60" className="px-3 border rounded w-full mb-4 py-1" onChange={setLegendesState(legende.locale)} value={legende.value} type="text"id={id} />
+                                </div>
+                            )
+                        })
+                    }
+                    
+
+                    <label className="font-medium mb-1 block" htmlFor="credit">Crédit : </label>
+                    <input className="px-3 border rounded w-full mb-4 py-1" onChange={e => setCredit(e.target.value)} value={credit} type="text" name="" id="credit" />
+
+                    <img className="w-1/3 h-auto border-2 rounded" src={uploadingMedia.src} alt="" />
+
+                    <button onClick={validateUpload} type="button" className="bg-blue-500 text-white px-3 py-2 rounded font-medium mt-4">Confirmer l'upload de l'image</button>
+                    <button onClick={closeModal} className="ml-2 bg-gray-500 text-white px-3 py-2 rounded font-medium mt-4">Annuler</button>
+                </div>
+            </Popup>
+
+
             {/* Input container */}
             <div style={{minHeight: 200}} className={`flex flex-col`}>
 

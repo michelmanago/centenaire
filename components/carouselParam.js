@@ -22,7 +22,7 @@ export default function Carousel({imgList, legende, id}) {
                 /*onSwiper={swiper => console.log(swiper)}*/
                 style={{'--swiper-navigation-color': 'transparent'}}
             >
-                {imgList.map((img, i) => (
+                {imgList && imgList.map((img, i) => (
                     <SwiperSlide key={id + '-' + i}>
                         <div className='flex flex-col items-center'>
                             <img className="full rounded-xl" src={`${mediaUrl}${img.public_path}`} alt={`slide ${i + 1}`} />

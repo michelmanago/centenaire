@@ -212,7 +212,7 @@ export async function selectAllPages(locale = null, category = ""){
         SELECT p.*, t.original_id as original_id FROM pagecontent p, page_translations t
         WHERE t.child_id = p.id ${conditionalWhere}
 
-        ORDER BY p.position
+        ORDER BY p.created_at DESC
         `,
         parameters
     )
