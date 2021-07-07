@@ -23,13 +23,13 @@ export default function CustomEditor({block, setContent}) {
         blockContent = SampleDocument;
     } else if (isSlateView) {
         const document = new DOMParser().parseFromString(block, 'text/html');
-        console.log(document.body);
+        //console.log(document.body);
         blockContent = deserialize(document.body);
     }
 
     const onChangeEditor = value => {
         const valueSerialize = serializer(value);
-        console.log(valueSerialize);
+        //console.log(valueSerialize);
         setContent(valueSerialize);
     };
     return (

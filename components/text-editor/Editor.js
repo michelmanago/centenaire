@@ -90,7 +90,7 @@ export default function Editor({document, onChange}) {
             //setContent(contentSerialize);
             //console.log(contentSerialize)
             //localStorage.setItem('contentSerialize', contentSerialize);
-            console.log(document);
+            //console.log(document);
             onChange(document);
             /*if (editor.selection != selection) {
                 setPreviousSelection(selection);
