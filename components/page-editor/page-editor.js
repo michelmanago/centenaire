@@ -270,7 +270,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     // others
     const languagesLists = locales.map(_locale => ({title: _locale.toUpperCase(), value: _locale}));
-
+    const originalPageId = editedPages ? editedPages[0].original_id : null
 
     // setters
     const setSlug = value => updateCurrentPage({pageSlug: currentPage.language + "/" + value, slugWithoutLocale: value})
@@ -334,6 +334,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 updatePages={updatePages}
                 addAttributedMedia={addAttributedMedia}
                 isEditing={isEditing}
+                originalPageId={originalPageId}
 
                 language={currentPage.language} languagesLists={languagesLists}
                 pageSlug={currentPage.pageSlug}

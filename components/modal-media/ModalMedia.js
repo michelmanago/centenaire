@@ -23,7 +23,7 @@ const tabContentStyles = {
 }
 
 
-export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia}){
+export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
@@ -87,10 +87,18 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
     const renderTabContent = () => {
         switch(tab){
             case TAB_UPLOAD:
-                return <ModalMediaUpload onMediaUploaded={onMediaUploaded}/>
+                return <ModalMediaUpload 
+                            onMediaUploaded={onMediaUploaded}
+                        />
             break;
             case TAB_MEDIA_LIST:
-                return <ModalMediaList updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} edited={edited} setEdited={setEdited} list={list}/>
+                return <ModalMediaList 
+                        originalPageId={originalPageId} 
+                        updateMediaFromList={updateMediaFromList} 
+                        deleteMediaFromList={deleteMediaFromList} 
+                        edited={edited} setEdited={setEdited} 
+                        list={list}
+                    />
             break;
             default:
                 return ""

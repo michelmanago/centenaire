@@ -10,7 +10,7 @@ import ModalMedia from "../../modal-media/ModalMedia";
 import PageEditorSidebarBlock from "./page-editor-sidebar-block";
 
 
-export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_id}){
+export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_id, originalPageId}){
 
     // states
     const [opened, setOpened] = useState(false)
@@ -69,6 +69,7 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
             <div style={{display: bandeau_id ? "none" : ""}}>
                 <button onClick={() => setOpened(true)} className="text-blue-500 underline">Ajouter une image</button>
                 <ModalMedia
+                    originalPageId={originalPageId}
                     preSelectedMedia={bandeau_id}
                     opened={opened}
                     onClose={() => setOpened(false)}
