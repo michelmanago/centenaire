@@ -9,6 +9,9 @@ import ModalMediaUpload from "./upload/ModalMediaUpload"
 // utils
 import fetchMediaList from "../../utils/fetch/fetchMediaList"
 
+// icons
+import IconClose from "../icons/IconClose"
+
 
 // styles
 const contentStyles = {
@@ -97,8 +100,13 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
             contentStyle={contentStyles}
             onClose={onClose}
         >
-            <div className="">
-                
+            <div className="relative">
+
+                {/* Close */}
+                <button onClick={onClose} className="absolute text-gray-700 hover:text-gray-800 right-0 top-0">
+                    <IconClose/>
+                </button>
+
                 {/* Header */}
                 <div className="px-5 pt-2">
 
