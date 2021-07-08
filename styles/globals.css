@@ -161,25 +161,29 @@ button {
     text-decoration: underline dotted;
 }
 
-.swiper-button-next {
+ 
+
+  .swiper-button-next {
     background-image: url(/static/img/flechedroite.svg);
     background-repeat: no-repeat;
     width: 50px !important;
     background-position: center;
-}
+  }
 
-.swiper-button-prev {
-    background-image: url(/static/img/flechegauche.svg);
-    background-repeat: no-repeat;
-    width: 50px !important;
-    background-position: center;
-}
+  .swiper-button-prev {
+      background-image: url(/static/img/flechegauche.svg);
+      background-repeat: no-repeat;
+      width: 50px !important;
+      background-position: center;
+  }
+
+
 
 .popimage-content {
-    margin: auto;
-    background: rgb(255, 255, 255);
-    height: 90vh;
-    border: rgb(255, 255, 255) solid;
+      
+   
+    width: 80%;
+   
 }
 
 .popimage-arrow {
@@ -189,6 +193,9 @@ button {
 .popimage-overlay {
     background: rgba(0, 0, 0, 0.719);
 }
+
+
+
 .closeModal {
     cursor: pointer;
     position: absolute;
