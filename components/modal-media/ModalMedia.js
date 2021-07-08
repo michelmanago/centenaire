@@ -45,6 +45,12 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
         }
     }
 
+    const updateMediaFromList = newMedia => {
+
+        // update this media
+        setList(list.map(l => l.id === newMedia.id ? newMedia : l))
+    }
+
     // methods
 
     const onSubmitMedia = () => {
@@ -74,7 +80,7 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
                 return <ModalMediaUpload onMediaUploaded={onMediaUploaded}/>
             break;
             case TAB_MEDIA_LIST:
-                return <ModalMediaList deleteMediaFromList={deleteMediaFromList} edited={edited} setEdited={setEdited} list={list}/>
+                return <ModalMediaList updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} edited={edited} setEdited={setEdited} list={list}/>
             break;
             default:
                 return ""
