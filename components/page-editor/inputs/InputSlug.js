@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 // utils
-import getAvailableSlug from '../../../utils/getAvailableSlug';
+import getAvailableSlug from '../../../utils/fetch/getAvailableSlug';
 import cleanForSlug from '../../../utils/cleanForSlug';
 
 const InputSlug = ({slugWithoutLocale, originalSlug, setSlug, currentLanguage}) => {

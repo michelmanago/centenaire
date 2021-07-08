@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
-import getAvailableSlug from '../../utils/getAvailableSlug';
+import getAvailableSlug from '../../utils/fetch/getAvailableSlug';
 import { pageFormat} from '../../utils/page-editor-formats';
 
 // components
@@ -32,6 +32,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     const [pages, setPages] = useState(editedPages ? pagesWithSlugsWithoutLocales(editedPages) : locales.map(_locale => pageFormat(_locale)))
     const [currentPageIndex, setCurrentPageIndex] = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [attributedMedia, setAttributedMedia] = useState([])
 
     // utils
     
@@ -87,6 +88,15 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 }    
             }))
         }
+    }
+
+    const addAttributedMedia = media_id => {
+
+        setAttributedMedia([
+            ...attributedMedia,
+            media_id,
+        ])
+
     }
 
     const generateEmptyTitles = form => {
@@ -190,11 +200,14 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     const onMediaUploaded = media => {
 
+        // add bandeau
         setPages(pages.map(page => ({
             ...page,
             bandeau_id: media.id
         })))
 
+        // add to attributed media
+        setAttributedMedia([...attributedMedia, media.id])
     }
 
     const onRemovePage = () => {
@@ -247,7 +260,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         // send pages to form
         try{
-            await onFormSubmitted(form);
+            await onFormSubmitted(form, attributedMedia);
         } catch (err){
             console.log(err)
         } finally {
@@ -319,6 +332,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
                 updateCurrentPage={updateCurrentPage}
                 updatePages={updatePages}
+                addAttributedMedia={addAttributedMedia}
                 isEditing={isEditing}
 
                 language={currentPage.language} languagesLists={languagesLists}

@@ -1,0 +1,35 @@
+import { getServerImageEndpoint } from "../utils-serveur-image"
+
+export default async function fetchCreateMedia(file, defaultLegende){
+
+    try {
+
+        const serverImageEndpoint = getServerImageEndpoint()
+
+        // form
+        const formdata = new FormData()
+        formdata.append("file", file, file.name)
+        formdata.append("legende", JSON.stringify(defaultLegende))
+
+
+        // Fetch
+        let results = null
+        const response = await fetch(serverImageEndpoint, {
+            method: "POST",
+            body: formdata
+        })
+
+        // Decode
+        if(response.ok){
+            results = await response.json()
+        } else {
+            throw new Error(response.statusText);
+        }
+
+        return results
+
+    } catch (error) {
+        console.log(err)
+        return false
+    }
+}
