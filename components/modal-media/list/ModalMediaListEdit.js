@@ -34,6 +34,11 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
         media.legende ? retrieveLegende() : locales.map(locale => ({locale, value: ""})))
 
 
+    // helpers
+    const renderMediaPreview = () => {
+        
+    }
+
     // setters
     const setOneLegende = (value, index) => {
 
@@ -94,6 +99,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
     // others
     const media_src = getMediaLink(media.public_path)
     const filename = media.public_path ? (media.public_path.split("/")).pop() : ""
+    const type = media.type
 
     return (
         <div>
@@ -103,10 +109,14 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                         <div className="py-3 px-2">
                             <p className="mb-3">Détails du fichier joint</p>
 
-                            {/* Image */}
-                            <div className="border-2 border-gray-400 w-1/2">
-                                <img src={media_src} alt="" />
-                            </div>
+                            {/* Preview */}
+                            {
+                                type === "image" && (
+                                    <div className="border-2 border-gray-400 w-1/2">
+                                        <img src={media_src} alt="" />
+                                    </div>
+                                )
+                            }
 
                             {/* Filename */}
                             <p className="text-sm mt-3 text-gray-600">{filename}</p>

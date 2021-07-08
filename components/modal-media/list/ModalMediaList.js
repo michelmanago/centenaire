@@ -4,6 +4,9 @@ import { getMediaLink } from "../../../utils/utils-serveur-image"
 
 // components
 import ModalMediaListEdit from "./ModalMediaListEdit"
+import IconVideo from "../../icons/IconVideo"
+import IconDocument from "../../icons/IconDocument"
+import IconUnknown from "../../icons/IconUnknown"
 
 // styles
 const imageItemContainerStyles = {
@@ -33,8 +36,39 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
         }
     }
 
+    // helpers
+    const renderMediaPreview = type => {
+        switch(type){
+            case "video":
+                return (
+                    <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                            <IconVideo className={"w-24 text-gray-100"}/>
+                    </div>
+                )
+            break;
+            case "image":
+                return (
+                    <img style={imageItemStyles} className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
+                )
+            break;
+            case "document":
+                return (
+                    <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                        <IconDocument className={"w-24 text-gray-100"}/>
+                    </div>
+                )
+            break;
+            default:
+                return (
+                    <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                        <IconUnknown className={"w-24 text-gray-100"}/>
+                    </div>
+                )
+        }
+    }
+
     // others
-    const filteredList = (originalPageId && filterByPage) ? list.filter(l => l.page_id === originalPageId) : list
+    const filteredList = (originalPageId && filterByPage) ? list.filter(l => l.page_id === originalPageId || l.justUploaded) : list
 
     return (
         <div className="h-full flex">
@@ -60,6 +94,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
                             const media_src = getMediaLink(image.public_path)
                             const isSelected = edited && edited.id === image.id
+                            const type = image.type
 
                             return (
                                 <button 
@@ -71,8 +106,8 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                                     <div
                                     style={imageItemContainerStyles} 
                                     className={`relative rounded border-4 border-transparent ${isSelected ? "border-green-400" : ""}`}
-                                    >
-                                        <img style={imageItemStyles} className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
+                                    >   
+                                        {renderMediaPreview(type)}
                                     </div>
                                 </button>
                             )

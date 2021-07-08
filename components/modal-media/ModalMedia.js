@@ -1,6 +1,7 @@
 // libs
 import { useEffect, useState } from "react"
 import Popup from "reactjs-popup"
+import Proptypes from "prop-types"
 
 // components
 import ModalMediaList from "./list/ModalMediaList"
@@ -23,7 +24,7 @@ const tabContentStyles = {
 }
 
 
-export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId}){
+function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
@@ -89,6 +90,7 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
             case TAB_UPLOAD:
                 return <ModalMediaUpload 
                             onMediaUploaded={onMediaUploaded}
+                            accepts={accepts}
                         />
             break;
             case TAB_MEDIA_LIST:
@@ -110,7 +112,7 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
     // lifecycle
     useEffect(async () => {
 
-        const media = await fetchMediaList(null)
+        const media = await fetchMediaList(null, accepts)
         setList(media)
 
         // pre select a media
@@ -119,7 +121,6 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
         }
 
     }, [])
-
 
     return (
         <Popup 
@@ -174,6 +175,13 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
 
 }
 
+ModalMedia.proptypes = {
+    accepts: Proptypes.oneOf(["image", "video", "document"]),
+}
+
 const TAB_UPLOAD = "TAB_UPLOAD"
 const TAB_MEDIA_LIST = "TAB_MEDIA_LIST"
 const TabItem = ({label, onClick, isCurrent}) => <button className={`px-3 py-2 border-l-2 border-t-2 border-r-2 border-transparent ${isCurrent ? " border-gray-200 " : ""}`} onClick={onClick}>{label}</button>
+
+
+export default ModalMedia
