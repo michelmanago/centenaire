@@ -10,9 +10,6 @@ const  ConfVideo = () => {
     const [startPlaying, setstartPlaying] = useState(true)
     const [endPlaying, setendPlaying] = useState(false)
     
-    
-    
-  
 
       return (
         <div className='player-wrapper'>
