@@ -14,7 +14,7 @@ const imageItemStyles = {
     
 }
 
-export default function ModalMediaList({list, edited, setEdited}){
+export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList}){
 
     // states
 
@@ -67,7 +67,7 @@ export default function ModalMediaList({list, edited, setEdited}){
 
             {/* Sidebar */}
             <div className="w-1/3 bg-gray-100 overflow-auto">
-                {edited && <ModalMediaListEdit key={edited.id} media={edited}/>}
+                {edited && <ModalMediaListEdit key={edited.id} deleteMediaFromList={deleteMediaFromList} media={edited}/>}
             </div>
         </div>
     )

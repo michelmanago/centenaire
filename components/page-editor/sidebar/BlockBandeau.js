@@ -46,7 +46,13 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
 
             getServeurImageMedia(bandeau_id)
             .then(media => {
-                setSrc(getMediaLink(media.public_path))
+                
+                setSrc(getMediaLink(media ? media.public_path : ""))
+                if(media){
+                    
+                } else {
+                    console.log("this media do not exists")
+                }
             })
 
         } else {

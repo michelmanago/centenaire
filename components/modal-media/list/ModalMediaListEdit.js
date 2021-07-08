@@ -2,12 +2,13 @@
 // libs
 import {useRouter} from 'next/router';
 import { useState } from "react"
+import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
 import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
 
 // utils
 import { getMediaLink } from "../../../utils/utils-serveur-image"
 
-export default function ModalMediaListEdit({media}){
+export default function ModalMediaListEdit({media, deleteMediaFromList}){
 
     // utils
     const retrieveLegende = () => {
@@ -68,6 +69,18 @@ export default function ModalMediaListEdit({media}){
 
     }
 
+    const onRemoveMedia = async () => {
+
+        const deleted = await fetchDeleteMedia(media.id)
+
+        if(deleted){
+            deleteMediaFromList(media.id)
+        } else {
+            alert("Could not delete this media.")
+        }
+
+    }
+
     // others
     const media_src = getMediaLink(media.public_path)
     const filename = media.public_path ? (media.public_path.split("/")).pop() : ""
@@ -89,7 +102,7 @@ export default function ModalMediaListEdit({media}){
                             <p className="text-sm mt-3 text-gray-600">{filename}</p>
 
                             {/* Remove */}
-                            <button className="text-red-400 underline">Supprimer définitivement</button>
+                            <button onClick={onRemoveMedia} className="text-red-400 underline">Supprimer définitivement</button>
 
                             {/* Form */}
                             <div className="mt-4">

@@ -31,6 +31,17 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
 
     // utils
 
+    const deleteMediaFromList = mediaId => {
+
+        // remove this media from list
+        setList(list.filter(l => l.id !== mediaId))
+
+        // if this media was selected -> unselected it
+        if(edited && edited.id === mediaId){
+            setEdited(null)
+        }
+    }
+
     // methods
 
     const onSubmitMedia = () => {
@@ -60,7 +71,7 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
                 return <ModalMediaUpload onMediaUploaded={onMediaUploaded}/>
             break;
             case TAB_MEDIA_LIST:
-                return <ModalMediaList edited={edited} setEdited={setEdited} list={list}/>
+                return <ModalMediaList deleteMediaFromList={deleteMediaFromList} edited={edited} setEdited={setEdited} list={list}/>
             break;
             default:
                 return ""
