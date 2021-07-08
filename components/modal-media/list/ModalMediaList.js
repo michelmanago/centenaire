@@ -47,7 +47,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                 {
                     originalPageId && (
                         <div className="border px-2 py-2">
-                            <label className="select-none" htmlFor="filterByPage">Uniquement les médias de cette page : </label>
+                            <label className="select-none" htmlFor="filterByPage">Uniquement les médiascette page : </label>
                             <input type="checkbox" checked={filterByPage} onChange={e => setFilterByPage(e.target.checked)} id="filterByPage" />
                         </div>
                     )
