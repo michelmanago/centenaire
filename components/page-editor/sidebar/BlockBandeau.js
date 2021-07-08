@@ -1,7 +1,6 @@
 // libs
 
 import { useEffect, useState } from "react";
-
 // utils
 import { getMediaLink, getServeurImageMedia } from "../../../utils/utils-serveur-image";
 
@@ -75,6 +74,7 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
                     onClose={() => setOpened(false)}
                     onMediaSelected={onMediaSelected}
                     submitLabel="Définir comme image de bandeau"
+                    accepts={["image"]}
                 />
             </div>
 

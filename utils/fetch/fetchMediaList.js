@@ -7,7 +7,6 @@ export default async function fetchMediaList(page_id = null){
         route += "?page=" + page_id
     }
 
-
     try {
         
         let results = null
