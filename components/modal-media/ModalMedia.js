@@ -23,7 +23,7 @@ const tabContentStyles = {
 }
 
 
-export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel}){
+export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
@@ -52,6 +52,16 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
     }
 
     // methods
+
+    const onCloseModal = () => {
+
+        // reset modal
+        setEdited(false)
+        setTab(TAB_MEDIA_LIST)
+
+        // call props.close()
+        onClose()
+    }
 
     const onSubmitMedia = () => {
         onMediaSelected(edited)
@@ -92,9 +102,13 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
     // lifecycle
     useEffect(async () => {
 
-        console.log("fetchMediaList")
         const media = await fetchMediaList(null)
         setList(media)
+
+        // pre select a media
+        if(preSelectedMedia){
+            setEdited(media.find(m => m.id === preSelectedMedia))
+        }
 
     }, [])
 

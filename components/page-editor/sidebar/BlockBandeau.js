@@ -65,9 +65,11 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
         <PageEditorSidebarBlock title="Bandeau de page">
 
             {/* MODE - CREATE */}
+            {/* do not conditional render modal when you lockScroll - it dont unlockScroll on unMount but only with opened going false */}
             <div style={{display: bandeau_id ? "none" : ""}}>
                 <button onClick={() => setOpened(true)} className="text-blue-500 underline">Ajouter une image</button>
                 <ModalMedia
+                    preSelectedMedia={bandeau_id}
                     opened={opened}
                     onClose={() => setOpened(false)}
                     onMediaSelected={onMediaSelected}
