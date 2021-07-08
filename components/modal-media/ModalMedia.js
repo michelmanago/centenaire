@@ -9,6 +9,9 @@ import ModalMediaUpload from "./upload/ModalMediaUpload"
 // utils
 import fetchMediaList from "../../utils/fetch/fetchMediaList"
 
+// icons
+import IconClose from "../icons/IconClose"
+
 
 // styles
 const contentStyles = {
@@ -20,7 +23,7 @@ const tabContentStyles = {
 }
 
 
-export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel}){
+export default function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
@@ -31,7 +34,34 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
 
     // utils
 
+    const deleteMediaFromList = mediaId => {
+
+        // remove this media from list
+        setList(list.filter(l => l.id !== mediaId))
+
+        // if this media was selected -> unselected it
+        if(edited && edited.id === mediaId){
+            setEdited(null)
+        }
+    }
+
+    const updateMediaFromList = newMedia => {
+
+        // update this media
+        setList(list.map(l => l.id === newMedia.id ? newMedia : l))
+    }
+
     // methods
+
+    const onCloseModal = () => {
+
+        // reset modal
+        setEdited(false)
+        setTab(TAB_MEDIA_LIST)
+
+        // call props.close()
+        onClose()
+    }
 
     const onSubmitMedia = () => {
         onMediaSelected(edited)
@@ -57,10 +87,18 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
     const renderTabContent = () => {
         switch(tab){
             case TAB_UPLOAD:
-                return <ModalMediaUpload onMediaUploaded={onMediaUploaded}/>
+                return <ModalMediaUpload 
+                            onMediaUploaded={onMediaUploaded}
+                        />
             break;
             case TAB_MEDIA_LIST:
-                return <ModalMediaList edited={edited} setEdited={setEdited} list={list}/>
+                return <ModalMediaList 
+                        originalPageId={originalPageId} 
+                        updateMediaFromList={updateMediaFromList} 
+                        deleteMediaFromList={deleteMediaFromList} 
+                        edited={edited} setEdited={setEdited} 
+                        list={list}
+                    />
             break;
             default:
                 return ""
@@ -72,9 +110,13 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
     // lifecycle
     useEffect(async () => {
 
-        console.log("fetchMediaList")
         const media = await fetchMediaList(null)
         setList(media)
+
+        // pre select a media
+        if(preSelectedMedia){
+            setEdited(media.find(m => m.id === preSelectedMedia))
+        }
 
     }, [])
 
@@ -86,8 +128,13 @@ export default function ModalMedia({opened, onClose, onMediaSelected, submitLabe
             contentStyle={contentStyles}
             onClose={onClose}
         >
-            <div className="">
-                
+            <div className="relative">
+
+                {/* Close */}
+                <button onClick={onClose} className="absolute text-gray-700 hover:text-gray-800 right-0 top-0">
+                    <IconClose/>
+                </button>
+
                 {/* Header */}
                 <div className="px-5 pt-2">
 

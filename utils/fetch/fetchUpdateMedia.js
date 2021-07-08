@@ -23,7 +23,7 @@ export default async function fetchUpdateMedia(media_id, fields){
         }
 
         // Receive results
-        return true
+        return results
 
     } catch (error) {
         console.log("FetchUpdateMedia", error)

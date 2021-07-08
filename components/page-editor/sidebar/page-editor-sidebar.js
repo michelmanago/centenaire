@@ -16,6 +16,7 @@ const PageEditorSidebar = ({
     updateCurrentPage,
     addAttributedMedia,
     isEditing,
+    originalPageId,
 
     language,
     languagesLists,
@@ -68,6 +69,7 @@ const PageEditorSidebar = ({
                 updatePages={updatePages}
                 addAttributedMedia={addAttributedMedia}
                 bandeau_id={bandeau_id}
+                originalPageId={originalPageId}
             />
 
             {/* Block publier */}

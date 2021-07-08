@@ -2,12 +2,13 @@
 // libs
 import {useRouter} from 'next/router';
 import { useState } from "react"
+import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
 import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
 
 // utils
 import { getMediaLink } from "../../../utils/utils-serveur-image"
 
-export default function ModalMediaListEdit({media}){
+export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList}){
 
     // utils
     const retrieveLegende = () => {
@@ -27,6 +28,7 @@ export default function ModalMediaListEdit({media}){
     const {locales} = useRouter()
 
     // states
+    const [modified, setModified] = useState(false)
     const [credit, setCredit] = useState(media.credit || "")
     const [legendes, setLegendes] = useState(
         media.legende ? retrieveLegende() : locales.map(locale => ({locale, value: ""})))
@@ -52,7 +54,7 @@ export default function ModalMediaListEdit({media}){
     }
 
     // methods
-    const onSubmitMedia = async () => {
+    const OnUpdateMedia = async () => {
 
         const form = {
             credit,
@@ -60,10 +62,31 @@ export default function ModalMediaListEdit({media}){
         }
 
         try {
+
+            // request update
             const newMedia = await fetchUpdateMedia(media.id, form)
-            console.log(newMedia)
+
+            // update in list 
+            updateMediaFromList(newMedia)
+
+            // show feedback
+            setModified(true)
+            setTimeout(() => setModified(false), 1500)
+
         } catch (error) {
             console.log(error)
+        }
+
+    }
+
+    const onRemoveMedia = async () => {
+
+        const deleted = await fetchDeleteMedia(media.id)
+
+        if(deleted){
+            deleteMediaFromList(media.id)
+        } else {
+            alert("Could not delete this media.")
         }
 
     }
@@ -89,7 +112,7 @@ export default function ModalMediaListEdit({media}){
                             <p className="text-sm mt-3 text-gray-600">{filename}</p>
 
                             {/* Remove */}
-                            <button className="text-red-400 underline">Supprimer définitivement</button>
+                            <button onClick={onRemoveMedia} className="text-red-400 underline">Supprimer définitivement</button>
 
                             {/* Form */}
                             <div className="mt-4">
@@ -114,7 +137,10 @@ export default function ModalMediaListEdit({media}){
                                 }
 
                                 {/* Submit */}
-                                <button type="button" onClick={onSubmitMedia} className="bg-blue-600 hover-bg-blue-700 px-3 py-1 text-white rounded">Modifier l'image</button>
+                                <button type="button" onClick={OnUpdateMedia} className="bg-green-500 hover:bg-green-600 px-3 py-1 text-white rounded">Modifier l'image</button>
+                                
+                                {/* Feedback */}
+                                {modified &&  <span className="ml-2 text-sm text-green-500">Modifié ✓</span>}
                             </div>
 
                         </div>

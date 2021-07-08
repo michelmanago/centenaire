@@ -10,7 +10,7 @@ import ModalMedia from "../../modal-media/ModalMedia";
 import PageEditorSidebarBlock from "./page-editor-sidebar-block";
 
 
-export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_id}){
+export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_id, originalPageId}){
 
     // states
     const [opened, setOpened] = useState(false)
@@ -46,7 +46,13 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
 
             getServeurImageMedia(bandeau_id)
             .then(media => {
-                setSrc(getMediaLink(media.public_path))
+                
+                setSrc(getMediaLink(media ? media.public_path : ""))
+                if(media){
+                    
+                } else {
+                    console.log("this media do not exists")
+                }
             })
 
         } else {
@@ -59,9 +65,12 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
         <PageEditorSidebarBlock title="Bandeau de page">
 
             {/* MODE - CREATE */}
+            {/* do not conditional render modal when you lockScroll - it dont unlockScroll on unMount but only with opened going false */}
             <div style={{display: bandeau_id ? "none" : ""}}>
                 <button onClick={() => setOpened(true)} className="text-blue-500 underline">Ajouter une image</button>
                 <ModalMedia
+                    originalPageId={originalPageId}
+                    preSelectedMedia={bandeau_id}
                     opened={opened}
                     onClose={() => setOpened(false)}
                     onMediaSelected={onMediaSelected}

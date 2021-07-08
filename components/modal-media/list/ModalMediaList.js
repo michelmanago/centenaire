@@ -14,9 +14,10 @@ const imageItemStyles = {
     
 }
 
-export default function ModalMediaList({list, edited, setEdited}){
+export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId}){
 
     // states
+    const [filterByPage, setFilterByPage] = useState(!!originalPageId)
 
     // methods
     const onSelectMedia = (media) => e => {
@@ -33,41 +34,57 @@ export default function ModalMediaList({list, edited, setEdited}){
     }
 
     // others
+    const filteredList = (originalPageId && filterByPage) ? list.filter(l => l.page_id === originalPageId) : list
 
     return (
         <div className="h-full flex">
             
             {/* List */}
-            <div className="w-2/3 overflow-auto h-full pr-2">
+            <div className="border w-2/3 overflow-auto h-full pr-2">
+
+                {/* Filters */}
+                {/* Not allowed to filter when creating the page because there is no media attributed to this page currently */}
                 {
-                    list.map(image => {
-
-                        const media_src = getMediaLink(image.public_path)
-                        const isSelected = edited && edited.id === image.id
-
-                        return (
-                            <button 
-                                type="button"
-                                key={image.id}
-                                onClick={onSelectMedia(image)} 
-                                className={`w-1/2 md:w-1/3 lg:w-1/4 p-2 rounded`}
-                            >
-                                <div
-                                 style={imageItemContainerStyles} 
-                                 className={`relative rounded border-4 border-transparent ${isSelected ? "border-green-400" : ""}`}
-                                >
-                                    <img style={imageItemStyles} className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
-                                </div>
-                            </button>
-                        )
-
-                    })
+                    originalPageId && (
+                        <div className="border-b px-2 py-2">
+                            <label className="select-none" htmlFor="filterByPage">Uniquement les fichiers de cette page : </label>
+                            <input type="checkbox" checked={filterByPage} onChange={e => setFilterByPage(e.target.checked)} id="filterByPage" />
+                        </div>
+                    )
                 }
+
+                {/* List */}
+                <div className="">
+                    {
+                        filteredList.map(image => {
+
+                            const media_src = getMediaLink(image.public_path)
+                            const isSelected = edited && edited.id === image.id
+
+                            return (
+                                <button 
+                                    type="button"
+                                    key={image.id}
+                                    onClick={onSelectMedia(image)} 
+                                    className={`w-1/2 md:w-1/3 lg:w-1/4 p-2 rounded`}
+                                >
+                                    <div
+                                    style={imageItemContainerStyles} 
+                                    className={`relative rounded border-4 border-transparent ${isSelected ? "border-green-400" : ""}`}
+                                    >
+                                        <img style={imageItemStyles} className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
+                                    </div>
+                                </button>
+                            )
+
+                        })
+                    }
+                </div>
             </div>
 
             {/* Sidebar */}
             <div className="w-1/3 bg-gray-100 overflow-auto">
-                {edited && <ModalMediaListEdit key={edited.id} media={edited}/>}
+                {edited && <ModalMediaListEdit key={edited.id} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited}/>}
             </div>
         </div>
     )
