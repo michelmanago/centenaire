@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 import Link from 'next/link';
-import {DefaultElement} from 'slate-react';
+import {DefaultElement, useFocused, useSelected} from 'slate-react';
 import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
 import TexteAnnote from '../Popup/texteannote';
@@ -71,6 +71,21 @@ function renderElement(props) {
                     <a className="link">{children}</a>
                 </Link>
             );
+        case 'image':
+            const selected = useSelected();
+            const focused = useFocused();
+            return (
+                <div {...attributes}>
+                    <div contentEditable={false}>
+                        <img
+                            src={element.url}
+                            alt={element.url}
+                            className={`block max-w-full max-h-80 ${selected && focused ? 'shadow-lg' : 'shadow-none'}`}
+                        />
+                    </div>
+                    {children}
+                </div>
+            );
         default:
             // For the default case, we delegate to Slate's default rendering.
             return <DefaultElement {...props} />;
@@ -81,7 +96,7 @@ function renderLeaf({attributes, children, leaf}) {
     let el = <>{children}</>;
 
     if (leaf.tooltip) {
-        el = <TexteAnnote texte={children} note={leaf.tooltip} />
+        el = <TexteAnnote texte={children} note={leaf.tooltip} />;
     }
 
     if (leaf.bold) {

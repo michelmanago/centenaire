@@ -4,6 +4,7 @@ import IconArrowUp from '../icons/IconArrowUp';
 import IconArrowDown from '../icons/IconArrowDown';
 import Trash from '../icons/trash';
 import PageEditorInputImage from './sidebar/PageEditorInputImage';
+import ModalMedia from '../modal-media/ModalMedia';
 
 export default function CarouselEditor({content, setContent}) {
     const [open, setOpen] = useState(false);
@@ -81,7 +82,8 @@ export default function CarouselEditor({content, setContent}) {
                     </button>
                 ) : null}
             </div>
-            <Popup
+            <ModalMedia opened={open} onClose={() => setOpen(false)} onMediaSelected={onMediaUploaded}  />
+            {/*<Popup
                 open={open}
                 position="top center"
                 modal="true"
@@ -100,7 +102,7 @@ export default function CarouselEditor({content, setContent}) {
                     </button>
                 </div>
                 <PageEditorInputImage onMediaUploaded={onMediaUploaded} onRemoveMedia={onRemoveMedia} mediaId={null} />
-            </Popup>
+            </Popup>*/}
             <Popup
                 open={openUpdate}
                 position="top center"

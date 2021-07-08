@@ -2,8 +2,10 @@ import { getMedias } from "../../dao/media";
 
 export default async function handler(req, res) {
     try {
+
         if (req.method === 'GET')  {
-        
+            
+            const page_id = req.query.page
             const medias = await getMedias()
 
             return res.json(medias);
