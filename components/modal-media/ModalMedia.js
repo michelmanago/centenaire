@@ -24,7 +24,7 @@ const tabContentStyles = {
 }
 
 
-function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts}){
+function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts = []}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
@@ -100,6 +100,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         deleteMediaFromList={deleteMediaFromList} 
                         edited={edited} setEdited={setEdited} 
                         list={list}
+                        accepts={accepts}
                     />
             break;
             default:
