@@ -58,7 +58,7 @@ export default function Carousel({imgList, legende, id}) {
                                         <button className="closeModal  m-10 close stroke-current text-black-600 " onClick={() => closeModal(i)}>
                                             &times;
                                         </button>
-                                        <img className="full rounded-xl h-full"  src={img.url} alt={`slide ${i + 1}`} />
+                                        <img className="full rounded-xl h-full"  src={`${mediaUrl}${img.public_path}`} alt={`slide ${i + 1}`} />
                                         {img.legende && <div className="flex justify-center  ">{img.legende}</div>
                                         }
                                  
