@@ -21,4 +21,8 @@ export function getServeurImageMedia(mediaId){
             throw new Error(response.statusText);
         }
     })
+    .catch(err => {
+        console.log("GetServerMedia")
+        return null
+    })
 }

@@ -9,6 +9,7 @@ import {
     isLinkActive,
     unwrapLink,
     toggleTooltip,
+    insertImage,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -16,6 +17,8 @@ import Popup from 'reactjs-popup';
 
 import Icons from './Icons';
 import ImageSelector from '../Popup/image-selector';
+import AnnotationSelector from '../Popup/annotation-selector';
+import ModalMedia from '../modal-media/ModalMedia';
 
 const PARAGRAPH_STYLES = ['multiple', 'h1', 'h2', 'h3', 'h4', 'paragraph'];
 const CHARACTER_STYLES = ['bold', 'italic', 'underline'];
@@ -24,12 +27,10 @@ const EFFECT_STYLES = ['align-left', 'align-center', 'align-right'];
 const MEDIA_STYLES = ['image', 'video'];
 
 export default function Toolbar({selection, previousSelection}) {
-    const [openImagePopup, setOpenImagePopup] = useState(false);
-    const [openVideoPopup, setOpenVideoPopup] = useState(false);
-
+    const [openModalMedia, setOpenModalMedia] = useState(false);
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
-    const [tooltipNote, setTooltipNote] = useState('');
-    const [tmpSelection, setTmpSelection] = useState(null);
+
+    const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
 
     const editor = useSlateStatic();
     const onBlockTypeChange = useCallback(
@@ -42,14 +43,21 @@ export default function Toolbar({selection, previousSelection}) {
         [editor],
     );
     const blockType = getTextBlockStyle(editor);
-    //console.log(blockType, editor);
+    console.log('editor', editor.selection);
 
-    const addTooltip = () => {
-        console.log(editor, selection, previousSelection);
-        var editorTmp = {...editor};
-        editorTmp.selection = tmpSelection;
-        toggleTooltip(editorTmp, tooltipNote);
-        setOpenTooltipPopup(false);
+    const addTooltip = (note) => {
+        //console.log(editor, selection, previousSelection);
+        //var editorTmp = {...editor};
+        //editorTmp.selection = tmpSelection;
+        toggleTooltip(editor, note);
+        //setOpenTooltipPopup(false);
+    };
+
+    const addImage = media => {
+        console.log(media, editor.selection);
+        insertImage(editor, `${urlServerMedia}${media.public_path}`);
+        setOpenModalMedia(false);
+        console.log('insertImage after:', editor);
     };
     return (
         <div className="text-black toolbar">
@@ -99,54 +107,13 @@ export default function Toolbar({selection, previousSelection}) {
                     if (getActiveStyles(editor).has('tooltip')) {
                         toggleTooltip(editor, null);
                     } else {
-                        console.log(editor, selection);
-                        setTmpSelection(editor.selection);
-                        setOpenTooltipPopup(true);
+                        var notePrompt = prompt('Note:');
+                        toggleTooltip(editor, notePrompt);
+                        //setOpenTooltipPopup(true);
                     }
                 }}
             />
-            <Popup
-                className=""
-                open={openTooltipPopup}
-                position="bottom center"
-                modal="true"
-                closeOnDocumentClick={false}
-                onClose={e => {
-                    setOpenTooltipPopup(false);
-                }}
-            >
-                <div className="flex flex-col gap-1">
-                    <div className="flex flex-row-reverse">
-                        <button
-                            className="p-1 text-white bg-red-500 rounded hover:bg-red-600"
-                            onClick={() => setOpenTooltipPopup(false)}
-                        >
-                            Fermer
-                        </button>
-                    </div>
-                    <div className="flex flex-row items-center gap-1">
-                        <label className="w-1/6 text-center" htmlFor="tooltip-note">
-                            Note
-                        </label>
-                        <textarea
-                            id="tooltip-note"
-                            className="w-5/6 px-1 border border-black"
-                            value={tooltipNote}
-                            onChange={e => setTooltipNote(e.currentTarget.value)}
-                        ></textarea>
-                    </div>
-                    <div className="flex flex-row justify-center">
-                        <button
-                            className="p-1 text-white bg-green-500 rounded hover:bg-green-600"
-                            onClick={() => {
-                                addTooltip();
-                            }}
-                        >
-                            Ajouter
-                        </button>
-                    </div>
-                </div>
-            </Popup>
+            <AnnotationSelector opened={openTooltipPopup} onClose={() => setOpenTooltipPopup(false)} sendNote={addTooltip} />
             {EFFECT_STYLES.map(effect => (
                 <ToolBarButton
                     key={effect}
@@ -180,10 +147,17 @@ export default function Toolbar({selection, previousSelection}) {
                 isActive={getActiveEffect(editor) === 'image'}
                 onMouseDown={event => {
                     event.preventDefault();
-                    setOpenImagePopup(true);
+                    //setOpenImagePopup(true);
+                    setOpenModalMedia(true);
                 }}
             />
-            <Popup
+            <ModalMedia
+                opened={openModalMedia}
+                onClose={() => setOpenModalMedia(false)}
+                onMediaSelected={addImage}
+                submitLabel={'Ajouter'}
+            />
+            {/*<Popup
                 className="image-popup"
                 open={openImagePopup}
                 position="bottom center"
@@ -202,8 +176,8 @@ export default function Toolbar({selection, previousSelection}) {
                     </button>
                 </div>
 
-                <ImageSelector />
-            </Popup>
+                <ModalMedia opened={openModalMedia} onClose={() => setOpenModalMedia(false)} onMediaSelected={addImage} submitLabel={'Ajouter'} />
+            </Popup>*/}
             <ToolBarButton
                 key={'video'}
                 icon={<Icons type={'video'} />}

@@ -14,10 +14,12 @@ import PageEditor from "../../../components/page-editor/page-editor"
 
 // utils
 import {toMysqlFormat} from "../../../utils/utils";
+import { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
 
 // utils
 
 export default function PageEditorUpdate({menu, pageTranslations}) {
+
 
 
     if(!pageTranslations || Array.isArray(pageTranslations) && !pageTranslations.length){
@@ -27,8 +29,11 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
     // states
     const router = useRouter()
 
+    // router
+    const {defaultLocale} = useRouter()
+
     // methods
-    const onSubmit = formPages => {
+    const onSubmit = (formPages, attributedMedia) => {
 
         // add last_modified
 
@@ -53,6 +58,12 @@ export default function PageEditorUpdate({menu, pageTranslations}) {
             } else {
                 throw new Error(response.statusText);
             }
+        })
+        .then(async pages => {
+
+            await bulkAttributePageToMedia(originalPage.id, attributedMedia)
+
+            return pages
         })
         .then(body => {
 

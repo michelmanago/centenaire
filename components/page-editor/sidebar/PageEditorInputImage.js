@@ -51,7 +51,9 @@ export default function PageEditorInputImage({onMediaUploaded, onRemoveMedia, me
             setIsLoading(true)
             getServeurImageMedia(mediaId)
             .then(media => {
-                setSrc(getMediaLink(media.public_path))
+                if(media){
+                    setSrc(getMediaLink(media.public_path))
+                }
                 setIsLoading(false)
             })
             .catch(err => {
