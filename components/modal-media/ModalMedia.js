@@ -24,7 +24,7 @@ const tabContentStyles = {
 }
 
 
-function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts = []}){
+function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts = ["image", "video", "document"]}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
