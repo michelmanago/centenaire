@@ -127,7 +127,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
                 <InputAddBlock addBlock={addBlockContent} />
 
                 {/* Import */}
-                <InputImportBlock updateCurrentPage={updateCurrentPage} pages={pages} currentPage={currentPage}/>
+                <InputImportBlock key={currentPage.language} updateCurrentPage={updateCurrentPage} pages={pages} currentPage={currentPage}/>
             </div>
             
             {/* List */}

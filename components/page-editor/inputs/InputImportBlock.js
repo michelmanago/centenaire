@@ -7,6 +7,7 @@ import IconClose from "../../icons/IconClose";
 
 export default function InputImportBlock({pages, currentPage, updateCurrentPage}){
 
+
     // utils
     const currentPageIdOrTempId = currentPage.id || currentPage.temp_id
     const pagesExceptCurrent = pages.filter(page => {
@@ -14,17 +15,22 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
         return pageIdOrTempId !== currentPageIdOrTempId
     })
     const formatBlockListForState = page => {
-        return page.blocks.map(block => {
+        const blocks = page.blocks.map(block => {
             return {
                 ...block,
                 selected: true
             }
         })
+
+        return blocks
     }
+
+
 
     // states
     const [open, setOpen] = useState(false)
     const [blockList, setBlockList] = useState(formatBlockListForState(pagesExceptCurrent[0]))
+
 
     // others
     const selectedBlocks = blockList.filter(b => b.selected)
@@ -81,6 +87,15 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
         }))
     }
 
+    useEffect(() => {
+        
+        console.log("mount")
+
+        return () => {
+            console.log("unmount")
+        }
+
+    }, [])
     
     return (
         <div className="">
@@ -119,36 +134,43 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
                         </div>
 
                         {/* Block list */}
-                        <div className="mt-5">
-                            <p className="block font-medium" htmlFor="translation">Choisir les blocs à importer :</p>
-                            <div className="border-2 w-2/3 self-center pt-2 px-3">
-                                {
-                                    blockList.map((block, blockIndex) => {
+                        {
+                            blockList.length === 0 ? (
+                                <p className="border-2 mt-5 py-2 bg-gray-100 rounded text-center">Il n'y a pas encore de blocs dans cette page.</p>
+                            ) : (
+                                <div className="mt-5">
+                                    <p className="block font-medium" htmlFor="translation">Choisir les blocs à importer :</p>
+                                    <div className="border-2 w-2/3 self-center pt-2 px-3">
 
-                                        const key = "block-" + block.position
-                                        const selected = block.selected
+                                        {
+                                            blockList.map((block, blockIndex) => {
 
-                                        return (
-                                            <button type="button" key={key} onClick={selectOneBlock(blockIndex)} className={`flex w-full py-1 pl-5 items-center border-dashed rounded border-2 border-transparent mb-2 hover:bg-green-100 ${selected ? "border-green-400" : ""}`}>
-                                                
-                                                {/* Position */}
-                                                <span className="inline-block text-left select-none flex-shrink -0 font-medium text-xl w-1/4">#{block.position}</span>
-                                                
-                                                {/* Type */}
-                                                <span className="inline-block text-left select-none flex-shrink-0 font-medium text-xl capitalize w-1/3 mr-2">{block.type}</span>
-                                            </button>
-                                        )
+                                                const key = "block-" + block.position
+                                                const selected = block.selected
 
-                                    })
-                                }
-                            </div>
-                        </div>
+                                                return (
+                                                    <button type="button" key={key} onClick={selectOneBlock(blockIndex)} className={`flex w-full py-1 pl-5 items-center border-dashed rounded border-2 border-transparent mb-2 hover:bg-green-100 ${selected ? "border-green-400" : ""}`}>
+                                                        
+                                                        {/* Position */}
+                                                        <span className="inline-block text-left select-none flex-shrink -0 font-medium text-xl w-1/4">#{block.position}</span>
+                                                        
+                                                        {/* Type */}
+                                                        <span className="inline-block text-left select-none flex-shrink-0 font-medium text-xl capitalize w-1/3 mr-2">{block.type}</span>
+                                                    </button>
+                                                )
+
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        }
 
                         {/* Valider importation */}
                         <button onClick={submitAddBlocs} disabled={!canSave} type="button" className={`mt-5 bg-blue-600 text-white py-2 rounded text-lg flex items-center justify-center ${canSave ? "" : "opacity-50 cursor-not-allowed"}`}>
                             <span className="">Importer les blocs</span>
                             {
-                                selectedCount ? <span class="ml-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-900 bg-white rounded-full">{selectedCount}</span> : ""
+                                selectedCount ? <span className="ml-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-900 bg-white rounded-full">{selectedCount}</span> : ""
                             }
                         </button>
 
