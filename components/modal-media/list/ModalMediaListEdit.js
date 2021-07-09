@@ -112,12 +112,18 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
     const onRemoveMedia = async () => {
 
-        const deleted = await fetchDeleteMedia(media.id)
+        // Prevent miss click
+        if(confirm("Êtes vous sûr de vouloir supprimer définitivement l'image ?")){
 
-        if(deleted){
-            deleteMediaFromList(media.id)
-        } else {
-            alert("Could not delete this media.")
+            // fetch DELETE
+            const deleted = await fetchDeleteMedia(media.id)
+
+            if(deleted){
+                deleteMediaFromList(media.id)
+            } else {
+                alert("Could not delete this media.")
+            }
+
         }
 
     }
