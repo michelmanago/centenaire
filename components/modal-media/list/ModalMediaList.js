@@ -23,7 +23,7 @@ const imageItemStyles = {
 export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts}){
 
     // states
-    const [filterByPage, setFilterByPage] = useState(!!originalPageId)
+    const [filterByPage, setFilterByPage] = useState(false)
 
     // methods
     const onSelectMedia = (media) => e => {
@@ -88,7 +88,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
         <div className="h-full flex">
             
             {/* List */}
-            <div className="border w-2/3 overflow-auto h-full pr-2">
+            <div className="w-2/3 overflow-auto h-full pr-2">
 
                 {/* Filters */}
                 {/* Not allowed to filter when creating the page because there is no media attributed to this page currently */}

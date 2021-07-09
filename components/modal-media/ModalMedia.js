@@ -18,10 +18,8 @@ import IconClose from "../icons/IconClose"
 // styles
 const contentStyles = {
     width: "85%",
+    height: "80%",
     borderRadius: ".2em"
-}
-const tabContentStyles = {
-    height: 500
 }
 
 // all types
@@ -132,7 +130,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
             contentStyle={contentStyles}
             onClose={onClose}
         >
-            <div className="relative">
+            <div className="relative w-full h-full flex flex-col">
 
                 {/* Close */}
                 <button onClick={onClose} className="absolute text-gray-700 hover:text-gray-800 right-0 top-0">
@@ -154,14 +152,16 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
                 {/* Body */}
 
-                <div style={tabContentStyles} className="border-2 pb-16">
-                    {
-                        renderTabContent()
-                    }
+                <div className="border flex-1 flex overflow-auto w-full">
+                    <div className="flex-1">
+                        {
+                            renderTabContent()
+                        }
+                    </div>
                 </div>
 
                 {/* Bottom */}
-                <div className="absolute border-t-2 border-gray-300 bottom-0 left-0 w-full bg-white h-16 py-2 px-3 flex">
+                <div className="border-t border-gray-300 w-full bg-white h-16 py-2 px-3 flex">
 
                     {/* Submit main action */}
                     <button 
