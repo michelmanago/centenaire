@@ -4,8 +4,9 @@ import BlockContentEditor from '../blocks/BlockContentEditor';
 
 // utils
 import InputAddBlock from '../inputs/InputAddBlock';
+import InputImportBlock from '../inputs/InputImportBlock';
 
-export default function BlockList({blockList, updateCurrentPage, originalPageId}){
+export default function BlockList({blockList, updateCurrentPage, originalPageId, pages, currentPage}){
 
     // utils
 
@@ -118,15 +119,21 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId}
     const list = blockList && Array.isArray(blockList) ? blockList : []
 
     return (
-        <div>
-            {/* Input - add block */}
-            <InputAddBlock addBlock={addBlockContent} />
+        <div className="">
+            
+            {/* Actions */}
+            <div className="flex">
+                {/* Input - add block */}
+                <InputAddBlock addBlock={addBlockContent} />
 
+                {/* Import */}
+                <InputImportBlock updateCurrentPage={updateCurrentPage} pages={pages} currentPage={currentPage}/>
+            </div>
+            
             {/* List */}
             {
                 list && (
                     sortedBlocks(list).map((block, blockIndex) => {
-    
                         
                         return (
                             <BlockContentEditor 
