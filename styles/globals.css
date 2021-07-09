@@ -6,71 +6,118 @@
 
 /* jost-regular */
 @font-face {
-  font-family: 'Jost';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/Jost/Jost-Regular.ttf');
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/static/fonts/Jost/Jost-Regular.ttf');
 }
 
 /* jost-medium */
 @font-face {
-  font-family: 'Jost';
-  font-style: normal;
-  font-weight: 500;
-  src: url('/static/fonts/Jost/Jost-Medium.ttf');
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/static/fonts/Jost/Jost-Medium.ttf');
 }
 
 /* jost-bold */
 @font-face {
-  font-family: 'Jost';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/Jost/Jost-Bold.ttf');
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/static/fonts/Jost/Jost-Bold.ttf');
 }
 
 /* Alegreya-regular */
 @font-face {
-  font-family: 'Alegreya';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/Alegreya/Alegreya-Regular.ttf');
+    font-family: 'Alegreya';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/static/fonts/Alegreya/Alegreya-Regular.ttf');
 }
 
 /* Alegreya-medium */
 @font-face {
-  font-family: 'Alegreya';
-  font-style: normal;
-  font-weight: 500;
-  src: url('/static/fonts/Alegreya/Alegreya-Medium.ttf');
+    font-family: 'Alegreya';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/static/fonts/Alegreya/Alegreya-Medium.ttf');
 }
 
 /* Alegreya-bold */
 @font-face {
-  font-family: 'Alegreya';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/Alegreya/Alegreya-Bold.ttf');
+    font-family: 'Alegreya';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/static/fonts/Alegreya/Alegreya-Bold.ttf');
 }
 
 html,
 body {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
-body{
+body {
     @apply bg-pyellow;
-  font-family:'Jost', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-weight:400;
+    font-family: 'Jost', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h2 {
+    font-family: 'Alegreya', Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
+    @apply text-2xl;
+    @apply sm:text-3xl;
+    padding-bottom: 9px;
+}
+
+h3 {
+    font-family: 'Alegreya', Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
+    @apply text-xl;
+    @apply sm:text-2xl;
+    padding-top: 6px;
+    padding-bottom: 9px;
+}
+
+ul {
+    list-style: disc;
+    @apply pl-10 my-4;
+}
+
+ol {
+    list-style: decimal;
+    @apply pl-10 my-4;
+}
+
+li {
+    @apply leading-tight;
+}
+
+p {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    padding-bottom: 6px;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.link {
+    color: #418dbb;
+    text-decoration: underline;
 }
 
 .bio-block h2 {
-  @apply text-2xl;
-  @apply sm:text-3xl;
+    @apply text-2xl;
+    @apply sm:text-3xl;
 }
 .bio-block h3 {
     @apply py-4 text-2xl;
@@ -79,79 +126,77 @@ body{
     @apply pb-2;
 }
 
-button{
-  outline: none!important;
+button {
+    outline: none !important;
 }
 
 .player-wrapper {
-  position: relative;
-  padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+    position: relative;
+    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
 }
 
 .react-player {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.marker{
-  padding: 15px 20px;
-  margin: 20px 0;
-  display: inline-block;
+.marker {
+    padding: 15px 20px;
+    margin: 20px 0;
+    display: inline-block;
 }
 
-
-.marker--not-complete{
-  background-color: gray;
-  color: darkgray
+.marker--not-complete {
+    background-color: gray;
+    color: darkgray;
 }
 
-.marker--is-complete{
-  background-color: springgreen;
-  color: white
+.marker--is-complete {
+    background-color: springgreen;
+    color: white;
 }
 
-.pointille{
-  text-decoration: underline dotted;
+.pointille {
+    text-decoration: underline dotted;
 }
 
-.swiper-button-next {
-  background-image: url(/static/img/flechedroite.svg);
-  background-repeat: no-repeat;
-  width: 50px!important;
-  background-position: center;
  
- 
-}
 
-.swiper-button-prev {
-  background-image: url(/static/img/flechegauche.svg);
-  background-repeat: no-repeat;
-  width: 50px!important;
-  background-position: center;
-}
-
-
-
-
-
-  .popimage-content {
-    margin: auto;
-    background: rgb(255, 255, 255);
-    height: 90vh;
-    border: rgb(255, 255, 255) solid;
+  .swiper-button-next {
+    background-image: url(/static/img/flechedroite.svg);
+    background-repeat: no-repeat;
+    width: 50px !important;
+    background-position: center;
   }
 
-  .popimage-arrow {
+  .swiper-button-prev {
+      background-image: url(/static/img/flechegauche.svg);
+      background-repeat: no-repeat;
+      width: 50px !important;
+      background-position: center;
+  }
+
+
+
+.popimage-content {
+      
+   
+    width: 80%;
+   
+}
+
+.popimage-arrow {
     color: rgb(255, 255, 255);
-  }
+}
 
-  
-  .popimage-overlay {
+.popimage-overlay {
     background: rgba(0, 0, 0, 0.719);
-    
-  }
-  .closeModal {
+}
+
+
+
+.closeModal {
     cursor: pointer;
     position: absolute;
     display: block;
@@ -163,16 +208,20 @@ button{
     background: #ffffff;
     border-radius: 18px;
     border: 1px solid #cfcece;
-  }
-  [data-popup='tooltip'].popup-overlay {
+}
+[data-popup='tooltip'].popup-overlay {
     background: transparent;
-  }
+}
 
-
-
-
+/* Image Popup*/
+.image-popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 80%;
+    padding: 5px;
+}
 
 /* Libs */
 
-@import "./pagecontent.css";
-@import "./libs/navbar.css";
+@import './pagecontent.css';
+@import './libs/navbar.css';

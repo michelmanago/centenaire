@@ -12,6 +12,7 @@ import Head from "next/head"
 
 // utils
 import { toMysqlFormat } from "../../../utils/utils";
+import attributePageToMedia, { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
 
 export default function PageEditorCreate({menu}) {
 
@@ -19,7 +20,7 @@ export default function PageEditorCreate({menu}) {
     const {defaultLocale} = useRouter()
 
     // methods
-    const onSubmit = async formPages => {
+    const onSubmit = async (formPages, attributedMedia) => {
 
         // add created_at
         const now = toMysqlFormat(new Date())
@@ -38,6 +39,14 @@ export default function PageEditorCreate({menu}) {
             } else {
                 throw new Error(response.statusText);
             }
+        })
+        .then(async pages => {
+
+            const originalPage = pages.find(page => page.language === defaultLocale)
+
+            await bulkAttributePageToMedia(originalPage.id, attributedMedia)
+
+            return pages
         })
         .then(pages => {
 

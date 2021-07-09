@@ -4,12 +4,12 @@ import IconArrowUp from '../icons/IconArrowUp';
 import IconArrowDown from '../icons/IconArrowDown';
 import Trash from '../icons/trash';
 import PageEditorInputImage from './sidebar/PageEditorInputImage';
+import ModalMedia from '../modal-media/ModalMedia';
 
 export default function CarouselEditor({content, setContent}) {
     const [open, setOpen] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
 
-    console.log(content);
     //const [localContent, setLocalContent] = useState(content ? content : [])
 
     const mediaUrl = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -20,6 +20,7 @@ export default function CarouselEditor({content, setContent}) {
         setContent(newContent);
     };
     const onMediaUploaded = media => {
+
         //refreshMediaList();
         var newContent = content ? {...content} : {legende: '', data: []};
         newContent.data.push(media);
@@ -80,11 +81,19 @@ export default function CarouselEditor({content, setContent}) {
                     </button>
                 ) : null}
             </div>
-            <Popup
+            <ModalMedia 
+                opened={open} 
+                onClose={() => setOpen(false)} 
+                onMediaSelected={onMediaUploaded}  
+                submitLabel="Ajouter l'image au carousel"
+                accepts={["image"]}
+            />
+            {/*<Popup
                 open={open}
                 position="top center"
                 modal="true"
                 closeOnDocumentClick
+                nested
                 onClose={e => {
                     setOpen(false);
                 }}
@@ -98,7 +107,7 @@ export default function CarouselEditor({content, setContent}) {
                     </button>
                 </div>
                 <PageEditorInputImage onMediaUploaded={onMediaUploaded} onRemoveMedia={onRemoveMedia} mediaId={null} />
-            </Popup>
+            </Popup>*/}
             <Popup
                 open={openUpdate}
                 position="top center"
@@ -129,16 +138,13 @@ export default function CarouselEditor({content, setContent}) {
                                         alt={media.public_path}
                                     />
                                 </div>
+
+
                                 <div className="flex flex-col items-center justify-center w-3/6">
-                                    <label htmlFor={`legende-${media.id}`}>legende</label>
-                                    <input
-                                        id={`legende-${media.id}`}
-                                        className="w-full p-1 border border-black rounded"
-                                        type="text"
-                                        value={media.legende ? media.legende : ''}
-                                        onChange={e => updateMediaLegende(media.id, e.currentTarget.value)}
-                                    />
+                                    {/* On edite les légendes dans la médiathèque */}
                                 </div>
+
+                                
                                 <div className='flex flex-row w-1/6'>
                                     <div className="flex flex-col items-center justify-center w-1/2">
                                         <div className="cursor-pointer" onClick={() => moveMedia(media, index, -1)}>

@@ -20,6 +20,11 @@ export default function Header({ menu, translations }) {
 
     /** States */
     const [isLangMenuOpened, setIsLangMenuOpened] = useState(false);
+    const [needLanguages, setNeedLanguages] = useState(false)
+
+    useEffect(() => {
+        setNeedLanguages(!window.location.pathname.startsWith("/admin"))
+    }, [])
 
     return (
         <header className="bg-pyellow">
@@ -40,9 +45,9 @@ export default function Header({ menu, translations }) {
                 </div>
             </div>
 
-            <div className="container max-w-screen-xl bg-white sm:mx-auto">
+            {needLanguages && <div className="container max-w-screen-xl bg-white sm:mx-auto">
                 <LanguageSwitcher translations={translations}/>
-            </div>
+            </div>}
 
             {/* Top bar */}
             <Nav menu={menu} />

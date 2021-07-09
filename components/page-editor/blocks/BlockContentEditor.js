@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 
 // components
-import CustomEditor from '../../Slate/customEditor';
+import CustomEditor from '../../text-editor/customEditor';
 import CarouselEditor from '../carousel-editor';
 import IconArrowDown from "../../icons/IconArrowDown"
 import IconArrowUp from "../../icons/IconArrowUp"
@@ -22,7 +22,7 @@ const BlockContentEditor = ({type, position ,content, setContent, removeBlockCon
         <div className="flex flex-col items-end pr-5 mb-10 border-r-4">
 
             {/* Position */}
-            <div className="border mb-3 flex">
+            <div className="flex mb-3 border">
                 {/* Up */}
                 <ButtonPositionArrow onClick={() => setBlockPosition(- 1)}><IconArrowUp/></ButtonPositionArrow>
                 <span className="flex items-center justify-center w-6">{position}</span>

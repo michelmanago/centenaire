@@ -1,19 +1,22 @@
 // components
 import PageEditorSidebarBlock from './page-editor-sidebar-block';
 import InputSubmitPage from '../inputs/InputSubmitPage';
-import PageEditorInputImage from './PageEditorInputImage';
 import PageEditCategory from './PageEditCategory';
 
 // utils
 import { useRouter } from 'next/router';
 import { CATEGORIES } from '../../../utils/parameters';
+import { useEffect, useState } from 'react';
+import BlockBandeau from './BlockBandeau';
 
 
 const categories = Object.values(CATEGORIES);
 
 const PageEditorSidebar = ({
     updateCurrentPage,
+    addAttributedMedia,
     isEditing,
+    originalPageId,
 
     language,
     languagesLists,
@@ -38,8 +41,9 @@ const PageEditorSidebar = ({
     const {locale} = useRouter();
 
     // setters
-    const setAuthor = e => updatePages({author: e.target.value});
+    const setAuthor = e => updateCurrentPage({author: e.target.value});
 
+    // others
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
     
     return (
@@ -61,13 +65,12 @@ const PageEditorSidebar = ({
             </PageEditorSidebarBlock>
 
             {/* Block bandeau */}
-            <PageEditorSidebarBlock title="Bandeau de page">
-                <PageEditorInputImage
-                    onMediaUploaded={onMediaUploaded}
-                    onRemoveMedia={onRemoveMedia}
-                    mediaId={bandeau_id}
-                />
-            </PageEditorSidebarBlock>
+            <BlockBandeau
+                updatePages={updatePages}
+                addAttributedMedia={addAttributedMedia}
+                bandeau_id={bandeau_id}
+                originalPageId={originalPageId}
+            />
 
             {/* Block publier */}
             <PageEditorSidebarBlock title="Publier">
@@ -119,7 +122,6 @@ const PageEditorSidebar = ({
                             <button
                                 type="button"
                                 onClick={onRemovePage}
-                                target="_blank"
                                 className="text-red-500 underline"
                             >
                                 Supprimer la page et ses traductions.
