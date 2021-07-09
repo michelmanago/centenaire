@@ -4,7 +4,10 @@ import { getMediaLink } from "../../../utils/utils-serveur-image"
 
 // components
 import ModalMediaListEdit from "./ModalMediaListEdit"
+
+// icons
 import IconVideo from "../../icons/IconVideo"
+import IconHeadphone from "../../icons/IconHeadphone"
 import IconDocument from "../../icons/IconDocument"
 import IconUnknown from "../../icons/IconUnknown"
 
@@ -56,6 +59,13 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                 return (
                     <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
                         <IconDocument className={"w-24 text-gray-100"}/>
+                    </div>
+                )
+            break;
+            case "audio":
+                return (
+                    <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                        <IconHeadphone className={"w-24 text-gray-100"}/>
                     </div>
                 )
             break;

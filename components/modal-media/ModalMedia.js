@@ -9,6 +9,7 @@ import ModalMediaUpload from "./upload/ModalMediaUpload"
 
 // utils
 import fetchMediaList from "../../utils/fetch/fetchMediaList"
+import { MEDIA_TYPES } from "../../utils/utils-media"
 
 // icons
 import IconClose from "../icons/IconClose"
@@ -23,8 +24,9 @@ const tabContentStyles = {
     height: 500
 }
 
-
-function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts = ["image", "video", "document"]}){
+// all types
+const defaultAccepts = Object.values(MEDIA_TYPES)
+function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedMedia, originalPageId, accepts = defaultAccepts}){
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
