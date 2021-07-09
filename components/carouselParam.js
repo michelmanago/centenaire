@@ -58,7 +58,7 @@ export default function Carousel({ imgList, legende, id }) {
 
             <Popup open={open} className='popimage ' closeOnDocumentClick={false} onClick={() => openModal(i)} >
 
-                <div className="max-w-screen-xl mx-auto  bg-white  ">
+                <div className="max-w-screen-xl mx-auto    ">
                     <Swiper
                         spaceBetween={50}
                         slidesPerView={1}
