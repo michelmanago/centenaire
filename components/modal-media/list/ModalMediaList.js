@@ -19,7 +19,7 @@ const imageItemContainerStyles = {
 export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts}){
 
     // states
-    const [filterByPage, setFilterByPage] = useState(false)
+    const [filterByPage, setFilterByPage] = useState(!!originalPageId)
 
     // methods
     const onSelectMedia = (media) => e => {
