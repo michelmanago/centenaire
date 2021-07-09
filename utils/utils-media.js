@@ -116,3 +116,24 @@ export function getFileType(mimetype){
     }
 
 }
+
+
+/** MISC */
+
+/**
+ * 
+ * @param {String} legende - stringified array of object (medias.legende)
+ * @returns {Array.<{locale: String, value: String}>|null}
+ */
+export function legendeAsArray(legende){
+
+    let legendeArray = ""
+
+    try {
+        legendeArray = JSON.parse(legende) 
+    } catch (error) {
+        console.warn("ModalMediaListEdit : legende invalide")
+    }
+
+    return Array.isArray(legendeArray) ? legendeArray : []
+}

@@ -2,27 +2,17 @@
 // libs
 import {useRouter} from 'next/router';
 import { useState } from "react"
-import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
-import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
+
 
 // utils
 import { getMediaLink } from "../../../utils/utils-serveur-image"
+import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
+import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
+import { legendeAsArray } from '../../../utils/utils-media';
 
 export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList}){
 
     // utils
-    const retrieveLegende = () => {
-
-        let legendeArray = ""
-
-        try {
-            legendeArray = JSON.parse(media.legende) 
-        } catch (error) {
-            console.warn("ModalMediaListEdit : legende invalide")
-        }
-
-        return Array.isArray(legendeArray) ? legendeArray : []
-    }
 
     // hooks
     const {locales} = useRouter()
@@ -31,7 +21,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
     const [modified, setModified] = useState(false)
     const [credit, setCredit] = useState(media.credit || "")
     const [legendes, setLegendes] = useState(
-        media.legende ? retrieveLegende() : locales.map(locale => ({locale, value: ""})))
+        media.legende ? legendeAsArray(media.legende) : locales.map(locale => ({locale, value: ""})))
 
 
     // helpers
