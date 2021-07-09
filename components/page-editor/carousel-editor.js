@@ -143,6 +143,14 @@ export default function CarouselEditor({content, setContent, originalPageId}) {
 
                                 <div className="flex flex-col items-center justify-center w-3/6">
                                     {/* On edite les légendes dans la médiathèque */}
+                                    <label htmlFor={`legende-${media.id}`}>legende</label>
+                                    <input
+                                        id={`legende-${media.id}`}
+                                        className="w-full p-1 border border-black rounded"
+                                        type="text"
+                                        value={media.legende ? media.legende : ''}
+                                        onChange={e => updateMediaLegende(media.id, e.currentTarget.value)}
+                                    />
                                 </div>
 
                                 

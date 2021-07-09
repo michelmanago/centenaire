@@ -122,7 +122,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
         <div className="">
             
             {/* Actions */}
-            <div className="flex">
+            <div className="border-2 px-2 py-3 border-dashed mb-10">
                 {/* Input - add block */}
                 <InputAddBlock addBlock={addBlockContent} />
 
@@ -132,6 +132,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
             
             {/* List */}
             {
+               
                 list && (
                     sortedBlocks(list).map((block, blockIndex) => {
                         

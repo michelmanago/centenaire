@@ -98,7 +98,7 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
     }, [])
     
     return (
-        <div className="">
+        <div className="mt-5">
 
             {/* Trigger */}
             <button onClick={e => setOpen(true)} className="bg-gray-200 border-2 border-gray-300 text-gray-700 px-2 py-1 rounded">Importer des blocs</button>
@@ -149,13 +149,16 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
                                                 const selected = block.selected
 
                                                 return (
-                                                    <button type="button" key={key} onClick={selectOneBlock(blockIndex)} className={`flex w-full py-1 pl-5 items-center border-dashed rounded border-2 border-transparent mb-2 hover:bg-green-100 ${selected ? "border-green-400" : ""}`}>
+                                                    <button type="button" key={key} onClick={selectOneBlock(blockIndex)} className={`flex w-full py-1 px-5 items-center border-dashed rounded border-2 border-transparent mb-2 hover:bg-green-100 ${selected ? "border-green-400" : ""}`}>
                                                         
                                                         {/* Position */}
                                                         <span className="inline-block text-left select-none flex-shrink -0 font-medium text-xl w-1/4">#{block.position}</span>
                                                         
                                                         {/* Type */}
-                                                        <span className="inline-block text-left select-none flex-shrink-0 font-medium text-xl capitalize w-1/3 mr-2">{block.type}</span>
+                                                        <span className="inline-block text-left select-none flex-shrink-0 font-medium text-xl capitalize w-1/3 mr-auto">{block.type}</span>
+                                                    
+                                                        {/* Checkbox */}
+                                                        <Checkbox checked={selected}/>
                                                     </button>
                                                 )
 
@@ -182,3 +185,9 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
     )
 
 }
+
+const Checkbox = ({checked}) => (
+    <div className={`border-2 flex justify-center items-center rounded text-green-700 text-sm font-semibold border-gray-300 w-6 h-6  ${checked ? "border-green-500" : ""}`}>
+        {checked ? "✓" : ""}
+    </div>
+)
