@@ -71,7 +71,7 @@ export default function ModalMediaUpload({onMediaUploaded, accepts}){
     acceptableFiles = acceptableFiles.replace(/image\//g, ".") // images
     acceptableFiles = acceptableFiles.replace(/video\//g, ".") // video
     acceptableFiles = acceptableFiles.replace(/audio\//g, ".") // audio
-    acceptableFiles = acceptableFiles.replace(/(?:file|application)\//g, ".") // document
+    acceptableFiles = acceptableFiles.replace(/(?:file|application|text)\//g, ".") // document
 
 
     return (
