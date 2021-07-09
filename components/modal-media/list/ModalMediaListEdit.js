@@ -136,8 +136,13 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
             {
                 media && (
                     <>
-                        <div className="py-3 px-2">
-                            <p className="mb-3">Détails du fichier joint</p>
+                        <div className="py-4 px-5">
+
+                            {/* Type */}
+                            <p>
+                                <span>Ficher de type : </span>
+                                <span className="inline-block mb-5 bg-purple-200 px-4 py-1 text-sm text-purple-800 rounded border-2 border-purple-300">{media.type}</span>
+                            </p>
 
                             {/* Preview */}
                             <div className="">
