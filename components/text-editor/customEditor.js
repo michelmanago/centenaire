@@ -7,7 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import {deserialize, serializer} from '../../lib/Slate/serialize';
 import SampleDocument from './SampleDocument';
 
-export default function CustomEditor({block, setContent}) {
+export default function CustomEditor({block, setContent, originalPageId}) {
     const [isSlateView, setIsSlateView] = useState(true);
     const changeView = event => {
         event.preventDefault();
@@ -32,6 +32,7 @@ export default function CustomEditor({block, setContent}) {
         //console.log(valueSerialize);
         setContent(valueSerialize);
     };
+
     return (
         <div className="">
             {isSlateView ? (
@@ -53,7 +54,7 @@ export default function CustomEditor({block, setContent}) {
                     </div>
                     <div className="bg-white border border-black h-screen-90">
                         {/*<Editor block={block} setContent={setContent} defuntId={defuntId} />*/}
-                        <Editor document={blockContent} onChange={onChangeEditor} />
+                        <Editor originalPageId={originalPageId} document={blockContent} onChange={onChangeEditor} />
                     </div>
                 </>
             ) : (

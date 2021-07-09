@@ -26,7 +26,8 @@ const LIST_STYLES = ['bulleted-list', 'numbered-list'];
 const EFFECT_STYLES = ['align-left', 'align-center', 'align-right'];
 const MEDIA_STYLES = ['image', 'video'];
 
-export default function Toolbar({selection, previousSelection}) {
+export default function Toolbar({selection, previousSelection, originalPageId}) {
+
     const [openModalMedia, setOpenModalMedia] = useState(false);
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
 
@@ -43,7 +44,6 @@ export default function Toolbar({selection, previousSelection}) {
         [editor],
     );
     const blockType = getTextBlockStyle(editor);
-    console.log('editor', editor.selection);
 
     const addTooltip = (note) => {
         //console.log(editor, selection, previousSelection);
@@ -155,7 +155,9 @@ export default function Toolbar({selection, previousSelection}) {
                 opened={openModalMedia}
                 onClose={() => setOpenModalMedia(false)}
                 onMediaSelected={addImage}
-                submitLabel={'Ajouter'}
+                submitLabel={"Ajouter le fichier"}
+                originalPageId={originalPageId}
+                accepts={["image", "audio", "video", "document"]}
             />
             {/*<Popup
                 className="image-popup"
@@ -178,14 +180,16 @@ export default function Toolbar({selection, previousSelection}) {
 
                 <ModalMedia opened={openModalMedia} onClose={() => setOpenModalMedia(false)} onMediaSelected={addImage} submitLabel={'Ajouter'} />
             </Popup>*/}
-            <ToolBarButton
+
+            {/* Pas utilisé pour l'instant */}
+            {/* <ToolBarButton
                 key={'video'}
                 icon={<Icons type={'video'} />}
                 isActive={getActiveEffect(editor) === 'video'}
                 onMouseDown={event => {
                     event.preventDefault();
                 }}
-            />
+            /> */}
         </div>
     );
 }

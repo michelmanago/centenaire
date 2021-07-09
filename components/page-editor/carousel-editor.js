@@ -6,7 +6,7 @@ import Trash from '../icons/trash';
 import PageEditorInputImage from './sidebar/PageEditorInputImage';
 import ModalMedia from '../modal-media/ModalMedia';
 
-export default function CarouselEditor({content, setContent}) {
+export default function CarouselEditor({content, setContent, originalPageId}) {
     const [open, setOpen] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
 
@@ -86,6 +86,7 @@ export default function CarouselEditor({content, setContent}) {
                 onClose={() => setOpen(false)} 
                 onMediaSelected={onMediaUploaded}  
                 submitLabel="Ajouter l'image au carousel"
+                originalPageId={originalPageId}
                 accepts={["image"]}
             />
             {/*<Popup

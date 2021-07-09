@@ -324,6 +324,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 <BlockList
                     blockList={currentPage.blocks}
                     updateCurrentPage={updateCurrentPage}
+                    originalPageId={originalPageId}
                 />
             </div>
 

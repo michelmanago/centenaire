@@ -5,7 +5,7 @@ import BlockContentEditor from '../blocks/BlockContentEditor';
 // utils
 import InputAddBlock from '../inputs/InputAddBlock';
 
-export default function BlockList({blockList, updateCurrentPage}){
+export default function BlockList({blockList, updateCurrentPage, originalPageId}){
 
     // utils
 
@@ -134,6 +134,7 @@ export default function BlockList({blockList, updateCurrentPage}){
                                 type={block.type}
                                 content={block.content}
                                 position={block.position}
+                                originalPageId={originalPageId}
     
                                 // actions
                                 setContent={setBlockContent(block.position)}
