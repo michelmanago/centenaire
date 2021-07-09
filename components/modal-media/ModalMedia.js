@@ -91,6 +91,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                 return <ModalMediaUpload 
                             onMediaUploaded={onMediaUploaded}
                             accepts={accepts}
+                            originalPageId={originalPageId}
                         />
             break;
             case TAB_MEDIA_LIST:

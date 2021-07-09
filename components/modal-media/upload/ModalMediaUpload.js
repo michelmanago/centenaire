@@ -8,7 +8,7 @@ import { getValidFileTypes, isValidFileType } from "../../../utils/utils-media";
 // utils
 
 
-export default function ModalMediaUpload({onMediaUploaded, accepts}){
+export default function ModalMediaUpload({onMediaUploaded, accepts, originalPageId}){
 
     // router
     const {locales} = useRouter()
@@ -43,11 +43,11 @@ export default function ModalMediaUpload({onMediaUploaded, accepts}){
                     value: ""
                 }))
 
-                const media = await fetchCreateMedia(file, defaultLegende)
+                const media = await fetchCreateMedia(file, defaultLegende, originalPageId)
                 
                 if(media){
                     // has just been uploaded so you dont filter it
-                    media.justUploaded = true
+                    // media.justUploaded = true
 
                     onMediaUploaded(media)
                 } else {
