@@ -10,7 +10,6 @@ export default function CarouselEditor({content, setContent}) {
     const [open, setOpen] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
 
-    console.log(content);
     //const [localContent, setLocalContent] = useState(content ? content : [])
 
     const mediaUrl = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -82,7 +81,13 @@ export default function CarouselEditor({content, setContent}) {
                     </button>
                 ) : null}
             </div>
-            <ModalMedia opened={open} onClose={() => setOpen(false)} onMediaSelected={onMediaUploaded}  />
+            <ModalMedia 
+                opened={open} 
+                onClose={() => setOpen(false)} 
+                onMediaSelected={onMediaUploaded}  
+                submitLabel="Ajouter l'image au carousel"
+                accepts={["image"]}
+            />
             {/*<Popup
                 open={open}
                 position="top center"

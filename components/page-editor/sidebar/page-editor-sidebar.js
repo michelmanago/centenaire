@@ -41,7 +41,7 @@ const PageEditorSidebar = ({
     const {locale} = useRouter();
 
     // setters
-    const setAuthor = e => updatePages({author: e.target.value});
+    const setAuthor = e => updateCurrentPage({author: e.target.value});
 
     // others
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)

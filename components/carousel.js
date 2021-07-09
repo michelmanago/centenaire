@@ -46,22 +46,22 @@ export default function Carousel({ imgList, legende, id }) {
                 >
                     {imgList.map((img, i) => (
                         <SwiperSlide key={id + '-' + i}>
-                            <div className='flex flex-col items-center ' >
+                            <div className='flex flex-col items-center' >
                                 <button className='' type="button" className="button" onClick={() => openModal(i)}>
                                     <img className="full rounded-xl " src={img.url} alt={`slide ${i + 1}`} />
                                     {img.legende && <div className="flex justify-center">{img.legende}</div>
                                     }
                                 </button>
                                
-                                <Popup open={openArray[i]} className='popimage max-w-screen-xl pt-5 mx-auto bg-white shadow md:flex md:flex-wrap' closeOnDocumentClick={false} onClick={() => openModal(i)}>
-                                   
+                                <Popup open={openArray[i] } className='popimage ' closeOnDocumentClick={false} onClick={() => openModal(i)}>
+                                <div className="max-w-screen-xl mx-auto ">
                                         <button className="closeModal  m-10 close stroke-current text-black-600 " onClick={() => closeModal(i)}>
                                             &times;
                                         </button>
-                                        <img className="full rounded-xl h-full"  src={img.url} alt={`slide ${i + 1}`} />
+                                        <img className="full"  src={img.url} alt={`slide ${i + 1}`} />
                                         {img.legende && <div className="flex justify-center  ">{img.legende}</div>
                                         }
-                                 
+                                 </div>
                                 </Popup>
                             </div>
 

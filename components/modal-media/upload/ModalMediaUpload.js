@@ -3,7 +3,7 @@
 import { useRouter } from "next/router";
 import { useRef, useState } from "react"
 import fetchCreateMedia from "../../../utils/fetch/fetchCreateMedia";
-import { getValidFileTypes, isValidImage } from "../../../utils/utils-media";
+import { getValidFileTypes, isValidFileType } from "../../../utils/utils-media";
 
 // utils
 
@@ -35,7 +35,7 @@ export default function ModalMediaUpload({onMediaUploaded, accepts}){
 
             const file = input.files[0]
 
-            if(isValidImage(accepts, file.type)){
+            if(isValidFileType(accepts, file.type)){
 
                 // default .legende
                 const defaultLegende = locales.map(locale => ({
@@ -70,7 +70,8 @@ export default function ModalMediaUpload({onMediaUploaded, accepts}){
     let acceptableFiles = acceptableFilesAttribute
     acceptableFiles = acceptableFiles.replace(/image\//g, ".") // images
     acceptableFiles = acceptableFiles.replace(/video\//g, ".") // video
-    acceptableFiles = acceptableFiles.replace(/(?:file|application)\//g, ".") // document
+    acceptableFiles = acceptableFiles.replace(/audio\//g, ".") // audio
+    acceptableFiles = acceptableFiles.replace(/(?:file|application|text)\//g, ".") // document
 
 
     return (

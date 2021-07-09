@@ -4,7 +4,10 @@ import { getMediaLink } from "../../../utils/utils-serveur-image"
 
 // components
 import ModalMediaListEdit from "./ModalMediaListEdit"
+
+// icons
 import IconVideo from "../../icons/IconVideo"
+import IconHeadphone from "../../icons/IconHeadphone"
 import IconDocument from "../../icons/IconDocument"
 import IconUnknown from "../../icons/IconUnknown"
 
@@ -13,14 +16,10 @@ const imageItemContainerStyles = {
     paddingTop: "100%"
 }
 
-const imageItemStyles = {
-    
-}
-
 export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts}){
 
     // states
-    const [filterByPage, setFilterByPage] = useState(!!originalPageId)
+    const [filterByPage, setFilterByPage] = useState(false)
 
     // methods
     const onSelectMedia = (media) => e => {
@@ -49,13 +48,20 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
             case "image":
                 const media_src = getMediaLink(media.public_path)
                 return (
-                    <img style={imageItemStyles} className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
+                    <img className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
                 )
             break;
             case "document":
                 return (
                     <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
                         <IconDocument className={"w-24 text-gray-100"}/>
+                    </div>
+                )
+            break;
+            case "audio":
+                return (
+                    <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                        <IconHeadphone className={"w-24 text-gray-100"}/>
                     </div>
                 )
             break;
@@ -78,7 +84,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
         <div className="h-full flex">
             
             {/* List */}
-            <div className="border w-2/3 overflow-auto h-full pr-2">
+            <div className="w-2/3 overflow-auto h-full pr-2">
 
                 {/* Filters */}
                 {/* Not allowed to filter when creating the page because there is no media attributed to this page currently */}

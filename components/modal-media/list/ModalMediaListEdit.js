@@ -2,27 +2,17 @@
 // libs
 import {useRouter} from 'next/router';
 import { useState } from "react"
-import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
-import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
+
 
 // utils
 import { getMediaLink } from "../../../utils/utils-serveur-image"
+import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
+import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
+import { legendeAsArray, MEDIA_TYPES } from '../../../utils/utils-media';
 
 export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList}){
 
     // utils
-    const retrieveLegende = () => {
-
-        let legendeArray = ""
-
-        try {
-            legendeArray = JSON.parse(media.legende) 
-        } catch (error) {
-            console.warn("ModalMediaListEdit : legende invalide")
-        }
-
-        return Array.isArray(legendeArray) ? legendeArray : []
-    }
 
     // hooks
     const {locales} = useRouter()
@@ -31,12 +21,48 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
     const [modified, setModified] = useState(false)
     const [credit, setCredit] = useState(media.credit || "")
     const [legendes, setLegendes] = useState(
-        media.legende ? retrieveLegende() : locales.map(locale => ({locale, value: ""})))
+        media.legende ? legendeAsArray(media.legende) : locales.map(locale => ({locale, value: ""})))
 
 
     // helpers
     const renderMediaPreview = () => {
+
+        const media_link = getMediaLink(media.public_path)
         
+        console.log(media.type)
+        switch(media.type){
+            case MEDIA_TYPES.IMAGE:
+                return (
+                   <div className="w-1/2 rounded border-2 border-gray-400">
+                        <img src={media_link} alt="" />
+                   </div>
+                )
+            break;
+            case MEDIA_TYPES.VIDEO:
+                return (
+                    <div className="w-3/4 rounded border-2 border-gray-400">
+                        <video controls src={media_link} muted loop></video>
+                    </div>
+                )
+            break;
+            case MEDIA_TYPES.AUDIO:
+                return (
+                    <div className="rounded border-2 border-gray-400">
+                        <audio className="w-full" src={media_link} controls loop></audio>
+                    </div>
+                )
+            break;
+            case MEDIA_TYPES.DOCUMENT:
+            default:
+                    return (
+                    <div className="">
+                        <a target="_blank" className="underline text-blue-500" href={media_link}>Voir le fichier</a>
+                    </div>
+                )
+            break;
+        
+        }
+
     }
 
     // setters
@@ -86,20 +112,24 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
     const onRemoveMedia = async () => {
 
-        const deleted = await fetchDeleteMedia(media.id)
+        // Prevent miss click
+        if(confirm("Êtes vous sûr de vouloir supprimer définitivement l'image ?")){
 
-        if(deleted){
-            deleteMediaFromList(media.id)
-        } else {
-            alert("Could not delete this media.")
+            // fetch DELETE
+            const deleted = await fetchDeleteMedia(media.id)
+
+            if(deleted){
+                deleteMediaFromList(media.id)
+            } else {
+                alert("Could not delete this media.")
+            }
+
         }
 
     }
 
     // others
-    const media_src = getMediaLink(media.public_path)
     const filename = media.public_path ? (media.public_path.split("/")).pop() : ""
-    const type = media.type
 
     return (
         <div>
@@ -110,13 +140,11 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                             <p className="mb-3">Détails du fichier joint</p>
 
                             {/* Preview */}
-                            {
-                                type === "image" && (
-                                    <div className="border-2 border-gray-400 w-1/2">
-                                        <img src={media_src} alt="" />
-                                    </div>
-                                )
-                            }
+                            <div className="">
+                                {
+                                    renderMediaPreview()
+                                }
+                            </div>
 
                             {/* Filename */}
                             <p className="text-sm mt-3 text-gray-600">{filename}</p>

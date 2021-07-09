@@ -6,13 +6,13 @@
  */
 /** ACCEPTABLES FILES */
 
-const MEDIA_TYPES = {
-    IMAGE: "IMAGE",
-    VIDEO: "VIDEO",
-    DOCUMENT: "DOCUMENT",
+export const MEDIA_TYPES = {
+    IMAGE: "image",
+    VIDEO: "video",
+    DOCUMENT: "document",
+    AUDIO: "audio",
 }
 
-// ## IMAGE
 const ACCEPTABLE_TYPE_IMAGE = [
     "image/jpg",
     "image/jpeg",
@@ -21,6 +21,16 @@ const ACCEPTABLE_TYPE_IMAGE = [
     "image/webp",
     "image/webp",
     "image/webp",
+]
+
+const ACCEPTABLE_TYPE_AUDIO = [
+    "audio/wave",
+    "audio/wav",
+    "audio/webm",
+    "audio/ogg",
+    "audio/mpeg",
+    "audio/mp3",
+    "audio/opus",
 ]
 
 const ACCEPTABLE_TYPE_VIDEO = [
@@ -64,12 +74,16 @@ export function getValidFileTypes(accepts){
         files.push(...ACCEPTABLE_TYPE_DOCUMENT)
     }
 
+    if(accepts.includes("audio")){
+        files.push(...ACCEPTABLE_TYPE_AUDIO)
+    }
+
     return files
 
 }
 
 // check if this file is acceptable
-export function isValidImage(accepts, mimetype) {
+export function isValidFileType(accepts, mimetype) {
     
     const acceptableFiles = getValidFileTypes(accepts)
 
@@ -82,19 +96,44 @@ export function getFileType(mimetype){
 
     // images
     if(ACCEPTABLE_TYPE_IMAGE.includes(mimetype)){
-        return "image"
+        return MEDIA_TYPES.IMAGE
     }
 
     else if(ACCEPTABLE_TYPE_VIDEO.includes(mimetype)){
-        return "video"
+        return MEDIA_TYPES.VIDEO
     }
 
     else if(ACCEPTABLE_TYPE_DOCUMENT.includes(mimetype)){
-        return "document"
+        return MEDIA_TYPES.DOCUMENT
+    }
+
+    else if(ACCEPTABLE_TYPE_AUDIO.includes(mimetype)){
+        return MEDIA_TYPES.AUDIO
     }
 
     else {
         return null
     }
 
+}
+
+
+/** MISC */
+
+/**
+ * 
+ * @param {String} legende - stringified array of object (medias.legende)
+ * @returns {Array.<{locale: String, value: String}>|null}
+ */
+export function legendeAsArray(legende){
+
+    let legendeArray = ""
+
+    try {
+        legendeArray = JSON.parse(legende) 
+    } catch (error) {
+        console.warn("ModalMediaListEdit : legende invalide")
+    }
+
+    return Array.isArray(legendeArray) ? legendeArray : []
 }
