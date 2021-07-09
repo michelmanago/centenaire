@@ -8,7 +8,7 @@ import { useState } from "react"
 import { getMediaLink } from "../../../utils/utils-serveur-image"
 import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
 import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
-import { legendeAsArray, MEDIA_TYPES } from '../../../utils/utils-media';
+import { getFilenameFromPath, legendeAsArray, MEDIA_TYPES } from '../../../utils/utils-media';
 
 export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList}){
 
@@ -29,7 +29,6 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
         const media_link = getMediaLink(media.public_path)
         
-        console.log(media.type)
         switch(media.type){
             case MEDIA_TYPES.IMAGE:
                 return (
@@ -129,7 +128,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
     }
 
     // others
-    const filename = media.public_path ? (media.public_path.split("/")).pop() : ""
+    const filename = getFilenameFromPath(media.public_path)
 
     return (
         <div>
@@ -152,7 +151,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                             </div>
 
                             {/* Filename */}
-                            <p className="text-sm mt-3 text-gray-600">{filename}</p>
+                            <p className="text-sm mt-3 text-gray-600">Nom du fichier : <em>{filename}</em></p>
 
                             {/* Remove */}
                             <button onClick={onRemoveMedia} className="text-red-400 underline">Supprimer définitivement</button>
