@@ -27,7 +27,7 @@ export default function ListPage({pages}){
             {/* H1 */}
             <div className="mt-5">
                 <h1 className="inline-block text-3xl font-semibold mb-5">Liste des pages</h1>
-                <a className="ml-3 inline-block bg-gray-100 border rounded text-blue-500 border-blue-500 px-3 py-1 font-medium" href="/">Ajouter</a>
+                <a className="ml-3 inline-block bg-gray-100 border rounded text-blue-500 border-blue-500 px-3 py-1 font-medium" href="/admin/page/create">Ajouter</a>
             </div>
 
             {/* Filters */}

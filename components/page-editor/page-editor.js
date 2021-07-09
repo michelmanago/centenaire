@@ -231,8 +231,8 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 })
                 .then(body => {
 
-                    // go home
-                    window.location.href = window.location.origin
+                    // go back page list
+                    window.location = window.location.origin + "/admin/page"
 
                 })
                 .catch(err => {

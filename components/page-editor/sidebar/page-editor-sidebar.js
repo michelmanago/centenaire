@@ -122,7 +122,6 @@ const PageEditorSidebar = ({
                             <button
                                 type="button"
                                 onClick={onRemovePage}
-                                target="_blank"
                                 className="text-red-500 underline"
                             >
                                 Supprimer la page et ses traductions.

@@ -60,11 +60,6 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
 
     }, [bandeau_id])
 
-
-    useEffect(() => {
-        setOpened(true)
-    }, [])
-
     return (
         <PageEditorSidebarBlock title="Bandeau de page">
 
