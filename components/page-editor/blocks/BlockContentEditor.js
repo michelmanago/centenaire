@@ -16,8 +16,8 @@ const ButtonPositionArrow = ({children, onClick}) => (
     </button>
 )
 
-const BlockContentEditor = ({type, position ,content, setContent, removeBlockContent, setBlockPosition}) => {
-    
+const BlockContentEditor = ({type, position ,content, setContent, removeBlockContent, setBlockPosition, originalPageId}) => {
+
     return (
         <div className="flex flex-col items-end pr-5 mb-10 border-r-4">
 
@@ -44,13 +44,13 @@ const BlockContentEditor = ({type, position ,content, setContent, removeBlockCon
                 {/* HTML EDITOR */}
                 {(type === 'text' && position) && (
                      <div>
-                         <CustomEditor block={content} setContent={setContent} />
+                         <CustomEditor originalPageId={originalPageId} block={content} setContent={setContent} />
                      </div>
                     //<textarea className="w-full h-20" onChange={e => setContent(e.target.value)} value={content} name="" id="" cols="30" rows="10"></textarea>
                 )}
 
                 {/* CAROUSEL */}
-                {type === 'carousel' && <CarouselEditor content={content} setContent={setContent} />}
+                {type === 'carousel' && <CarouselEditor originalPageId={originalPageId} content={content} setContent={setContent} />}
             </div>
         </div>
     );

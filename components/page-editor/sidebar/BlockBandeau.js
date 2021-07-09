@@ -60,11 +60,6 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
 
     }, [bandeau_id])
 
-
-    useEffect(() => {
-        setOpened(true)
-    }, [])
-
     return (
         <PageEditorSidebarBlock title="Bandeau de page">
 
@@ -79,7 +74,7 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
                     onClose={() => setOpened(false)}
                     onMediaSelected={onMediaSelected}
                     submitLabel="Définir comme image de bandeau"
-                    // accepts={}
+                    accepts={["image"]}
                 />
             </div>
 

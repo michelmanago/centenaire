@@ -137,3 +137,19 @@ export function legendeAsArray(legende){
 
     return Array.isArray(legendeArray) ? legendeArray : []
 }
+
+
+export function getFilenameFromPath(media){
+
+    const public_path = media.public_path
+
+    if(public_path){
+
+        const paths_as_array = public_path.split("/")
+        const filename = paths_as_array[paths_as_array.length - 1]
+        
+        return filename
+    }
+
+    return "monFichier.png"
+}

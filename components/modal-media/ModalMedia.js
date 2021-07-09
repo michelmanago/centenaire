@@ -161,7 +161,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                 </div>
 
                 {/* Bottom */}
-                <div className="border-t border-gray-300 w-full bg-white h-16 py-2 px-3 flex">
+                <div className="border-t border-gray-300 w-full bg-white h-16 pt-2 px-3 flex">
 
                     {/* Submit main action */}
                     <button 

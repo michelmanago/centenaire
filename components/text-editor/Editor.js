@@ -72,7 +72,7 @@ const withImages = editor => {
     return editor;
 };
 
-export default function Editor({document, onChange}) {
+export default function Editor({document, onChange, originalPageId}) {
     const editor = useMemo(() => withLinks(withImages(withReact(createEditor()))), []);
     const {renderElement, renderLeaf, onKeyDown} = useEditorConfig(editor);
     const [selection, setSelection] = useSelection(editor);
@@ -102,7 +102,7 @@ export default function Editor({document, onChange}) {
 
     return (
         <Slate editor={editor} value={document} onChange={onChangeHandler}>
-            <Toolbar selection={selection} />
+            <Toolbar originalPageId={originalPageId} selection={selection} />
             <Editable renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
         </Slate>
     );
