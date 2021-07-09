@@ -21,23 +21,6 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
             }
         })
     }
-    const renderPreviewBlock = block => {
-
-        const content = block.content
-
-        if(typeof content === "string"){
-            return content
-        }
-
-        else if(typeof content === "object"){
-            return JSON.stringify(content)
-        }
-
-        else {
-            return "not renderable"
-        }
-
-    }
 
     // states
     const [open, setOpen] = useState(false)
@@ -149,14 +132,10 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
                                             <button type="button" key={key} onClick={selectOneBlock(blockIndex)} className={`flex w-full py-1 pl-5 items-center border-dashed rounded border-2 border-transparent mb-2 hover:bg-green-100 ${selected ? "border-green-400" : ""}`}>
                                                 
                                                 {/* Position */}
-                                                <span className="inline-block text-left select-none flex-shrink -0 font-medium text-xl w-1/5">#{block.position}</span>
+                                                <span className="inline-block text-left select-none flex-shrink -0 font-medium text-xl w-1/4">#{block.position}</span>
                                                 
                                                 {/* Type */}
                                                 <span className="inline-block text-left select-none flex-shrink-0 font-medium text-xl capitalize w-1/3 mr-2">{block.type}</span>
-
-                                                {/* Preview */}
-                                                <span className="inline-block p-2 truncate">{renderPreviewBlock(block)}</span>
-
                                             </button>
                                         )
 
