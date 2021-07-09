@@ -25,7 +25,6 @@ export default function PageContent({pageName, blocks}){
     }
 
 
-
     let blockList = ""
 
     if(!list && blocks){

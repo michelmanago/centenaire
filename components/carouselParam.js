@@ -28,7 +28,12 @@ export default function Carousel({ imgList, legende, id }) {
         newArray[index] = true;
         setOpenArray(newArray);
     }
-    const closeModal = () => setOpen(false);
+    const closeModal = (index) => {
+        var newArray = [...openArray];
+        newArray[index] = false;
+        setOpenArray(newArray);
+    }
+
 
     // others
     const mediaUrl = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -62,76 +67,41 @@ export default function Carousel({ imgList, legende, id }) {
                     /*onSwiper={swiper => console.log(swiper)}*/
                     style={{ '--swiper-navigation-color': 'transparent' }}
                 >
-                    {imgList && imgList.map((img, i) => {
+                  {imgList.map((img, i) => {
 
-                        const theLegende = renderLegende(img.legende)
+                      const theLegende = renderLegende(img.legende)
 
-                        return (
-                            <SwiperSlide key={id + '-' + i}>
-                                
-                                <div className='flex flex-col items-center'>
-                                    <button className='' type="button" className="button" onClick={() => setOpen(o => !o)}>
+                    return (
+                        <SwiperSlide key={id + '-' + i}>
+                            <div className='flex flex-col items-center' >
+                                <button className='' type="button" className="button" onClick={() => openModal(i)}>
+                                <img className="full  " src={`${mediaUrl}${img.public_path}`} alt={`slide ${i + 1}`} />
+                                    {theLegende && <div className="flex justify-center  ">{theLegende}</div>
+                                    }
+                                </button>
+                               
+                                <Popup open={openArray[i] } className='popimage ' closeOnDocumentClick={false} onClick={() => openModal(i)}>
+                                    <div className="max-w-screen-xl mx-auto ">
+                                            <button className="closeModal  m-10 close stroke-current text-black-600 " onClick={() => closeModal(i)}>
+                                                &times;
+                                            </button>
+                                            <img className="full  " src={`${mediaUrl}${img.public_path}`} alt={`slide ${i + 1}`} />
+                                        {theLegende && <div className="flex justify-center text-white">{theLegende}</div>
+                                        }
+                                    </div>
+                                </Popup>
+                            </div>
 
-                                        {/* Image */}
-                                        <img className="full rounded-xl" src={`${mediaUrl}${img.public_path}`} alt={`slide ${i + 1}`} />
+                        </SwiperSlide>
+                    )
 
-                                        {/* Legende */}
-                                        {theLegende && <div className="flex justify-center">{theLegende}</div>}
-                                    </button>
-                                </div>
-
-                            </SwiperSlide>
-                        )
-
-                    })}
+                  })}
                 </Swiper>
+                    
             </div>
 
 
-            {/* Carousel popup */}
-            <Popup open={open} className='popimage ' closeOnDocumentClick={false} onClick={() => openModal(i)} >
-
-                <div className="max-w-screen-xl mx-auto    ">
-                    <Swiper
-                        spaceBetween={50}
-                        slidesPerView={1}
-                        loop={true}
-                        navigation={{ clickable: true }}
-                        /*onSlideChange={() => console.log('slide change')}*/
-                        /*onSwiper={swiper => console.log(swiper)}*/
-                        style={{ '--swiper-navigation-color': 'transparent' }}
-                    >
-                        {imgList.map((img, i) => {
-
-                            const theLegende = renderLegende(img.legende)
-
-                            return (
-                                <SwiperSlide key={id + '-' + i}>
-                                    <div className='flex flex-col items-center ' >
-
-                                        {/* Close */}
-                                        <button className="closeModal  m-10 close stroke-current text-black-600 " onClick={closeModal}>
-                                            &times;
-                                        </button>
-
-                                        {/* Image */}
-                                        <img className="full  " src={`${mediaUrl}${img.public_path}`} alt={`slide ${i + 1}`} />
-
-                                        {/* Legende */}
-                                        {
-                                            theLegende && <div className="flex justify-center  ">{theLegende}</div>
-                                        }
-
-                                    </div>
-
-                                </SwiperSlide>
-                            )
-
-                        })}
-                    </Swiper>
-
-                </div>
-            </Popup>
+           
 
 
             <div className="flex justify-center">{legende}</div>
