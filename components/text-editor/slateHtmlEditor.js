@@ -64,8 +64,25 @@ export default function SlateEditor({block, setContent}) {
             {/*<button className="px-2 text-black border border-gray-900 rounded" onClick={displayStruct}>
                 Display Struct
             </button>*/}
+            <textarea
+                className="w-full"
+                value={block}
+                onInput={e => {
+                    e.target.style.height = 'inherit';
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                }}
+                onChange={e => {
+                    var valueArray = e.currentTarget.value.split('\n')
+                    var value = ""
+                    for (const val of valueArray) {
+                        value += val;
+                    }
 
-            <Slate
+                    console.log('Value', value);
+                    setContent(value);
+                }}
+            />
+            {/*<Slate
                 editor={editor}
                 value={value}
                 onChange={value => {
@@ -81,7 +98,7 @@ export default function SlateEditor({block, setContent}) {
                         if (elt.children[0].text === '') textElt = '</br>';
                         else if (i != 0) textElt = `<p>${elt.children[0].text}</p>`;
                         content = `${content} ${textElt}`;
-                    });*/
+                    });
                     //localStorage.setItem('contentSerialize', content);
                     //const html = content;
                     //const document = new DOMParser().parseFromString(html, 'text/html');
@@ -98,7 +115,7 @@ export default function SlateEditor({block, setContent}) {
                     renderLeaf={renderLeaf}
                     className="p-2 overflow-y-auto h-5/6"
                 />
-            </Slate>
+            </Slate>*/}
         </>
     );
 }
