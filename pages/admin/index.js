@@ -42,7 +42,7 @@ export default function AdminIndex({menu}) {
                 ) : (
                     <div className="flex gap-x-5">
                         <BlockLink label="Catégories" href="/admin/category"/>
-                        <BlockLink label="Menus" href="/editor-menu"/>
+                        <BlockLink label="Menus de navigation" href="/admin/editor-menu"/>
                         <BlockLink label="Pages" href="/admin/page"/>
                     </div>
                 )}
