@@ -10,7 +10,7 @@ import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
 import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
 import { getFilenameFromPath, legendeAsArray, MEDIA_TYPES } from '../../../utils/utils-media';
 
-export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList}){
+export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList, hasModified, setHasModified}){
 
     // utils
 
@@ -81,9 +81,24 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
         })
 
         setLegendes(nextLegendes)
+
+        // has modified
+        if(!hasModified){
+            setHasModified(true)
+        }
     }
 
     // methods
+
+    const onChangeCredit = event => {
+        setCredit(event.target.value)
+
+        // has modified
+        if(!hasModified){
+            setHasModified(true)
+        }
+    }
+
     const OnUpdateMedia = async () => {
 
         const form = {
@@ -106,6 +121,9 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
         } catch (error) {
             console.log(error)
         }
+
+        // reset
+        setHasModified(false)
 
     }
 
@@ -163,7 +181,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                                 <InputText
                                     label="Crédit :"
                                     value={credit}
-                                    onChange={e => setCredit(e.target.value)}
+                                    onChange={onChangeCredit}
                                 />
 
                                 {/* Legendes */}
@@ -179,7 +197,21 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                                 }
 
                                 {/* Submit */}
-                                <button type="button" onClick={OnUpdateMedia} className="bg-green-500 hover:bg-green-600 px-3 py-1 text-white rounded">Modifier l'image</button>
+                                <div className="relative border inline-block">
+                                    
+                                    {/* Button */}
+                                    <button type="button" onClick={OnUpdateMedia} className="bg-green-500 hover:bg-green-600 px-3 py-1 text-white rounded">Sauvegarder le média</button>
+                                    
+                                    {/* Animation */}
+                                    {
+                                        hasModified && (
+                                            <span className="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                                            </span>
+                                        )
+                                    }
+                                </div>
                                 
                                 {/* Feedback */}
                                 {modified &&  <span className="ml-2 text-sm text-green-500">Modifié ✓</span>}
