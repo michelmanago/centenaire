@@ -138,7 +138,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
     // lifecycle
     useEffect(async () => {
 
-        const media = await fetchMediaList(null, accepts)
+        const media = await fetchMediaList(null, accepts, true)
         setList(media)
 
         // pre select a media
@@ -154,7 +154,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
             open={opened}
             contentStyle={contentStyles}
             onClose={onCloseModal}
-            
+
             closeOnEscape={false} // because this event can not be prevented
             closeOnDocumentClick={false} // because this event can not be prevented
         >

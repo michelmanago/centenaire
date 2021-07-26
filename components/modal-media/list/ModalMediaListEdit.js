@@ -153,7 +153,18 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
             {
                 media && (
                     <>
-                        <div className="py-4 px-5">
+                        <div className="py-4 pl-5 pr-2">
+
+                            {/* Associated */}
+                            {
+                                media.page ? (
+                                    <div className="max-w-full"> 
+                                        <a href={`/${media.page.pageSlug}`} target="_blank" className="max-w-full truncate inline-block mb-5 bg-yellow-400 px-3 py-1 text-sm text-yellow-800 rounded border-2 border-yellow-500">Associé à <em className="italic underline">{media.page.pageName}</em></a>
+                                    </div>
+                                ) : (
+                                    <span className="opacity-50 inline-block mb-5 bg-yellow-400 px-3 py-1 text-sm text-yellow-800 rounded border-2 border-yellow-500">Associé à aucune page</span>
+                                )
+                            }
 
                             {/* Type */}
                             <p>

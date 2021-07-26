@@ -6,7 +6,9 @@ export default async function handler(req, res) {
         if (req.method === 'GET')  {
             
             const page_id = req.query.page
-            const medias = await getMedias()
+            const get_associated_page = req.query.get_associated_page
+            
+            const medias = await getMedias(page_id, get_associated_page)
 
             return res.json(medias);
         } else {

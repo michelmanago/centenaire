@@ -1,12 +1,46 @@
 import {query} from '../lib/db';
 
 // SELECT ALL 
-export async function getMedias() {
-    const res = await query(`
-        SELECT * from medias
-    `);
+export async function getMedias(page_id, get_associated_page) {
 
-    return JSON.parse(JSON.stringify(res));
+    let queryString = ""
+    if(get_associated_page){
+        queryString = `
+            SELECT 
+                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path, m.page_id, 
+                p.pageSlug, p.pageName, p.id as _page_id
+            FROM medias m
+            LEFT JOIN pagecontent p
+            ON m.page_id = p.id
+        `
+    } else {
+        queryString = `
+            SELECT
+                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path, m.page_id, 
+            FROM medias m
+        `
+    }
+
+    const res = await query(queryString);
+
+    let results = JSON.parse(JSON.stringify(res))
+    results = results.map(media => ( Object.assign( {
+        id: media.id,
+        upload_path: media.upload_path,
+        type: media.type,
+        credit: media.credit,
+        legende: media.legende,
+        public_path: media.public_path,
+        page_id: media.page_id,
+    }, (get_associated_page && media.pageSlug) && {
+        page: {
+            id: media.page_id,
+            pageSlug: media.pageSlug,
+            pageName: media.pageName,
+        }
+    } ) ))
+
+    return results
 }
 
 
