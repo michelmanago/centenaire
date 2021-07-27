@@ -16,12 +16,18 @@ export async function getMedias(page_id, get_associated_page) {
     } else {
         queryString = `
             SELECT
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path, m.page_id, 
+                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path, m.page_id
             FROM medias m
         `
     }
 
-    const res = await query(queryString);
+    if(page_id){
+        queryString += `
+            WHERE m.page_id = ?
+        `
+    }
+
+    const res = await query(queryString, page_id ? [page_id] : []);
 
     let results = JSON.parse(JSON.stringify(res))
     results = results.map(media => ( Object.assign( {
