@@ -1,5 +1,6 @@
 // libs
 import Head from "next/head"
+import {getSession, useSession} from 'next-auth/client';
 
 // model
 import { getMenu } from "../../../model/menu"
@@ -27,6 +28,17 @@ export default function Page({menu, pages}) {
 }
 
 export async function getServerSideProps(context) {
+    const {req} = context;
+    const session = await getSession({req});
+
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/login?redirect=admin/page`,
+            },
+        };
+    }
     
     const category = context.query.cat
 

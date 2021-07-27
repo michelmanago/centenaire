@@ -4,6 +4,7 @@ import { getMenu } from '../../../model/menu';
 
 // libs
 import Head from 'next/head';
+import {getSession, useSession} from 'next-auth/client';
 
 // components
 import Header from '../../../components/header/header';
@@ -31,7 +32,7 @@ export default function AdminCategory({menu}) {
                     {
                         categories.map(cat => (
                             <li key={cat}>
-                                <a className="text-blue-500 underline text-lg" key={cat} href={`/admin/category/${cat}`} >{capitalize(cat)}</a>
+                                <a className="text-lg text-blue-500 underline" key={cat} href={`/admin/category/${cat}`} >{capitalize(cat)}</a>
                             </li>
                         ))
                     }
@@ -42,6 +43,18 @@ export default function AdminCategory({menu}) {
 }
 
 export async function getServerSideProps(context) {
+    const {req} = context;
+    const session = await getSession({req});
+
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/login?redirect=admin/category`,
+            },
+        };
+    }
+
     const menu = await getMenu(context.locale)
   
     return {props: {
