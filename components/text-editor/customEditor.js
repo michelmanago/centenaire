@@ -7,7 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import {deserialize, serializer} from '../../lib/Slate/serialize';
 import SampleDocument from './SampleDocument';
 
-export default function CustomEditor({block, setContent, originalPageId}) {
+export default function CustomEditor({block, setContent, originalPageId, addAttributedMedia}) {
     const [isSlateView, setIsSlateView] = useState(true);
     const changeView = event => {
         event.preventDefault();
