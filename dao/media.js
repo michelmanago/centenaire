@@ -1,10 +1,46 @@
 import {query} from '../lib/db';
 
+
+const groupedByMedia = results => {
+    
+    // group by media
+
+    const groupedResults = {}
+
+    results.forEach(media => {
+
+        const key = media.id
+        const page = media.page_id && ({
+            id: media.page_id,
+            pageSlug: media.pageSlug,
+            pageName: media.pageName,
+        })
+        
+        if(!groupedResults[key]){
+            groupedResults[key] = {
+                id: media.id,
+                upload_path: media.upload_path,
+                type: media.type,
+                credit: media.credit,
+                legende: media.legende,
+                public_path: media.public_path,
+                pages: []
+            }
+        }
+
+        if(page){
+            groupedResults[key].pages.push(page)
+        }
+
+
+    })
+
+    return Object.values(groupedResults)
+    
+}
+
 // SELECT ALL 
 export async function getMedias(page_id, get_associated_page) {
-
-
-    console.log("getMeida")
 
 
     let queryString = ""
@@ -14,20 +50,22 @@ export async function getMedias(page_id, get_associated_page) {
                 m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
                 p.pageSlug, p.pageName,
                 mp.page_id
-            FROM media_page mp
+            FROM medias m
+            LEFT JOIN media_page mp
+                ON mp.media_id = m.id
             LEFT JOIN pagecontent p
-                ON mp.page_id = p.id
-            LEFT JOIN medias m
-                ON m.id = mp.media_id
+                ON p.id = mp.page_id
         `
     } else {
         queryString = `
-            SELECT
+            SELECT 
                 m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
                 mp.page_id
-            FROM media_page mp
-            LEFT JOIN medias m
-                ON m.id = mp.media_id
+            FROM medias m
+            LEFT JOIN media_page mp
+                ON mp.media_id = m.id
+            LEFT JOIN pagecontent p
+                ON p.id = mp.page_id
         `
     }
 
@@ -40,25 +78,8 @@ export async function getMedias(page_id, get_associated_page) {
     const res = await query(queryString, page_id ? [page_id] : []);
 
     let results = JSON.parse(JSON.stringify(res))
-    console.log("before", results)
 
-    results = results.map(media => ( Object.assign( {
-        id: media.id,
-        upload_path: media.upload_path,
-        type: media.type,
-        credit: media.credit,
-        legende: media.legende,
-        public_path: media.public_path,
-        page_id: media.page_id,
-    }, (get_associated_page && media.pageSlug) && {
-        page: {
-            id: media.page_id,
-            pageSlug: media.pageSlug,
-            pageName: media.pageName,
-        }
-    } ) ))
-
-    return results
+    return groupedByMedia(results)
 }
 
 
@@ -68,14 +89,22 @@ export async function selectSingleMedia(media_id){
 
     const rows = await query(
         `
-            SELECT * FROM medias
-            WHERE id = ?
+            SELECT 
+                m.*,
+                mp.page_id
+            FROM medias m
+                LEFT JOIN media_page mp
+                    ON mp.media_id = m.id
+                LEFT JOIN pagecontent p
+                    ON p.id = mp.page_id
+            WHERE m.id = ?
         `,
         [media_id]
     )
 
-    return rows.length ? rows[0] : null
+    const groupedResults = groupedByMedia(rows)
 
+    return rows.length ? groupedResults[0] : null
 }
 
 // PUT MEDIA
@@ -92,8 +121,6 @@ export async function putSingleMedia(media_id, {credit, legende} = {}){
         `,
         [credit, legende, /** id of media (!needs to be the last argument) */ media_id]
     )
-
-    const {affectedRows} = res
 
     return true
 

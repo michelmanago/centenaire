@@ -1,8 +1,7 @@
-import { query } from '../lib/db'
 
 // dao
 import { getMedias, putSingleMedia, selectSingleMedia } from '../dao/media'
-import { associateMediaToPage } from "../dao/media_page"
+import { insertMediaPage } from "../dao/media_page"
 
 export async function updateMedia(media_id, fields){
 
@@ -22,7 +21,7 @@ export async function updateMedia(media_id, fields){
 
     // associate media
     if(fields.page_id){
-        await associateMediaToPage(media_id, fields.page_id)
+        await insertMediaPage(media_id, fields.page_id)
     }
 
     return the_media
@@ -43,9 +42,7 @@ export async function getSingleMedia(media_id){
 
 export async function getMediaList(page_id, get_associated_page){
 
-
     const mediaList = await getMedias(page_id, get_associated_page)
-
     return mediaList
 
 }

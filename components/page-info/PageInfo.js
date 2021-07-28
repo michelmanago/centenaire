@@ -1,10 +1,8 @@
 // libs
 import Popup from "reactjs-popup"
-import {useRouter} from 'next/router';
 
 // icons
 import IconInfo from "../icons/IconInfo"
-import { legendeAsArray } from "../../utils/utils-media";
 
 
 const wrapperStyles = {
@@ -12,9 +10,6 @@ const wrapperStyles = {
 }
 
 export default function PageInfo({media, author}){
-
-    // locales
-    const {locale} = useRouter()
 
     return (
 
@@ -26,8 +21,6 @@ export default function PageInfo({media, author}){
         >
             <div style={wrapperStyles} className="bg-gray-100 px-5 py-5 shadow-md border rounded">
 
-
-
                 {/* Auteur */}
                 {author && (
                     <div>
@@ -36,20 +29,15 @@ export default function PageInfo({media, author}){
                     </div>
                 )}
 
-
                 {/* Credits */}
                 <p className="underline">Crédits</p>
                 <ol className="pl-5 m-0">
                     {media.map(mediaItem => {
 
-                        const jsonLegende = mediaItem.legende
-                        const legendes = legendeAsArray(jsonLegende)
-                        const currentLegende = legendes.find(l => l.locale === locale)
-
-                        if(currentLegende && currentLegende.value){
+                        if(mediaItem.credit){
                             return (
-                                <li className="mb-2 text-sm">
-                                    {currentLegende.value}
+                                <li key={mediaItem.id} className="mb-2 text-sm">
+                                    {mediaItem.credit}
                                 </li>
                             )
                         }

@@ -12,7 +12,7 @@ import Head from "next/head"
 
 // utils
 import { toMysqlFormat } from "../../../utils/utils";
-import attributePageToMedia, { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
+import { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
 
 export default function PageEditorCreate({menu}) {
 

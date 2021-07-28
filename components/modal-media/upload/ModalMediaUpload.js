@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/router";
 import { useRef, useState } from "react"
-import fetchCreateMedia from "../../../utils/fetch/fetchCreateMedia";
-import { getValidFileTypes, isValidFileType } from "../../../utils/utils-media";
 
 // utils
-
+import fetchCreateMedia from "../../../utils/fetch/fetchCreateMedia";
+import { getValidFileTypes, isValidFileType } from "../../../utils/utils-media";
+import attributePageToMedia from "../../../utils/fetch/attributePageToMedia"
 
 export default function ModalMediaUpload({onMediaUploaded, accepts, originalPageId}){
 
@@ -38,18 +38,17 @@ export default function ModalMediaUpload({onMediaUploaded, accepts, originalPage
             if(isValidFileType(accepts, file.type)){
 
                 // default .legende
-                const defaultLegende = locales.map(locale => ({
-                    locale,
-                    value: ""
-                }))
+                // const defaultLegende = locales.map(locale => ({
+                //     locale,
+                //     value: ""
+                // }))
 
-                const media = await fetchCreateMedia(file, defaultLegende, originalPageId)
+                const media = await fetchCreateMedia(file)
                 
                 if(media){
-                    // has just been uploaded so you dont filter it
-                    // media.justUploaded = true
+                    const mediaAssociated = await attributePageToMedia(originalPageId, media.id)
 
-                    onMediaUploaded(media)
+                    onMediaUploaded(mediaAssociated)
                 } else {
                     alert("not ok")
                     resetInput()

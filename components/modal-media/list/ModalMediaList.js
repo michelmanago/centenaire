@@ -10,6 +10,7 @@ import IconVideo from "../../icons/IconVideo"
 import IconHeadphone from "../../icons/IconHeadphone"
 import IconDocument from "../../icons/IconDocument"
 import IconUnknown from "../../icons/IconUnknown"
+import IconLinked from "../../icons/IconLinked"
 
 // utils
 import { getFilenameFromPath } from "../../../utils/utils-media"
@@ -45,6 +46,23 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     }
 
     // helpers
+
+    const getAssociatedMediaOnly = list => {
+
+        // we can filter by page
+        if(originalPageId && filterByPage){
+            return list.filter(mediaItem => {
+
+                // this media is associated to a page with id = originalPageId                
+                return mediaItem.pages && mediaItem.pages.find(page => page.id === originalPageId)
+
+            })
+        }
+
+        else {
+            return list
+        }
+    }
 
     const renderMediaPreview = media => {
         switch(media.type){
@@ -88,7 +106,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     // only show acceptable files and files with no type
     const filteredByType = list.filter(l => accepts.includes(l.type) || !l.type)
     // filter by page
-    const filteredList = (originalPageId && filterByPage) ? filteredByType.filter(l => l.page_id === originalPageId || l.justUploaded) : filteredByType
+    const filteredList = getAssociatedMediaOnly(filteredByType)
 
     return (
         <div className="h-full flex">
@@ -116,6 +134,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                             const isSelected = edited && edited.id === image.id
                             const type = image.type
                             const filename = getFilenameFromPath(image)
+                            const linkedToThisPage = image.pages && image.pages.some(page => page.id === originalPageId)
 
                             return (
                                 <button 
@@ -128,6 +147,13 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                                     style={imageItemContainerStyles} 
                                     className={`relative rounded border-4 border-transparent ${isSelected ? "border-green-400" : ""}`}
                                     >   
+                                        {
+                                            linkedToThisPage && (
+                                                <div className="text-gray-100 absolute left-0 top-0 border-gray-900 opacity-50 px-1 bg-yellow-600 z-10">
+                                                    <IconLinked/>
+                                                </div>
+                                            )
+                                        }
 
                                         {/* Image preview */}
                                         {renderMediaPreview(image)}
@@ -147,7 +173,16 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
             {/* Sidebar */}
             <div className="w-1/3 bg-gray-100 overflow-auto">
-                {edited && <ModalMediaListEdit key={edited.id} originalPageId={originalPageId} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited} hasModified={hasModified} setHasModified={setHasModified} />}
+                {edited && <ModalMediaListEdit 
+                    key={edited.id} 
+                    originalPageId={originalPageId} 
+                    updateMediaFromList={updateMediaFromList} 
+                    deleteMediaFromList={deleteMediaFromList} 
+                    media={edited} 
+                    hasModified={hasModified} 
+                    setHasModified={setHasModified} 
+                    setEdited={setEdited}
+                />}
             </div>
         </div>
     )

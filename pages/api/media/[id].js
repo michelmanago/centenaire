@@ -1,5 +1,5 @@
 import { validateMediaLegende } from "../../../components/validate/media"
-import { updateMedia } from "../../../model/media"
+import { getSingleMedia, updateMedia } from "../../../model/media"
 
 export default async function handler(req, res) {
 
@@ -23,10 +23,14 @@ export default async function handler(req, res) {
                 return res.status(400).json("legende is invalid")
             } 
 
-            // do
-            const results = await updateMedia(id, fields)
+            // update media
+            await updateMedia(id, fields)
 
-            return res.json(results)
+            // get fresh new media
+            const newMedia = await getSingleMedia(id)
+
+            
+            return res.json(newMedia)
         } 
         
         else {
