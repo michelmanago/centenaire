@@ -84,5 +84,27 @@ export function isHome(){
     }
 }
 
+export function separateBy(array, fn){
+
+    let indexes = {}
+
+    array.forEach((item, index) => {
+
+        let value = fn(item, index)
+
+        // all falsy values (except 0) become "undefined key"
+        value = value !== 0 && !value ? undefined : value
+
+        if(indexes[value]){
+            indexes[value].push(item)
+        } else {
+            indexes[value] = [item]
+        }
+
+    })
+
+    return Object.values(indexes)
+
+}
 
 export function voidFunction(){}

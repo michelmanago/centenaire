@@ -1,14 +1,8 @@
-// libs
-import { useEffect, useState } from "react"
-
 // utils
-import { onSubmitPreventForm } from "../../../utils/utils"
+import { onSubmitPreventForm, separateBy } from "../../../utils/utils"
 
 
 export default function MenuEditorPageList({setAvailablePages, availablePages, currentLocale, addPageLinks}){
-
-
-    
 
     // listeners
     const onAddPage = page => event => {
@@ -37,8 +31,39 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
     }
 
     // other
-    const pages = availablePages.filter(page => page.language === currentLocale)
-    const isSubmittingDisabled = !pages.filter(p => p.selected).length
+    const pagesOfCurrentLocale = availablePages.filter(page => page.language === currentLocale)
+    const isSubmittingDisabled = !availablePages.filter(p => p.selected).length
+    const pagesSeparatedByCategory = separateBy(pagesOfCurrentLocale, item => item.page)
+
+    // renderer
+    const renderCategoryList = (list, category = "Non classées") => {
+        return (
+            <div className="mb-4">
+                <p className="text-sm border-b mb-2 pb-1 font-light uppercase">{category}</p>
+                {
+                    list.map(page => {
+
+                        const permalien = page.pageSlug
+            
+                        return (
+                            <div key={"link" + page.id} className="flex items-center whitespace-nowrap">
+            
+                                {/* Checkbox */}
+                                <input checked={page.selected} onChange={onAddPage(page)} className="mr-5" type="checkbox" />
+            
+                                {/* Label */}
+                                <a className="inline-block text-blue-400 underline min-w-max" target="_blank" href={permalien} >{page.pageName}</a>
+            
+                                {/* Preview link */}
+                                <span className="text-xs ml-5">{permalien}</span>
+            
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
 
     return (
         <form onSubmit={onSubmitPreventForm} className="">
@@ -47,24 +72,11 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
             <div className="border rounded px-5 py-3 overflow-scroll">
                 {
                     // show only pages from current language
-                    pages.map(page => {
+                    pagesSeparatedByCategory.map((pages, i) => {
 
-                        const permalien = page.pageSlug
-
-                        return (
-                            <div key={"link" + page.id} className="flex items-center whitespace-nowrap">
-    
-                                {/* Checkbox */}
-                                <input checked={page.selected} onChange={onAddPage(page)} className="mr-5" type="checkbox" />
-    
-                                {/* Label */}
-                                <a className="inline-block text-blue-400 underline min-w-max" target="_blank" href={permalien} >{page.pageName}</a>
-    
-                                {/* Preview link */}
-                                <span className="text-xs ml-5">{permalien}</span>
-    
-                            </div>
-                        )
+                        const category = pages[0].page
+                        console.log(i, category)
+                        return renderCategoryList(pages, category ? category : undefined)
                     })
                 }
             </div>

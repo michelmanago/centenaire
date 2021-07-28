@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "deep-equal": "^2.0.5",
     "escape-html": "^1.0.3",
+    "fast-pass-gen": "^1.0.0",
     "frontend-collective-react-dnd-scrollzone": "^1.0.2",
     "html-react-parser": "^1.2.4",
     "is-url": "^1.2.4",

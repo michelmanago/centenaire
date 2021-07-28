@@ -17,7 +17,7 @@ const imageItemContainerStyles = {
     paddingTop: "100%"
 }
 
-export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts}){
+export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
 
     // states
     const [filterByPage, setFilterByPage] = useState(!!originalPageId)
@@ -25,14 +25,21 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     // methods
     const onSelectMedia = (media) => e => {
 
-        // close current
-        if(edited && edited.id === media.id){
-            setEdited(null)
-        } 
-        
-        // switch
-        else {
-            setEdited(media)
+        if(!hasModified || (hasModified && confirm("Êtes vous sûr de vouloir quitter l'édition du média sans sauvegarder vos modifications ?"))){
+
+            // close current
+            if(edited && edited.id === media.id){
+                setEdited(null)
+            } 
+            
+            // switch
+            else {
+                setEdited(media)
+            }
+
+            // reset after switched
+            setHasModified(false)
+            
         }
     }
 
@@ -137,7 +144,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
             {/* Sidebar */}
             <div className="w-1/3 bg-gray-100 overflow-auto">
-                {edited && <ModalMediaListEdit key={edited.id} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited}/>}
+                {edited && <ModalMediaListEdit key={edited.id} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited} hasModified={hasModified} setHasModified={setHasModified} />}
             </div>
         </div>
     )
