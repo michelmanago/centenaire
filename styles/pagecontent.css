@@ -42,6 +42,7 @@
   
 .pagecontent ol li {
     @apply text-justify;
+    font-size: 1.125rem;
   }
   
   
