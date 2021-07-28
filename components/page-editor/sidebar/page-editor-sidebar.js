@@ -5,12 +5,7 @@ import PageEditCategory from './PageEditCategory';
 
 // utils
 import { useRouter } from 'next/router';
-import { CATEGORIES } from '../../../utils/parameters';
-import { useEffect, useState } from 'react';
 import BlockBandeau from './BlockBandeau';
-
-
-const categories = Object.values(CATEGORIES);
 
 const PageEditorSidebar = ({
     updateCurrentPage,
@@ -145,7 +140,6 @@ const PageEditorSidebar = ({
             <PageEditCategory
                 updatePages={updatePages} 
                 category={category}
-                categories={categories}
             />
         </div>
     );

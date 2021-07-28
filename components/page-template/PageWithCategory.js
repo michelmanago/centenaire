@@ -5,11 +5,7 @@
 import PageContent from './commons/PageContent';
 import SortedNavList from "./commons/SortedNavList"
 
-// utils
-import { CATEGORIES } from '../../utils/parameters';
-
-
-export default function PageCategory({page}) {
+export default function PageWithCategory({page}) {
     
     return (
         <div className="flex">

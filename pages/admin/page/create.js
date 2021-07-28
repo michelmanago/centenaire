@@ -9,6 +9,7 @@ import PageEditor from "../../../components/page-editor/page-editor"
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head"
+import {getSession, useSession} from 'next-auth/client';
 
 // utils
 import { toMysqlFormat } from "../../../utils/utils";
@@ -92,8 +93,17 @@ export default function PageEditorCreate({menu}) {
 
 export async function getServerSideProps(context) {
 
+    const {req} = context;
+    const session = await getSession({req});
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: '/login?redirect=admin/page/create',
+            },
+        };
+    }
     const menu = await getMenu(context.locale)
-  
     return {props: {
       menu: menu
     }}

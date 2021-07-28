@@ -9,12 +9,9 @@ import Header from '../../components/header/header';
 // models
 import { getMenu } from '../../model/menu';
 
-// styles
-const blockLinkStyles = {
-    width: 200,
-    height: 100
+const linkStyles = {
+    width: 300
 }
-
 
 export default function AdminIndex({menu}) {
 
@@ -29,7 +26,7 @@ export default function AdminIndex({menu}) {
 
             {menu && <Header menu={menu.data}/>}
             <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
-                <h1 className="text-4xl mb-5 font-semibold">Administrer le site</h1>
+                <h1 className="mb-5 text-4xl font-semibold">Administrer le site</h1>
                 {session && session.userBase.role === 'admin' ? (
                     <div className='flex flex-row'>
                         <Link href="/admin/signup">
@@ -40,10 +37,11 @@ export default function AdminIndex({menu}) {
                         </Link>
                     </div>
                 ) : (
-                    <div className="flex gap-x-5">
-                        <BlockLink label="Catégories" href="/admin/category"/>
-                        <BlockLink label="Menus" href="/editor-menu"/>
+                    <div className="flex flex-col">
                         <BlockLink label="Pages" href="/admin/page"/>
+                        <BlockLink label="Catégories" href="/admin/category"/>
+                        <BlockLink label="Menus de navigation" href="/admin/editor-menu"/>
+                        <BlockLink label="Utilisateurs" href="/admin/users/create"/>
                     </div>
                 )}
             </main>
@@ -53,9 +51,11 @@ export default function AdminIndex({menu}) {
 
 
 const BlockLink = ({label, href}) => (
-    <Link href={href}>
-        <a style={blockLinkStyles} className='inline-block flex justify-center items-center font-medium rounded h-30 w-10 bg-gray-600 hover:bg-gray-700 text-white'>{label}</a>
-    </Link>
+    <div>
+        <Link href={href}>
+            <a style={linkStyles} className="inline-block px-3 py-1 mb-3 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200">{label}</a>
+        </Link>
+    </div>
 )
 
 
@@ -65,9 +65,7 @@ export async function getServerSideProps(context) {
 
     const menu = await getMenu(locale)
 
-
-    console.warn("ENLEVER FALSE")
-    if (false && !session)
+    if (!session)
         return {
             redirect: {
                 permanent: false,

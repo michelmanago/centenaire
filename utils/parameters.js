@@ -12,8 +12,12 @@ export const CATEGORIES = {
     ARTISTES: "artistes"
 }
 
+export const ROLES = {
+    ADMIN: "admin",
+    AUTHOR: "author",
+}
+
 export default {
-
     CATEGORIES,
-
+    ROLES,
 }

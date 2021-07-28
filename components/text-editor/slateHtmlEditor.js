@@ -78,8 +78,8 @@ export default function SlateEditor({block, setContent}) {
                         value += val;
                     }
 
-                    console.log('Value', value);
-                    setContent(value);
+                    //console.log('Value', value);
+                    setContent(value.replace(/\s+/g, ' '));
                 }}
             />
             {/*<Slate
