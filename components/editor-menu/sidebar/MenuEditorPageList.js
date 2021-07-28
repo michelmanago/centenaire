@@ -1,6 +1,3 @@
-// libs
-import { useEffect, useState } from "react"
-
 // utils
 import { onSubmitPreventForm, separateBy } from "../../../utils/utils"
 

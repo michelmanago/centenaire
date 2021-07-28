@@ -14,7 +14,6 @@ import MenuEditorSidebar from '../../components/editor-menu/sidebar/MenuEditorSi
 
 // format
 import { formatNewMenuItem, fromDBDataToTreedata } from '../../utils/editor-menu-formats';
-import { recursiveMapTreeData } from '../../utils/utils';
 
 // utils
 import addUUIDToLinks from "../../utils/scripts/addUUIDToLinks"

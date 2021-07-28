@@ -10,7 +10,7 @@ import Head from "next/head"
 // component
 import Header from '../components/header/header';
 import PageDefault from '../components/page-template/PageDefault';
-import PageCategory from '../components/page-template/PageCategory';
+import PageWithCategory from '../components/page-template/PageWithCategory';
 import PageInfo from '../components/page-info/PageInfo';
 
 // model
@@ -54,7 +54,7 @@ export default function DynPage({ menu, page}) {
 
 
         if(hasCategory){
-            return <PageCategory page={page}/>
+            return <PageWithCategory page={page}/>
         } 
 
         else {

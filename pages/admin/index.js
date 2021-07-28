@@ -9,12 +9,9 @@ import Header from '../../components/header/header';
 // models
 import { getMenu } from '../../model/menu';
 
-// styles
-const blockLinkStyles = {
-    width: 200,
-    height: 100
+const linkStyles = {
+    width: 300
 }
-
 
 export default function AdminIndex({menu}) {
 
@@ -40,10 +37,11 @@ export default function AdminIndex({menu}) {
                         </Link>
                     </div>
                 ) : (
-                    <div className="flex gap-x-5">
+                    <div className="flex flex-col">
+                        <BlockLink label="Pages" href="/admin/page"/>
                         <BlockLink label="Catégories" href="/admin/category"/>
                         <BlockLink label="Menus de navigation" href="/admin/editor-menu"/>
-                        <BlockLink label="Pages" href="/admin/page"/>
+                        <BlockLink label="Utilisateurs" href="/admin/users/create"/>
                     </div>
                 )}
             </main>
@@ -53,9 +51,11 @@ export default function AdminIndex({menu}) {
 
 
 const BlockLink = ({label, href}) => (
-    <Link href={href}>
-        <a style={blockLinkStyles} className='inline-block flex justify-center items-center font-medium rounded h-30 w-10 bg-gray-600 hover:bg-gray-700 text-white'>{label}</a>
-    </Link>
+    <div>
+        <Link href={href}>
+            <a style={linkStyles} className="inline-block px-3 py-1 mb-3 border bg-gray-100 hover:bg-gray-200 border-gray-300 rounded">{label}</a>
+        </Link>
+    </div>
 )
 
 

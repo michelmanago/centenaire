@@ -6,8 +6,12 @@ export const CATEGORIES = {
     COMPOSITEURS: "compositeurs",
 }
 
+export const ROLES = {
+    ADMIN: "admin",
+    AUTHOR: "author",
+}
+
 export default {
-
     CATEGORIES,
-
+    ROLES,
 }
