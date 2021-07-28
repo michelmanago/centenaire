@@ -11,8 +11,6 @@ export default async function handler(req, res) {
             // body
             const id = req.query.id
             const fields = req.body
-
-            console.log("ff", fields)
             
             if(!id){
                 return res.status(400).json({

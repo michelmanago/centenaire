@@ -10,6 +10,8 @@ import IconVideo from "../../icons/IconVideo"
 import IconHeadphone from "../../icons/IconHeadphone"
 import IconDocument from "../../icons/IconDocument"
 import IconUnknown from "../../icons/IconUnknown"
+
+// utils
 import { getFilenameFromPath } from "../../../utils/utils-media"
 
 // styles
@@ -22,7 +24,6 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     // states
     const [filterByPage, setFilterByPage] = useState(!!originalPageId)
 
-    // methods
     const onSelectMedia = (media) => e => {
 
         if(!hasModified || (hasModified && confirm("Êtes vous sûr de vouloir quitter l'édition du média sans sauvegarder vos modifications ?"))){
@@ -92,6 +93,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     return (
         <div className="h-full flex">
             
+            
             {/* List */}
             <div className="w-2/3 overflow-auto h-full pr-2">
 
@@ -126,6 +128,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                                     style={imageItemContainerStyles} 
                                     className={`relative rounded border-4 border-transparent ${isSelected ? "border-green-400" : ""}`}
                                     >   
+
                                         {/* Image preview */}
                                         {renderMediaPreview(image)}
 
@@ -144,7 +147,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
             {/* Sidebar */}
             <div className="w-1/3 bg-gray-100 overflow-auto">
-                {edited && <ModalMediaListEdit key={edited.id} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited} hasModified={hasModified} setHasModified={setHasModified} />}
+                {edited && <ModalMediaListEdit key={edited.id} originalPageId={originalPageId} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited} hasModified={hasModified} setHasModified={setHasModified} />}
             </div>
         </div>
     )

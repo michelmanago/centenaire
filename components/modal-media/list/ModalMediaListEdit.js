@@ -9,8 +9,13 @@ import { getMediaLink } from "../../../utils/utils-serveur-image"
 import fetchDeleteMedia from '../../../utils/fetch/fetchDeleteMedia';
 import fetchUpdateMedia from '../../../utils/fetch/fetchUpdateMedia';
 import { getFilenameFromPath, legendeAsArray, MEDIA_TYPES } from '../../../utils/utils-media';
+import fetchDissociateMediaFromPage from "../../../utils/fetch/fetchDissociateMediaFromPage"
 
-export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList, hasModified, setHasModified}){
+// icons
+import IconUnlink from "../../icons/IconUnlink"
+
+
+export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList, hasModified, setHasModified, originalPageId}){
 
     // utils
 
@@ -90,6 +95,24 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
     // methods
 
+    const onUnlink = async media_id => {
+
+        try {
+            const res = await fetchDissociateMediaFromPage(media_id, originalPageId)
+
+            // unlink in state
+            // const newMedia = {
+            //     ...media,
+            // }
+            updateMediaFromList(newMedia)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
+    
     const onChangeCredit = event => {
         setCredit(event.target.value)
 
@@ -146,7 +169,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
     }
 
     // others
-    const filename = getFilenameFromPath(media.public_path)
+    const filename = media && getFilenameFromPath(media)
 
     return (
         <div>
@@ -155,8 +178,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                     <>
                         <div className="py-4 pl-5 pr-2">
 
-                            {/* Associated */}
-                            {
+                            {/* {
                                 media.page ? (
                                     <div className="max-w-full"> 
                                         <a href={`/${media.page.pageSlug}`} target="_blank" className="max-w-full truncate inline-block mb-5 bg-yellow-400 px-3 py-1 text-sm text-yellow-800 rounded border-2 border-yellow-500">Associé à <em className="italic underline">{media.page.pageName}</em></a>
@@ -164,7 +186,7 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
                                 ) : (
                                     <span className="opacity-50 inline-block mb-5 bg-yellow-400 px-3 py-1 text-sm text-yellow-800 rounded border-2 border-yellow-500">Associé à aucune page</span>
                                 )
-                            }
+                            } */}
 
                             {/* Type */}
                             <p>
@@ -184,6 +206,20 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
                             {/* Remove */}
                             <button onClick={onRemoveMedia} className="text-red-400 underline">Supprimer définitivement</button>
+
+                            {/* Association */}
+                            
+                            <div className="my-3">
+                                <p>Associations</p>
+                                <div>
+                                    {/* Unlink */}
+                                    <button onClick={(e) => onUnlink(media.id)} className="mb-5 inline-flex justify-end py-1 opacity-50 items-center px-2 rounded border border-gray-600 bg-gray-300 hover:bg-gray-400 z-20">
+                                        <IconUnlink size="24px"/>
+                                        <span className="ml-2">Dissocier de la page</span>
+                                    </button>
+                                </div>
+                            </div>
+
 
                             {/* Form */}
                             <div className="mt-4">

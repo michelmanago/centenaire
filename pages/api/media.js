@@ -15,6 +15,7 @@ export default async function handler(req, res) {
             return res.status(405).json({ message: 'wrong http method' });
         }
     } catch (e) {
+        console.log(e)
         res.status(500).json({ message: e.message })
     }
 }

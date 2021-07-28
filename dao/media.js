@@ -3,33 +3,45 @@ import {query} from '../lib/db';
 // SELECT ALL 
 export async function getMedias(page_id, get_associated_page) {
 
+
+    console.log("getMeida")
+
+
     let queryString = ""
     if(get_associated_page){
         queryString = `
             SELECT 
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path, m.page_id, 
-                p.pageSlug, p.pageName, p.id as _page_id
-            FROM medias m
+                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
+                p.pageSlug, p.pageName,
+                mp.page_id
+            FROM media_page mp
             LEFT JOIN pagecontent p
-            ON m.page_id = p.id
+                ON mp.page_id = p.id
+            LEFT JOIN medias m
+                ON m.id = mp.media_id
         `
     } else {
         queryString = `
             SELECT
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path, m.page_id
-            FROM medias m
+                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
+                mp.page_id
+            FROM media_page mp
+            LEFT JOIN medias m
+                ON m.id = mp.media_id
         `
     }
 
     if(page_id){
         queryString += `
-            WHERE m.page_id = ?
+            WHERE mp.page_id = ?
         `
     }
 
     const res = await query(queryString, page_id ? [page_id] : []);
 
     let results = JSON.parse(JSON.stringify(res))
+    console.log("before", results)
+
     results = results.map(media => ( Object.assign( {
         id: media.id,
         upload_path: media.upload_path,
@@ -68,18 +80,17 @@ export async function selectSingleMedia(media_id){
 
 // PUT MEDIA
 
-export async function putSingleMedia(media_id, {credit, legende, page_id} = {}){
+export async function putSingleMedia(media_id, {credit, legende} = {}){
 
     const res = await query(
         `
             UPDATE medias
             SET 
                 credit = ?,
-                legende = ?,
-                page_id = ?
+                legende = ?
             WHERE id = ?
         `,
-        [credit, legende, page_id, /** id of media (!needs to be the last argument) */ media_id]
+        [credit, legende, /** id of media (!needs to be the last argument) */ media_id]
     )
 
     const {affectedRows} = res
