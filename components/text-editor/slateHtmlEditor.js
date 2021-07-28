@@ -16,12 +16,8 @@ export default function SlateEditor({block, setContent}) {
                     e.target.style.height = `${e.target.scrollHeight}px`;
                 }}
                 onChange={e => {
-                    var valueArray = e.currentTarget.value.split('\n');
-                    var value = '';
-                    for (const val of valueArray) {
-                        value += val;
-                    }
-                    setContent(value.replace(/\s{2,}/g, ''));
+                    var valueNoNewLine = e.currentTarget.value.replace(/\n\s{2,}/g, ' ');
+                    setContent(valueNoNewLine.replace(/>\s</g, '><'));
                 }}
             />
         </>
