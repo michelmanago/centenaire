@@ -10,14 +10,14 @@ import Head from "next/head"
 // component
 import Header from '../components/header/header';
 import PageDefault from '../components/page-template/PageDefault';
-import PageCategory from '../components/page-template/PageCategory';
+import PageWithCategory from '../components/page-template/PageWithCategory';
+import PageInfo from '../components/page-info/PageInfo';
 
 // model
 import {getMenu} from '../model/menu';
 import { getPageBySlug } from '../model/page';
 
 // utils
-import {CATEGORIES} from "../utils/parameters"
 import { getMediaLink } from '../utils/utils-serveur-image';
 
 const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
@@ -54,7 +54,7 @@ export default function DynPage({ menu, page}) {
 
 
         if(hasCategory){
-            return <PageCategory page={page}/>
+            return <PageWithCategory page={page}/>
         } 
 
         else {
@@ -88,6 +88,9 @@ export default function DynPage({ menu, page}) {
             )}
 
             <main className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
+
+                {/* Information */}
+                <PageInfo author={page.author} media={page.associated_media}/>
                 
                 {
                     renderPage(page)

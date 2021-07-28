@@ -1,7 +1,7 @@
 import { query } from '../lib/db'
 
 // dao
-import { putSingleMedia, selectSingleMedia } from '../dao/media'
+import { getMedias, putSingleMedia, selectSingleMedia } from '../dao/media'
 
 export async function updateMedia(media_id, fields){
 
@@ -29,5 +29,14 @@ export async function getSingleMedia(media_id){
     }
 
     return the_media
+
+}
+
+export async function getMediaList(page_id, get_associated_page){
+
+
+    const mediaList = await getMedias(page_id, get_associated_page)
+
+    return mediaList
 
 }

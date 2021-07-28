@@ -1,10 +1,15 @@
 
-export default async function fetchMediaList(page_id = null){
+export default async function fetchMediaList(page_id = null, accepts, get_associated_page = false){
 
-    let route = "/api/media"
+
+    const url = new URL(window.origin + "/api/media")
 
     if(page_id){
-        route += "?page=" + page_id
+        url.searchParams.append("page", page_id)
+    }
+
+    if(get_associated_page){
+        url.searchParams.append("get_associated_page", true)
     }
 
     try {
@@ -12,7 +17,7 @@ export default async function fetchMediaList(page_id = null){
         let results = null
 
         // Fetch
-        const response = await fetch(route)
+        const response = await fetch(url.toString())
 
         // Decode
         if(response.ok){

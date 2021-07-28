@@ -4,20 +4,19 @@ import Head from 'next/head';
 import {changeNodeAtPath, insertNode, removeNodeAtPath, getNodeAtPath} from 'react-sortable-tree';
 
 // components
-import Header from '../components/header/header';
-import MenuEditorSubmit from '../components/editor-menu/inputs/MenuEditorSubmit';
-import MenuEditorTree from '../components/editor-menu/tree/menu-editor-tree';
+import Header from '../../components/header/header';
+import MenuEditorSubmit from '../../components/editor-menu/inputs/MenuEditorSubmit';
+import MenuEditorTree from '../../components/editor-menu/tree/menu-editor-tree';
 
 // models
-import {getMenus} from '../model/menu';
-import MenuEditorSidebar from '../components/editor-menu/sidebar/MenuEditorSidebar';
+import {getMenus} from '../../model/menu';
+import MenuEditorSidebar from '../../components/editor-menu/sidebar/MenuEditorSidebar';
 
 // format
-import { formatNewMenuItem, fromDBDataToTreedata } from '../utils/editor-menu-formats';
-import { recursiveMapTreeData } from '../utils/utils';
+import { formatNewMenuItem, fromDBDataToTreedata } from '../../utils/editor-menu-formats';
 
 // utils
-import addUUIDToLinks from "../utils/scripts/addUUIDToLinks"
+import addUUIDToLinks from "../../utils/scripts/addUUIDToLinks"
 
 const retrieveTranslationsFrom = (pages = [], original_id, language) => {
 

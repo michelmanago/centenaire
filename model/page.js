@@ -1,6 +1,7 @@
 import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectOriginalPageId, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
 import {query} from '../lib/db';
 import { getServeurImageMedia } from '../utils/utils-serveur-image';
+import { getMediaList } from './media';
 
 
 export async function removePage(pageId){
@@ -90,6 +91,10 @@ export async function getPageBySlug(pageSlug, specificContext = "") {
         
         let page = await selectPageBySlug(pageSlug)
 
+        if(!page){
+            throw new Error("Page not found")
+        }
+
         // in context of show/displaying a page we need more information
         if(specificContext === "render"){
 
@@ -118,6 +123,10 @@ export async function getPageBySlug(pageSlug, specificContext = "") {
             // fetch translations
             let translations = await getPageTranslations(page.originalPageId)
             page.translations = translations
+
+            // all associated images
+            let associated_media = await getMediaList(page.originalPageId)
+            page.associated_media = associated_media
 
         }
 
