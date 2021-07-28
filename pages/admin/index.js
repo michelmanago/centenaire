@@ -29,7 +29,7 @@ export default function AdminIndex({menu}) {
 
             {menu && <Header menu={menu.data}/>}
             <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
-                <h1 className="text-4xl mb-5 font-semibold">Administrer le site</h1>
+                <h1 className="mb-5 text-4xl font-semibold">Administrer le site</h1>
                 {session && session.userBase.role === 'admin' ? (
                     <div className='flex flex-row'>
                         <Link href="/admin/signup">
@@ -54,7 +54,7 @@ export default function AdminIndex({menu}) {
 
 const BlockLink = ({label, href}) => (
     <Link href={href}>
-        <a style={blockLinkStyles} className='inline-block flex justify-center items-center font-medium rounded h-30 w-10 bg-gray-600 hover:bg-gray-700 text-white'>{label}</a>
+        <a style={blockLinkStyles} className='flex items-center justify-center w-10 font-medium text-white bg-gray-600 rounded h-30 hover:bg-gray-700'>{label}</a>
     </Link>
 )
 
@@ -65,9 +65,7 @@ export async function getServerSideProps(context) {
 
     const menu = await getMenu(locale)
 
-
-    console.warn("ENLEVER FALSE")
-    if (false && !session)
+    if (!session)
         return {
             redirect: {
                 permanent: false,

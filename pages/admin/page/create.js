@@ -95,7 +95,6 @@ export async function getServerSideProps(context) {
 
     const {req} = context;
     const session = await getSession({req});
-
     if (!session) {
         return {
             redirect: {
@@ -104,9 +103,7 @@ export async function getServerSideProps(context) {
             },
         };
     }
-
     const menu = await getMenu(context.locale)
-  
     return {props: {
       menu: menu
     }}
