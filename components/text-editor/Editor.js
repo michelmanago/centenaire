@@ -101,9 +101,11 @@ export default function Editor({document, onChange, originalPageId}) {
     );
 
     return (
-        <Slate editor={editor} value={document} onChange={onChangeHandler}>
-            <Toolbar originalPageId={originalPageId} selection={selection} />
-            <Editable renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
-        </Slate>
+        <div className='pagecontent'>
+            <Slate editor={editor} value={document} onChange={onChangeHandler}>
+                <Toolbar originalPageId={originalPageId} selection={selection} />
+                <Editable renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
+            </Slate>
+        </div>
     );
 }
