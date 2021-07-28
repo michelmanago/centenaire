@@ -32,7 +32,7 @@ export default function Home({menu}) {
       <div className={styles.home}>
         <header className={styles.header + " relative"}>
           <div className={styles.homeBandeauVideoContainer}>
-            <video className={styles.homeBandeauVideo} loop muted autoPlay src="/static/videos/bandeau-centenaire.mp4"></video>
+            <video className={styles.homeBandeauVideo} controls loop muted autoPlay playsInline src="/static/videos/bandeau-centenaire.mp4"></video>
           </div>          
         </header>
         <AppHome  currentLanguage={locale} />
