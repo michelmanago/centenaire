@@ -83,11 +83,7 @@ function renderElement(props) {
                 </div>
             );
         case 'video':
-            return (
-                <video controls>
-                    <source src={element.url} />
-                </video>
-            );
+            return <video controls src={element.url} loop>{children}</video>;
         default:
             // For the default case, we delegate to Slate's default rendering.
             return <DefaultElement {...props} />;

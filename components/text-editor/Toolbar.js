@@ -10,6 +10,7 @@ import {
     unwrapLink,
     toggleTooltip,
     insertImage,
+    insertVideo,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -27,6 +28,7 @@ const MEDIA_STYLES = ['image', 'video'];
 export default function Toolbar({selection, previousSelection, originalPageId, addAttributedMedia}) {
     const [openModalMedia, setOpenModalMedia] = useState(false);
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
+    const [openModalMediaVideo, setOpenModalMediaVideo] = useState(false);
 
     const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
 
@@ -56,6 +58,13 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
         setTimeout(() => addAttributedMedia(media.id), 1000);
         setOpenModalMedia(false);
         console.log('insertImage after:', editor);
+    };
+    const addVideo = media => {
+        console.log(media, editor.selection, selection);
+        insertVideo(editor, `${urlServerMedia}${media.public_path}`);
+        setTimeout(() => addAttributedMedia(media.id), 1000);
+        setOpenModalMediaVideo(false);
+        console.log('insertVideo after:', editor);
     };
     return (
         <div className="text-black toolbar">
@@ -159,7 +168,25 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 onMediaSelected={addImage}
                 submitLabel={'Ajouter le fichier'}
                 originalPageId={originalPageId}
-                accepts={['image', 'audio', 'video', 'document']}
+                accepts={['image']}
+            />
+            <ToolBarButton
+                key={'video'}
+                icon={<Icons type={'video'} />}
+                isActive={getActiveEffect(editor) === 'video'}
+                onMouseDown={event => {
+                    event.preventDefault();
+                    //setOpenImagePopup(true);
+                    setOpenModalMediaVideo(true);
+                }}
+            />
+            <ModalMedia
+                opened={openModalMediaVideo}
+                onClose={() => setOpenModalMediaVideo(false)}
+                onMediaSelected={addVideo}
+                submitLabel={'Ajouter le fichier'}
+                originalPageId={originalPageId}
+                accepts={['video']}
             />
             {/*<Popup
                 className="image-popup"
