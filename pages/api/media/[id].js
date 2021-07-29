@@ -1,5 +1,5 @@
 import { validateMediaLegende } from "../../../components/validate/media"
-import { updateMedia } from "../../../model/media"
+import { getSingleMedia, updateMedia } from "../../../model/media"
 
 export default async function handler(req, res) {
 
@@ -27,8 +27,13 @@ export default async function handler(req, res) {
             const results = await updateMedia(id, fields)
 
             return res.json(results)
-        } 
-        
+        }
+        else if (req.method === 'GET') {
+            const id = req.query.id
+            const results = await getSingleMedia(id);
+
+            return res.json(results);
+        }
         else {
             return res.status(405).json({ message: 'wrong http method' });
         }
