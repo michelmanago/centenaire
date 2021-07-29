@@ -17,7 +17,7 @@ export default function SlateEditor({block, setContent}) {
                 }}
                 onChange={e => {
                     var valueNoNewLine = e.currentTarget.value.replace(/\n\s{2,}/g, ' ');
-                    setContent(valueNoNewLine.replace(/>\s</g, '><'));
+                    setContent(valueNoNewLine.replace(/>\s+</g, '><'));
                 }}
             />
         </>

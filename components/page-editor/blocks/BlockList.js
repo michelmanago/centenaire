@@ -6,7 +6,7 @@ import BlockContentEditor from '../blocks/BlockContentEditor';
 import InputAddBlock from '../inputs/InputAddBlock';
 import InputImportBlock from '../inputs/InputImportBlock';
 
-export default function BlockList({blockList, updateCurrentPage, originalPageId, pages, currentPage}){
+export default function BlockList({blockList, updateCurrentPage, originalPageId, pages, currentPage, addAttributedMedia}){
 
     // utils
 
@@ -122,7 +122,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
         <div className="">
             
             {/* Actions */}
-            <div className="border-2 px-2 py-3 border-dashed mb-10">
+            <div className="px-2 py-3 mb-10 border-2 border-dashed">
                 {/* Input - add block */}
                 <InputAddBlock addBlock={addBlockContent} />
 
@@ -148,6 +148,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
                                 setContent={setBlockContent(block.position)}
                                 removeBlockContent={removeBlockContent(block.position)}
                                 setBlockPosition={setBlockPosition(block.position)}
+                                addAttributedMedia={addAttributedMedia}
                             />
                         )
     

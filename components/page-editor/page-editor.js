@@ -302,7 +302,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 <input
                     onChange={setTitle}
                     value={currentPage.pageName}
-                    className="w-full px-5 py-4 mb-5 border rounded text-xl"
+                    className="w-full px-5 py-4 mb-5 text-xl border rounded"
                     type="text"
                     placeholder="Titre de la page"
                 />
@@ -327,6 +327,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                     originalPageId={originalPageId}
                     pages={pages}
                     currentPage={currentPage}
+                    addAttributedMedia={addAttributedMedia}
                 />
             </div>
 
