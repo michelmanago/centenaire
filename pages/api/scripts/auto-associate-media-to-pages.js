@@ -2,7 +2,8 @@ import { getAllPages } from "../../../model/page";
 import { query } from "../../../lib/db";
 
 
-const ORIGIN_FROM_SERVEURIMAGE = "http://localhost:3333/uploads/centenaire/page/"
+// const ORIGIN_FROM_SERVEURIMAGE = "http://localhost:3333/uploads/centenaire/page/"
+const ORIGIN_FROM_SERVEURIMAGE = "https://api.eglise-russe-ste-genevieve-des-bois.eu/uploads/centenaire/page/"
 
 
 
@@ -11,7 +12,8 @@ export default async function handler(req, res) {
 
         if(req.method === 'POST'){
 
-            const results = await run(true)
+            let exec = typeof req.query.exec === "undefined" ? false : true
+            const results = await run(!exec)
 
             return res.json(results)
         }
