@@ -11,8 +11,6 @@ export default async function handler(req, res) {
             // body
             const id = req.query.id
             const fields = req.body
-
-            console.log("ff", fields)
             
             if(!id){
                 return res.status(400).json({
@@ -25,10 +23,14 @@ export default async function handler(req, res) {
                 return res.status(400).json("legende is invalid")
             } 
 
-            // do
-            const results = await updateMedia(id, fields)
+            // update media
+            await updateMedia(id, fields)
 
-            return res.json(results)
+            // get fresh new media
+            const newMedia = await getSingleMedia(id)
+
+            
+            return res.json(newMedia)
         }
         else if (req.method === 'GET') {
             const id = req.query.id
@@ -36,6 +38,7 @@ export default async function handler(req, res) {
 
             return res.json(results);
         }
+        
         else {
             return res.status(405).json({ message: 'wrong http method' });
         }

@@ -27,6 +27,7 @@ export default async function fetchUpdateMedia(media_id, fields){
 
     } catch (error) {
         console.log("FetchUpdateMedia", error)
+        throw new Error(error)
     }
 
 
