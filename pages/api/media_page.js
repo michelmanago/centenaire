@@ -1,4 +1,3 @@
-import { getMedias } from "../../dao/media";
 import { dissociateMediaFromPage } from "../../model/media_page";
 
 export default async function handler(req, res) {

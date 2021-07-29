@@ -13,7 +13,7 @@ import {getSession, useSession} from 'next-auth/client';
 
 // utils
 import { toMysqlFormat } from "../../../utils/utils";
-import attributePageToMedia, { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
+import { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
 
 export default function PageEditorCreate({menu}) {
 

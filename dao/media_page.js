@@ -13,6 +13,21 @@ export async function insertMediaPage(media_id, page_id){
 
 }
 
+export async function selectMediaPage(media_id, page_id){
+
+    const res = await query(`
+        SELECT 
+            id
+        FROM 
+            media_page
+        WHERE 
+            media_id = ? AND page_id = ?
+    `, [media_id, page_id]);
+
+    return res.length ? res[0] : null
+
+}
+
 export async function deleteMediaPage(media_id, page_id){
 
     const res = await query(`

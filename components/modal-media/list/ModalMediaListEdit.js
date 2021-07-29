@@ -15,7 +15,7 @@ import fetchDissociateMediaFromPage from "../../../utils/fetch/fetchDissociateMe
 import IconUnlink from "../../icons/IconUnlink"
 
 
-export default function ModalMediaListEdit({media, deleteMediaFromList, updateMediaFromList, hasModified, setHasModified, originalPageId}){
+export default function ModalMediaListEdit({media, setEdited, deleteMediaFromList, updateMediaFromList, hasModified, setHasModified, originalPageId}){
 
     // utils
 
@@ -101,9 +101,14 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
             const res = await fetchDissociateMediaFromPage(media_id, originalPageId)
 
             // unlink in state
-            // const newMedia = {
-            //     ...media,
-            // }
+            const newMedia = {
+                ...media,
+                pages: media.pages ? media.pages.filter(page => page.id !== originalPageId) : []
+            }
+
+            // unselect this media
+            setEdited(null)
+
             updateMediaFromList(newMedia)
 
         } catch (error) {
@@ -170,6 +175,8 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
     // others
     const filename = media && getFilenameFromPath(media)
+    const linkedToThisPage = media.pages && media.pages.some(page => page.id === originalPageId)
+    const showAssociationSection = linkedToThisPage
 
     return (
         <div>
@@ -209,16 +216,24 @@ export default function ModalMediaListEdit({media, deleteMediaFromList, updateMe
 
                             {/* Association */}
                             
-                            <div className="my-3">
-                                <p>Associations</p>
-                                <div>
-                                    {/* Unlink */}
-                                    <button onClick={(e) => onUnlink(media.id)} className="mb-5 inline-flex justify-end py-1 opacity-50 items-center px-2 rounded border border-gray-600 bg-gray-300 hover:bg-gray-400 z-20">
-                                        <IconUnlink size="24px"/>
-                                        <span className="ml-2">Dissocier de la page</span>
-                                    </button>
-                                </div>
-                            </div>
+                            {
+                                showAssociationSection && (
+                                    <div className="my-3">
+                                        <p>Associations</p>
+                                        {
+                                            linkedToThisPage && (
+                                                <div>
+                                                    {/* Unlink */}
+                                                    <button onClick={(e) => onUnlink(media.id)} className="mb-5 inline-flex justify-end py-1 opacity-50 items-center px-2 rounded border border-gray-600 bg-gray-300 hover:bg-gray-400 z-20">
+                                                        <IconUnlink size="24px"/>
+                                                        <span className="ml-2">Dissocier de la page</span>
+                                                    </button>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                )
+                            }
 
 
                             {/* Form */}

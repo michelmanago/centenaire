@@ -99,6 +99,10 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     }
 
+    const removeAttributedMedia = media_id => {
+        setAttributedMedia(attributedMedia.filter(id => id !== media_id))
+    }
+
     const generateEmptyTitles = form => {
 
         let output = []
@@ -337,6 +341,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 updateCurrentPage={updateCurrentPage}
                 updatePages={updatePages}
                 addAttributedMedia={addAttributedMedia}
+                removeAttributedMedia={removeAttributedMedia}
                 isEditing={isEditing}
                 originalPageId={originalPageId}
 
