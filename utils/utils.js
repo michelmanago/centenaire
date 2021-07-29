@@ -108,3 +108,15 @@ export function separateBy(array, fn){
 }
 
 export function voidFunction(){}
+
+export function getPagesSortedByPosition(list)  {
+
+    if(!list) return []
+
+
+    const sortedPages = [...list]
+    sortedPages.sort((a, b) => a.position - b.position)
+
+    return sortedPages
+
+}
