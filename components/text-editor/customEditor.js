@@ -54,7 +54,7 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
                     </div>
                     <div className="bg-white border border-black h-screen-90">
                         {/*<Editor block={block} setContent={setContent} defuntId={defuntId} />*/}
-                        <Editor originalPageId={originalPageId} document={blockContent} onChange={onChangeEditor} />
+                        <Editor originalPageId={originalPageId} document={blockContent} onChange={onChangeEditor} addAttributedMedia={addAttributedMedia} />
                     </div>
                 </>
             ) : (
