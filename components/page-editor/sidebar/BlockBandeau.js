@@ -9,11 +9,12 @@ import ModalMedia from "../../modal-media/ModalMedia";
 import PageEditorSidebarBlock from "./page-editor-sidebar-block";
 
 
-export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_id, originalPageId}){
+export default function BlockBandeau({updatePages, addAttributedMedia, removeAttributedMedia, bandeau_id, originalPageId}){
 
     // states
     const [opened, setOpened] = useState(false)
     const [src, setSrc] = useState("")
+    const [selectedMedia, setSelectedMedia] = useState(null)
 
     // methods
     const onMediaSelected = media => {
@@ -28,11 +29,23 @@ export default function BlockBandeau({updatePages, addAttributedMedia, bandeau_i
             bandeau_id: media_id
         })
 
+        // save in state
+        setSelectedMedia(media_id)
+
         // add to attributed media
         addAttributedMedia(media_id)
     }
     const onRemove = () => {
+
+        // remove from attributed media
+        removeAttributedMedia(selectedMedia)
+
+        // remove from page
         updatePages({bandeau_id: null})
+
+        // unsave
+        setSelectedMedia(null)
+        
     }
 
 
