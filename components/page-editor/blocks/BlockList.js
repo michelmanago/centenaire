@@ -4,8 +4,9 @@ import BlockContentEditor from '../blocks/BlockContentEditor';
 
 // utils
 import InputAddBlock from '../inputs/InputAddBlock';
+import InputImportBlock from '../inputs/InputImportBlock';
 
-export default function BlockList({blockList, updateCurrentPage}){
+export default function BlockList({blockList, updateCurrentPage, originalPageId, pages, currentPage, addAttributedMedia}){
 
     // utils
 
@@ -118,15 +119,22 @@ export default function BlockList({blockList, updateCurrentPage}){
     const list = blockList && Array.isArray(blockList) ? blockList : []
 
     return (
-        <div>
-            {/* Input - add block */}
-            <InputAddBlock addBlock={addBlockContent} />
+        <div className="">
+            
+            {/* Actions */}
+            <div className="px-2 py-3 mb-10 border-2 border-dashed">
+                {/* Input - add block */}
+                <InputAddBlock addBlock={addBlockContent} />
 
+                {/* Import */}
+                <InputImportBlock key={currentPage.language} updateCurrentPage={updateCurrentPage} pages={pages} currentPage={currentPage}/>
+            </div>
+            
             {/* List */}
             {
+               
                 list && (
                     sortedBlocks(list).map((block, blockIndex) => {
-    
                         
                         return (
                             <BlockContentEditor 
@@ -134,11 +142,13 @@ export default function BlockList({blockList, updateCurrentPage}){
                                 type={block.type}
                                 content={block.content}
                                 position={block.position}
+                                originalPageId={originalPageId}
     
                                 // actions
                                 setContent={setBlockContent(block.position)}
                                 removeBlockContent={removeBlockContent(block.position)}
                                 setBlockPosition={setBlockPosition(block.position)}
+                                addAttributedMedia={addAttributedMedia}
                             />
                         )
     

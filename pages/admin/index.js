@@ -1,23 +1,19 @@
 // libs
 import {getSession, useSession} from 'next-auth/client';
 import Link from 'next/link';
-import Head from "next/head"
+import Head from 'next/head';
 
 // components
 import Header from '../../components/header/header';
 
 // models
-import { getMenu } from '../../model/menu';
+import {getMenu} from '../../model/menu';
 
-// styles
-const blockLinkStyles = {
-    width: 200,
-    height: 100
-}
-
+const linkStyles = {
+    width: 300,
+};
 
 export default function AdminIndex({menu}) {
-
     const [session] = useSession();
 
     return (
@@ -27,47 +23,40 @@ export default function AdminIndex({menu}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {menu && <Header menu={menu.data}/>}
+            {menu && <Header menu={menu.data} />}
             <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
-                <h1 className="text-4xl mb-5 font-semibold">Administrer le site</h1>
-                {session && session.userBase.role === 'admin' ? (
-                    <div className='flex flex-row'>
-                        <Link href="/admin/signup">
-                            <a className='px-2 py-1 mr-2 text-white rounded bg-pblue hover:bg-pblue-dark'>Ajouter un User</a>
-                        </Link>
-                        <Link href="/admin/page">
-                            <a className='px-2 py-1 text-white rounded bg-pblue hover:bg-pblue-dark'>Administrer les pages</a>
-                        </Link>
-                    </div>
-                ) : (
-                    <div className="flex gap-x-5">
-                        <BlockLink label="Catégories" href="/admin/category"/>
-                        <BlockLink label="Menus" href="/editor-menu"/>
-                        <BlockLink label="Pages" href="/admin/page"/>
-                    </div>
-                )}
+                <h1 className="mb-5 text-4xl font-semibold">Administrer le site</h1>
+                <div className="flex flex-col">
+                    <BlockLink label="Pages" href="/admin/page" />
+                    <BlockLink label="Catégories" href="/admin/category" />
+                    <BlockLink label="Menus de navigation" href="/admin/editor-menu" />
+                    <BlockLink label="Utilisateurs" href="/admin/users/create" />
+                </div>
             </main>
         </>
     );
 }
 
-
 const BlockLink = ({label, href}) => (
-    <Link href={href}>
-        <a style={blockLinkStyles} className='inline-block flex justify-center items-center font-medium rounded h-30 w-10 bg-gray-600 hover:bg-gray-700 text-white'>{label}</a>
-    </Link>
-)
-
+    <div>
+        <Link href={href}>
+            <a
+                style={linkStyles}
+                className="inline-block px-3 py-1 mb-3 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"
+            >
+                {label}
+            </a>
+        </Link>
+    </div>
+);
 
 export async function getServerSideProps(context) {
     const {req, locale} = context;
     const session = await getSession({req});
 
-    const menu = await getMenu(locale)
+    const menu = await getMenu(locale);
 
-
-    console.warn("ENLEVER FALSE")
-    if (false && !session)
+    if (!session)
         return {
             redirect: {
                 permanent: false,
@@ -76,7 +65,7 @@ export async function getServerSideProps(context) {
         };
     return {
         props: {
-            menu
+            menu,
         },
     };
 }

@@ -32,6 +32,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
         // list section
         const [list, setList] = useState([])
         const [edited, setEdited] = useState(null)
+    const [hasModified, setHasModified] = useState(false)
 
     // utils
 
@@ -54,18 +55,39 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
     // methods
 
+    const onChangeTab = tab => {
+
+        if(!hasModified || (hasModified && confirm("Êtes vous sûr de vouloir quitter l'édition du média sans sauvegarder vos modifications ?"))){
+            setTab(tab)
+            setHasModified(false)
+        }
+
+    }
+
     const onCloseModal = () => {
 
-        // reset modal
-        setEdited(false)
-        setTab(TAB_MEDIA_LIST)
+        if(!hasModified || (hasModified && confirm("Êtes vous sûr de vouloir quitter l'édition du média sans sauvegarder vos modifications ?"))){
 
-        // call props.close()
-        onClose()
+            // reset modal
+            setEdited(false)
+            setTab(TAB_MEDIA_LIST)
+            setHasModified(false)
+
+
+            // call props.close()
+            onClose()
+
+        }
     }
 
     const onSubmitMedia = () => {
-        onMediaSelected(edited)
+
+        if(!hasModified || (hasModified && confirm("Êtes vous sûr de vouloir quitter l'édition du média sans sauvegarder vos modifications ?"))){
+            onMediaSelected(edited)
+            setHasModified(false)
+
+        }
+
     }
 
     const onMediaUploaded = media => {
@@ -91,6 +113,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                 return <ModalMediaUpload 
                             onMediaUploaded={onMediaUploaded}
                             accepts={accepts}
+                            originalPageId={originalPageId}
                         />
             break;
             case TAB_MEDIA_LIST:
@@ -101,6 +124,8 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         edited={edited} setEdited={setEdited} 
                         list={list}
                         accepts={accepts}
+                        hasModified={hasModified}
+                        setHasModified={setHasModified}
                     />
             break;
             default:
@@ -113,7 +138,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
     // lifecycle
     useEffect(async () => {
 
-        const media = await fetchMediaList(null, accepts)
+        const media = await fetchMediaList(null, accepts, true)
         setList(media)
 
         // pre select a media
@@ -128,12 +153,15 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
             lockScroll={true}
             open={opened}
             contentStyle={contentStyles}
-            onClose={onClose}
+            onClose={onCloseModal}
+
+            closeOnEscape={false} // because this event can not be prevented
+            closeOnDocumentClick={false} // because this event can not be prevented
         >
             <div className="relative w-full h-full flex flex-col">
 
                 {/* Close */}
-                <button onClick={onClose} className="absolute text-gray-700 hover:text-gray-800 right-0 top-0">
+                <button onClick={onCloseModal} className="absolute text-gray-700 hover:text-gray-800 right-0 top-0">
                     <IconClose/>
                 </button>
 
@@ -144,8 +172,8 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
                     {/* Tabs */}
                     <div className="">
-                        <TabItem isCurrent={tab === TAB_UPLOAD} onClick={() => setTab(TAB_UPLOAD)} label="Téléverser des fichiers"/>
-                        <TabItem isCurrent={tab === TAB_MEDIA_LIST} onClick={() => setTab(TAB_MEDIA_LIST)} label="Médiathèque"/>
+                        <TabItem isCurrent={tab === TAB_UPLOAD} onClick={() => onChangeTab(TAB_UPLOAD)} label="Téléverser des fichiers"/>
+                        <TabItem isCurrent={tab === TAB_MEDIA_LIST} onClick={() => onChangeTab(TAB_MEDIA_LIST)} label="Médiathèque"/>
                     </div>
 
                 </div>

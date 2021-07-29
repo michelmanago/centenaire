@@ -97,7 +97,7 @@ export default function Login({providers}) {
                             </Link>
                             <p className="flex-1 mx-4 my-1 text-gray-500 text-md sm:my-auto">or</p>
                             <Link
-                                href={router.query.redirect ? `/signup?redirect=${router.query.redirect}` : `/signup`}
+                                href={router.query.redirect ? `/admin/signup?redirect=${router.query.redirect}` : `/admin/signup`}
                             >
                                 <a className="underline flex-2">Create an Account</a>
                             </Link>

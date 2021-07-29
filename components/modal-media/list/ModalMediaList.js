@@ -10,13 +10,14 @@ import IconVideo from "../../icons/IconVideo"
 import IconHeadphone from "../../icons/IconHeadphone"
 import IconDocument from "../../icons/IconDocument"
 import IconUnknown from "../../icons/IconUnknown"
+import { getFilenameFromPath } from "../../../utils/utils-media"
 
 // styles
 const imageItemContainerStyles = {
     paddingTop: "100%"
 }
 
-export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts}){
+export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
 
     // states
     const [filterByPage, setFilterByPage] = useState(!!originalPageId)
@@ -24,18 +25,26 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     // methods
     const onSelectMedia = (media) => e => {
 
-        // close current
-        if(edited && edited.id === media.id){
-            setEdited(null)
-        } 
-        
-        // switch
-        else {
-            setEdited(media)
+        if(!hasModified || (hasModified && confirm("Êtes vous sûr de vouloir quitter l'édition du média sans sauvegarder vos modifications ?"))){
+
+            // close current
+            if(edited && edited.id === media.id){
+                setEdited(null)
+            } 
+            
+            // switch
+            else {
+                setEdited(media)
+            }
+
+            // reset after switched
+            setHasModified(false)
+            
         }
     }
 
     // helpers
+
     const renderMediaPreview = media => {
         switch(media.type){
             case "video":
@@ -104,6 +113,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
                             const isSelected = edited && edited.id === image.id
                             const type = image.type
+                            const filename = getFilenameFromPath(image)
 
                             return (
                                 <button 
@@ -116,7 +126,13 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                                     style={imageItemContainerStyles} 
                                     className={`relative rounded border-4 border-transparent ${isSelected ? "border-green-400" : ""}`}
                                     >   
+                                        {/* Image preview */}
                                         {renderMediaPreview(image)}
+
+                                        {/* Title */}
+                                        <div className="truncate px-3 text-sm py-1 opacity-70 z-10 absolute bottom-0 left-0 w-full bg-gray-500 text-white">
+                                            {filename}
+                                        </div>
                                     </div>
                                 </button>
                             )
@@ -128,7 +144,7 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
             {/* Sidebar */}
             <div className="w-1/3 bg-gray-100 overflow-auto">
-                {edited && <ModalMediaListEdit key={edited.id} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited}/>}
+                {edited && <ModalMediaListEdit key={edited.id} updateMediaFromList={updateMediaFromList} deleteMediaFromList={deleteMediaFromList} media={edited} hasModified={hasModified} setHasModified={setHasModified} />}
             </div>
         </div>
     )

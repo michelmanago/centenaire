@@ -1,11 +1,14 @@
-// libs
+// utils
+import { CATEGORIES } from '../../../utils/parameters';
 
 // components
 import { capitalize } from "../../../utils/utils"
 import PageEditorSidebarBlock from "./page-editor-sidebar-block"
 
 
-export default function PageEditCategory({updatePages, category, categories}){
+const categories = Object.values(CATEGORIES);
+
+export default function PageEditCategory({updatePages, category}){
 
     // synchronized
     const setCategory = e => {

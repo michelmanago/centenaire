@@ -5,8 +5,8 @@ import { useState } from "react";
 const InputAddBlock = ({addBlock}) => {
     const [type, setType] = useState('text');
     return (
-        <div>
-            <div>Ajouter un Bloc</div>
+        <div className="">
+            <p className="text-lg font-medium pl-1">Ajouter un Bloc</p>
             <select
                 className="px-1 mx-1 border rounded"
                 defaultValue={type}
