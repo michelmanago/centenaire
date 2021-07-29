@@ -10,6 +10,7 @@ import BlockBandeau from './BlockBandeau';
 const PageEditorSidebar = ({
     updateCurrentPage,
     addAttributedMedia,
+    removeAttributedMedia,
     isEditing,
     originalPageId,
 
@@ -63,6 +64,7 @@ const PageEditorSidebar = ({
             <BlockBandeau
                 updatePages={updatePages}
                 addAttributedMedia={addAttributedMedia}
+                removeAttributedMedia={removeAttributedMedia}
                 bandeau_id={bandeau_id}
                 originalPageId={originalPageId}
             />

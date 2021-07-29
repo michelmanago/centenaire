@@ -1,7 +1,7 @@
 import { getFileType } from "../utils-media"
 import { getServerImageEndpoint } from "../utils-serveur-image"
 
-export default async function fetchCreateMedia(file, defaultLegende, originalPageId){
+export default async function fetchCreateMedia(file){
 
     try {
 
@@ -10,11 +10,10 @@ export default async function fetchCreateMedia(file, defaultLegende, originalPag
         // form
         const formdata = new FormData()
         formdata.append("file", file, file.name)
-        formdata.append("legende", JSON.stringify(defaultLegende))
+
         // get type
         const fileType = getFileType(file.type)
         formdata.append("type", fileType)
-        formdata.append("page_id", originalPageId)
 
         // Fetch
         let results = null
