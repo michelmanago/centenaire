@@ -14,10 +14,6 @@ const KeyBindings = {
             toggleStyle(editor, 'italic');
             return;
         }
-        if (isHotkey('mod+c', event)) {
-            toggleStyle(editor, 'code');
-            return;
-        }
         if (isHotkey('mod+u', event)) {
             toggleStyle(editor, 'underline');
             return;
@@ -85,6 +81,12 @@ function renderElement(props) {
                     </div>
                     {children}
                 </div>
+            );
+        case 'video':
+            return (
+                <video controls>
+                    <source src={element.url} />
+                </video>
             );
         default:
             // For the default case, we delegate to Slate's default rendering.
