@@ -90,6 +90,7 @@ export async function selectSingleMedia(media_id){
         `
             SELECT 
                 m.*,
+                p.pageSlug, p.pageName,
                 mp.page_id
             FROM medias m
                 LEFT JOIN media_page mp

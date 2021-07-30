@@ -1,6 +1,5 @@
 // libs
 
-import { useRouter } from "next/router";
 import { useRef, useState } from "react"
 
 // utils
@@ -11,7 +10,6 @@ import attributePageToMedia from "../../../utils/fetch/attributePageToMedia"
 export default function ModalMediaUpload({onMediaUploaded, accepts, originalPageId}){
 
     // router
-    const {locales} = useRouter()
 
     // ref
     const inputRef = useRef()
@@ -25,6 +23,31 @@ export default function ModalMediaUpload({onMediaUploaded, accepts, originalPage
             inputRef.current.value = ""
         }
     }
+
+    const uploadFile = async file => {
+
+        try {
+            
+            const media = await fetchCreateMedia(file)
+                
+            if(media){
+                console.log("will associate")
+                const mediaAssociated = await attributePageToMedia(originalPageId, media.id)
+    
+                onMediaUploaded(mediaAssociated)
+            } else {
+                alert("not ok")
+                resetInput()
+            }
+
+        } catch (error) {
+            alert("not ok")
+            resetInput()
+
+            console.log(error)
+        }
+
+    }
     
     // methods
     const onFileChange = async event => {
@@ -37,22 +60,7 @@ export default function ModalMediaUpload({onMediaUploaded, accepts, originalPage
 
             if(isValidFileType(accepts, file.type)){
 
-                // default .legende
-                // const defaultLegende = locales.map(locale => ({
-                //     locale,
-                //     value: ""
-                // }))
-
-                const media = await fetchCreateMedia(file)
-                
-                if(media){
-                    const mediaAssociated = await attributePageToMedia(originalPageId, media.id)
-
-                    onMediaUploaded(mediaAssociated)
-                } else {
-                    alert("not ok")
-                    resetInput()
-                }
+                await uploadFile(file)
 
             } else {
                 alert("Le format n'est pas accepté.")
@@ -83,7 +91,13 @@ export default function ModalMediaUpload({onMediaUploaded, accepts, originalPage
             <div className="border bg-gray-100 hover:bg-gray-200 relative w-1/3 cursor-pointer">
 
                 {/* Real */}
-                <input ref={inputRef} accepts={acceptableFilesAttribute} onChange={onFileChange} className="cursor-pointer absolute w-full h-full left-0 top-0 opacity-0" type="file" />
+                <input 
+                    ref={inputRef} 
+                    accepts={acceptableFilesAttribute} 
+                    onChange={onFileChange} 
+                    className="cursor-pointer absolute w-full h-full left-0 top-0 opacity-0" 
+                    type="file" 
+                />
 
                 {/* Fake */}
                 <div className="pointer-events-none relative py-3 rounded text-center border border-blue-600 text-blue-600">Séléctionner des fichiers</div>

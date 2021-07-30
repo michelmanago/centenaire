@@ -12,15 +12,15 @@ export default function PageWithCategory({ page }) {
     return (
         <div className="flex flex-col lg:flex-row mt-8 ">
 
-            {/* Nav */}
+            {/* Nav mobile */}
             <div className="lg:hidden">
-                <SortedNavListMobile list={page.nav} />
+                <SortedNavListMobile list={page.nav} category={page.page}/>
             </div>
 
-            {/* Nav mobile */}
+            {/* Nav desktop */}
             {page.nav &&
-                <div className=" lg:block hidden   " >
-                    <SortedNavList list={page.nav} name={page.page} />
+                <div className="lg:block hidden w-1/3" >
+                    <SortedNavList list={page.nav} />
                 </div>
             }
 

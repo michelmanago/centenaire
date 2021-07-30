@@ -22,6 +22,7 @@ export async function updateMedia(media_id, fields){
     // associate media
     if(fields.page_id){
         await attributeMediaToPage(media_id, fields.page_id)
+
     }
 
     return the_media

@@ -15,7 +15,7 @@ export default function SortedNavList({list}){
     }
 
     return (
-        <div className="w-1/3 mr-5">
+        <div className="mr-5">
             <ul className="list-disc">
                 {
                     getSortedPages().map(page => {

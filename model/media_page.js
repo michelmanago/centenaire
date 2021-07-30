@@ -1,7 +1,13 @@
 import { insertMediaPage, deleteMediaPage, selectMediaPage } from '../dao/media_page'
-import { query } from '../lib/db'
 
 // dao
+
+export async function getMediaPage(media_id, page_id){
+
+    const res = await selectMediaPage(media_id, page_id)
+    
+    return res
+}
 
 export async function attributeMediaToPage(media_id, page_id){
 
@@ -11,13 +17,6 @@ export async function attributeMediaToPage(media_id, page_id){
     if(!association){
         const res = await insertMediaPage(media_id, page_id)
     }
-}
-
-export async function getMediaPage(media_id, page_id){
-
-    const res = await selectMediaPage(media_id, page_id)
-    
-    return res
 }
 
 export async function dissociateMediaFromPage(media_id, page_id){
