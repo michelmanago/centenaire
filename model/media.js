@@ -1,6 +1,6 @@
 
 // dao
-import { getMedias, putSingleMedia, selectSingleMedia } from '../dao/media'
+import { putSingleMedia, selectMedia, selectMediaWithPages, selectSingleMedia } from '../dao/media'
 import { attributeMediaToPage } from './media_page'
 
 export async function updateMedia(media_id, fields){
@@ -41,9 +41,16 @@ export async function getSingleMedia(media_id){
 
 }
 
-export async function getMediaList(page_id, get_associated_page){
+export async function getMediaList(page_id, pageOffset){
 
-    const mediaList = await getMedias(page_id, get_associated_page)
+    const mediaList = await selectMedia(page_id)
+    return mediaList
+
+}
+
+export async function getMediaWithPages(page_id, pageOffset){
+
+    const mediaList = await selectMediaWithPages(page_id, undefined, pageOffset)
     return mediaList
 
 }

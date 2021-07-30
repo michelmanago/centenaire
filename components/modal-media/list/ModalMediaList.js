@@ -14,13 +14,14 @@ import IconLinked from "../../icons/IconLinked"
 
 // utils
 import { getFilenameFromPath } from "../../../utils/utils-media"
+import ModalMediaListPagination from "./ModalMediaListPagination"
 
 // styles
 const imageItemContainerStyles = {
     paddingTop: "100%"
 }
 
-export default function ModalMediaList({list, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
+export default function ModalMediaList({list, changePaginationPage, pagination, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
 
     // states
     const [filterByPage, setFilterByPage] = useState(!!originalPageId)
@@ -47,21 +48,33 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
 
     // helpers
 
-    const getAssociatedMediaOnly = list => {
+    const getPaginatedList = list => {
 
-        // we can filter by page
-        if(originalPageId && filterByPage){
-            return list.filter(mediaItem => {
 
-                // this media is associated to a page with id = originalPageId                
-                return mediaItem.pages && mediaItem.pages.find(page => page.id === originalPageId)
+        if(pagination){
 
-            })
-        }
+            const {item_per_page, page, page_count} = pagination
+            const start = page * item_per_page
 
-        else {
+            const slicedList = list.slice(start, start + item_per_page)
+
+            console.log(slicedList.length, list.length, pagination, start)
+
+            return slicedList
+        } else {
             return list
         }
+
+    }
+
+    const getAssociatedMediaOnly = list => {
+
+        return list.filter(mediaItem => {
+
+            // this media is associated to a page with id = originalPageId                
+            return mediaItem.pages && mediaItem.pages.find(page => page.id === originalPageId)
+
+        })
     }
 
     const renderMediaPreview = media => {
@@ -103,17 +116,18 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
     }
 
     // others
+    const weCanFilterByPage = (originalPageId && filterByPage)
     // only show acceptable files and files with no type
     const filteredByType = list.filter(l => accepts.includes(l.type) || !l.type)
     // filter by page
-    const filteredList = getAssociatedMediaOnly(filteredByType)
+    const filteredList = weCanFilterByPage ? getAssociatedMediaOnly(filteredByType) : filteredByType
 
     return (
         <div className="h-full flex">
             
             
             {/* List */}
-            <div className="w-2/3 overflow-auto h-full pr-2">
+            <div className="w-2/3 overflow-hidden h-full pr-2">
 
                 {/* Filters */}
                 {/* Not allowed to filter when creating the page because there is no media attributed to this page currently */}
@@ -126,13 +140,17 @@ export default function ModalMediaList({list, edited, setEdited, deleteMediaFrom
                     )
                 }
 
+                {/* Pagination */}
+                {
+                    pagination && <ModalMediaListPagination changePaginationPage={changePaginationPage} pagination={pagination} />
+                }
+
                 {/* List */}
-                <div className="">
+                <div className="overflow-auto h-full">
                     {
-                        filteredList.map(image => {
+                        getPaginatedList(filteredList).map(image => {
 
                             const isSelected = edited && edited.id === image.id
-                            const type = image.type
                             const filename = getFilenameFromPath(image)
                             const linkedToThisPage = image.pages && image.pages.some(page => page.id === originalPageId)
 

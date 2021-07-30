@@ -1,15 +1,19 @@
 
-export default async function fetchMediaList(page_id = null, accepts, get_associated_page = false){
+export default async function fetchMediaList(page_id, with_pages = false, pageOffset = 0){
 
 
     const url = new URL(window.origin + "/api/media")
 
+    // pagination
+    url.searchParams.append("page_offset", pageOffset)
+
+    // of page
     if(page_id){
-        url.searchParams.append("page", page_id)
+        url.searchParams.append("page_id", page_id)
     }
 
-    if(get_associated_page){
-        url.searchParams.append("get_associated_page", true)
+    if(with_pages){
+        url.searchParams.append("with_pages", true)
     }
 
     try {
@@ -31,7 +35,7 @@ export default async function fetchMediaList(page_id = null, accepts, get_associ
 
     } catch (error) {
         console.log("fetchMediaList", error)
-        return []
+        throw new Error(error.message)
     }
 
 }

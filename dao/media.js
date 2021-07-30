@@ -40,45 +40,99 @@ const groupedByMedia = results => {
 }
 
 // SELECT ALL 
-export async function getMedias(page_id, get_associated_page) {
-
+export async function selectMedia(page_id) {
 
     let queryString = ""
-    if(get_associated_page){
-        queryString = `
-            SELECT 
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
-                p.pageSlug, p.pageName,
-                mp.page_id
-            FROM medias m
-            LEFT JOIN media_page mp
-                ON mp.media_id = m.id
-            LEFT JOIN pagecontent p
-                ON p.id = mp.page_id
-        `
-    } else {
-        queryString = `
-            SELECT 
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path
-            FROM medias m
-            LEFT JOIN media_page mp
-                ON mp.media_id = m.id
-            LEFT JOIN pagecontent p
-                ON p.id = mp.page_id
-        `
-    }
+    let parameters = []
+    
+    queryString = `
+        SELECT 
+            m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path
+        FROM medias m
+        LEFT JOIN media_page mp
+            ON mp.media_id = m.id
+        LEFT JOIN pagecontent p
+            ON p.id = mp.page_id
+    `
 
+    // need to associate pages
     if(page_id){
         queryString += `
             WHERE mp.page_id = ?
         `
+        parameters.push(page_id)
+
     }
 
-    const res = await query(queryString, page_id ? [page_id] : []);
+    // order by most recent
+    queryString+= `
+        ORDER BY id DESC
+    `
 
-    let results = JSON.parse(JSON.stringify(res))
+    const res = await query(queryString, parameters);
+    const data = JSON.parse(JSON.stringify(res))
+    return groupedByMedia(data)
 
-    return groupedByMedia(results)
+}
+
+export async function selectMediaWithPages(page_id, limit = 15, pageOffset = 0) {
+
+    console.log({pageOffset})
+
+    const needPagination = limit !== -1
+
+    let queryString = ""
+    let parameters = []
+    let pagination = null
+    
+    // base
+    queryString += `
+        SELECT 
+            m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
+            p.pageSlug, p.pageName,
+            mp.page_id
+        FROM medias m
+        LEFT JOIN media_page mp
+            ON mp.media_id = m.id
+        LEFT JOIN pagecontent p
+            ON p.id = mp.page_id
+    `
+
+    // only media associated with this page_id
+    if(page_id){
+        queryString += `
+            WHERE mp.page_id = ?
+        `
+        parameters.push(page_id)
+    }
+
+    // order by most recent
+    queryString+= `
+        ORDER BY id DESC
+    `
+
+    // pagination
+    if(needPagination){
+        queryString += `
+            LIMIT ? OFFSET ?
+        `
+        parameters.push(limit, limit * pageOffset)
+
+        pagination = await query(`
+            SELECT COUNT(id) as media_count FROM medias
+            ${page_id ? "WHERE mp.page_id = ?" : ""}
+        `, page_id ? [page_id] : [])
+    }
+
+    
+
+    const res = await query(queryString, parameters)
+    const data = JSON.parse(JSON.stringify(res))
+    return {
+        array: groupedByMedia(data),
+        count: pagination ? pagination[0].media_count : undefined
+    }
+
 }
 
 

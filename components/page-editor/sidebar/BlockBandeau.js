@@ -71,11 +71,13 @@ export default function BlockBandeau({updatePages, addAttributedMedia, removeAtt
             setSrc("")
         }
 
+        console.warn("REMOVE THIS CODE")
+
     }, [bandeau_id])
 
-    // useEffect(() => {
-    //     setOpened(true)
-    // }, [])
+    useEffect(() => {
+        setOpened(true)
+    }, [])
 
     return (
         <PageEditorSidebarBlock title="Bandeau de page">

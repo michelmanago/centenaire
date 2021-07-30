@@ -31,10 +31,18 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
         // list section
         const [list, setList] = useState([])
+        const [pagination, setPagination] = useState(null)
         const [edited, setEdited] = useState(null)
     const [hasModified, setHasModified] = useState(false)
 
     // utils
+
+    const changePaginationPage = newPage => {
+        setPagination({
+            ...pagination,
+            page: newPage
+        })
+    }
 
     const deleteMediaFromList = mediaId => {
 
@@ -123,6 +131,8 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         deleteMediaFromList={deleteMediaFromList} 
                         edited={edited} setEdited={setEdited} 
                         list={list}
+                        changePaginationPage={changePaginationPage}
+                        pagination={pagination}
                         accepts={accepts}
                         hasModified={hasModified}
                         setHasModified={setHasModified}
@@ -136,10 +146,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
     const canSubmit = !!edited
 
     // lifecycle
-    useEffect(async () => {
-
-        const media = await fetchMediaList(null, accepts, true)
-        setList(media)
+    useEffect(() => {
 
         // pre select a media
         if(preSelectedMedia){
@@ -148,6 +155,37 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
     }, [])
 
+    useEffect(async () => {
+
+        try {
+            
+            const media = await fetchMediaList(null, true, pagination ? pagination.page : 0)
+
+            // set list
+            setList([
+                ...list,
+                ...media.array,
+            ])
+
+            // pagination (first time only)
+            if(!pagination && media.count){
+                setPagination({
+                    item_count: media.count,
+                    item_per_page: 15,
+                    page_count: Math.ceil(media.count / 15),
+                    page: 0,
+                    
+                })
+            }
+            
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }, [pagination])
+    
+    
     return (
         <Popup 
             lockScroll={true}
@@ -175,6 +213,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         <TabItem isCurrent={tab === TAB_UPLOAD} onClick={() => onChangeTab(TAB_UPLOAD)} label="Téléverser des fichiers"/>
                         <TabItem isCurrent={tab === TAB_MEDIA_LIST} onClick={() => onChangeTab(TAB_MEDIA_LIST)} label="Médiathèque"/>
                     </div>
+                    
 
                 </div>
 
