@@ -30,8 +30,7 @@ export default async function fetchMediaList(page_id = null, accepts, get_associ
         return results
 
     } catch (error) {
-        console.log("fetchMediaList", error)
-        return []
+        throw new Error(error.message)
     }
 
 }

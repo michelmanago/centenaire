@@ -28,10 +28,10 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
-
-        // list section
-        const [list, setList] = useState([])
-        const [edited, setEdited] = useState(null)
+    const [list, setList] = useState([])
+    const [fetching, setFetching] = useState(true)
+    const [hasDoneFirstFetch, setHasDoneFirstFetch] = useState(false)
+    const [edited, setEdited] = useState(null)
     const [hasModified, setHasModified] = useState(false)
 
     // utils
@@ -123,6 +123,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         deleteMediaFromList={deleteMediaFromList} 
                         edited={edited} setEdited={setEdited} 
                         list={list}
+                        fetching={fetching}
                         accepts={accepts}
                         hasModified={hasModified}
                         setHasModified={setHasModified}
@@ -138,15 +139,40 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
     // lifecycle
     useEffect(async () => {
 
-        const media = await fetchMediaList(null, accepts, true)
-        setList(media)
+        if(opened && !hasDoneFirstFetch){
 
-        // pre select a media
-        if(preSelectedMedia){
-            setEdited(media.find(m => m.id === preSelectedMedia))
+            console.log("FETCH HUGE LIST")
+
+            // has first fetched
+            setHasDoneFirstFetch(true)
+
+            try {
+
+                // is loading
+                setFetching(true)
+
+                // fetch list
+                const media = await fetchMediaList(null, accepts, true)
+
+                // has loaded
+                setFetching(false)
+
+                setList(media)
+
+                
+                // pre select a media
+                if(preSelectedMedia){
+                    setEdited(media.find(m => m.id === preSelectedMedia))
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
         }
 
-    }, [])
+    }, [opened])
+
+
 
     return (
         <Popup 
