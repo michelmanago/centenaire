@@ -4,7 +4,7 @@
 // components
 import PageContent from './commons/PageContent';
 import SortedNavList from "./commons/SortedNavList";
-import SortedNavListeMobile from "./commons/SortedNavListeMobile";
+import SortedNavListMobile from "./commons/SortedNavListMobile";
 
 
 export default function PageWithCategory({ page }) {
@@ -14,10 +14,11 @@ export default function PageWithCategory({ page }) {
 
             {/* Nav */}
             <div className="lg:hidden">
-                <SortedNavListeMobile list={page.nav} />
+                <SortedNavListMobile list={page.nav} />
             </div>
-            {page.nav &&
 
+            {/* Nav mobile */}
+            {page.nav &&
                 <div className=" lg:block hidden   " >
                     <SortedNavList list={page.nav} name={page.page} />
                 </div>

@@ -4,7 +4,7 @@ import { getPagesSortedByPosition } from "../../../utils/utils"
 
 
 
-function SortedNavListeMobile({ list }) {
+function SortedNavListMobile({ list }) {
 
     
 
@@ -38,5 +38,5 @@ function SortedNavListeMobile({ list }) {
 
 }
 
-export default SortedNavListeMobile;
+export default SortedNavListMobile;
 
