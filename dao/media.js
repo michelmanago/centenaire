@@ -40,33 +40,21 @@ const groupedByMedia = results => {
 }
 
 // SELECT ALL 
-export async function getMedias(page_id, get_associated_page) {
+export async function selectMedia(page_id) {
 
 
     let queryString = ""
-    if(get_associated_page){
-        queryString = `
-            SELECT 
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
-                p.pageSlug, p.pageName,
-                mp.page_id
-            FROM medias m
-            LEFT JOIN media_page mp
-                ON mp.media_id = m.id
-            LEFT JOIN pagecontent p
-                ON p.id = mp.page_id
-        `
-    } else {
-        queryString = `
-            SELECT 
-                m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path
-            FROM medias m
-            LEFT JOIN media_page mp
-                ON mp.media_id = m.id
-            LEFT JOIN pagecontent p
-                ON p.id = mp.page_id
-        `
-    }
+    queryString = `
+        SELECT 
+            m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
+            p.pageSlug, p.pageName,
+            mp.page_id
+        FROM medias m
+        LEFT JOIN media_page mp
+            ON mp.media_id = m.id
+        LEFT JOIN pagecontent p
+            ON p.id = mp.page_id
+    `
 
     if(page_id){
         queryString += `

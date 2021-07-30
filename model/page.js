@@ -1,7 +1,7 @@
 import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectOriginalPageId, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
 import {query} from '../lib/db';
 import { getServeurImageMedia } from '../utils/utils-serveur-image';
-import { getMediaList } from './media';
+import { getMedia } from './media';
 
 
 export async function removePage(pageId){
@@ -125,7 +125,7 @@ export async function getPageBySlug(pageSlug, specificContext = "") {
             page.translations = translations
 
             // all associated images
-            let associated_media = await getMediaList(page.originalPageId)
+            let associated_media = await getMedia(page.originalPageId)
             page.associated_media = associated_media
 
         }
