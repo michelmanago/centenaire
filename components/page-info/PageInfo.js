@@ -11,12 +11,18 @@ const wrapperStyles = {
 
 export default function PageInfo({media, author}){
 
+
+    const thereIsCredit =  (media.length && media.some(m => m.credit))
+
+    if(!thereIsCredit && !author){
+        return ""
+    }
+
     return (
 
         <Popup
             trigger={TriggerDOM}
             on={["hover", "focus"]}
-            // on={["click"]}
             position={["right top"]}
         >
             <div style={wrapperStyles} className="bg-gray-100 px-5 py-5 shadow-md border rounded">
@@ -30,20 +36,26 @@ export default function PageInfo({media, author}){
                 )}
 
                 {/* Credits */}
-                <p className="underline">Crédits</p>
-                <ol className="pl-5 m-0">
-                    {media.map(mediaItem => {
+                {
+                    thereIsCredit && (
+                        <>
+                            <p className="underline">Crédits</p>
+                            <ol className="pl-5 m-0">
+                                {media.map(mediaItem => {
 
-                        if(mediaItem.credit){
-                            return (
-                                <li key={mediaItem.id} className="mb-2 text-sm">
-                                    {mediaItem.credit}
-                                </li>
-                            )
-                        }
+                                    if(mediaItem.credit){
+                                        return (
+                                            <li key={mediaItem.id} className="mb-2 text-sm">
+                                                {mediaItem.credit}
+                                            </li>
+                                        )
+                                    }
 
-                    })}
-                </ol>
+                                })}
+                            </ol>
+                        </>
+                    )
+                }
             </div>
         </Popup>
     )
