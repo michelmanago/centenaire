@@ -107,7 +107,6 @@ export default function AdminCategory({pages, menu, categoryName}) {
                     <button
                         type="button"
                         onClick={onSubmit}
-                        type="button"
                         className="px-3 py-3 font-semibold text-white bg-blue-600 rounded cursor-pointer hover:bg-blue-700"
                     >
                         Sauvegarder le nouvel ordre

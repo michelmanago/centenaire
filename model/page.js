@@ -3,6 +3,25 @@ import {query} from '../lib/db';
 import { getServeurImageMedia } from '../utils/utils-serveur-image';
 import { getMedia } from './media';
 
+// helpers
+const getLastPosition = async category => {
+
+    let lastPosition = null
+    // If has category find last position
+    if(category){
+        lastPosition = await query(`
+            SELECT position
+            FROM pagecontent
+            WHERE page = ?
+            ORDER BY position DESC
+        `, [category])
+
+        lastPosition = lastPosition && lastPosition.length ? lastPosition[0].position : null
+    }
+
+    return lastPosition
+
+}
 
 export async function removePage(pageId){
 
@@ -37,9 +56,28 @@ export async function getPageTranslations(originalPageId){
 
 // create a new page (with 3 translations)
 export async function createNewPage(pages){
- 
+
+
+    const category = pages[0].page
+    let lastPosition = null
+
+    // If has category find last position
+    if(category){
+        lastPosition = await query(`
+            SELECT position
+            FROM pagecontent
+            WHERE page = ?
+            ORDER BY position DESC
+        `, [category])
+
+        lastPosition = lastPosition && lastPosition.length ? lastPosition[0].position : null
+    }
+     
     // pages
-    const createdPages = pages.map(page => createSinglePage(page).then(createdId => ({...page, id: createdId})))
+    const createdPages = pages.map(page => createSinglePage({
+        ...page, 
+        position: lastPosition ? lastPosition + 1 : page.position
+    }).then(createdId => ({...page, id: createdId})))
     const createdIds = await Promise.all(createdPages)
 
     // translations
