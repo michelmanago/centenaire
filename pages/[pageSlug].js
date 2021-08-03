@@ -90,7 +90,7 @@ export default function DynPage({ menu, page}) {
             <main className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
 
                 {/* Information */}
-                <PageInfo author={page.author} media={page.associated_media} created_at={page.created_at} last_modified={page.last_modified}/>
+                <PageInfo author={page.author} media={page.associated_media} created_at={page.created_at} last_modified={page.last_modified} source={page.source}/>
                 
                 {
                     renderPage(page)

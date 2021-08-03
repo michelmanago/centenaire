@@ -15,12 +15,14 @@ const wrapperStyles = {
 
 
 
-export default function PageInfo({ media, author, created_at, last_modified }) {
+export default function PageInfo({ media, author, created_at, last_modified, source }) {
 
     const { locale } = useRouter();
 
     const thereIsCredit = (media.length && media.some(m => m.credit))
 
+
+    
 
 
     return (
@@ -47,6 +49,14 @@ export default function PageInfo({ media, author, created_at, last_modified }) {
                     <div>
                         <p className="underline">Dernière modification</p>
                         <p className="text-sm">{last_modified ? new Date(last_modified).toLocaleString(locale) : ''}</p>
+                    </div>
+                )}
+
+                {/* Source */}
+                {source && (
+                    <div>
+                        <p className="underline">Source</p>
+                        <p>{source}</p>
                     </div>
                 )}
 
