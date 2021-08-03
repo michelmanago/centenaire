@@ -1,23 +1,15 @@
 // components
-import { blockFormat } from '../../../utils/page-editor-formats';
 import BlockContentEditor from '../blocks/BlockContentEditor';
-
-// utils
 import InputAddBlock from '../inputs/InputAddBlock';
 import InputImportBlock from '../inputs/InputImportBlock';
 
+// utils
+import { blockFormat } from '../../../utils/page-editor-formats';
+import { getBlockListSortedByPosition } from '../../../utils/utils';
+
+
+
 export default function BlockList({blockList, updateCurrentPage, originalPageId, pages, currentPage, addAttributedMedia}){
-
-    // utils
-
-    const sortedBlocks = (blocks) => {
-
-        const sortedBlocks = [...blocks]
-        sortedBlocks.sort((a, b) => a.position - b.position)
-
-        return sortedBlocks
-
-    }
 
     // listeners
 
@@ -134,7 +126,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
             {
                
                 list && (
-                    sortedBlocks(list).map((block, blockIndex) => {
+                    getBlockListSortedByPosition(list).map((block, blockIndex) => {
                         
                         return (
                             <BlockContentEditor 

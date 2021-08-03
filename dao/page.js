@@ -2,7 +2,7 @@ import { query } from "../lib/db"
 import { filterObj } from "../utils/utils"
 
 
-export async function selectOriginalPageId(childId){
+export async function selectOriginalPageId(childId) {
 
     const res = await query(
         `
@@ -16,7 +16,7 @@ export async function selectOriginalPageId(childId){
 
 }
 
-export async function deletePages(pageIds){
+export async function deletePages(pageIds) {
 
     const res = await query(
         `
@@ -30,7 +30,7 @@ export async function deletePages(pageIds){
 
 }
 
-export async function deleteTranslations(translationsIds){
+export async function deleteTranslations(translationsIds) {
 
     const res = await query(
         `
@@ -44,17 +44,17 @@ export async function deleteTranslations(translationsIds){
 
 }
 
-export async function insertPage({pageName, pageSlug, page, language, author, created_at, blocks, bandeau_id, position}){
+export async function insertPage({ pageName, pageSlug, page, language, author, created_at, blocks, bandeau_id, position, source }) {
 
     const blocksToJson = JSON.stringify(blocks)
 
     const res = await query(
         `
             INSERT INTO pagecontent
-            (pageName, pageSlug, page, language, author, created_at, last_modified, blocks, bandeau_id, position)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (pageName, pageSlug, page, language, author, created_at, last_modified, blocks, bandeau_id, position, source)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
         `,
-        [pageName, pageSlug, page, language, author, created_at, created_at, blocksToJson, bandeau_id, position]
+        [pageName, pageSlug, page, language, author, created_at, created_at, blocksToJson, bandeau_id, position, source]
     )
 
     return res.affectedRows ? res.insertId : null
@@ -62,7 +62,7 @@ export async function insertPage({pageName, pageSlug, page, language, author, cr
 }
 
 
-export async function insertTranslation(originalId, childId){
+export async function insertTranslation(originalId, childId) {
 
     const res = await query(
         `
@@ -77,7 +77,7 @@ export async function insertTranslation(originalId, childId){
 
 }
 
-export async function selectTranslations(originalPageId){
+export async function selectTranslations(originalPageId) {
 
     const res = await query(
         `
@@ -92,40 +92,41 @@ export async function selectTranslations(originalPageId){
 
 }
 
-export async function updatePage({id, pageName, pageSlug, content, page, language, author, last_modified, blocks, bandeau_id, position}) {
+export async function updatePage({ id, pageName, pageSlug, content, page, language, author, last_modified, blocks, bandeau_id, position, source }) {
 
     const updatableFields = {
-        pageName, 
-        pageSlug, 
-        content, 
-        page, 
-        language, 
-        author, 
-        last_modified, 
-        blocks, 
-        bandeau_id, 
-        position
+        pageName,
+        pageSlug,
+        content,
+        page,
+        language,
+        author,
+        last_modified,
+        blocks,
+        bandeau_id,
+        position,
+        source
     }
 
     const valid_fields = filterObj(updatableFields, (key, val) => val !== undefined)
     const fields_count = valid_fields.length
 
     // there is no fields
-    if(fields_count === 0){
+    if (fields_count === 0) {
         throw new Error("no fields found")
-    } else {
+    } else {
 
 
         // SETTERS
         let setters = ""
-    
+
         const fieldsKey = Object.keys(valid_fields)
-        
+
         fieldsKey.map((key, index) => {
-    
-            if(index === 0){
+
+            if (index === 0) {
                 setters += key + " = ?"
-            }  else {
+            } else {
                 setters += "," + key + " = ?"
             }
 
@@ -134,14 +135,18 @@ export async function updatePage({id, pageName, pageSlug, content, page, languag
 
         // VALUES
         let values = []
-        
+
         fieldsKey.forEach(key => {
 
             let val = updatableFields[key]
 
             // maybe needs to stringify json
-            if(key === "blocks" && typeof val !== "string"){
+            if (key === "blocks" && typeof val !== "string") {
                 val = JSON.stringify(val)
+            }
+
+            if (key === "page" && !val) {
+                val = null
             }
 
             // add to values
@@ -161,8 +166,8 @@ export async function updatePage({id, pageName, pageSlug, content, page, languag
             `,
             values
         )
-    
-        if(!res.affectedRows){
+
+        if (!res.affectedRows) {
             throw {
                 message: "page not found id: " + id,
                 status: 404
@@ -191,18 +196,18 @@ export async function selectPageBySlug(pageSlug) {
         return null
 }
 
-export async function selectAllPages(locale = null, category = ""){
+export async function selectAllPages(locale = null, category = "") {
 
 
     let parameters = []
     let conditionalWhere = ""
 
-    if(locale) {
+    if (locale) {
         parameters.push(locale)
         conditionalWhere += " AND language = ? "
     }
 
-    if(category) {
+    if (category) {
         parameters.push(category)
         conditionalWhere += " AND page = ? "
     }
@@ -221,4 +226,4 @@ export async function selectAllPages(locale = null, category = ""){
         return JSON.parse(JSON.stringify(res))
     else
         return null
-} 
+}

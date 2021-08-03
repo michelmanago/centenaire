@@ -1,11 +1,11 @@
 // libs
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 // utils
 import cleanForSlug from '../../utils/cleanForSlug';
 import getAvailableSlug from '../../utils/fetch/getAvailableSlug';
-import { pageFormat} from '../../utils/page-editor-formats';
+import { pageFormat } from '../../utils/page-editor-formats';
 
 // components
 import InputSlug from './inputs/InputSlug';
@@ -15,14 +15,14 @@ import BlockList from './blocks/BlockList';
 
 // helpers
 const getSlugWithoutLocale = (slugsWithLocale, langue) => slugsWithLocale.replace(langue + "/", "")
-const pagesWithSlugsWithoutLocale = pages => pages.map(page => ({...page, pageSlug: getSlugWithoutLocale(page.pageSlug, page.language)}))
+const pagesWithSlugsWithoutLocale = pages => pages.map(page => ({ ...page, pageSlug: getSlugWithoutLocale(page.pageSlug, page.language) }))
 
 // create the editable slug with no locale
-const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({...page, slugWithoutLocale: page.pageSlug.replace(page.language + "/", "")}))
+const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({ ...page, slugWithoutLocale: page.pageSlug.replace(page.language + "/", "") }))
 
 const isTitleEmpty = title => (!title || !title.replace(/\s/g, '').length)
 
-export default function PageEditor({onFormSubmitted, editedPages}) {
+export default function PageEditor({ onFormSubmitted, editedPages, BlockSource }) {
 
     // hooks
     const { locales, defaultLocale } = useRouter();
@@ -35,7 +35,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     const [attributedMedia, setAttributedMedia] = useState([])
 
     // utils
-    
+
     const notAllowedToSave = () => {
 
         // one translations empty
@@ -48,7 +48,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     // lifecycle
     useEffect(() => {
-        if(canSave && !isEditing){
+        if (canSave && !isEditing) {
             // Prevent leaving page without saving
             window.onbeforeunload = () => "Êtes vous sûr de vouloir quitter l'éditeur ?";
         } else {
@@ -59,13 +59,13 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     const isEditing = !!editedPages;
     const currentPage = pages[currentPageIndex]
     const updateCurrentPage = (values) => {
-        
-        if(pages && pages.length){
-            
+
+        if (pages && pages.length) {
+
             setPages(pages.map((page, pageIndex) => {
 
-                if(pageIndex === currentPageIndex){
-                    
+                if (pageIndex === currentPageIndex) {
+
                     return {
                         ...currentPage,
                         ...values
@@ -73,19 +73,19 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 } else {
                     return page
                 }
-    
+
             }))
         }
-        
+
     }
 
     const updatePages = (values = {}) => {
-        if(pages && pages.length){
+        if (pages && pages.length) {
             setPages(pages.map(page => {
                 return {
                     ...page,
                     ...values
-                }    
+                }
             }))
         }
     }
@@ -109,7 +109,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         const pagesWithNoTitle = form.filter(page => isTitleEmpty(page.pageName))
 
-        if(pagesWithNoTitle.length === pages.length){
+        if (pagesWithNoTitle.length === pages.length) {
 
             const title = "Brouillon"
 
@@ -119,7 +119,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 pageSlug: page.language + "/" + cleanForSlug(title),
             }))
         }
-        else if(pagesWithNoTitle.length){
+        else if (pagesWithNoTitle.length) {
 
             const firstPageWithTitle = form.find(page => !isTitleEmpty(page.pageName))
             const firstPageWithTitleId = firstPageWithTitle.id || firstPageWithTitle.temp_id
@@ -129,11 +129,11 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
                 // when creating page there is no page.id
                 const id = page.id || page.temp_id
 
-                if(id === firstPageWithTitleId){
+                if (id === firstPageWithTitleId) {
                     return firstPageWithTitle
-                } 
-                
-                else if (isTitleEmpty(page.pageName)){
+                }
+
+                else if (isTitleEmpty(page.pageName)) {
                     return ({
                         ...page,
                         pageName: firstPageWithTitle.pageName,
@@ -151,19 +151,19 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
             output = form
         }
 
-        return output        
+        return output
     }
 
     const checkSlugsAtTheEnd = async form => {
-    
+
         const output = [...form]
 
         // slugs that might be generated by title and that already exists in database
         const mightBeDirtySlugs = []
 
         form.forEach((page, pageIndex) => {
-            
-            if(!isEditing || editedPages[pageIndex].pageSlug !== page.pageSlug){
+
+            if (!isEditing || editedPages[pageIndex].pageSlug !== page.pageSlug) {
                 mightBeDirtySlugs.push({
                     index: pageIndex,
                     slug: page.pageSlug
@@ -176,7 +176,7 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
         const promises = mightBeDirtySlugs.map(slugItem => getAvailableSlug(slugItem.slug).then(checkedSlug => {
 
-            return ({index: slugItem.index, slug: checkedSlug})
+            return ({ index: slugItem.index, slug: checkedSlug })
 
         }))
 
@@ -190,8 +190,8 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
 
         return output
-        
-    } 
+
+    }
 
     // methods
 
@@ -216,37 +216,37 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
     const onRemovePage = () => {
 
-        if(confirm("Êtes vous sûr de vouloir supprimer cette page et ses traductions.")){
+        if (confirm("Êtes vous sûr de vouloir supprimer cette page et ses traductions.")) {
 
             const originalPage = editedPages.find(p => p.language === defaultLocale)
             const id = originalPage ? originalPage.id : null
-            
-            if(id){
+
+            if (id) {
 
                 fetch("/api/page/" + id, {
                     method: "DELETE",
                 })
-                .then(response => {
-                    if(response.ok){
-                        return response.json()
-                    } else {
-                        throw new Error(response.statusText);
-                    }
-                })
-                .then(body => {
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json()
+                        } else {
+                            throw new Error(response.statusText);
+                        }
+                    })
+                    .then(body => {
 
-                    // go back page list
-                    window.location = window.location.origin + "/admin/page"
+                        // go back page list
+                        window.location = window.location.origin + "/admin/page"
 
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
 
             }
 
         }
-        
+
     }
 
     const onSubmitPage = async () => {
@@ -263,26 +263,32 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
         form = await checkSlugsAtTheEnd(form)
 
         // send pages to form
-        try{
+        try {
             await onFormSubmitted(form, attributedMedia);
-        } catch (err){
+        } catch (err) {
             console.log(err)
         } finally {
-            setIsSubmitting(false)   
+            setIsSubmitting(false)
         }
     };
 
     // others
-    const languagesLists = locales.map(_locale => ({title: _locale.toUpperCase(), value: _locale}));
+    const languagesLists = locales.map(_locale => ({ title: _locale.toUpperCase(), value: _locale }));
     const originalPageId = editedPages ? editedPages[0].original_id : null
 
     // setters
-    const setSlug = value => updateCurrentPage({pageSlug: currentPage.language + "/" + value, slugWithoutLocale: value})
+    const setSlug = value => updateCurrentPage({ pageSlug: currentPage.language + "/" + value, slugWithoutLocale: value })
     const setTitle = e => {
-        
-        const cleanedSlug = cleanForSlug(e.target.value)
-        updateCurrentPage({pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug})
 
+        // only sync slug when creating page
+        if (isEditing) {
+            updateCurrentPage({ pageName: e.target.value })
+
+        }
+        else {
+            const cleanedSlug = cleanForSlug(e.target.value)
+            updateCurrentPage({ pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug })
+        }
     }
 
 
@@ -294,76 +300,71 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
 
             <div className="flex p-8 gap-x-8">
 
-            {/* Left */}
-            <div className="flex-1 w-2/5">
+                {/* Left */}
+                <div className="flex-1 w-2/5">
 
-                {/* Mode de page */}
-                <h1 className="mb-5 text-4xl font-bold">
-                    {isEditing ? 'Modifier la page' : 'Ajouter une nouvelle page'}
-                </h1>
+                    {/* Mode de page */}
+                    <h1 className="mb-5 text-4xl font-bold">
+                        {isEditing ? 'Modifier la page' : 'Ajouter une nouvelle page'}
+                    </h1>
 
-                {/* Input - Title */}
-                <input
-                    onChange={setTitle}
-                    value={currentPage.pageName}
-                    className="w-full px-5 py-4 mb-5 text-xl border rounded"
-                    type="text"
-                    placeholder="Titre de la page"
-                />
-            
-                {/* Input - Slug */}
-                {currentPage.pageSlug && (
-                    <InputSlug 
-                        currentLanguage={currentPage.language} 
-
-                        originalSlug={editedPages ? editedPages[currentPageIndex].pageSlug : ""}
-                        slug={currentPage.pageSlug} 
-                        slugWithoutLocale={currentPage.slugWithoutLocale}
-
-                        setSlug={setSlug} 
+                    {/* Input - Title */}
+                    <input
+                        onChange={setTitle}
+                        value={currentPage.pageName}
+                        className="w-full px-5 py-4 mb-5 text-xl border rounded"
+                        type="text"
+                        placeholder="Titre de la page"
                     />
-                )}
 
-                {/* Content blocks */}
-                <BlockList
-                    blockList={currentPage.blocks}
+                    {/* Input - Slug */}
+                    {currentPage.pageSlug && (
+                        <InputSlug
+                            currentLanguage={currentPage.language}
+                            originalSlug={editedPages ? editedPages[currentPageIndex].pageSlug : ""}
+                            slug={currentPage.pageSlug}
+                            slugWithoutLocale={currentPage.slugWithoutLocale}
+
+                            setSlug={setSlug}
+                        />
+                    )}
+
+                    {/* Content blocks */}
+                    <BlockList
+                        blockList={currentPage.blocks}
+                        updateCurrentPage={updateCurrentPage}
+                        originalPageId={originalPageId}
+                        pages={pages}
+                        currentPage={currentPage}
+                        addAttributedMedia={addAttributedMedia}
+                    />
+                </div>
+
+                {/* Right */}
+                <PageEditorSidebar
                     updateCurrentPage={updateCurrentPage}
-                    originalPageId={originalPageId}
-                    pages={pages}
-                    currentPage={currentPage}
+                    updatePages={updatePages}
                     addAttributedMedia={addAttributedMedia}
+                    removeAttributedMedia={removeAttributedMedia}
+                    isEditing={isEditing}
+                    originalPageId={originalPageId}
+                    source={currentPage.source}
+                    language={currentPage.language} languagesLists={languagesLists}
+                    pageSlug={currentPage.pageSlug}
+                    author={currentPage.author}
+                    category={currentPage.page}
+                    created_at={currentPage.created_at} last_modified={currentPage.last_modified}
+                    pagePermalien={currentPage.pageSlug}
+                    bandeau_id={currentPage.bandeau_id}
+                    onSubmit={onSubmitPage}
+                    onRemovePage={onRemovePage}
+                    isSubmitting={isSubmitting}
+                    onMediaUploaded={onMediaUploaded}
+                    onRemoveMedia={onRemoveMedia}
+                    onChangeLanguage={onChangeLanguage}
+                    notAllowedToSave={!canSave}
+
                 />
-            </div>
-
-            {/* Right */}
-            <PageEditorSidebar
-
-                updateCurrentPage={updateCurrentPage}
-                updatePages={updatePages}
-                addAttributedMedia={addAttributedMedia}
-                removeAttributedMedia={removeAttributedMedia}
-                isEditing={isEditing}
-                originalPageId={originalPageId}
-
-                language={currentPage.language} languagesLists={languagesLists}
-                pageSlug={currentPage.pageSlug}
-                author={currentPage.author}
-                category={currentPage.page}
-                created_at={currentPage.created_at} last_modified={currentPage.last_modified}
-                pagePermalien={currentPage.pageSlug}
-                bandeau_id={currentPage.bandeau_id}
-                
-                onSubmit={onSubmitPage}
-                onRemovePage={onRemovePage}
-                isSubmitting={isSubmitting}
-                onMediaUploaded={onMediaUploaded}
-                onRemoveMedia={onRemoveMedia}
-
-                onChangeLanguage={onChangeLanguage}
-
-                notAllowedToSave={!canSave}
-
-            />
 
             </div>
         </div>
