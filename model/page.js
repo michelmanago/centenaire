@@ -16,7 +16,7 @@ const getLastPosition = async category => {
             ORDER BY position DESC
         `, [category])
 
-        lastPosition = lastPosition && lastPosition.length ? lastPosition[0].position : null
+        lastPosition = lastPosition && lastPosition.length ? lastPosition[0].position + 1 : null
     }
 
     return lastPosition
@@ -37,8 +37,20 @@ export async function removePage(pageId){
 
 export async function updateTranslations(pages){
 
+    const page_id = pages[0].id
+    const category_before = (await query(`SELECT page FROM pagecontent WHERE id = ?`, [page_id]))[0].page
+    const category_after = pages[0].page
+
+    let lastPosition = null
+
+    // category has been changed 
+    if(category_before !== category_after && category_after){
+       lastPosition = await getLastPosition(category_after)
+    }
+
+
     // update pages
-    const updatePagePromises = pages.map(page => updatePage(page))
+    const updatePagePromises = pages.map(page => updatePage({...page, position: lastPosition ? lastPosition : page.position}))
     const updatedIds = await Promise.all(updatePagePromises)
     
     return pages.map(page => page.id)
@@ -63,20 +75,13 @@ export async function createNewPage(pages){
 
     // If has category find last position
     if(category){
-        lastPosition = await query(`
-            SELECT position
-            FROM pagecontent
-            WHERE page = ?
-            ORDER BY position DESC
-        `, [category])
-
-        lastPosition = lastPosition && lastPosition.length ? lastPosition[0].position : null
+        lastPosition = await getLastPosition(category)
     }
      
     // pages
     const createdPages = pages.map(page => createSinglePage({
         ...page, 
-        position: lastPosition ? lastPosition + 1 : page.position
+        position: lastPosition ? lastPosition : page.position
     }).then(createdId => ({...page, id: createdId})))
     const createdIds = await Promise.all(createdPages)
 

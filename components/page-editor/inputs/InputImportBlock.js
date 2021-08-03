@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 
+// utils
+import { getBlockListSortedByPosition } from "../../../utils/utils";
+
 // components
 import IconClose from "../../icons/IconClose";
 
@@ -44,7 +47,9 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
         const newBlocks = [...currentPage.blocks]
 
         // add imported blocks with correct positions
-        selectedBlocks.forEach(block => {
+        const sortedSelectedBlocks = getBlockListSortedByPosition(selectedBlocks)
+
+        sortedSelectedBlocks.forEach(block => {
             newBlocks.push({
                 ...block,
                 position: newBlocks.length + 1
@@ -65,8 +70,7 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
     const onChooseTranslation = e => {
 
         const language = e.target.value
-        console.log(language)
-        const translation = pagesExceptCurrent.find(page => page.language === e.target.value)
+        const translation = pagesExceptCurrent.find(page => page.language === language)
         
         if(translation){
             setBlockList(formatBlockListForState(translation))
@@ -87,16 +91,6 @@ export default function InputImportBlock({pages, currentPage, updateCurrentPage}
         }))
     }
 
-    useEffect(() => {
-        
-        console.log("mount")
-
-        return () => {
-            console.log("unmount")
-        }
-
-    }, [])
-    
     return (
         <div className="mt-5">
 
