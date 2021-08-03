@@ -6,6 +6,7 @@ import PageEditCategory from './PageEditCategory';
 // utils
 import { useRouter } from 'next/router';
 import BlockBandeau from './BlockBandeau';
+import BlockSource from './BlockSource'
 
 const PageEditorSidebar = ({
     updateCurrentPage,
@@ -13,7 +14,7 @@ const PageEditorSidebar = ({
     removeAttributedMedia,
     isEditing,
     originalPageId,
-
+    source,
     language,
     languagesLists,
     author,
@@ -34,14 +35,14 @@ const PageEditorSidebar = ({
 }) => {
 
     // hooks
-    const {locale} = useRouter();
+    const { locale } = useRouter();
 
     // setters
-    const setAuthor = e => updateCurrentPage({author: e.target.value});
+    const setAuthor = e => updateCurrentPage({ author: e.target.value });
 
     // others
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
-    
+
     return (
         <div className="w-2/5">
             {/* Block langues */}
@@ -67,6 +68,12 @@ const PageEditorSidebar = ({
                 removeAttributedMedia={removeAttributedMedia}
                 bandeau_id={bandeau_id}
                 originalPageId={originalPageId}
+            />
+
+            {/* Block source */}
+            <BlockSource
+                updatePages={updatePages}
+                source={source}
             />
 
             {/* Block publier */}
@@ -140,9 +147,10 @@ const PageEditorSidebar = ({
 
             {/* Block categorie */}
             <PageEditCategory
-                updatePages={updatePages} 
+                updatePages={updatePages}
                 category={category}
             />
+
         </div>
     );
 };

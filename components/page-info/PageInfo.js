@@ -22,7 +22,7 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
     const thereIsCredit = (media.length && media.some(m => m.credit))
 
 
-    
+
 
 
     return (
@@ -56,7 +56,7 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
                 {source && (
                     <div>
                         <p className="underline">Source</p>
-                        <p>{source}</p>
+                        <p className="-mt-2">{source}</p>
                     </div>
                 )}
 
