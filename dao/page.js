@@ -144,6 +144,10 @@ export async function updatePage({id, pageName, pageSlug, content, page, languag
                 val = JSON.stringify(val)
             }
 
+            if(key === "page" && !val){
+                val = null
+            }
+
             // add to values
             values.push(val)
 
@@ -151,7 +155,7 @@ export async function updatePage({id, pageName, pageSlug, content, page, languag
 
         // finally add id
         values.push(id)
-
+        
         const res = await query(
             `
                 UPDATE pagecontent
