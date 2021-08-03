@@ -120,3 +120,11 @@ export function getPagesSortedByPosition(list)  {
     return sortedPages
 
 }
+
+export function getBlockListSortedByPosition(list, asc = true){
+
+    const sortedBlocks = [...list]
+    sortedBlocks.sort((a, b) => (a.position - b.position) * (asc ? 1 : -1))
+
+    return sortedBlocks
+}
