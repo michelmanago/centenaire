@@ -14,13 +14,14 @@ import IconLinked from "../../icons/IconLinked"
 
 // utils
 import { getFilenameFromPath } from "../../../utils/utils-media"
+import ModalMediaListPagination from "./ModalMediaListPagination"
 
 // styles
 const imageItemContainerStyles = {
     paddingTop: "100%"
 }
 
-export default function ModalMediaList({list, fetching, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
+export default function ModalMediaList({changePaginationPage, pagination, list, fetching, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
 
     // states
     const [filterByPage, setFilterByPage] = useState(!!originalPageId)
@@ -46,6 +47,20 @@ export default function ModalMediaList({list, fetching, edited, setEdited, delet
     }
 
     // helpers
+
+    const getPaginatedList = list => {
+
+        if(pagination){
+
+            const start = pagination.item_per_page * pagination.page
+            const end = start + pagination.item_per_page
+
+            return list.slice(start, end)
+        } else {
+            return list
+        }
+        
+    }
 
     const getAssociatedMediaOnly = list => {
 
@@ -110,7 +125,7 @@ export default function ModalMediaList({list, fetching, edited, setEdited, delet
             // LIST READY
             if(list.length){
                 return (
-                    filteredList.map(image => {
+                    list.map(image => {
     
                         const isSelected = edited && edited.id === image.id
                         const filename = getFilenameFromPath(image)
@@ -183,6 +198,7 @@ export default function ModalMediaList({list, fetching, edited, setEdited, delet
     const filteredByType = list.filter(l => accepts.includes(l.type) || !l.type)
     // filter by page
     const filteredList = getAssociatedMediaOnly(filteredByType)
+    const paginatedList = getPaginatedList(filteredList)
 
 
     return (
@@ -203,10 +219,12 @@ export default function ModalMediaList({list, fetching, edited, setEdited, delet
                     )
                 }
 
+                {pagination && <ModalMediaListPagination changePaginationPage={changePaginationPage} pagination={pagination}/>}
+
                 {/* List */}
                 <div className="">
                     {
-                        renderList(filteredList)
+                        renderList(paginatedList)
                     }
                 </div>
             </div>

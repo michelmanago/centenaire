@@ -8,8 +8,8 @@ import ModalMediaList from "./list/ModalMediaList"
 import ModalMediaUpload from "./upload/ModalMediaUpload"
 
 // utils
-import fetchMediaList from "../../utils/fetch/fetchMediaList"
 import { MEDIA_TYPES } from "../../utils/utils-media"
+import fetchMediaPaginated from "../../utils/fetch/fetchMediaPaginated"
 
 // icons
 import IconClose from "../icons/IconClose"
@@ -33,8 +33,59 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
     const [hasDoneFirstFetch, setHasDoneFirstFetch] = useState(false)
     const [edited, setEdited] = useState(null)
     const [hasModified, setHasModified] = useState(false)
+    const [pagination, setPagination] = useState(null)
+
 
     // utils
+
+    // const fetchMediaForList = async pageOffset => {
+
+    //     // is loading
+    //     setFetching(true)
+
+    //     // fetch list
+    //     const media = await fetchMediaPaginated(0)
+
+    //     // has loaded
+    //     setFetching(false)
+
+    //     // list of media
+    //     setList(media.array)
+
+    //     // set pagination
+    //     setPagination(media.pagination)
+
+    // }
+
+    const changePaginationPage = async newPage => {
+        
+        if(pagination && newPage !== pagination.page){
+            setPagination({
+                ...pagination,
+                page: newPage
+            })
+
+            // Fetch new list
+
+            // is loading
+            setFetching(true)
+
+            // fetch list
+            const media = await fetchMediaPaginated(newPage)
+
+            // has loaded
+            setFetching(false)
+
+            // list of media
+            setList([
+                ...list,
+                ...media.array
+            ])
+
+            // set pagination
+            setPagination(media.pagination)
+        }
+    }
 
     const deleteMediaFromList = mediaId => {
 
@@ -127,6 +178,8 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         accepts={accepts}
                         hasModified={hasModified}
                         setHasModified={setHasModified}
+                        changePaginationPage={changePaginationPage}
+                        pagination={pagination}
                     />
             break;
             default:
@@ -141,28 +194,16 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
         if(opened && !hasDoneFirstFetch){
 
-            console.log("FETCH HUGE LIST")
-
             // has first fetched
             setHasDoneFirstFetch(true)
 
             try {
 
-                // is loading
-                setFetching(true)
-
-                // fetch list
-                const media = await fetchMediaList(null, accepts, true)
-
-                // has loaded
-                setFetching(false)
-
-                setList(media)
-
+                const media = await fetchMediaForList(0)
                 
                 // pre select a media
                 if(preSelectedMedia){
-                    setEdited(media.find(m => m.id === preSelectedMedia))
+                    setEdited(media.array.find(m => m.id === preSelectedMedia))
                 }
 
             } catch (error) {
@@ -171,7 +212,6 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
         }
 
     }, [opened])
-
 
 
     return (

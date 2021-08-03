@@ -38,7 +38,6 @@ export default function Carousel({imgList, legende, id}) {
                 const resJSON = await response.json();
                 dataObj.push(resJSON);
             }
-            console.log('dataObj', dataObj);
             if (dataObj.length != 0) {
                 setImgListState(dataObj);
                 setIsFetch(true);

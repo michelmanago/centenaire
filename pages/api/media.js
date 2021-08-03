@@ -6,8 +6,9 @@ export default async function handler(req, res) {
         if (req.method === 'GET')  {
             
             const page_id = req.query.page_id
+            const page_offset = req.query.page_offset
             
-            const medias = await getMedia(page_id)
+            const medias = await getMedia(page_id, page_offset)
 
             return res.json(medias);
         } else {

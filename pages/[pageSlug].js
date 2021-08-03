@@ -19,6 +19,7 @@ import { getPageBySlug } from '../model/page';
 
 // utils
 import { getMediaLink } from '../utils/utils-serveur-image';
+import { selectMediaPaginated } from '../dao/media';
 
 const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
 
@@ -137,6 +138,8 @@ export async function getStaticProps(context) {
 
     const menu = await getMenu(context.locale);
     const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
+
+    const foo = await selectMediaPaginated(15, 0)
 
     return {
         props: {
