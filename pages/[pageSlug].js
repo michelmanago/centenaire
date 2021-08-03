@@ -31,8 +31,7 @@ const bannerStyles = {
 
 
 export default function DynPage({ menu, page}) {
-    console.log(page)
-
+    
     // redirect 404
     if(!page){
         return <DefaultErrorPage statusCode={404} />
