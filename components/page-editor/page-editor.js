@@ -280,9 +280,15 @@ export default function PageEditor({onFormSubmitted, editedPages}) {
     const setSlug = value => updateCurrentPage({pageSlug: currentPage.language + "/" + value, slugWithoutLocale: value})
     const setTitle = e => {
         
-        const cleanedSlug = cleanForSlug(e.target.value)
-        updateCurrentPage({pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug})
+        // only sync slug when creating page
+        if(isEditing){
+            updateCurrentPage({pageName: e.target.value})
 
+        } 
+        else {
+            const cleanedSlug = cleanForSlug(e.target.value)
+            updateCurrentPage({pageName: e.target.value, pageSlug: currentPage.language + "/" + cleanedSlug, slugWithoutLocale: cleanedSlug})
+        }
     }
 
 
