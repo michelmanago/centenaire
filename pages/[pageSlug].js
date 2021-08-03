@@ -31,7 +31,7 @@ const bannerStyles = {
 
 
 export default function DynPage({ menu, page}) {
-
+    console.log(page)
 
     // redirect 404
     if(!page){
@@ -90,12 +90,12 @@ export default function DynPage({ menu, page}) {
             <main className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
 
                 {/* Information */}
-                <PageInfo author={page.author} media={page.associated_media}/>
+                <PageInfo author={page.author} media={page.associated_media} created_at={page.created_at} last_modified={page.last_modified}/>
                 
                 {
                     renderPage(page)
                 }
-
+                
             </main>
 
         </div>
@@ -137,12 +137,15 @@ export async function getStaticProps(context) {
 
     const menu = await getMenu(context.locale);
     const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
-
+    
     return {
         props: {
-            page, menu
+            page, menu 
         },
+        
         revalidate: 10,
     };
+    
+    
 }
 
