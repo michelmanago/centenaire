@@ -30,8 +30,6 @@ export default function PageEditor({ onFormSubmitted, editedPages, BlockSource }
     // States
     // form
     const [pages, setPages] = useState(editedPages ? pagesWithSlugsWithoutLocales(editedPages) : locales.map(_locale => pageFormat(_locale)))
-
-    console.log('page', pages)
     const [currentPageIndex, setCurrentPageIndex] = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [attributedMedia, setAttributedMedia] = useState([])
