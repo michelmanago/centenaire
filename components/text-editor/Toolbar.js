@@ -83,8 +83,10 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
         var timer = opt.timeStart ? `#t=${opt.timeStart},${opt.timeEnd}` : '';
         editor.selection = currentSelection;
         insertVideoModal(editor, `${urlServerMedia}${mediaTmp.public_path}${timer}`, opt.isModal);
-        setTimeout(() => addAttributedMedia(mediaTmp.id), 1000);
-        setMediaTmp(null);
+        setTimeout(() => {
+            addAttributedMedia(mediaTmp.id);
+            setMediaTmp(null);
+        }, 1000);
         setCurrentSelection(null);
         setOpenModalVideoInfo(false);
     };
