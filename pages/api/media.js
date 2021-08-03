@@ -1,14 +1,13 @@
-import { getMedias } from "../../dao/media";
+import { getMedia } from "../../model/media";
 
 export default async function handler(req, res) {
     try {
 
         if (req.method === 'GET')  {
             
-            const page_id = req.query.page
-            const get_associated_page = req.query.get_associated_page
+            const page_id = req.query.page_id
             
-            const medias = await getMedias(page_id, get_associated_page)
+            const medias = await getMedia(page_id)
 
             return res.json(medias);
         } else {

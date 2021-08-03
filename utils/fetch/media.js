@@ -1,15 +1,9 @@
-
-export default async function fetchMediaList(page_id = null, accepts, get_associated_page = false){
-
+export async function fetchMediaList(page_id = null){
 
     const url = new URL(window.origin + "/api/media")
 
     if(page_id){
-        url.searchParams.append("page", page_id)
-    }
-
-    if(get_associated_page){
-        url.searchParams.append("get_associated_page", true)
+        url.searchParams.append("page_id", page_id)
     }
 
     try {
@@ -30,7 +24,8 @@ export default async function fetchMediaList(page_id = null, accepts, get_associ
         return results
 
     } catch (error) {
-        throw new Error(error.message)
+        console.log("fetchMediaList", error)
+        return []
     }
 
 }

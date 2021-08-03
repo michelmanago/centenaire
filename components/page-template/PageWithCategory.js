@@ -4,7 +4,7 @@
 // components
 import PageContent from './commons/PageContent';
 import SortedNavList from "./commons/SortedNavList";
-import SortedNavListeMobile from "./commons/SortedNavListeMobile";
+import SortedNavListMobile from "./commons/SortedNavListMobile";
 
 
 export default function PageWithCategory({ page }) {
@@ -12,14 +12,15 @@ export default function PageWithCategory({ page }) {
     return (
         <div className="flex flex-col lg:flex-row mt-8 ">
 
-            {/* Nav */}
+            {/* Nav mobile */}
             <div className="lg:hidden">
-                <SortedNavListeMobile list={page.nav} />
+                <SortedNavListMobile list={page.nav} category={page.page}/>
             </div>
-            {page.nav &&
 
-                <div className=" lg:block hidden   " >
-                    <SortedNavList list={page.nav} name={page.page} />
+            {/* Nav desktop */}
+            {page.nav &&
+                <div className="lg:block hidden w-1/3" >
+                    <SortedNavList list={page.nav} />
                 </div>
             }
 

@@ -7,13 +7,13 @@ export default function SortedNavList({list}){
  
 
     return (
-        <div className="w-1/3 mr-5">
-            <ul className="list-disc">
+        <div className="mr-5">
+            <ul className="pl-0">
                 {
                     getPagesSortedByPosition(list).map(page => {
 
                         return (
-                            <li key={page.id}><a className="text-blue-400 underline" href={"/" + page.pageSlug}>{page.pageName}</a></li>
+                            <li className="list-none mb-1" key={page.id}><a className="text-blue-500 underline" href={"/" + page.pageSlug}>{page.pageName}</a></li>
                         )
 
                     })

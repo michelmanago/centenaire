@@ -47,9 +47,12 @@ export async function getStaticProps(context) {
 
   const menu = await getMenu(context.locale)
 
-  return {props: {
-    menu: menu
-  }}
+  return {
+    props: {
+      menu: menu
+    },
+    revalidate: 10,
+  }
 }
   
   

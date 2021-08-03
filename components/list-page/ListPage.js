@@ -1,7 +1,12 @@
 // libs
-
 import { useState } from "react"
+
+// utils
 import { CATEGORIES } from "../../utils/parameters"
+
+// icons
+import IconOpenNew from "../icons/IconOpenNew"
+
 
 export default function ListPage({pages}){
 
@@ -85,7 +90,14 @@ export default function ListPage({pages}){
 
                             return (
                                 <tr key={page.id}>
-                                    <ColBody className="px-3"><a className="text-blue-500 hover:underline" href={editLink}>{page.pageName}</a></ColBody>
+                                    <ColBody className="px-3">
+                                        <span className="inline-flex items-center">
+                                            <a className="text-blue-500 hover:underline mr-2" href={editLink}>{page.pageName}</a>
+                                            <a href={`/${page.pageSlug}`} target="_blank" className="text-gray-900 hover:opacity-50">
+                                                <IconOpenNew size="16px"/>
+                                            </a>
+                                        </span>
+                                    </ColBody>
                                     <ColBody><a className="underline" href={category_link}>{page.page}</a></ColBody>
                                     <ColBody>{page.author}</ColBody>
                                     <ColBody>{page.created_at ? new Date(page.created_at).toLocaleString() : ""}</ColBody>
