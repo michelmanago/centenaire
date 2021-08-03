@@ -40,8 +40,8 @@ export default function PageInfo({media, author}){
                     thereIsCredit && (
                         <>
                             <p className="underline">Crédits</p>
-                            <div className="max-h-44 overflow-auto border-2">
-                                <ol className="pl-5 m-0">
+                            <div className="max-h-44 overflow-auto border">
+                                <ol className="pl-8 m-0">
                                     {media.map(mediaItem => {
 
                                         if(mediaItem.credit){
