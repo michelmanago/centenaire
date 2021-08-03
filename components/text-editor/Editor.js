@@ -79,7 +79,7 @@ export default function Editor({document, onChange, originalPageId, addAttribute
     const [previousSelection, setPreviousSelection] = useState(editor);
 
     const onChangeHandler = useCallback(
-        document => {
+        newDocument => {
             //setValue(value);
 
             // Save the value to Local Storage.
@@ -91,7 +91,8 @@ export default function Editor({document, onChange, originalPageId, addAttribute
             //console.log(contentSerialize)
             //localStorage.setItem('contentSerialize', contentSerialize);
             //console.log(document);
-            onChange(document);
+            if (newDocument != document)
+                onChange(newDocument);
             /*if (editor.selection != selection) {
                 setPreviousSelection(selection);
             }*/

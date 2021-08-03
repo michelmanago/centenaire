@@ -172,3 +172,8 @@ export function insertVideo(editor, url) {
     const image = {type: 'video', url, children: [text]};
     Transforms.insertNodes(editor, image);
 }
+export function insertVideoModal(editor, url, isModal) {
+    const text = {text: ''};
+    const videoModal = {type: 'video', modal: isModal, url, children: [text]};
+    Transforms.insertNodes(editor, videoModal);
+}

@@ -11,6 +11,7 @@ import {
     toggleTooltip,
     insertImage,
     insertVideo,
+    insertVideoModal,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -18,6 +19,9 @@ import {useCallback, useState} from 'react';
 import Icons from './Icons';
 import AnnotationSelector from '../Popup/annotation-selector';
 import ModalMedia from '../modal-media/ModalMedia';
+import Popup from 'reactjs-popup';
+import VideoOptions from '../Popup/videoOptions';
+import {Editor} from 'slate';
 
 const PARAGRAPH_STYLES = ['multiple', 'h1', 'h2', 'h3', 'h4', 'paragraph'];
 const CHARACTER_STYLES = ['bold', 'italic', 'underline'];
@@ -26,9 +30,12 @@ const EFFECT_STYLES = ['align-left', 'align-center', 'align-right'];
 const MEDIA_STYLES = ['image', 'video'];
 
 export default function Toolbar({selection, previousSelection, originalPageId, addAttributedMedia}) {
+    const [currentSelection, setCurrentSelection] = useState(null);
     const [openModalMedia, setOpenModalMedia] = useState(false);
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
     const [openModalMediaVideo, setOpenModalMediaVideo] = useState(false);
+    const [openModalVideoInfo, setOpenModalVideoInfo] = useState(false);
+    const [mediaTmp, setMediaTmp] = useState(null);
 
     const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
 
@@ -54,6 +61,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
 
     const addImage = media => {
         console.log(media, editor.selection, selection);
+        editor.selection = currentSelection;
         insertImage(editor, `${urlServerMedia}${media.public_path}`);
         setTimeout(() => addAttributedMedia(media.id), 1000);
         setOpenModalMedia(false);
@@ -61,10 +69,26 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     };
     const addVideo = media => {
         console.log(media, editor.selection, selection);
-        insertVideo(editor, `${urlServerMedia}${media.public_path}`);
-        setTimeout(() => addAttributedMedia(media.id), 1000);
+        //insertVideo(editor, `${urlServerMedia}${media.public_path}`);
+        //insertVideoModal(editor, `${urlServerMedia}${media.public_path}`);
+        setMediaTmp(media);
+        //setTimeout(() => addAttributedMedia(media.id), 1000);
         setOpenModalMediaVideo(false);
+        setOpenModalVideoInfo(true);
         console.log('insertVideo after:', editor);
+    };
+    const addVideoWithOpt = opt => {
+        console.log('opt', opt);
+        console.log('editor', editor);
+        var timer = opt.timeStart ? `#t=${opt.timeStart},${opt.timeEnd}` : '';
+        editor.selection = currentSelection;
+        insertVideoModal(editor, `${urlServerMedia}${mediaTmp.public_path}${timer}`, opt.isModal);
+        setTimeout(() => {
+            addAttributedMedia(mediaTmp.id);
+            setMediaTmp(null);
+        }, 1000);
+        setCurrentSelection(null);
+        setOpenModalVideoInfo(false);
     };
     return (
         <div className="text-black toolbar">
@@ -159,6 +183,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 onMouseDown={event => {
                     event.preventDefault();
                     //setOpenImagePopup(true);
+                    setCurrentSelection(editor.selection);
                     setOpenModalMedia(true);
                 }}
             />
@@ -176,7 +201,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 isActive={getActiveEffect(editor) === 'video'}
                 onMouseDown={event => {
                     event.preventDefault();
-                    //setOpenImagePopup(true);
+                    setCurrentSelection(editor.selection);
                     setOpenModalMediaVideo(true);
                 }}
             />
@@ -188,37 +213,12 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 originalPageId={originalPageId}
                 accepts={['video']}
             />
-            {/*<Popup
-                className="image-popup"
-                open={openImagePopup}
-                position="bottom center"
-                modal="true"
-                closeOnDocumentClick={false}
-                onClose={e => {
-                    setOpenImagePopup(false);
-                }}
-            >
-                <div className="flex flex-row-reverse">
-                    <button
-                        className="p-1 text-white bg-red-500 rounded hover:bg-red-600"
-                        onClick={() => setOpenImagePopup(false)}
-                    >
-                        Fermer
-                    </button>
-                </div>
-
-                <ModalMedia opened={openModalMedia} onClose={() => setOpenModalMedia(false)} onMediaSelected={addImage} submitLabel={'Ajouter'} />
-            </Popup>*/}
-
-            {/* Pas utilisé pour l'instant */}
-            {/* <ToolBarButton
-                key={'video'}
-                icon={<Icons type={'video'} />}
-                isActive={getActiveEffect(editor) === 'video'}
-                onMouseDown={event => {
-                    event.preventDefault();
-                }}
-            /> */}
+            <VideoOptions
+                open={openModalVideoInfo}
+                setOpen={setOpenModalVideoInfo}
+                onSubmit={addVideoWithOpt}
+                mediaTmp={mediaTmp}
+            />
         </div>
     );
 }
@@ -228,7 +228,6 @@ function ToolBarButton(props) {
     return (
         <button
             className={`p-1 my-1 mr-1 text-black border toolbar-btn ${isActive ? 'border-grey-500' : 'border-black'}`}
-            /*active={isActive}*/
             {...otherProps}
         >
             {icon}
