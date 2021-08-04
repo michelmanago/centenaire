@@ -13,9 +13,11 @@ import {
     Image,
     Video,
     Music,
+    File,
+    PDF,
 } from './icon';
 
-export default function Icons({type}) {
+export default function Icons({type, className}) {
     switch (type) {
         case 'bold':
             return <Bold isActive={true} />;
@@ -41,6 +43,8 @@ export default function Icons({type}) {
             return <Video />;
         case 'audio':
             return <Music />;
+        case 'pdf':
+            return <File className={className} />;
         default:
             return <>{type}</>;
     }

@@ -14,7 +14,7 @@ export default function VideoModal({url}) {
                     setOpen(true);
                 }}
             >
-                <video controls src={url}></video>
+                <video src={url}></video>
             </div>
             <Popup
                 lockScroll={true}

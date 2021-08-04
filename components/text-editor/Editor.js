@@ -72,8 +72,18 @@ const withImages = editor => {
     return editor;
 };
 
+const withPDF = editor => {
+    const {isVoid} = editor;
+
+    editor.isVoid = element => {
+        return element.type === 'pdf' ? true : isVoid(element);
+    }
+
+    return editor;
+}
+
 export default function Editor({document, onChange, originalPageId, addAttributedMedia}) {
-    const editor = useMemo(() => withLinks(withImages(withReact(createEditor()))), []);
+    const editor = useMemo(() => withPDF(withLinks(withImages(withReact(createEditor())))), []);
     const {renderElement, renderLeaf, onKeyDown} = useEditorConfig(editor);
     const [selection, setSelection] = useSelection(editor);
     const [previousSelection, setPreviousSelection] = useState(editor);
