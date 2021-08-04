@@ -15,16 +15,42 @@ import IconLinked from "../../icons/IconLinked"
 // utils
 import { getFilenameFromPath } from "../../../utils/utils-media"
 import ModalMediaListPagination from "./ModalMediaListPagination"
+import fetchMediaPaginated from "../../../utils/fetch/fetchMediaPaginated"
 
 // styles
 const imageItemContainerStyles = {
     paddingTop: "100%"
 }
 
-export default function ModalMediaList({changePaginationPage, pagination, list, fetching, edited, setEdited, deleteMediaFromList, updateMediaFromList, originalPageId, accepts, hasModified, setHasModified}){
+export default function ModalMediaList({pageIndexes, setPageIndexes, preSelectedMedia, opened, active, edited, setEdited, originalPageId, accepts, hasModified, setHasModified}){
+
+    if(!active) return ""
 
     // states
-    const [filterByPage, setFilterByPage] = useState(!!originalPageId)
+    const [filterByPage, setFilterByPage] = useState(!originalPageId)
+    const [fetching, setFetching] = useState(true)
+    const [pagination, setPagination] = useState(null)
+    const [hasDoneFirstFetch, setHasDoneFirstFetch] = useState(false)
+
+    // utils
+    const getCurrentPageIndexKey = (offset = pagination.page, isFiltered = filterByPage) => {
+        return `page-${offset}${isFiltered ? "-filtered" : ""}`
+    }
+    const currentList = (pagination ? pageIndexes[getCurrentPageIndexKey()] : []) || [] 
+
+    // methods
+
+    const onChangeFilter = event => {
+
+        // change filter
+        setFilterByPage(event.target.checked)
+
+        // reset
+
+        // re-fetch list (async)
+        fetchMediaForList(0, event.target.checked, true)
+
+    }
 
     const onSelectMedia = (media) => e => {
 
@@ -46,39 +72,117 @@ export default function ModalMediaList({changePaginationPage, pagination, list, 
         }
     }
 
-    // helpers
+    const fetchMediaForList = async (pageOffset, filtered = filterByPage) => {
 
-    const getPaginatedList = list => {
+        const nextPageIndexKey = getCurrentPageIndexKey(pageOffset, filtered)
 
-        if(pagination){
+        // prevent from fetching an already fetched page
+        // if(typeof pageIndexes[nextPageIndexKey] !== "undefined"){
 
-            const start = pagination.item_per_page * pagination.page
-            const end = start + pagination.item_per_page
+        //     // change page
+        //     setPagination({
+        //         ...pagination,
+        //         page: pageOffset
+        //     })
 
-            return list.slice(start, end)
-        } else {
-            return list
-        }
-        
-    }
+        //     return false
+        // }
 
-    const getAssociatedMediaOnly = list => {
+        try {
+            
+            // is loading
+            setFetching(true)
 
-        // we can filter by page
-        if(originalPageId && filterByPage){
-            return list.filter(mediaItem => {
+            // fetch list
+            const media = await fetchMediaPaginated(pageOffset, filtered ? originalPageId : undefined)
 
-                // this media is associated to a page with id = originalPageId                
-                return mediaItem.pages && mediaItem.pages.find(page => page.id === originalPageId)
-
+            // list of media
+            setPageIndexes({
+                ...pageIndexes,
+                [nextPageIndexKey]: media.array
             })
+
+            // set pagination
+            setPagination(media.pagination)
+            
+
+            // has loaded
+            setFetching(false)
+
+            return media
+
+        } catch (error) {
+            console.log(error)
+            throw new Error(error.message)
         }
 
-        else {
-            return list
+    }
+
+    const changePaginationPage = async newPage => {
+        
+        if(pagination && newPage !== pagination.page){
+
+            // Fetch new list
+            await fetchMediaForList(newPage)
         }
     }
 
+    const updateMediaFromList = newMedia => {
+
+        // update this media
+
+        const currentIndex = getCurrentPageIndexKey()
+        const currentPage = pageIndexes[currentIndex]
+
+        // replace one item of {currentPage}
+        setPageIndexes({
+            ...pageIndexes,
+            [currentIndex]: currentPage.map(page => page.id === newMedia.id ? newMedia : page)
+        })
+
+    }
+    
+    const deleteMediaFromList = mediaId => {
+
+        // remove this media from list
+        const currentIndex = getCurrentPageIndexKey()
+        const currentPage = pageIndexes[currentIndex]
+
+        setPageIndexes({
+            ...pageIndexes,
+            [currentIndex]: currentPage.filter(l => l.id !== mediaId)
+        })
+
+        // if this media was selected -> unselected it
+        if(edited && edited.id === mediaId){
+            setEdited(null)
+        }
+    }
+
+    // lifecycle
+    useEffect(async () => {
+
+        if(opened && !hasDoneFirstFetch){
+
+            // has first fetched
+            setHasDoneFirstFetch(true)
+
+            try {
+
+                const media = await fetchMediaForList(0)
+                
+                // pre select a media
+                if(preSelectedMedia){
+                    setEdited(media.array.find(m => m.id === preSelectedMedia))
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+    }, [opened])
+    
 
         // renderers
 
@@ -194,11 +298,6 @@ export default function ModalMediaList({changePaginationPage, pagination, list, 
 
 
     // others
-    // only show acceptable files and files with no type
-    const filteredByType = list.filter(l => accepts.includes(l.type) || !l.type)
-    // filter by page
-    const filteredList = getAssociatedMediaOnly(filteredByType)
-    const paginatedList = getPaginatedList(filteredList)
 
 
     return (
@@ -206,27 +305,27 @@ export default function ModalMediaList({changePaginationPage, pagination, list, 
             
             
             {/* List */}
-            <div className="w-2/3 overflow-auto h-full pr-2">
-
+            <div className="w-2/3 pr-2 overflow-auto flex flex-col">
                 {/* Filters */}
                 {/* Not allowed to filter when creating the page because there is no media attributed to this page currently */}
                 {
                     originalPageId && (
                         <div className="border-b px-2 py-2">
                             <label className="select-none" htmlFor="filterByPage">Uniquement les fichiers de cette page : </label>
-                            <input type="checkbox" checked={filterByPage} onChange={e => setFilterByPage(e.target.checked)} id="filterByPage" />
+                            <input type="checkbox" checked={filterByPage} onChange={onChangeFilter} id="filterByPage" />
                         </div>
                     )
                 }
 
-                {pagination && <ModalMediaListPagination changePaginationPage={changePaginationPage} pagination={pagination}/>}
-
                 {/* List */}
-                <div className="">
+                <div className="overflow-auto h-full">
                     {
-                        renderList(paginatedList)
+                        renderList(currentList)
                     }
                 </div>
+
+                {(pagination && pagination.page_count > 1) && <ModalMediaListPagination changePaginationPage={changePaginationPage} pagination={pagination}/>}
+
             </div>
 
             {/* Sidebar */}

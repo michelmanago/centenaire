@@ -1,3 +1,6 @@
+// libs
+import { useState } from "react"
+
 // icons
 import IconPrev from "../../icons/IconPrev"
 import IconNext from "../../icons/IconNext"
@@ -8,14 +11,15 @@ export default function ModalMediaListPagination({pagination, changePaginationPa
     // methods
     const goNextPage = () => changePaginationPage(pagination.page + 1)
     const goPrevPage = () => changePaginationPage(pagination.page - 1)
+    const jumpAt = pageOffset => changePaginationPage(pageOffset)
 
     // others
     const currentPage = pagination.page
     const canGoPrevPage = (currentPage > 0)
-    const canGoNextPage = (currentPage < pagination.page_count)
+    const canGoNextPage = (currentPage + 1 < pagination.page_count)
 
     return (
-        <div className="mt-2 flex justify-center items-center">
+        <div className="my-2 flex justify-center items-center">
 
             {/* Pagination */}
             <div className="flex items-center">
@@ -25,8 +29,33 @@ export default function ModalMediaListPagination({pagination, changePaginationPa
                     <IconPrev/>
                 </ArrowButton>
 
-                {/* Current */}
-                <span className="select-none inline-flex justify-center items-center text-sm mx-6 bg-gray-500 w-8 h-8 rounded text-white font-medium">{pagination.page + 1}</span>
+                {/* Pages */}
+
+                {
+                    Array(pagination.page_count).fill(true).map((page, pageIndex) => {
+
+                        const distance = Math.abs(pagination.page - pageIndex)
+
+                        if(distance > 3) return ""
+
+                        const isCurrent = pageIndex === pagination.page
+                        const currentStyles = `bg-gray-900 text-white`
+                        const notCurrentStyles = ``
+
+                        return (
+                            <button
+                                disabled={isCurrent}
+                                key={"page-" + pageIndex}
+                                className={`rounded mx-1 w-8 h-8 ${isCurrent ? currentStyles : notCurrentStyles}`}
+                                onClick={() => jumpAt(pageIndex)}
+                            >
+                                {pageIndex + 1}
+                            </button>
+                        )
+
+                    })
+                }
+
 
 
                 {/* Next */}

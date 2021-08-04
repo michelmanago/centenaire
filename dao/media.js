@@ -41,49 +41,88 @@ const groupedByMedia = results => {
 
 // SELECT ALL 
 
-export async function selectMediaPaginated(limit = 15, pageOffset = 0) {
+export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id) {
 
+    let item_count = 0
+
+    let parameters = []
     let queryString = `
         SELECT 
-            *
+            DISTINCT m.*
         FROM
-            medias    
-        LIMIT ? OFFSET ?
+            medias m  
     `
 
-    let res = await query(queryString, [limit, pageOffset * limit])
+    // restrict to media of this page
+    if(page_id){
+        queryString += `
+            LEFT JOIN media_page mp ON mp.media_id = m.id
+            WHERE mp.page_id = ?
+        `
+        parameters.push(page_id)
+    }
+
+    // add pagination
+    queryString += `
+        LIMIT ? OFFSET ?
+    `
+    parameters.push(limit, pageOffset * limit)
+
+    // get all media
+    let res = await query(queryString, parameters)
     let media = JSON.parse(JSON.stringify(res))
     let media_ids = media.map(m => m.id)
 
-    // all pages associated
-    let pages = await query(`SELECT media_id, page_id FROM media_page WHERE media_id IN (?)`, [media_ids])
-    pages = JSON.parse(JSON.stringify(pages))
-    
-    // set pages []
-    media = media.map(m => ({...m, pages: []}))
+    if(media_ids && media_ids.length){
+        
+        // all pages associated
+        let pages = await query(`
+            SELECT 
+                mp.media_id, mp.page_id 
+            FROM media_page mp
+            LEFT JOIN pagecontent p ON p.id = mp.page_id
+            WHERE mp.media_id IN (?)
+        `, [media_ids])
+        pages = JSON.parse(JSON.stringify(pages))
 
-    pages.forEach(page => {
+        // set pages []
+        media = media.map(m => ({...m, pages: []}))
 
-        // media associated with this page
-        const associated_media = media.find(m => m.id === page.media_id)
+        pages.forEach(page => {
 
-        if(associated_media){
-            if(associated_media.pages){
-                associated_media.pages.push(page)
-            } else {
-                associated_media.pages = [page]
+            // media associated with this page
+            const associated_media = media.find(m => m.id === page.media_id)
+            const outputed_page = {
+                id: page.page_id
             }
-        }
 
-    })
+            if(associated_media){
+                if(associated_media.pages){
+                    associated_media.pages.push(outputed_page)
+                } else {
+                    associated_media.pages = [outputed_page]
+                }
+            }
 
-    let item_count = (await query(`SELECT COUNT(*) as count FROM medias`))[0].count
+        })
 
+        item_count = (await query(`
+            SELECT COUNT(DISTINCT m.id) as count 
+            FROM medias m
+            ${page_id ? `
+                LEFT JOIN media_page mp ON mp.media_id = m.id
+                WHERE mp.page_id = 131
+            ` : ""}
+        `))[0].count
+
+
+    }
 
     return {
         array: media,
         pagination: {
             item_per_page: limit,
+            item_count_current_page: media.length,
             item_count: item_count,
             page: Number(pageOffset),
             page_count: Math.ceil(item_count / limit)

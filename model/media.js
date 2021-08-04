@@ -44,7 +44,7 @@ export async function getSingleMedia(media_id){
 export async function getMedia(page_id, pageOffset){
 
     if(typeof pageOffset !== "undefined"){
-        return await selectMediaPaginated(15, pageOffset)
+        return await selectMediaPaginated(15, pageOffset, page_id)
     } else {
         return await selectMedia(page_id)
     }
