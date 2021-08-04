@@ -12,6 +12,7 @@ import {
     insertImage,
     insertVideo,
     insertVideoModal,
+    insertAudio,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -35,6 +36,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
     const [openModalMediaVideo, setOpenModalMediaVideo] = useState(false);
     const [openModalVideoInfo, setOpenModalVideoInfo] = useState(false);
+    const [openModalAudio, setOpenModalAudio] = useState(false);
     const [mediaTmp, setMediaTmp] = useState(null);
 
     const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -89,6 +91,13 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
         }, 1000);
         setCurrentSelection(null);
         setOpenModalVideoInfo(false);
+    };
+
+    const addAudio = media => {
+        editor.selection = currentSelection;
+        insertAudio(editor, `${urlServerMedia}${media.public_path}`);
+        setTimeout(() => addAttributedMedia(media.id), 1000);
+        setOpenModalAudio(false);
     };
     return (
         <div className="text-black toolbar">
@@ -218,6 +227,25 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 setOpen={setOpenModalVideoInfo}
                 onSubmit={addVideoWithOpt}
                 mediaTmp={mediaTmp}
+            />
+
+            <ToolBarButton
+                key={'audio'}
+                icon={<Icons type={'audio'} />}
+                isActive={getActiveEffect(editor) === 'audio'}
+                onMouseDown={event => {
+                    event.preventDefault();
+                    setCurrentSelection(editor.selection);
+                    setOpenModalAudio(true);
+                }}
+            />
+            <ModalMedia
+                opened={openModalAudio}
+                onClose={() => setOpenModalAudio(false)}
+                onMediaSelected={addAudio}
+                submitLabel={'Ajouter le fichier'}
+                originalPageId={originalPageId}
+                accepts={['audio']}
             />
         </div>
     );

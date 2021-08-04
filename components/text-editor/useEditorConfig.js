@@ -89,6 +89,12 @@ function renderElement(props) {
                     {children}
                 </video>
             );
+        case 'audio':
+            return (
+                <audio controls src={element.url}>
+                    {children}
+                </audio>
+            );
         default:
             // For the default case, we delegate to Slate's default rendering.
             return <DefaultElement {...props} />;
