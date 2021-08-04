@@ -1,5 +1,5 @@
 // libs
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 // components
 import CustomEditor from '../../text-editor/customEditor';
@@ -23,6 +23,12 @@ const BlockContentEditor = ({
     originalPageId,
     addAttributedMedia,
 }) => {
+    const [isRender, setIsRender] = useState(true);
+    useEffect(() => {
+        console.log('position change');
+        setIsRender(false);
+        setTimeout(() => setIsRender(true), 1000);
+    }, [])
     return (
         <div className="flex flex-col items-end pr-5 mb-10 border-r-4">
             {/* Position */}
@@ -60,13 +66,14 @@ const BlockContentEditor = ({
                 {/* Fallback */}
 
                 {/* HTML EDITOR */}
-                {type === 'text' && position && (
+                {type === 'text' && isRender && position && (
                     <div>
                         <CustomEditor
                             originalPageId={originalPageId}
                             block={content}
                             setContent={setContent}
                             addAttributedMedia={addAttributedMedia}
+                            position={position}
                         />
                     </div>
                     //<textarea className="w-full h-20" onChange={e => setContent(e.target.value)} value={content} name="" id="" cols="30" rows="10"></textarea>
