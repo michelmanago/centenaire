@@ -14,6 +14,7 @@ import {legendeAsArray} from '../utils/utils-media';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export default function Carousel({imgList, legende, id}) {
+    
     // states
     const [open, setOpen] = useState(false);
     const [openArray, setOpenArray] = useState(() => {
@@ -76,9 +77,8 @@ export default function Carousel({imgList, legende, id}) {
     return (
 
         <div className="popup">
-            <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9 flex flex-wrap content-center">
+            <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9">
                 {/* Carousel */}
-                
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
@@ -90,7 +90,7 @@ export default function Carousel({imgList, legende, id}) {
                 >
                     {imgListState.map((img, i) => {
                         const theLegende = renderLegende(img.legende);
-                        
+
                         return (
                             <SwiperSlide key={id + '-' + i}>
                                 <div className="flex flex-col items-center">
@@ -102,15 +102,14 @@ export default function Carousel({imgList, legende, id}) {
                                         />
                                         {theLegende && <div className="flex justify-center ">{theLegende}</div>}
                                     </button>
-                                    
+
                                     <Popup
                                         open={openArray[i]}
                                         className="popimage "
                                         closeOnDocumentClick={false}
                                         onClick={() => openModal(i)}
                                     >
-                                        
-                                        <div className="max-w-screen-xl mx-auto flex flex-wrap justify-center">
+                                        <div className="max-w-screen-xl mx-auto flex flex-wrap justify-center ">
                                             <button
                                                 className="mr-64 stroke-current closeModal close text-black-600 "
                                                 onClick={() => closeModal(i)}
@@ -123,7 +122,7 @@ export default function Carousel({imgList, legende, id}) {
                                                 alt={`slide ${i + 1}`}
                                             />
                                             {theLegende && (
-                                                <div className="flex justify-center text-white ">{theLegende}</div>
+                                                <div className="flex justify-center text-white">{theLegende}</div>
                                             )}
                                         </div>
                                     </Popup>
