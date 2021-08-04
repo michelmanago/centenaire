@@ -80,31 +80,20 @@ export default function Editor({document, onChange, originalPageId, addAttribute
 
     const onChangeHandler = useCallback(
         newDocument => {
-            //setValue(value);
-
-            // Save the value to Local Storage.
-            //const content = JSON.stringify(document);
-            //localStorage.setItem('content', content);
-            //const contentSerialize = serializer(document);
-            //const contentDeserialize = deserialize(contentSerialize);
-            //setContent(contentSerialize);
-            //console.log(contentSerialize)
-            //localStorage.setItem('contentSerialize', contentSerialize);
-            //console.log(document);
-            if (newDocument != document)
-                onChange(newDocument);
-            /*if (editor.selection != selection) {
-                setPreviousSelection(selection);
-            }*/
+            if (newDocument != document) onChange(newDocument);
             setSelection(editor.selection);
         },
         [editor.selection, onChange, setSelection],
     );
 
     return (
-        <div className='pagecontent'>
+        <div className="pagecontent">
             <Slate editor={editor} value={document} onChange={onChangeHandler}>
-                <Toolbar originalPageId={originalPageId} selection={selection} addAttributedMedia={addAttributedMedia} />
+                <Toolbar
+                    originalPageId={originalPageId}
+                    selection={selection}
+                    addAttributedMedia={addAttributedMedia}
+                />
                 <Editable renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
             </Slate>
         </div>

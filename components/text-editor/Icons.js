@@ -39,6 +39,8 @@ export default function Icons({type}) {
             return <Image />;
         case 'video':
             return <Video />;
+        case 'audio':
+            return <Music />;
         default:
             return <>{type}</>;
     }

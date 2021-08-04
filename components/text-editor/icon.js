@@ -161,8 +161,8 @@ export const Music = ({isActive}) => {
         <svg
             className={isActive ? 'fill-black' : 'fill-grey'}
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width={iconWidth}
+            height={iconHeight}
             fill="none"
             stroke="currentColor"
             strokeLinecap="round"
@@ -183,8 +183,8 @@ export const PDF = ({isActive}) => {
         <svg
             className={isActive ? 'fill-black' : 'fill-grey'}
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width={iconWidth}
+            height={iconHeight}
             viewBox="0 0 20 20"
         >
             <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />

@@ -177,3 +177,9 @@ export function insertVideoModal(editor, url, isModal) {
     const videoModal = {type: 'video', modal: isModal, url, children: [text]};
     Transforms.insertNodes(editor, videoModal);
 }
+
+export function insertAudio(editor, url) {
+    const text = {text: ''};
+    const audio = {type: 'audio', url, children: [text]};
+    Transforms.insertNodes(editor, audio);
+}
