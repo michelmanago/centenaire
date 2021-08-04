@@ -7,8 +7,9 @@ import htmlParse from 'html-react-parser';
 import CarouselParam from '../../carouselParam';
 import TexteAnnote from '../../Popup/texteannote';
 import VideoModal from '../../Popup/videoModal';
+import ImageModal from '../../Popup/imageModal';
 
-export default function PageContent({pageName, blocks}) {
+export default function PageContent({ pageName, blocks, attribs }) {
     // prevent from mapping String
     const list = blocks && Array.isArray(blocks) ? blocks : null;
 
@@ -47,6 +48,11 @@ export default function PageContent({pageName, blocks}) {
                                         const url = domNode.attribs['src'];
 
                                         return <VideoModal url={url} />;
+                                    } else if (domNode.attribs && domNode.attribs['data-js-imagemodal'] !== undefined) {
+                                        const url = domNode.attribs['src'];
+                                        const className = domNode.attribs['className'];
+                                        const classs = domNode.attribs['class'];
+                                        return <ImageModal url={url} className={`${className} ${classs}`} />;
                                     }
                                 },
                             })}
