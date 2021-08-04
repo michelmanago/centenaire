@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 // import Swiper core and required components
-import SwiperCore, {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 // Import Swiper React components
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper styles
 import 'swiper/swiper-bundle.css';
 
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import Popup from 'reactjs-popup';
-import {legendeAsArray} from '../utils/utils-media';
+import { legendeAsArray } from '../utils/utils-media';
 
 // install Swiper components
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-export default function Carousel({imgList, legende, id}) {
-    
+export default function Carousel({ imgList, legende, id }) {
+
     // states
     const [open, setOpen] = useState(false);
     const [openArray, setOpenArray] = useState(() => {
-        var array = (array = Array.apply(null, {length: imgList.length}).map(function () {
+        var array = (array = Array.apply(null, { length: imgList.length }).map(function () {
             return false;
         }));
         return array;
@@ -39,7 +39,7 @@ export default function Carousel({imgList, legende, id}) {
                 const resJSON = await response.json();
                 dataObj.push(resJSON);
             }
-            
+
             if (dataObj.length != 0) {
                 setImgListState(dataObj);
                 setIsFetch(true);
@@ -63,7 +63,7 @@ export default function Carousel({imgList, legende, id}) {
     const mediaUrl = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
 
     // router
-    const {locale} = useRouter();
+    const { locale } = useRouter();
 
     // helpers
     const renderLegende = legendes => {
@@ -83,10 +83,10 @@ export default function Carousel({imgList, legende, id}) {
                     spaceBetween={50}
                     slidesPerView={1}
                     loop={true}
-                    navigation={{clickable: true}}
+                    navigation={{ clickable: true }}
                     /*onSlideChange={() => console.log('slide change')}*/
                     /*onSwiper={swiper => console.log(swiper)}*/
-                    style={{'--swiper-navigation-color': 'transparent'}}
+                    style={{ '--swiper-navigation-color': 'transparent' }}
                 >
                     {imgListState.map((img, i) => {
                         const theLegende = renderLegende(img.legende);
@@ -109,15 +109,15 @@ export default function Carousel({imgList, legende, id}) {
                                         closeOnDocumentClick={false}
                                         onClick={() => openModal(i)}
                                     >
-                                        <div className="max-w-screen-xl mx-auto flex flex-wrap justify-center ">
+                                        <div className="max-w-screen-xl w-4/5 relative  mx-auto flex flex-wrap justify-center ">
                                             <button
-                                                className="mr-64 stroke-current closeModal close text-black-600 "
+                                                className=" absolute r-0 t-6  stroke-current closeModal close text-black-600 "
                                                 onClick={() => closeModal(i)}
                                             >
                                                 &times;
                                             </button>
                                             <img
-                                                className="full "
+                                                className="w-full "
                                                 src={`${mediaUrl}${img.public_path}`}
                                                 alt={`slide ${i + 1}`}
                                             />
