@@ -26,7 +26,7 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
             setContentLoad(true);
 
             setSlateContent(blockContent);
-        } else if (!deepEqual(blockContent, slateContent) ) {
+        } else if (block != '' && !deepEqual(blockContent, slateContent) ) {
             setSlateContent(blockContent);
             console.log('check not equal');
         }
