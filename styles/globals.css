@@ -216,9 +216,24 @@ button {
 /* Image Popup*/
 .image-popup-content {
     margin: auto;
-    background: rgb(255, 255, 255);
+    background: rgb(22, 22, 22);
     width: 80%;
     padding: 5px;
+}
+
+.image-modal-content {
+    position: relative;
+    display: block;
+    height: 95vh;
+    background-color: #ffffff;
+    border: 1px #ffffff;
+    border-radius: 5px;
+}
+.image-modal-content img {
+    height: 91vh;
+}
+.image-modal-overlay {
+    background: rgba(0, 0, 0, 0.719);
 }
 
 /* Libs */

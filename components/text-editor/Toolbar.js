@@ -24,14 +24,16 @@ import ModalMedia from '../modal-media/ModalMedia';
 import Popup from 'reactjs-popup';
 import VideoOptions from '../Popup/videoOptions';
 import {Editor} from 'slate';
+import PdfOptions from '../Popup/pdfOptions';
+import {getLegendeFromLocal} from '../../utils/utils-media';
 
-const PARAGRAPH_STYLES = ['multiple', 'h1', 'h2', 'h3', 'h4', 'paragraph'];
+const PARAGRAPH_STYLES = ['multiple', 'h1', 'h2', 'h3', 'h4', 'h5', 'paragraph'];
 const CHARACTER_STYLES = ['bold', 'italic', 'underline'];
 const LIST_STYLES = ['bulleted-list', 'numbered-list'];
 const EFFECT_STYLES = ['align-left', 'align-center', 'align-right'];
 const MEDIA_STYLES = ['image', 'video'];
 
-export default function Toolbar({selection, previousSelection, originalPageId, addAttributedMedia}) {
+export default function Toolbar({selection, previousSelection, originalPageId, addAttributedMedia, currentPage}) {
     const [currentSelection, setCurrentSelection] = useState(null);
     const [openModalMedia, setOpenModalMedia] = useState(false);
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
@@ -39,6 +41,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     const [openModalVideoInfo, setOpenModalVideoInfo] = useState(false);
     const [openModalAudio, setOpenModalAudio] = useState(false);
     const [openModalPdf, setOpenModalPdf] = useState(false);
+    const [openModalPdfInfo, setOpenModalPdfInfo] = useState(false);
     const [mediaTmp, setMediaTmp] = useState(null);
 
     const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -64,12 +67,11 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     };
 
     const addImage = media => {
-        console.log(media, editor.selection, selection);
         editor.selection = currentSelection;
-        insertImage(editor, `${urlServerMedia}${media.public_path}`);
+        const legende = getLegendeFromLocal(media.legende, currentPage.language);
+        insertImage(editor, `${urlServerMedia}${media.public_path}`, legende);
         setTimeout(() => addAttributedMedia(media.id), 1000);
         setOpenModalMedia(false);
-        console.log('insertImage after:', editor);
     };
     const addVideo = media => {
         console.log(media, editor.selection, selection);
@@ -103,9 +105,19 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     };
     const addPdf = media => {
         editor.selection = currentSelection;
-        insertPdf(editor, `${urlServerMedia}${media.public_path}`);
-        setTimeout(() => addAttributedMedia(media.id), 1000);
+        setMediaTmp(media);
         setOpenModalPdf(false);
+        setOpenModalPdfInfo(true);
+    };
+    const addPdfWithOpt = opt => {
+        insertPdf(editor, `${urlServerMedia}${mediaTmp.public_path}`, opt.value);
+        setTimeout(() => {
+            addAttributedMedia(mediaTmp.id);
+            setMediaTmp(null);
+        }, 1000);
+
+        setCurrentSelection(null);
+        setOpenModalPdfInfo(false);
     };
     return (
         <div className="text-black toolbar">
@@ -273,6 +285,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 originalPageId={originalPageId}
                 accepts={['document']}
             />
+            <PdfOptions open={openModalPdfInfo} setOpen={setOpenModalPdfInfo} onSubmit={addPdfWithOpt} />
         </div>
     );
 }

@@ -156,9 +156,9 @@ export function wrapLink(editor, url) {
     }
 }
 
-export function insertImage(editor, url) {
+export function insertImage(editor, url, legende) {
     const text = {text: ''};
-    const image = {type: 'image', url, children: [text]};
+    const image = {type: 'image', url, legende, children: [text]};
     Transforms.insertNodes(editor, image);
 }
 export function isImageUrl(url) {
@@ -184,8 +184,8 @@ export function insertAudio(editor, url) {
     Transforms.insertNodes(editor, audio);
 }
 
-export function insertPdf(editor, url) {
+export function insertPdf(editor, url, textValue) {
     const text = {text: ''};
-    const pdf = {type: 'pdf', url, dataText: 'Test DL PDF', children: [text]};
+    const pdf = {type: 'pdf', url, dataText: textValue != '' ? textValue : 'Test PDF Download', children: [text]};
     Transforms.insertNodes(editor, pdf);
 }
