@@ -7,15 +7,16 @@ import React, { useEffect, useRef } from "react"
 import styles from "./nav.module.css"
 
 // utils
-import { resolveMenuHref } from '../../utils/utils'
+import { getMenuHref } from '../../utils/utils'
 
 
 
 
 const NavLink = ({item}) => {
+    
 
     let has_children = !!item.subMenu
-    let href = resolveMenuHref(item.href)
+    let href = getMenuHref(item.href)
 
     if(has_children){
   
