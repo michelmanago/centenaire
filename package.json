@@ -30,6 +30,7 @@
     "reactjs-popup": "^2.0.4",
     "serverless-mysql": "^1.5.4",
     "slate": "^0.63.0",
+    "slate-history": "^0.62.0",
     "slate-hyperscript": "^0.62.0",
     "slate-react": "^0.65.2",
     "swiper": "^6.6.1",

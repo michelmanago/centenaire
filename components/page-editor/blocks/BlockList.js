@@ -135,6 +135,7 @@ export default function BlockList({blockList, updateCurrentPage, originalPageId,
                                 content={block.content}
                                 position={block.position}
                                 originalPageId={originalPageId}
+                                currentPage={currentPage}
     
                                 // actions
                                 setContent={setBlockContent(block.position)}

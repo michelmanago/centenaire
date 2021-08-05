@@ -5,7 +5,7 @@ import IconClose from "../icons/IconClose";
 
 
 
-export default function ImageModal({url, className}){
+export default function ImageModal({url, className, legende}){
     const[open, setOpen] = useState(false);
     console.log(className);
     return (
@@ -16,7 +16,7 @@ export default function ImageModal({url, className}){
             }}
         >
                 <img src={url} className={className} />
-                
+                <div>{legende}</div>
             </div>
             <div className="popup">
             <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9">
@@ -29,12 +29,12 @@ export default function ImageModal({url, className}){
             closeOnDocumentClick={false} // beacause this event can not be prevented4
             
             >
-                  <div className="mt-6 p-1 flex flex-wrap justify-center ">
+                  <div className="flex flex-wrap justify-center p-1 mt-6 ">
                   
                       {/* Close */}
                       <button
                         onClick={() => setOpen(false)}
-                        className="absolute top-0 right-0 text-gray-700 hover:text-gray-800 flex flex-wrap ">
+                        className="absolute top-0 right-0 flex flex-wrap text-gray-700 hover:text-gray-800 ">
                             <IconClose />
                         </button>
                         <img

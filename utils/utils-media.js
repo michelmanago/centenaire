@@ -153,3 +153,19 @@ export function getFilenameFromPath(media){
 
     return "monFichier.png"
 }
+
+export function getLegendeFromLocal(legendes, local) {
+    var legendesParse = [];
+    if (legendes) {
+        legendesParse = JSON.parse(legendes);
+    }
+
+    var legendeTmp = "";
+    for (const legende of legendesParse) {
+        if (legende.locale === local) {
+            legendeTmp = legende.value;
+            break;
+        }
+    }
+    return legendeTmp;
+}
