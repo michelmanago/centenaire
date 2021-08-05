@@ -8,6 +8,7 @@ import CarouselParam from '../../carouselParam';
 import TexteAnnote from '../../Popup/texteannote';
 import VideoModal from '../../Popup/videoModal';
 import ImageModal from '../../Popup/imageModal';
+import PdfDownload from '../../Popup/pdf-download';
 
 export default function PageContent({ pageName, blocks, attribs }) {
     // prevent from mapping String
@@ -53,6 +54,10 @@ export default function PageContent({ pageName, blocks, attribs }) {
                                         const className = domNode.attribs['className'];
                                         const classs = domNode.attribs['class'];
                                         return <ImageModal url={url} className={`${className} ${classs}`} />;
+                                    } else if (domNode.attribs && domNode.attribs['data-js-pdf'] !== undefined) {
+                                        const url = domNode.attribs['href'];
+                                        const text = domNode.attribs['data-text'];
+                                        return <PdfDownload url={url} text={text} />
                                     }
                                 },
                             })}

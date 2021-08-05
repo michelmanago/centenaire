@@ -66,7 +66,7 @@ export function getActiveEffect(editor) {
 
 export function toggleBlockEffect(editor, blockEffect) {
     const currentBlockEffect = getActiveEffect(editor);
-    const changeTo = currentBlockEffect === blockEffect ? 'align-left' : blockEffect;
+    const changeTo = currentBlockEffect === blockEffect ? '' : blockEffect;
     Transforms.setNodes(editor, {effect: changeTo}, {at: editor.selection, match: n => Editor.isBlock(editor, n)});
 }
 
@@ -182,4 +182,10 @@ export function insertAudio(editor, url) {
     const text = {text: ''};
     const audio = {type: 'audio', url, children: [text]};
     Transforms.insertNodes(editor, audio);
+}
+
+export function insertPdf(editor, url) {
+    const text = {text: ''};
+    const pdf = {type: 'pdf', url, dataText: 'Test DL PDF', children: [text]};
+    Transforms.insertNodes(editor, pdf);
 }

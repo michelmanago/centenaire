@@ -13,6 +13,7 @@ import {
     insertVideo,
     insertVideoModal,
     insertAudio,
+    insertPdf,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -37,6 +38,7 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     const [openModalMediaVideo, setOpenModalMediaVideo] = useState(false);
     const [openModalVideoInfo, setOpenModalVideoInfo] = useState(false);
     const [openModalAudio, setOpenModalAudio] = useState(false);
+    const [openModalPdf, setOpenModalPdf] = useState(false);
     const [mediaTmp, setMediaTmp] = useState(null);
 
     const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -98,6 +100,12 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
         insertAudio(editor, `${urlServerMedia}${media.public_path}`);
         setTimeout(() => addAttributedMedia(media.id), 1000);
         setOpenModalAudio(false);
+    };
+    const addPdf = media => {
+        editor.selection = currentSelection;
+        insertPdf(editor, `${urlServerMedia}${media.public_path}`);
+        setTimeout(() => addAttributedMedia(media.id), 1000);
+        setOpenModalPdf(false);
     };
     return (
         <div className="text-black toolbar">
@@ -246,6 +254,24 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 submitLabel={'Ajouter le fichier'}
                 originalPageId={originalPageId}
                 accepts={['audio']}
+            />
+            <ToolBarButton
+                key={'pdf'}
+                icon={<Icons type={'pdf'} />}
+                isActive={getActiveEffect(editor) === 'pdf'}
+                onMouseDown={event => {
+                    event.preventDefault();
+                    setCurrentSelection(editor.selection);
+                    setOpenModalPdf(true);
+                }}
+            />
+            <ModalMedia
+                opened={openModalPdf}
+                onClose={() => setOpenModalPdf(false)}
+                onMediaSelected={addPdf}
+                submitLabel={'Ajouter le fichier'}
+                originalPageId={originalPageId}
+                accepts={['document']}
             />
         </div>
     );

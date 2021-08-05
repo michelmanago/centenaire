@@ -5,6 +5,7 @@ import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
 import TexteAnnote from '../Popup/texteannote';
 import VideoModal from '../Popup/videoModal';
+import PdfDownload from '../Popup/pdf-download';
 const KeyBindings = {
     onKeyDown: (editor, event) => {
         if (isHotkey('mod+b', event)) {
@@ -94,6 +95,13 @@ function renderElement(props) {
                 <audio controls src={element.url}>
                     {children}
                 </audio>
+            );
+        case 'pdf':
+            return (
+                <div {...attributes} contentEditable={false}>
+                    <PdfDownload url={element.url} text={element.dataText} />
+                    {children}
+                </div>
             );
         default:
             // For the default case, we delegate to Slate's default rendering.
