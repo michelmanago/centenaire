@@ -81,7 +81,6 @@ export default function Carousel({ imgList, legende, id }) {
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
-                    loop={true}
                     navigation={{ clickable: true }}
                     /*onSlideChange={() => console.log('slide change')}*/
                     /*onSwiper={swiper => console.log(swiper)}*/

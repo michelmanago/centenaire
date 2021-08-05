@@ -25,7 +25,7 @@ export default function PageContent({pageName, blocks, attribs}) {
     let blockList = '';
 
     if (!list && blocks) {
-        blockList = <p className="text-red-600">Impossive d'afficher les blocks de cette page.</p>;
+        blockList = <p className="text-red-600">Impossible d'afficher les blocks de cette page.</p>;
     } else {
         blockList =
             list &&

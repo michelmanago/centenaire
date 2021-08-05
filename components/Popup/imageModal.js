@@ -14,20 +14,17 @@ export default function ImageModal({url, className, legende}){
                 e.preventDefault();
                 setOpen(true);
             }}
-        >
+            >
                 <img src={url} className={className} />
                 <div>{legende}</div>
             </div>
-            <div className="popup">
-            <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9">
- 
-        <Popup
-            open={open}
-            onClose={setOpen}
-            className={'image-modal'}
-            closeOnEscape={false} // beacause this can not be prevented
-            closeOnDocumentClick={false} // beacause this event can not be prevented4
-            
+
+            <Popup
+                open={open}
+                onClose={setOpen}
+                className={'image-modal'}
+                closeOnEscape={false} // beacause this can not be prevented
+                closeOnDocumentClick={false} // beacause this event can not be prevented4
             >
                   <div className="flex flex-wrap justify-center p-1 mt-6 ">
                   
@@ -44,8 +41,6 @@ export default function ImageModal({url, className, legende}){
                         />
                   </div>
             </Popup>
-            </div>
-            </div>
         </div>
     )
 }
