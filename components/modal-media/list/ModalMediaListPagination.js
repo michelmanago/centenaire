@@ -40,7 +40,7 @@ export default function ModalMediaListPagination({pagination, changePaginationPa
 
                         const isCurrent = pageIndex === pagination.page
                         const currentStyles = `bg-gray-900 text-white`
-                        const notCurrentStyles = ``
+                        const notCurrentStyles = `hover:bg-gray-300`
 
                         return (
                             <button
