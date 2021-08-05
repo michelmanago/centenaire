@@ -136,7 +136,7 @@ export async function getStaticProps(context) {
 
     const menu = await getMenu(context.locale);
     const page = await getPageBySlug(context.locale + "/" + pageSlug, "render").catch(err => null);
-    
+
     return {
         props: {
             page, menu 

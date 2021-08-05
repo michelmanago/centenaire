@@ -8,7 +8,6 @@ import ModalMediaList from "./list/ModalMediaList"
 import ModalMediaUpload from "./upload/ModalMediaUpload"
 
 // utils
-import fetchMediaList from "../../utils/fetch/fetchMediaList"
 import { MEDIA_TYPES } from "../../utils/utils-media"
 
 // icons
@@ -18,7 +17,7 @@ import IconClose from "../icons/IconClose"
 // styles
 const contentStyles = {
     width: "85%",
-    height: "80%",
+    height: "92%",
     borderRadius: ".2em"
 }
 
@@ -28,30 +27,13 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
-    const [list, setList] = useState([])
-    const [fetching, setFetching] = useState(true)
-    const [hasDoneFirstFetch, setHasDoneFirstFetch] = useState(false)
+    const [pageIndexes, setPageIndexes] = useState({})
     const [edited, setEdited] = useState(null)
     const [hasModified, setHasModified] = useState(false)
 
+
+
     // utils
-
-    const deleteMediaFromList = mediaId => {
-
-        // remove this media from list
-        setList(list.filter(l => l.id !== mediaId))
-
-        // if this media was selected -> unselected it
-        if(edited && edited.id === mediaId){
-            setEdited(null)
-        }
-    }
-
-    const updateMediaFromList = newMedia => {
-
-        // update this media
-        setList(list.map(l => l.id === newMedia.id ? newMedia : l))
-    }
 
     // methods
 
@@ -95,84 +77,13 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
         // change tab
         setTab(TAB_MEDIA_LIST)
 
-        // add new media to list
-        setList([
-            media,
-            ...list
-        ])
-
+        // modalList will re-fetch the list
         // select the media
         setEdited(media)
     }
 
-
     // others
-    const renderTabContent = () => {
-        switch(tab){
-            case TAB_UPLOAD:
-                return <ModalMediaUpload 
-                            onMediaUploaded={onMediaUploaded}
-                            accepts={accepts}
-                            originalPageId={originalPageId}
-                        />
-            break;
-            case TAB_MEDIA_LIST:
-                return <ModalMediaList 
-                        originalPageId={originalPageId} 
-                        updateMediaFromList={updateMediaFromList} 
-                        deleteMediaFromList={deleteMediaFromList} 
-                        edited={edited} setEdited={setEdited} 
-                        list={list}
-                        fetching={fetching}
-                        accepts={accepts}
-                        hasModified={hasModified}
-                        setHasModified={setHasModified}
-                    />
-            break;
-            default:
-                return ""
-            
-        }
-    }
     const canSubmit = !!edited
-
-    // lifecycle
-    useEffect(async () => {
-
-        if(opened && !hasDoneFirstFetch){
-
-            console.log("FETCH HUGE LIST")
-
-            // has first fetched
-            setHasDoneFirstFetch(true)
-
-            try {
-
-                // is loading
-                setFetching(true)
-
-                // fetch list
-                const media = await fetchMediaList(null, accepts, true)
-
-                // has loaded
-                setFetching(false)
-
-                setList(media)
-
-                
-                // pre select a media
-                if(preSelectedMedia){
-                    setEdited(media.find(m => m.id === preSelectedMedia))
-                }
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-    }, [opened])
-
-
 
     return (
         <Popup 
@@ -208,9 +119,24 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
                 <div className="border flex-1 flex overflow-auto w-full">
                     <div className="flex-1">
-                        {
-                            renderTabContent()
-                        }
+                        <ModalMediaUpload 
+                            onMediaUploaded={onMediaUploaded}
+                            accepts={accepts}
+                            originalPageId={originalPageId}
+                            active={tab === TAB_UPLOAD}
+                        />
+                        <ModalMediaList 
+                            originalPageId={originalPageId} 
+                            edited={edited} setEdited={setEdited} 
+                            pageIndexes={pageIndexes}
+                            setPageIndexes={setPageIndexes}
+                            accepts={accepts}
+                            hasModified={hasModified}
+                            setHasModified={setHasModified}
+                            active={tab === TAB_MEDIA_LIST}
+                            opened={opened}
+                            preSelectedMedia={preSelectedMedia}
+                        />
                     </div>
                 </div>
 

@@ -1,62 +1,54 @@
-.pagecontent a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
 .pagecontent h1 {
-    font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
-    font-weight:700;
+    font-family: 'Alegreya', Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
     @apply text-2xl;
     @apply sm:text-3xl;
     padding-bottom: 9px;
-    
-  }
-  
+}
+
 .pagecontent h2 {
-    font-family: "Alegreya", Verdana, Geneva, Tahoma, sans-serif;
-    font-weight:700;
+    font-family: 'Alegreya', Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
     @apply text-xl;
     @apply sm:text-2xl;
     padding-top: 6px;
     padding-bottom: 9px;
-  }
-  
+}
+
 .pagecontent ul {
-    font-size: 1.125rem;  
+    font-size: 1.125rem;
     list-style: disc;
     padding-bottom: 6px;
-  }
-  
+}
+
 .pagecontent ol {
     font-size: 1.125rem;
     list-style: decimal;
     padding-bottom: 6px;
     padding-left: 18px;
-  }
-  
+}
+
 .pagecontent li {
     line-height: 1.75rem;
     padding-bottom: 6px;
     padding-left: 18px;
-  }
-  
+}
+
 .pagecontent ol li {
     @apply text-justify;
     font-size: 1.125rem;
-  }
-  
-  
+}
+
 .pagecontent p {
     font-size: 1.125rem;
     line-height: 1.75rem;
     padding-bottom: 6px;
-    @apply text-justify;
 }
 
-.pagecontent .pointille{
-  text-decoration: underline dotted;
+.pagecontent .pointille {
+    text-decoration: underline dotted;
 }
 
 .video-modal-overlay {
-    background: rgba(0,0,0,.5);
+    background: rgba(0, 0, 0, 0.5);
 }

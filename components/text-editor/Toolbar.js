@@ -12,6 +12,8 @@ import {
     insertImage,
     insertVideo,
     insertVideoModal,
+    insertAudio,
+    insertPdf,
 } from './EditorUtils';
 import {useSlateStatic} from 'slate-react';
 import {useCallback, useState} from 'react';
@@ -22,6 +24,7 @@ import ModalMedia from '../modal-media/ModalMedia';
 import Popup from 'reactjs-popup';
 import VideoOptions from '../Popup/videoOptions';
 import {Editor} from 'slate';
+import PdfOptions from '../Popup/pdfOptions';
 
 const PARAGRAPH_STYLES = ['multiple', 'h1', 'h2', 'h3', 'h4', 'paragraph'];
 const CHARACTER_STYLES = ['bold', 'italic', 'underline'];
@@ -35,6 +38,9 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
     const [openTooltipPopup, setOpenTooltipPopup] = useState(false);
     const [openModalMediaVideo, setOpenModalMediaVideo] = useState(false);
     const [openModalVideoInfo, setOpenModalVideoInfo] = useState(false);
+    const [openModalAudio, setOpenModalAudio] = useState(false);
+    const [openModalPdf, setOpenModalPdf] = useState(false);
+    const [openModalPdfInfo, setOpenModalPdfInfo] = useState(false);
     const [mediaTmp, setMediaTmp] = useState(null);
 
     const urlServerMedia = `${process.env.NEXT_PUBLIC_SERVER_IMAGE}`;
@@ -89,6 +95,29 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
         }, 1000);
         setCurrentSelection(null);
         setOpenModalVideoInfo(false);
+    };
+
+    const addAudio = media => {
+        editor.selection = currentSelection;
+        insertAudio(editor, `${urlServerMedia}${media.public_path}`);
+        setTimeout(() => addAttributedMedia(media.id), 1000);
+        setOpenModalAudio(false);
+    };
+    const addPdf = media => {
+        editor.selection = currentSelection;
+        setMediaTmp(media);
+        setOpenModalPdf(false);
+        setOpenModalPdfInfo(true);
+    };
+    const addPdfWithOpt = opt => {
+        insertPdf(editor, `${urlServerMedia}${mediaTmp.public_path}`, opt.value);
+        setTimeout(() => {
+            addAttributedMedia(mediaTmp.id);
+            setMediaTmp(null);
+        }, 1000);
+
+        setCurrentSelection(null);
+        setOpenModalPdfInfo(false);
     };
     return (
         <div className="text-black toolbar">
@@ -218,6 +247,48 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
                 setOpen={setOpenModalVideoInfo}
                 onSubmit={addVideoWithOpt}
                 mediaTmp={mediaTmp}
+            />
+
+            <ToolBarButton
+                key={'audio'}
+                icon={<Icons type={'audio'} />}
+                isActive={getActiveEffect(editor) === 'audio'}
+                onMouseDown={event => {
+                    event.preventDefault();
+                    setCurrentSelection(editor.selection);
+                    setOpenModalAudio(true);
+                }}
+            />
+            <ModalMedia
+                opened={openModalAudio}
+                onClose={() => setOpenModalAudio(false)}
+                onMediaSelected={addAudio}
+                submitLabel={'Ajouter le fichier'}
+                originalPageId={originalPageId}
+                accepts={['audio']}
+            />
+            <ToolBarButton
+                key={'pdf'}
+                icon={<Icons type={'pdf'} />}
+                isActive={getActiveEffect(editor) === 'pdf'}
+                onMouseDown={event => {
+                    event.preventDefault();
+                    setCurrentSelection(editor.selection);
+                    setOpenModalPdf(true);
+                }}
+            />
+            <ModalMedia
+                opened={openModalPdf}
+                onClose={() => setOpenModalPdf(false)}
+                onMediaSelected={addPdf}
+                submitLabel={'Ajouter le fichier'}
+                originalPageId={originalPageId}
+                accepts={['document']}
+            />
+            <PdfOptions
+                open={openModalPdfInfo}
+                setOpen={setOpenModalPdfInfo}
+                onSubmit={addPdfWithOpt}
             />
         </div>
     );

@@ -1,14 +1,22 @@
 // @refresh reset
 
 // Import React dependencies.
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 // Import the Slate editor factory.
 
 
 export default function SlateEditor({block, setContent}) {
+    const ref = useRef();
+    console.log(ref);
+    useEffect(() => {
+        console.log(ref);
+        ref.current.style.height = 'inherit';
+        ref.current.style.height = `${ref.current.scrollHeight}px`;
+    }, [ref]);
     return (
         <>
             <textarea
+                ref={ref}
                 className="w-full"
                 value={block}
                 onInput={e => {

@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Editor from './Editor';
 import SlateHtmlEditor from './slateHtmlEditor';
@@ -6,31 +6,53 @@ import SlateHtmlEditor from './slateHtmlEditor';
 import 'reactjs-popup/dist/index.css';
 import {deserialize, serializer} from '../../lib/Slate/serialize';
 import SampleDocument from './SampleDocument';
+import deepEqual from 'deep-equal';
 
-export default function CustomEditor({block, setContent, originalPageId, addAttributedMedia}) {
+/* Still bug when changing text then block position */
+export default function CustomEditor({block, setContent, originalPageId, addAttributedMedia, position}) {
     const [isSlateView, setIsSlateView] = useState(true);
+    const [slateContent, setSlateContent] = useState(() => SampleDocument);
+    const [contentLoad, setContentLoad] = useState(false);
+
+    if (typeof window === 'undefined') {
+        return <div>Loading ...</div>;
+    }
+
+    useEffect(() => {
+        console.log('mount');
+        const document = new DOMParser().parseFromString(block, 'text/html');
+        var blockContent = deserialize(document.body);
+        if (block != '' && !contentLoad) {
+            setContentLoad(true);
+
+            setSlateContent(blockContent);
+        } else if (block != '' && !deepEqual(blockContent, slateContent) ) {
+            setSlateContent(blockContent);
+            console.log('check not equal');
+        }
+
+        return () => {
+            //setContentLoad(false);
+            //console.log('unmount');
+        };
+    });
     const changeView = event => {
         event.preventDefault();
         setIsSlateView(!isSlateView);
     };
-    if (typeof window === 'undefined') {
-        return (
-            <div>Loading ...</div>
-        )
-    }
-    var blockContent = block;
-    if (isSlateView && block === '') {
-        blockContent = SampleDocument;
-    } else if (isSlateView) {
-        const document = new DOMParser().parseFromString(block, 'text/html');
-        //console.log(document.body);
-        blockContent = deserialize(document.body);
-    }
 
     const onChangeEditor = value => {
+        setSlateContent(value);
         const valueSerialize = serializer(value);
         //console.log(valueSerialize);
         setContent(valueSerialize);
+    };
+    const onChangeHtmlEditor = value => {
+        setContent(value);
+        const document = new DOMParser().parseFromString(block, 'text/html');
+        //console.log(document.body);
+        const valueDeserialize = deserialize(document.body);
+        setSlateContent(valueDeserialize);
     };
 
     return (
@@ -54,7 +76,12 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
                     </div>
                     <div className="bg-white border border-black h-screen-90">
                         {/*<Editor block={block} setContent={setContent} defuntId={defuntId} />*/}
-                        <Editor originalPageId={originalPageId} document={blockContent} onChange={onChangeEditor} addAttributedMedia={addAttributedMedia} />
+                        <Editor
+                            originalPageId={originalPageId}
+                            document={slateContent}
+                            onChange={onChangeEditor}
+                            addAttributedMedia={addAttributedMedia}
+                        />
                     </div>
                 </>
             ) : (
@@ -75,7 +102,7 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
                         </button>
                     </div>
                     <div className="h-full bg-white border border-black">
-                        <SlateHtmlEditor block={block} setContent={setContent} />
+                        <SlateHtmlEditor block={block} setContent={onChangeHtmlEditor} />
                     </div>
                 </>
             )}

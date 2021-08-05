@@ -8,6 +8,7 @@ import CarouselParam from '../../carouselParam';
 import TexteAnnote from '../../Popup/texteannote';
 import VideoModal from '../../Popup/videoModal';
 import ImageModal from '../../Popup/imageModal';
+import PdfDownload from '../../Popup/pdf-download';
 
 export default function PageContent({ pageName, blocks, attribs }) {
     // prevent from mapping String
