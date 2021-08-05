@@ -19,8 +19,8 @@ export function inRange(x, min, max) {
 // FETCH
 
 // Menu
-export function resolveMenuHref(href){
-    return href
+export function getMenuHref(href){
+    return href.startsWith("/") ? href : `/${href}`
 }
 
 // Tree data
