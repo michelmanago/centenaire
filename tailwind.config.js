@@ -13,8 +13,10 @@ module.exports = {
       'sm:mt-2',
       'sm:w-1/3',
       'mt-8',
+      '-mt-8',
       'mt-2',
-      'pt-6', 
+      'pt-6',
+      'pl-12', 
       'mb-4', 
       'pl-4', 
       'pr-4', 
@@ -31,6 +33,8 @@ module.exports = {
       'underline', 
       'text-pblue',
       'bg-blue-600',
+      'text-xl',
+      'sm:text-2xl',
     ]
   },
   darkMode: false, // or 'media' or 'class'
