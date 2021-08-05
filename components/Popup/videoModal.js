@@ -3,9 +3,24 @@ import {useState} from 'react';
 import Popup from 'reactjs-popup';
 import IconClose from '../icons/IconClose';
 
+function getTimerEnd(url) {
+    var value = '';
+    if (url.includes('#')) {
+        const [urlMedia, timer] = url.split('#');
+        const [start, end] = timer?.split(',');
+        value = end;
+    }
+
+    return value;
+}
+
 export default function VideoModal({url}) {
     const [open, setOpen] = useState(false);
+    //const [timeEnd ,setTimeEnd] = useState(null);
     const videoRef = useRef();
+
+    const end = getTimerEnd(url);
+
     return (
         <div>
             <div
@@ -37,9 +52,12 @@ export default function VideoModal({url}) {
                         className="mt-6"
                         controls
                         src={url}
-                        onPause={() => {
+                        onPause={e => {
                             console.log('video pause');
-                            setOpen(false);
+                            console.log('event', e);
+                            if (end && e.currentTarget.currentTime >= end) {
+                                setTimeout(() => setOpen(false), 1000);
+                            }
                         }}
                         autoPlay
                     ></video>
