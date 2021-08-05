@@ -41,7 +41,8 @@ const groupedByMedia = results => {
 
 // SELECT ALL 
 
-export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id) {
+export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id, accepts = [], order = "DESC") {
+
 
     let item_count = 0
 
@@ -57,10 +58,24 @@ export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id) 
     if(page_id){
         queryString += `
             LEFT JOIN media_page mp ON mp.media_id = m.id
-            WHERE mp.page_id = ?
+            WHERE mp.page_id = ? AND type IN (?)
+
         `
-        parameters.push(page_id)
+        parameters.push(page_id, accepts)
+    } 
+
+    else {
+        queryString += `
+            WHERE type IN (?)
+        `
+        parameters.push(accepts)
     }
+
+
+    // add order
+    queryString += `
+        ORDER BY m.id ${order}
+    `
 
     // add pagination
     queryString += `
@@ -111,9 +126,11 @@ export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id) 
             FROM medias m
             ${page_id ? `
                 LEFT JOIN media_page mp ON mp.media_id = m.id
-                WHERE mp.page_id = 131
-            ` : ""}
-        `))[0].count
+                WHERE mp.page_id = ? AND type IN (?)
+            ` : `
+                WHERE type IN (?)
+            `}
+        `, page_id ? [page_id, accepts] : [accepts]))[0].count
 
 
     }

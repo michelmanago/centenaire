@@ -27,6 +27,7 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
     if(!active) return ""
 
     // states
+    const [didMount, setDidMount] = useState(false)
     const [filterByPage, setFilterByPage] = useState(!originalPageId)
     const [fetching, setFetching] = useState(true)
     const [pagination, setPagination] = useState(null)
@@ -94,7 +95,7 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
             setFetching(true)
 
             // fetch list
-            const media = await fetchMediaPaginated(pageOffset, filtered ? originalPageId : undefined)
+            const media = await fetchMediaPaginated(pageOffset, filtered ? originalPageId : undefined, accepts)
 
             // list of media
             setPageIndexes({
@@ -162,6 +163,12 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
     // lifecycle
     useEffect(async () => {
 
+        if(didMount){
+            return;
+        } else {
+            setDidMount(true)
+        }
+
         if(opened && !hasDoneFirstFetch){
 
             // has first fetched
@@ -181,7 +188,7 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
             }
         }
 
-    }, [opened])
+    }, [opened, hasDoneFirstFetch, preSelectedMedia, didMount])
     
 
         // renderers

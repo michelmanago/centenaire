@@ -1,5 +1,8 @@
+import { MEDIA_TYPES } from "../utils-media"
 
-export default async function fetchMediaPaginated(pageOffset = 0, page_id){
+const allTypesMedia = Object.values(MEDIA_TYPES)
+
+export default async function fetchMediaPaginated(pageOffset = 0, page_id, accepts = allTypesMedia){
 
 
     const url = new URL(window.origin + "/api/media")
@@ -7,6 +10,10 @@ export default async function fetchMediaPaginated(pageOffset = 0, page_id){
 
     if(page_id){
         url.searchParams.append("page_id", page_id)
+    }
+
+    if(accepts){
+        url.searchParams.append("accepts", accepts.join("-"))
     }
 
     try {

@@ -7,8 +7,9 @@ export default async function handler(req, res) {
             
             const page_id = req.query.page_id
             const page_offset = req.query.page_offset
+            const accepts = req.query.accepts ? req.query.accepts.split("-") : []
             
-            const medias = await getMedia(page_id, page_offset)
+            const medias = await getMedia(page_id, page_offset, accepts)
 
             return res.json(medias);
         } else {

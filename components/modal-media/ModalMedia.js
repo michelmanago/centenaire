@@ -17,7 +17,7 @@ import IconClose from "../icons/IconClose"
 // styles
 const contentStyles = {
     width: "85%",
-    height: "80%",
+    height: "92%",
     borderRadius: ".2em"
 }
 
@@ -27,7 +27,6 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
 
     // states
     const [tab, setTab] = useState(TAB_MEDIA_LIST)
-    const [list, setList] = useState([])
     const [pageIndexes, setPageIndexes] = useState({})
     const [edited, setEdited] = useState(null)
     const [hasModified, setHasModified] = useState(false)
@@ -78,12 +77,7 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
         // change tab
         setTab(TAB_MEDIA_LIST)
 
-        // add new media to list
-        setList([
-            media,
-            ...list
-        ])
-
+        // modalList will re-fetch the list
         // select the media
         setEdited(media)
     }
@@ -134,10 +128,8 @@ function ModalMedia({opened, onClose, onMediaSelected, submitLabel, preSelectedM
                         <ModalMediaList 
                             originalPageId={originalPageId} 
                             edited={edited} setEdited={setEdited} 
-                            list={list}
                             pageIndexes={pageIndexes}
                             setPageIndexes={setPageIndexes}
-                            setList={setList}
                             accepts={accepts}
                             hasModified={hasModified}
                             setHasModified={setHasModified}
