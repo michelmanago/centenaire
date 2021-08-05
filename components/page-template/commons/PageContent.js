@@ -52,8 +52,11 @@ export default function PageContent({ pageName, blocks, attribs }) {
                                     } else if (domNode.attribs && domNode.attribs['data-js-imagemodal'] !== undefined) {
                                         const url = domNode.attribs['src'];
                                         const classNames = [domNode.attribs['className'], domNode.attribs['classname'], domNode.attribs['classs']]
-                                        console.log(domNode);
                                         return <ImageModal url={url} className={classNames.join(' ')} legende={block.content.legende} id={block.id} />;
+                                    } else if (domNode.attribs && domNode.attribs['data-js-pdf'] !== undefined) {
+                                        const url = domNode.attribs['href'];
+                                        const text = domNode.attribs['data-text'];
+                                        return <PdfDownload url={url} text={text} />
                                     }
                                 },
                             })}
