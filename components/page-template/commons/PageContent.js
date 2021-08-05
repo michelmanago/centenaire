@@ -51,9 +51,8 @@ export default function PageContent({ pageName, blocks, attribs }) {
                                         return <VideoModal url={url} />;
                                     } else if (domNode.attribs && domNode.attribs['data-js-imagemodal'] !== undefined) {
                                         const url = domNode.attribs['src'];
-                                        const className = domNode.attribs['className'];
-                                        const classs = domNode.attribs['class'];
-                                        return <ImageModal url={url} className={`${className} ${classs}`} />;
+                                        const classNames = [domNode.attribs['className'], domNode.attribs['classname'], domNode.attribs['classs']]
+                                        return <ImageModal url={url} className={classNames.join(' ')} legende={block.content.legende} id={block.id} />;
                                     } else if (domNode.attribs && domNode.attribs['data-js-pdf'] !== undefined) {
                                         const url = domNode.attribs['href'];
                                         const text = domNode.attribs['data-text'];
