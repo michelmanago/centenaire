@@ -7,7 +7,9 @@ import fetchCreateMedia from "../../../utils/fetch/fetchCreateMedia";
 import { getValidFileTypes, isValidFileType } from "../../../utils/utils-media";
 import attributePageToMedia from "../../../utils/fetch/attributePageToMedia"
 
-export default function ModalMediaUpload({onMediaUploaded, accepts, originalPageId}){
+export default function ModalMediaUpload({active, onMediaUploaded, accepts, originalPageId}){
+
+    if(!active) return ""
 
     // router
 

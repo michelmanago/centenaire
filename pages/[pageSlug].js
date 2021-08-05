@@ -19,6 +19,7 @@ import { getPageBySlug } from '../model/page';
 
 // utils
 import { getMediaLink } from '../utils/utils-serveur-image';
+import { selectMediaPaginated } from '../dao/media';
 
 const NavCompositeur = dynamic(() => import('../components/compositeurs/nav'));
 
