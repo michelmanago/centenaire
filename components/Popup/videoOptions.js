@@ -45,7 +45,7 @@ export default function VideoOptions({open, setOpen, onSubmit, mediaTmp}) {
                     <div>Fin:</div>
                     <input
                         className="border rounded"
-                        type="text"
+                        type="number"
                         value={timeEnd}
                         onChange={e => setTimeEnd(e.currentTarget.value)}
                     />
@@ -57,7 +57,12 @@ export default function VideoOptions({open, setOpen, onSubmit, mediaTmp}) {
             <div className="flex w-full h-16 px-3 pt-2 bg-white border-t border-gray-300">
                 {/* Submit main action */}
                 <button
-                    onClick={() => onSubmit({isModal, timeStart, timeEnd})}
+                    onClick={() => {
+                        onSubmit({isModal, timeStart, timeEnd});
+                        setIsModal(false);
+                        setTimeStart('');
+                        setTimeEnd('');
+                    }}
                     className={`ml-auto font-medium text-lg bg-blue-600 h-full text-white px-5 rounded hover:bg-blue-700`}
                 >
                     {'Ajouter'}
