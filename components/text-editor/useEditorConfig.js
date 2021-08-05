@@ -4,7 +4,6 @@ import {DefaultElement, useFocused, useSelected} from 'slate-react';
 import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
 import TexteAnnote from '../Popup/texteannote';
-import VideoModal from '../Popup/videoModal';
 import PdfDownload from '../Popup/pdf-download';
 const KeyBindings = {
     onKeyDown: (editor, event) => {
@@ -78,7 +77,7 @@ function renderElement(props) {
                         <img
                             src={element.url}
                             alt={element.url}
-                            className={`block max-w-full max-h-80 ${selected && focused ? 'shadow-lg' : 'shadow-none'}`}
+                            className={`block mx-auto max-w-full max-h-80 ${selected && focused ? 'shadow-lg' : 'shadow-none'}`}
                         />
                     </div>
                     {children}
@@ -86,7 +85,7 @@ function renderElement(props) {
             );
         case 'video':
             return (
-                <video controls src={element.url} loop>
+                <video controls src={element.url}>
                     {children}
                 </video>
             );
