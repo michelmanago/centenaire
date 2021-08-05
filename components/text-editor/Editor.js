@@ -6,6 +6,7 @@ import Toolbar from './Toolbar';
 import useEditorConfig from './useEditorConfig';
 import useSelection from './useSelection';
 import {serializer, deserialize} from '../../lib/Slate/serialize';
+import { withHistory } from 'slate-history'
 
 import {wrapLink, insertImage, isImageUrl} from './EditorUtils';
 
@@ -82,8 +83,8 @@ const withPDF = editor => {
     return editor;
 }
 
-export default function Editor({document, onChange, originalPageId, addAttributedMedia}) {
-    const editor = useMemo(() => withPDF(withLinks(withImages(withReact(createEditor())))), []);
+export default function Editor({document, onChange, originalPageId, addAttributedMedia, currentPage}) {
+    const editor = useMemo(() => withPDF(withLinks(withImages(withHistory(withReact(createEditor()))))), []);
     const {renderElement, renderLeaf, onKeyDown} = useEditorConfig(editor);
     const [selection, setSelection] = useSelection(editor);
     const [previousSelection, setPreviousSelection] = useState(editor);
@@ -103,6 +104,7 @@ export default function Editor({document, onChange, originalPageId, addAttribute
                     originalPageId={originalPageId}
                     selection={selection}
                     addAttributedMedia={addAttributedMedia}
+                    currentPage={currentPage}
                 />
                 <Editable renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
             </Slate>

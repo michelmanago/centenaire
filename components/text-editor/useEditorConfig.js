@@ -4,7 +4,6 @@ import {DefaultElement, useFocused, useSelected} from 'slate-react';
 import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
 import TexteAnnote from '../Popup/texteannote';
-import VideoModal from '../Popup/videoModal';
 import PdfDownload from '../Popup/pdf-download';
 const KeyBindings = {
     onKeyDown: (editor, event) => {
@@ -57,6 +56,8 @@ function renderElement(props) {
             return <h3 {...newAttributes}>{children}</h3>;
         case 'h4':
             return <h4 {...newAttributes}>{children}</h4>;
+        case 'h5':
+            return <h5 {...newAttributes}>{children}</h5>;
         case 'bulleted-list':
             return <ul {...newAttributes}>{children}</ul>;
         case 'numbered-list':
@@ -72,21 +73,25 @@ function renderElement(props) {
         case 'image':
             const selected = useSelected();
             const focused = useFocused();
+            console.log(element.legende);
             return (
                 <div {...attributes}>
                     <div contentEditable={false}>
                         <img
                             src={element.url}
                             alt={element.url}
-                            className={`block max-w-full max-h-80 ${selected && focused ? 'shadow-lg' : 'shadow-none'}`}
+                            className={`block max-w-full max-h-80 ${
+                                selected && focused ? 'shadow-lg' : 'shadow-none'
+                            }`}
                         />
+                        <div>{element.legende ?? element.legende}</div>
                     </div>
                     {children}
                 </div>
             );
         case 'video':
             return (
-                <video controls src={element.url} loop>
+                <video controls src={element.url}>
                     {children}
                 </video>
             );

@@ -22,10 +22,10 @@ const BlockContentEditor = ({
     setBlockPosition,
     originalPageId,
     addAttributedMedia,
+    currentPage,
 }) => {
     const [isRender, setIsRender] = useState(true);
     useEffect(() => {
-        console.log('position change');
         setIsRender(false);
         setTimeout(() => setIsRender(true), 1000);
     }, [])
@@ -73,7 +73,7 @@ const BlockContentEditor = ({
                             block={content}
                             setContent={setContent}
                             addAttributedMedia={addAttributedMedia}
-                            position={position}
+                            currentPage={currentPage}
                         />
                     </div>
                     //<textarea className="w-full h-20" onChange={e => setContent(e.target.value)} value={content} name="" id="" cols="30" rows="10"></textarea>

@@ -9,7 +9,7 @@ import SampleDocument from './SampleDocument';
 import deepEqual from 'deep-equal';
 
 /* Still bug when changing text then block position */
-export default function CustomEditor({block, setContent, originalPageId, addAttributedMedia, position}) {
+export default function CustomEditor({block, setContent, originalPageId, addAttributedMedia, currentPage}) {
     const [isSlateView, setIsSlateView] = useState(true);
     const [slateContent, setSlateContent] = useState(() => SampleDocument);
     const [contentLoad, setContentLoad] = useState(false);
@@ -19,22 +19,14 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
     }
 
     useEffect(() => {
-        console.log('mount');
         const document = new DOMParser().parseFromString(block, 'text/html');
         var blockContent = deserialize(document.body);
         if (block != '' && !contentLoad) {
             setContentLoad(true);
-
             setSlateContent(blockContent);
         } else if (block != '' && !deepEqual(blockContent, slateContent) ) {
             setSlateContent(blockContent);
-            console.log('check not equal');
         }
-
-        return () => {
-            //setContentLoad(false);
-            //console.log('unmount');
-        };
     });
     const changeView = event => {
         event.preventDefault();
@@ -81,6 +73,7 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
                             document={slateContent}
                             onChange={onChangeEditor}
                             addAttributedMedia={addAttributedMedia}
+                            currentPage={currentPage}
                         />
                     </div>
                 </>
