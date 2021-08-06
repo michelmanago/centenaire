@@ -16,7 +16,7 @@ export default function ImageModal({url, className, legende}){
             }}
             >
                 <img src={url} className={className} />
-                <div>{legende}</div>
+                <div className='italic text-center'>{legende}</div>
             </div>
 
             <Popup

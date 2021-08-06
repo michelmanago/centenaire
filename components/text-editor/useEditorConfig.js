@@ -83,7 +83,7 @@ function renderElement(props) {
                                 selected && focused ? 'shadow-lg' : 'shadow-none'
                             }`}
                         />
-                        <div>{element.legende ? element.legende : ''}</div>
+                        <div className='italic text-center'>{element.legende ? element.legende : ''}</div>
                     </div>
                     {children}
                 </div>
