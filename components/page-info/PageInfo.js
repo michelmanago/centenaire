@@ -6,6 +6,7 @@ import IconInfo from "../icons/IconInfo"
 
 // utils
 import { useRouter } from 'next/router';
+import { getFilenameFromPath } from "../../utils/utils-media";
 
 
 const wrapperStyles = {
@@ -80,7 +81,7 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
                                         if(mediaItem.credit){
                                             return (
                                                 <li key={mediaItem.id} className="mb-2 text-sm">
-                                                    {mediaItem.credit}
+                                                    <em>{getFilenameFromPath(mediaItem.public_path)}</em> : {mediaItem.credit}
                                                 </li>
                                             )
                                         }
@@ -98,7 +99,7 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
 }
 
 const TriggerDOM = (
-    <div className="border mb-3 px-4 py-1 bg-gray-100 border-gray-300 hover:bg-gray-200 rounded inline-flex items-center">
+    <div className="border mb-3 px-4 py-1 border-gray-300 hover:bg-gray-200 rounded inline-flex items-center">
 
         {/* Icon */}
         <IconInfo />
