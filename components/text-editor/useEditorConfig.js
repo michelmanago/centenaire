@@ -73,7 +73,6 @@ function renderElement(props) {
         case 'image':
             const selected = useSelected();
             const focused = useFocused();
-            console.log(element.legende);
             return (
                 <div {...attributes}>
                     <div contentEditable={false}>
@@ -84,7 +83,7 @@ function renderElement(props) {
                                 selected && focused ? 'shadow-lg' : 'shadow-none'
                             }`}
                         />
-                        <div>{element.legende ?? element.legende}</div>
+                        <div>{element.legende ? element.legende : ''}</div>
                     </div>
                     {children}
                 </div>
