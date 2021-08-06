@@ -49,14 +49,15 @@ export default function PageContent({pageName, blocks, attribs}) {
                                         const url = domNode.attribs['src'];
 
                                         return <VideoModal url={url} />;
-                                    } else if (domNode.attribs && domNode.attribs['data-js-imagemodal'] !== undefined) {
+                                    } else if (domNode.name === 'img') {
                                         const url = domNode.attribs['src'];
                                         const legende = domNode.attribs['data-legende'];
                                         const classNames = [
                                             domNode.attribs['className'],
                                             domNode.attribs['classname'],
-                                            domNode.attribs['classs'],
+                                            domNode.attribs['class'],
                                         ];
+                                        console.log(domNode, classNames);
                                         return (
                                             <ImageModal
                                                 url={url}
