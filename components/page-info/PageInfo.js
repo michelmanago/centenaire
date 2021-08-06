@@ -18,13 +18,11 @@ const wrapperStyles = {
 
 export default function PageInfo({ media, author, created_at, last_modified, source }) {
 
+    // router
     const { locale } = useRouter();
 
+    // others
     const thereIsCredit = (media.length && media.some(m => m.credit))
-
-
-
-
 
     return (
 
@@ -81,7 +79,7 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
                                         if(mediaItem.credit){
                                             return (
                                                 <li key={mediaItem.id} className="mb-2 text-sm">
-                                                    <em>{getFilenameFromPath(mediaItem.public_path)}</em> : {mediaItem.credit}
+                                                    <em>{getFilenameFromPath(mediaItem)}</em> : {mediaItem.credit}
                                                 </li>
                                             )
                                         }
