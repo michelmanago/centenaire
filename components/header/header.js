@@ -9,7 +9,6 @@ import styles from '../../styles/components/header.module.css';
 // components
 import Image from 'next/image';
 import Nav from '../nav/nav';
-import LanguageSwitcher from "../../components/language-switcher/LanguageSwitcher"
 
 export default function Header({ menu, translations }) {
     const [session] = useSession();
@@ -20,11 +19,6 @@ export default function Header({ menu, translations }) {
 
     /** States */
     const [isLangMenuOpened, setIsLangMenuOpened] = useState(false);
-    const [needLanguages, setNeedLanguages] = useState(false)
-
-    useEffect(() => {
-        setNeedLanguages(!window.location.pathname.startsWith("/admin"))
-    }, [])
 
     return (
         <header className="bg-pyellow">
@@ -45,12 +39,11 @@ export default function Header({ menu, translations }) {
                 </div>
             </div>
 
-            {needLanguages && <div className="container max-w-screen-xl bg-white sm:mx-auto">
-                <LanguageSwitcher translations={translations}/>
-            </div>}
-
             {/* Top bar */}
-            <Nav menu={menu} />
+            <Nav 
+                menu={menu}
+                translations={translations}
+            />
 
             {session && (
                 <div className='flex flex-row items-center justify-center'>

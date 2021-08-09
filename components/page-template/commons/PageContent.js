@@ -30,11 +30,16 @@ export default function PageContent({pageName, blocks, attribs}) {
         blockList =
             list &&
             sortedBlocks(list).map((block, index) => {
+
+                const key = `${block.position}-${block.type}`
+
                 if (block.type === 'text') {
                     return (
-                        <div key={index}>
+                        <div key={key}>
                             {htmlParse(block.content, {
                                 replace: domNode => {
+
+
                                     // Render Tooltip {TexteAnnote}
                                     if (domNode.attribs && domNode.attribs['data-js-tooltip'] !== undefined) {
                                         if (domNode.firstChild && domNode.firstChild.type === 'text') {
@@ -45,27 +50,41 @@ export default function PageContent({pageName, blocks, attribs}) {
                                         } else {
                                             console.warn('First child is not type text');
                                         }
-                                    } else if (domNode.attribs && domNode.attribs['data-js-videomodal'] !== undefined) {
+                                    } 
+                                    
+                                    // Render Video Modal
+                                    else if (domNode.attribs && domNode.attribs['data-js-videomodal'] !== undefined) {
                                         const url = domNode.attribs['src'];
 
                                         return <VideoModal url={url} />;
-                                    } else if (domNode.name === 'img') {
+                                    } 
+                                    
+                                    // Render Image modal
+                                    else if (domNode.name === 'img') {
+
+                                        // data
                                         const url = domNode.attribs['src'];
                                         const legende = domNode.attribs['data-legende'];
+                                        const credit = domNode.attribs['data-credit'];
+
                                         const classNames = [
                                             domNode.attribs['className'],
                                             domNode.attribs['classname'],
                                             domNode.attribs['class'],
                                         ];
-                                        console.log(domNode, classNames);
+
                                         return (
                                             <ImageModal
                                                 url={url}
                                                 className={classNames.join(' ')}
                                                 legende={legende}
+                                                credit={credit}
                                             />
                                         );
-                                    } else if (domNode.attribs && domNode.attribs['data-js-pdf'] !== undefined) {
+                                    } 
+                                    
+                                    // Render PDF Downloadable
+                                    else if (domNode.attribs && domNode.attribs['data-js-pdf'] !== undefined) {
                                         const url = domNode.attribs['href'];
                                         const text = domNode.attribs['data-text'];
                                         return <PdfDownload url={url} text={text} />;
@@ -76,7 +95,7 @@ export default function PageContent({pageName, blocks, attribs}) {
                     );
                 } else if (block.type === 'carousel') {
                     return (
-                        <div key={block.id}>
+                        <div key={key}>
                             <CarouselParam imgList={block.content.data} legende={block.content.legende} id={block.id} />
                         </div>
                     );

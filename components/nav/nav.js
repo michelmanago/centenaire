@@ -1,7 +1,10 @@
 // libs
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
+
+// components
+import LanguageSwitcher from "../language-switcher/LanguageSwitcher"
 
 // style
 import styles from "./nav.module.css"
@@ -50,7 +53,7 @@ const NavLink = ({item}) => {
 
 }
 
-const Nav = ({menu = []}) => {
+const Nav = ({menu = [], translations}) => {
 
     // methods
 
@@ -72,6 +75,13 @@ const Nav = ({menu = []}) => {
         })
     }, [refContainer])
 
+    const [needLanguages, setNeedLanguages] = useState(false)
+
+    useEffect(() => {
+        setNeedLanguages(!window.location.pathname.startsWith("/admin"))
+    }, [])
+
+
     return (
         <nav ref={refContainer} className="navbar flex items-center bg-pblue">
             <button className="navbar-toggle">
@@ -85,6 +95,12 @@ const Nav = ({menu = []}) => {
                     menu.map((item, index) => <NavLink key={"item-" + index} item={item} />)
                 }
                 </ul>
+
+                {needLanguages && (
+                    <div className="text-gray-900">
+                        <LanguageSwitcher translations={translations}/>
+                    </div>
+                )}
             </div>
         </nav>
     )

@@ -156,9 +156,9 @@ export function wrapLink(editor, url) {
     }
 }
 
-export function insertImage(editor, url, legende) {
+export function insertImage(editor, url, legende, credit) {
     const text = {text: ''};
-    const image = {type: 'image', url, legende, children: [text]};
+    const image = {type: 'image', url, legende, credit, children: [text]};
     Transforms.insertNodes(editor, image);
 }
 export function isImageUrl(url) {

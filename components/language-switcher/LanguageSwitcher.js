@@ -74,9 +74,9 @@ const LanguageSwitcher = ({translations}) => {
     }
 
     return (
-        <div className="border py-3 flex justify-end">
+        <div className="flex justify-end">
 
-            <select defaultValue={locale} onChange={onSelectLangue} className="mr-5 border px-2 py-3 rounded">
+            <select defaultValue={locale} onChange={onSelectLangue} className="mr-5 border px-2 py-1 rounded">
                 {
                     locales.map(locale => (
                         <option key={locale} value={locale}>{locale.toUpperCase()}</option>
