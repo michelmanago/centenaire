@@ -30,9 +30,12 @@ export default function PageContent({pageName, blocks, attribs}) {
         blockList =
             list &&
             sortedBlocks(list).map((block, index) => {
+
+                const key = `${block.position}-${block.type}`
+
                 if (block.type === 'text') {
                     return (
-                        <div key={index}>
+                        <div key={key}>
                             {htmlParse(block.content, {
                                 replace: domNode => {
 
@@ -70,8 +73,6 @@ export default function PageContent({pageName, blocks, attribs}) {
                                             domNode.attribs['class'],
                                         ];
 
-                                        console.log({before: domNode.attribs})
-
                                         return (
                                             <ImageModal
                                                 url={url}
@@ -94,7 +95,7 @@ export default function PageContent({pageName, blocks, attribs}) {
                     );
                 } else if (block.type === 'carousel') {
                     return (
-                        <div key={block.id}>
+                        <div key={key}>
                             <CarouselParam imgList={block.content.data} legende={block.content.legende} id={block.id} />
                         </div>
                     );

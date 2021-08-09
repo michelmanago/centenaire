@@ -18,46 +18,45 @@ export default function ImageModal({url, className, legende, credit}){
                 overlayStyle={overlayStyle}
                 trigger={
                     <div>
-                        <ImageContainer
-                            url={url}
-                            className={className}
-                            legende={legende}
-                            credit={credit}
+                        {/* Image */}
+                        <img 
+                            src={url} 
+                            className={`mx-auto ${className}`}
+                            alt=""
                         />
+
+                        {/* Info */}
+                        {
+                            (legende || credit) && (
+                                <div className="mt-2">
+                                    {legende && <p className='font-bold text-center'>{legende}</p>}
+                                    {credit && <p className='italic text-center'>{credit}</p>}
+                                </div>
+                            )
+                        }
                     </div>
                 }
             >
                {
-                   close => (
-                    <div className="bg-gray-100">
-                        {/* Container */}
-                        <div className="w-full">
-    
-                            {/* Close */}
-                            <button onClick={close} type="button" className="hover:opacity-50 absolute right-2 top-2">
-                                <IconClose/>
-                            </button>
-    
-                            <ImageContainer
-                                url={url}
-                                className={className}
-                                legende={legende}
-                                credit={credit}
-                                inModal={true}
-                            />
-                        </div>
-                    </div>
-                   )
+                    close => (
+                        <ImageModalContainer
+                            url={url}
+                            className={className}
+                            legende={legende}
+                            credit={credit}
+                            close={close}
+                        />
+                    )
                }
             </Popup>
         </div>
     )
 }
 
-const ImageContainer = ({url, className, legende, credit, inModal = false}) => {
+export const ImageModalContainer = ({url, className, legende, credit, close}) => {
 
     // states
-    const [loaded, setLoaded] = useState(inModal ? false : true)
+    const [loaded, setLoaded] = useState(false)
     const [dimension, setDimension] = useState(null)
 
     // methods
@@ -85,11 +84,20 @@ const ImageContainer = ({url, className, legende, credit, inModal = false}) => {
 
     // others
     const styles = Object.assign({
-        display: (inModal && !loaded) ? "none" : "",
-    }, (inModal && dimension) && dimension)
+        display: !loaded ? "none" : "",
+    }, dimension && dimension)
 
     return (
-        <div>   
+        <div className="relative bg-gray-100">   
+
+            {/* Close */}
+            {
+                close && (
+                    <button onClick={close} type="button" className="hover:opacity-50 absolute right-2 top-2">
+                        <IconClose/>
+                    </button>
+                )
+            }
 
             {/* Image */}
             <img 
