@@ -9,7 +9,8 @@ export const CATEGORIES = {
     MAITRESSPIRITUELS: "maîtres spirituels",
     LAICS: "laïcs",
     ICONOGRAPHES: "iconographes",
-    ARTISTES: "artistes"
+    ARTISTES: "artistes",
+    ECOLEPAROISSIALE : "écoles paroissiales"
 }
 
 export const ROLES = {
