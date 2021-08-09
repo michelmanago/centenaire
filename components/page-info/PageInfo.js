@@ -6,14 +6,11 @@ import IconInfo from "../icons/IconInfo"
 
 // utils
 import { useRouter } from 'next/router';
-import { getFilenameFromPath } from "../../utils/utils-media";
 
 
 const wrapperStyles = {
     width: 400
 }
-
-
 
 
 export default function PageInfo({ media, author, created_at, last_modified, source }) {
@@ -23,6 +20,8 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
 
     // others
     const thereIsCredit = (media.length && media.some(m => m.credit))
+    const creditsVideo = media.filter(m => m.type === "video")
+    const creditsImage = media.filter(m => m.type === "image")
 
     return (
 
@@ -67,34 +66,41 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
                     </div>
                 )}
 
-                {/* Credits */}
+                {/* Credits images */}
                 {
-                    thereIsCredit && (
-                        <>
-                            <p className="underline">Crédits</p>
-                            <div className="max-h-44 overflow-auto border">
-                                <ol className="pl-8 m-0">
-                                    {media.map(mediaItem => {
+                    (creditsImage && creditsImage.length) && <ListCredtit media={creditsImage} title={"Credits photo"}/> 
+                }
 
-                                        if(mediaItem.credit){
-                                            return (
-                                                <li key={mediaItem.id} className="mb-2 text-sm">
-                                                    <em>{getFilenameFromPath(mediaItem)}</em> : {mediaItem.credit}
-                                                </li>
-                                            )
-                                        }
-
-                                    })}
-                                </ol>
-                            </div>
-                        </>
-                    )
+                {/* Credits images */}
+                {
+                    (creditsVideo && creditsVideo.length) && <ListCredtit media={creditsVideo} title={"Crédits vidéo"}/> 
                 }
             </div>
         </Popup>
     )
 
 }
+
+const ListCredtit = ({media, title}) => (
+    <div className="mb-1">
+        <p className="underline">{title}</p>
+        <div className="max-h-44 overflow-auto">
+            <ol className="pl-8 m-0">
+                {media.map(mediaItem => {
+
+                    if(mediaItem.credit){
+                        return (
+                            <li key={mediaItem.id} className="mb-2 text-sm">
+                                {mediaItem.credit}
+                            </li>
+                        )
+                    }
+
+                })}
+            </ol>
+        </div>
+    </div>
+)
 
 const TriggerDOM = (
     <div className="border mb-3 px-4 py-1 border-gray-300 hover:bg-gray-200 rounded inline-flex items-center">
