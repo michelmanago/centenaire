@@ -68,8 +68,12 @@ export default function Toolbar({selection, previousSelection, originalPageId, a
 
     const addImage = media => {
         editor.selection = currentSelection;
+
+        // data
         const legende = getLegendeFromLocal(media.legende, currentPage.language);
-        insertImage(editor, `${urlServerMedia}${media.public_path}`, legende);
+        const credit = media.credit
+
+        insertImage(editor, `${urlServerMedia}${media.public_path}`, legende, credit);
         setTimeout(() => addAttributedMedia(media.id), 1000);
         setOpenModalMedia(false);
     };

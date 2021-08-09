@@ -221,20 +221,6 @@ button {
     padding: 5px;
 }
 
-.image-modal-content {
-    position: relative;
-    display: block;
-    height: 95vh;
-    background-color: #ffffff;
-    border: 1px #ffffff;
-    border-radius: 5px;
-}
-.image-modal-content img {
-    height: 91vh;
-}
-.image-modal-overlay {
-    background: rgba(0, 0, 0, 0.719);
-}
 
 /* Libs */
 
