@@ -6,7 +6,7 @@ export const CATEGORIES = {
     COMPOSITEURS: "compositeurs",
     PRIMATS: "primats",
     EVEQUES: "évêques",
-    MAITRESSPIRITUELS: "maîtres spirituels",
+    MAITRESSPIRITUELS: "pères spirituels et moniales",
     THEOLOGIENS: "théologiens et philosophes",
     LAICS: "laïcs",
     ICONOGRAPHES: "iconographes",
