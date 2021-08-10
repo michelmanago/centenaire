@@ -1,5 +1,5 @@
 // utils
-import { onSubmitPreventForm, separateBy } from "../../../utils/utils"
+import { getMenuHref, onSubmitPreventForm, separateBy } from "../../../utils/utils"
 
 
 export default function MenuEditorPageList({setAvailablePages, availablePages, currentLocale, addPageLinks}){
@@ -43,7 +43,7 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
                 {
                     list.map(page => {
 
-                        const permalien = page.pageSlug
+                        const permalien = getMenuHref(page.pageSlug)
             
                         return (
                             <div key={"link" + page.id} className="flex items-center whitespace-nowrap">
@@ -75,7 +75,6 @@ export default function MenuEditorPageList({setAvailablePages, availablePages, c
                     pagesSeparatedByCategory.map((pages, i) => {
 
                         const category = pages[0].page
-                        console.log(i, category)
                         return renderCategoryList(pages, category ? category : undefined)
                     })
                 }
