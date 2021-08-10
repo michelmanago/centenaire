@@ -4,18 +4,17 @@ import { getMenu } from '../../../model/menu';
 
 // libs
 import Head from 'next/head';
-import {getSession, useSession} from 'next-auth/client';
+import {getSession} from 'next-auth/client';
+import Link from "next/link"
 
 // components
 import Header from '../../../components/header/header';
 
 // parameters
-import { CATEGORIES } from "../../../utils/parameters"
 import { capitalize } from '../../../utils/utils';
+import { getAllCategories } from '../../../model/category';
 
-export default function AdminCategory({menu}) {
-
-    const categories = Object.values(CATEGORIES)
+export default function AdminCategory({menu, categories}) {
 
     return (
         <>
@@ -31,8 +30,10 @@ export default function AdminCategory({menu}) {
                 <ul className="pl-5">
                     {
                         categories.map(cat => (
-                            <li key={cat}>
-                                <a className="text-lg text-blue-500 underline" key={cat} href={`/admin/category/${cat}`} >{capitalize(cat)}</a>
+                            <li key={cat.id}>
+                                <Link href={`/admin/category/${cat.title}`}>
+                                    <a className="text-lg text-blue-500 underline">{capitalize(cat.title)}</a>
+                                </Link>
                             </li>
                         ))
                     }
@@ -55,9 +56,13 @@ export async function getServerSideProps(context) {
         };
     }
 
+    // data
     const menu = await getMenu(context.locale)
+    const categories = await getAllCategories()
+
   
     return {props: {
-      menu: menu
+      menu: menu,
+      categories,
     }}
 }

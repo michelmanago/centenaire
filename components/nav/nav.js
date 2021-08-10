@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from "react"
+import Link from "next/link"
 
 // components
 import LanguageSwitcher from "../language-switcher/LanguageSwitcher"
@@ -25,16 +26,18 @@ const NavLink = ({item}) => {
   
         return (
             <li> 
-                <a href={href}>
+                <Link href={href}>
+                    <a>
 
-                    <span>{item.label}</span>
-                    <svg className="parent-icon" viewBox="0 0 1024 1024">
-                        <path d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
-                    </svg>
-                    <svg className="parent-toggle" viewBox="0 0 1024 1024">
-                        <path d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
-                    </svg>
-                </a>
+                        <span>{item.label}</span>
+                        <svg className="parent-icon" viewBox="0 0 1024 1024">
+                            <path d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
+                        </svg>
+                        <svg className="parent-toggle" viewBox="0 0 1024 1024">
+                            <path d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
+                        </svg>
+                    </a>
+                </Link>
                 <ul className="subnav md:bg-pblue"> 
                     {
                         item.subMenu.map((subItem, index) => <NavLink key={"subitem-" + index} item={subItem}/>)
@@ -47,7 +50,11 @@ const NavLink = ({item}) => {
   
     else {
       return (
-        <li><a href={href}>{item.label}</a></li> 
+        <li>
+            <Link href={href}>
+                <a>{item.label}</a>
+            </Link>
+        </li> 
       )
     }
 

@@ -30,8 +30,8 @@ const PageEditorSidebar = ({
     onMediaUploaded,
     onRemoveMedia,
     updatePages,
-
-    notAllowedToSave,
+    categories,
+    notAllowedToSave
 }) => {
 
     // hooks
@@ -149,6 +149,7 @@ const PageEditorSidebar = ({
             <PageEditCategory
                 updatePages={updatePages}
                 category={category}
+                categories={categories}
             />
 
         </div>

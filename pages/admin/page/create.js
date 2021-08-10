@@ -1,5 +1,6 @@
 // models
 import { getMenu } from "../../../model/menu";
+import { getAllCategories } from "../../../model/category";
 
 // components
 import Header from "../../../components/header/header"
@@ -15,7 +16,7 @@ import {getSession, useSession} from 'next-auth/client';
 import { toMysqlFormat } from "../../../utils/utils";
 import { bulkAttributePageToMedia } from "../../../utils/fetch/attributePageToMedia";
 
-export default function PageEditorCreate({menu}) {
+export default function PageEditorCreate({menu, categories}) {
 
     // hooks
     const {defaultLocale} = useRouter()
@@ -85,6 +86,7 @@ export default function PageEditorCreate({menu}) {
             <main className="">
                 <PageEditor
                     onFormSubmitted={onSubmit}
+                    categories={categories}
                 />
             </main>
         </>
@@ -103,9 +105,14 @@ export async function getServerSideProps(context) {
             },
         };
     }
+
+    // data
     const menu = await getMenu(context.locale)
+    const categories = await getAllCategories()
+
     return {props: {
-      menu: menu
+      menu: menu,
+      categories
     }}
   }
     

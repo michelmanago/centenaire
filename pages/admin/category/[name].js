@@ -10,7 +10,6 @@ import DefaultErrorPage from 'next/error';
 import {getSession, useSession} from 'next-auth/client';
 
 // parameters
-import {CATEGORIES} from '../../../utils/parameters';
 import {getAllPages} from '../../../model/page';
 import {useRouter} from 'next/router';
 

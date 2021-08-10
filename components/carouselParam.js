@@ -79,7 +79,7 @@ export default function Carousel({ imgList, legende, id }) {
 
     return (
         <div>
-            <div className="h-auto my-6 overflow-hidden bg-white rounded-xl md:max-w-full mb-9">
+            <div className="h-auto my-6 overflow-hidden bg-white md:max-w-full">
 
 
                 {/* Modal */}
@@ -123,8 +123,11 @@ export default function Carousel({ imgList, legende, id }) {
                             <SwiperSlide key={img.public_path}>
                                 <div className="flex flex-col items-center">
 
+                                    {/* Trigger moadl */}
+                                    <button className="absolute w-10/12 h-full" type="button" onClick={() => openImageModal(img)}></button>
+
                                     {/* Clickable image */}
-                                    <button type="button" onClick={() => openImageModal(img)}>
+                                    <div>
 
                                         {/* Image */}
                                         <img 
@@ -136,22 +139,24 @@ export default function Carousel({ imgList, legende, id }) {
                                         {
                                             (legende || credit) && (
                                                 <div className="mt-2">
-                                                    {legende && <p className='font-bold text-center'>{legende}</p>}
+                                                    {legende && <p className='text-center'>{legende}</p>}
                                                     {credit && <p className='italic text-center'>{credit}</p>}
                                                 </div>
                                             )
                                         }
 
-                                    </button>
+                                    </div>
 
                                 </div>
                             </SwiperSlide>
                         );
                     })}
                 </Swiper>
-            </div>
+    
+                {/* Legende carousel */}
+                <p className="text-center font-bold">{legende}</p>
 
-            <div className="flex justify-center">{legende}</div>
+            </div>
         </div>
     );
 }

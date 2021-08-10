@@ -1,6 +1,9 @@
 // utils
 import { getPagesSortedByPosition } from "../../../utils/utils"
 
+//libs
+import Link from "next/link"
+
 
 export default function SortedNavList({list}){
 
@@ -13,7 +16,11 @@ export default function SortedNavList({list}){
                     getPagesSortedByPosition(list).map(page => {
 
                         return (
-                            <li className="list-none mb-1" key={page.id}><a className="text-blue-500 underline" href={"/" + page.pageSlug}>{page.pageName}</a></li>
+                            <li className="list-none mb-1" key={page.id}>
+                                <Link href={"/" + page.pageSlug}>
+                                    <a className="text-blue-500 underline" >{page.pageName}</a>
+                                </Link>
+                            </li>
                         )
 
                     })
