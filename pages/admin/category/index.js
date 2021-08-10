@@ -4,7 +4,8 @@ import { getMenu } from '../../../model/menu';
 
 // libs
 import Head from 'next/head';
-import {getSession, useSession} from 'next-auth/client';
+import {getSession} from 'next-auth/client';
+import Link from "next/link"
 
 // components
 import Header from '../../../components/header/header';
@@ -32,7 +33,9 @@ export default function AdminCategory({menu}) {
                     {
                         categories.map(cat => (
                             <li key={cat}>
-                                <a className="text-lg text-blue-500 underline" key={cat} href={`/admin/category/${cat}`} >{capitalize(cat)}</a>
+                                <Link href={`/admin/category/${cat}`}>
+                                    <a className="text-lg text-blue-500 underline" key={cat}>{capitalize(cat)}</a>
+                                </Link>
                             </li>
                         ))
                     }
