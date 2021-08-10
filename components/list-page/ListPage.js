@@ -3,13 +3,12 @@ import { useState } from "react"
 import Link from "next/link"
 
 // utils
-import { CATEGORIES } from "../../utils/parameters"
 
 // icons
 import IconOpenNew from "../icons/IconOpenNew"
 
 
-export default function ListPage({pages}){
+export default function ListPage({pages, categories}){
 
     
     // states
@@ -25,7 +24,7 @@ export default function ListPage({pages}){
 
     // others
     const filteredPages = search ? pages.filter(p => p.pageName.match(new RegExp(search, "i"))) : pages
-    const categories = Object.values(CATEGORIES)
+    const thereIsNoPages = !pages || pages && !pages.length
 
     return (
         <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
@@ -42,17 +41,17 @@ export default function ListPage({pages}){
             <div className="my-2">
 
                 {/* Count */}
-                <span>Nombre de pages ({pages.length})</span>
+                {<span>Nombre de pages ({thereIsNoPages ? "0" : pages.length})</span>}
 
                 {/* Filter by category */}
                 <span className="ml-5">
                     Filtrer par : 
                     {
                         categories.map((cat, index) => (
-                            <span key={cat}>
+                            <span key={cat.id}>
                                 {index !== 0 ? " - " : ""}
-                                <Link href={`/admin/page?cat=${cat}`}>
-                                    <a className="mx-2 underline">{cat}</a>
+                                <Link href={`/admin/page?cat=${cat.title}`}>
+                                    <a className="mx-2 underline">{cat.title}</a>
                                 </Link>
                             </span>
                         ))

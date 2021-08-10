@@ -4,13 +4,15 @@ import {getSession, useSession} from 'next-auth/client';
 
 // model
 import { getMenu } from "../../../model/menu"
+import { getAllPages } from "../../../model/page"
+import { getAllCategories } from "../../../model/category";
 
 // components
 import Header from "../../../components/header/header"
 import ListPage from "../../../components/list-page/ListPage"
-import { getAllPages } from "../../../model/page"
 
-export default function Page({menu, pages}) {
+
+export default function Page({menu, pages, categories}) {
     return (
         <>
 
@@ -21,7 +23,7 @@ export default function Page({menu, pages}) {
 
             {menu && <Header menu={menu.data}/>}
 
-            <ListPage pages={pages}/>
+            <ListPage pages={pages} categories={categories}/>
 
         </>
     )
@@ -44,10 +46,12 @@ export async function getServerSideProps(context) {
 
     const menu = await getMenu(context.locale)
     const pages = await getAllPages(context.defaultLocale, category ? category : null)
+    const categories = await getAllCategories()
   
     return {props: {
       menu: menu,
-      pages: pages
+      pages: pages,
+      categories,
     }}
 
 }

@@ -22,7 +22,7 @@ const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({ ...page, slug
 
 const isTitleEmpty = title => (!title || !title.replace(/\s/g, '').length)
 
-export default function PageEditor({ onFormSubmitted, editedPages, BlockSource }) {
+export default function PageEditor({ onFormSubmitted, editedPages, categories }) {
 
     // hooks
     const { locales, defaultLocale } = useRouter();
@@ -363,7 +363,7 @@ export default function PageEditor({ onFormSubmitted, editedPages, BlockSource }
                     onRemoveMedia={onRemoveMedia}
                     onChangeLanguage={onChangeLanguage}
                     notAllowedToSave={!canSave}
-
+                    categories={categories}
                 />
 
             </div>
