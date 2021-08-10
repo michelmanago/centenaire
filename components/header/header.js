@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
+import Link from "next/link"
 
 // styles
 import styles from '../../styles/components/header.module.css';
@@ -56,18 +57,21 @@ export default function Header({ menu, translations }) {
 
                         <strong>{session.userBase ? session.userBase.username : session.user.name}</strong>
                     </span>
-                    <a
+                    <Link
                         href={`/api/auth/signout`}
-                        className={
-                            'mx-1 text-white border border-transparent rounded-md bg-pblue hover:bg-pblue-dark px-2 py-2'
-                        }
-                        onClick={e => {
-                            e.preventDefault();
-                            signOut();
-                        }}
                     >
-                        Sign out
-                    </a>
+                        <a
+                            className={
+                                'mx-1 text-white border border-transparent rounded-md bg-pblue hover:bg-pblue-dark px-2 py-2'
+                            }
+                            onClick={e => {
+                                e.preventDefault();
+                                signOut();
+                            }}
+                        >
+                            Sign out
+                        </a>
+                    </Link>
                 </div>
             )}
 

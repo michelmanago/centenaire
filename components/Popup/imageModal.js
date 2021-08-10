@@ -94,7 +94,7 @@ export const ImageModalContainer = ({url, className, legende, credit, close}) =>
             {
                 close && (
                     <button onClick={close} type="button" className="hover:opacity-50 absolute right-2 top-2">
-                        <IconClose/>
+                        <IconClose size={"45px"}/>
                     </button>
                 )
             }

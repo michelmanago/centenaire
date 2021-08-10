@@ -1,5 +1,6 @@
 // libs
 import { useState } from "react"
+import Link from "next/link"
 
 // utils
 import { CATEGORIES } from "../../utils/parameters"
@@ -32,7 +33,9 @@ export default function ListPage({pages}){
             {/* H1 */}
             <div className="mt-5">
                 <h1 className="inline-block text-3xl font-semibold mb-5">Liste des pages</h1>
-                <a className="ml-3 inline-block bg-gray-100 border rounded text-blue-500 border-blue-500 px-3 py-1 font-medium" href="/admin/page/create">Ajouter</a>
+                <Link href="/admin/page/create">
+                    <a className="ml-3 inline-block bg-gray-100 border rounded text-blue-500 border-blue-500 px-3 py-1 font-medium">Ajouter</a>
+                </Link>
             </div>
 
             {/* Filters */}
@@ -48,7 +51,9 @@ export default function ListPage({pages}){
                         categories.map((cat, index) => (
                             <span key={cat}>
                                 {index !== 0 ? " - " : ""}
-                                <a className="mx-2 underline" href={`/admin/page?cat=${cat}`}>{cat}</a>
+                                <Link href={`/admin/page?cat=${cat}`}>
+                                    <a className="mx-2 underline">{cat}</a>
+                                </Link>
                             </span>
                         ))
                     }
@@ -98,7 +103,7 @@ export default function ListPage({pages}){
                                             </a>
                                         </span>
                                     </ColBody>
-                                    <ColBody><a className="underline" href={category_link}>{page.page}</a></ColBody>
+                                    <ColBody><Link href={category_link}><a className="underline">{page.page}</a></Link></ColBody>
                                     <ColBody>{page.author}</ColBody>
                                     <ColBody>{page.created_at ? new Date(page.created_at).toLocaleString() : ""}</ColBody>
                                 </tr>  
