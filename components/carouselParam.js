@@ -11,6 +11,7 @@ import { legendeAsArray } from '../utils/utils-media';
 
 // components
 import {ImageModalContainer} from "./Popup/imageModal"
+import IconCopyrights  from "./icons/IconCopyright"
 
 // install Swiper components
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -79,7 +80,7 @@ export default function Carousel({ imgList, legende, id }) {
 
     return (
         <div>
-            <div className="h-auto my-6 overflow-hidden bg-white md:max-w-full">
+            <div className="h-auto my-6 overflow-hidden bg-white md:max-w-full w-2/3 mx-auto">
 
 
                 {/* Modal */}
@@ -122,6 +123,25 @@ export default function Carousel({ imgList, legende, id }) {
                         return (
                             <SwiperSlide key={img.public_path}>
                                 <div className="flex flex-col items-center">
+
+                                    {/* Copyright tooltip */}
+                                    {
+                                        credit && (
+                                            <Popup
+                                                on={["hover"]}
+                                                position={["right center", "bottom center"]}
+                                                trigger={
+                                                    <span className="absolute left-4 top-4 text-gray-400 hover:opacity-70 cursor-pointer">
+                                                        <IconCopyrights size={"34px"}/>
+                                                    </span>
+                                                }
+                                            >
+                                                <div className="border bg-gray-100">
+                                                    {credit}
+                                                </div>
+                                            </Popup>
+                                        )
+                                    }
 
                                     {/* Trigger moadl */}
                                     <button className="absolute w-10/12 h-full" type="button" onClick={() => openImageModal(img)}></button>

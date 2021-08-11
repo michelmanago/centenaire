@@ -68,12 +68,12 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
 
                 {/* Credits images */}
                 {
-                    (creditsImage && creditsImage.length) && <ListCredtit media={creditsImage} title={"Credits photo"}/> 
+                    (creditsImage && creditsImage.length) ? <ListCredtit media={creditsImage} title={"Credits photo"}/> : ""
                 }
 
-                {/* Credits images */}
+                {/* Credits video */}
                 {
-                    (creditsVideo && creditsVideo.length) && <ListCredtit media={creditsVideo} title={"Crédits vidéo"}/> 
+                    (creditsVideo && creditsVideo.length) ? <ListCredtit media={creditsVideo} title={"Crédits vidéo"}/> : ""
                 }
             </div>
         </Popup>
