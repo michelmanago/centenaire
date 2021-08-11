@@ -17,7 +17,7 @@ export default function ImageModal({url, className, legende, credit}){
                 modal
                 overlayStyle={overlayStyle}
                 trigger={
-                    <div>
+                    <div className="">
                         {/* Image */}
                         <img 
                             src={url} 
@@ -41,7 +41,6 @@ export default function ImageModal({url, className, legende, credit}){
                     close => (
                         <ImageModalContainer
                             url={url}
-                            className={className}
                             legende={legende}
                             credit={credit}
                             close={close}
@@ -53,7 +52,7 @@ export default function ImageModal({url, className, legende, credit}){
     )
 }
 
-export const ImageModalContainer = ({url, className, legende, credit, close}) => {
+export const ImageModalContainer = ({url, legende, credit, close}) => {
 
     // states
     const [loaded, setLoaded] = useState(false)
@@ -69,11 +68,12 @@ export const ImageModalContainer = ({url, className, legende, credit, close}) =>
         const height = image.naturalHeight
         const aspectRatio = width / height
 
+
         // dimension
         // find the most suitable dimension for almost fullscreen image
         setDimension({
-            width : (width > height) && "82vw",
-            height: (width < height) && "80vh",
+            width : (width > height) && "66vw",
+            height: (width < height) && "76vh",
             aspectRatio: aspectRatio,
         })
 
@@ -93,8 +93,8 @@ export const ImageModalContainer = ({url, className, legende, credit, close}) =>
             {/* Close */}
             {
                 close && (
-                    <button onClick={close} type="button" className="hover:opacity-50 absolute right-2 top-2">
-                        <IconClose size={"45px"}/>
+                    <button onClick={close} type="button" className="text-red-500 bg-gray-100 p-1 rounded-full hover:opacity-50 opacity-90 absolute right-2 top-2">
+                        <IconClose size={"35px"}/>
                     </button>
                 )
             }
@@ -103,7 +103,7 @@ export const ImageModalContainer = ({url, className, legende, credit, close}) =>
             <img 
                 style={styles} 
                 src={url} 
-                className={`mx-auto ${className}`}
+                className={`mx-auto`}
                 onLoad={onLoaded}
             />
 
@@ -120,10 +120,14 @@ export const ImageModalContainer = ({url, className, legende, credit, close}) =>
             }
     
             {/* Info */}
-            <div className="mt-2">
-                <p className='font-bold text-center'>{legende}</p>
-                <p className='italic text-center'>{credit}</p>
-            </div>
+            {
+                (legende || credit) && (
+                    <div className="mt-2">
+                        {legende && <p className='font-bold text-center'>{legende}</p>}
+                        {credit && <p className='italic text-center'>{credit}</p>}
+                    </div>
+                )
+            }
         </div>
     )
 }
