@@ -3,6 +3,7 @@ module.exports = {
   purge: {
     content: ['./pages/**/*.js', './components/**/*.js'],
     safelist: [
+      'text-justify',
       'float-none',
       'float-left', 
       'float-right', 
