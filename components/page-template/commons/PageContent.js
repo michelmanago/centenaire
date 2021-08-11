@@ -11,6 +11,7 @@ import ImageModal from '../../Popup/imageModal';
 import PdfDownload from '../../Popup/pdf-download';
 
 export default function PageContent({pageName, blocks, attribs}) {
+
     // prevent from mapping String
     const list = blocks && Array.isArray(blocks) ? blocks : null;
 

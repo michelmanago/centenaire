@@ -12,23 +12,23 @@ const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 export default function ImageModal({url, className, legende, credit}){
 
     return (
-        <div>
+        <div className="border-2 border-green-400 text-left">
             <Popup
                 modal
                 overlayStyle={overlayStyle}
                 trigger={
-                    <div className="">
+                    <div className="border-2 border-red-400">
                         {/* Image */}
                         <img 
                             src={url} 
-                            className={`mx-auto ${className}`}
+                            className={`${className}`}
                             alt=""
                         />
 
                         {/* Info */}
                         {
                             (legende || credit) && (
-                                <div className="mt-2">
+                                <div className="mt-2 ">
                                     {legende && <p className='font-bold text-center'>{legende}</p>}
                                     {credit && <p className='italic text-center'>{credit}</p>}
                                 </div>

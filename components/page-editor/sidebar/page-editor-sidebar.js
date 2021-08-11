@@ -44,7 +44,7 @@ const PageEditorSidebar = ({
     const permalien = pagePermalien.startsWith("/") ? pagePermalien : ("/" + pagePermalien)
 
     return (
-        <div className="w-2/5">
+        <div>
             {/* Block langues */}
             <PageEditorSidebarBlock title="Langues">
                 {

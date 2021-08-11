@@ -22,6 +22,11 @@ const pagesWithSlugsWithoutLocales = pages => pages.map(page => ({ ...page, slug
 
 const isTitleEmpty = title => (!title || !title.replace(/\s/g, '').length)
 
+// styles
+const sidebarStyles = {
+    maxWidth: 400
+} 
+
 export default function PageEditor({ onFormSubmitted, editedPages, categories }) {
 
     // hooks
@@ -296,12 +301,12 @@ export default function PageEditor({ onFormSubmitted, editedPages, categories })
     const onChangeLanguage = value => setCurrentPageIndex(languagesLists.findIndex(v => v.value === value))
 
     return (
-        <div className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
+        <div className="px-10 py-10 mx-auto bg-white border">
 
             <div className="flex p-8 gap-x-8">
 
                 {/* Left */}
-                <div className="flex-1 w-2/5">
+                <div className="flex-1 w-2/3">
 
                     {/* Mode de page */}
                     <h1 className="mb-5 text-4xl font-bold">
@@ -341,32 +346,34 @@ export default function PageEditor({ onFormSubmitted, editedPages, categories })
                 </div>
 
                 {/* Right */}
-                <PageEditorSidebar
-                    updateCurrentPage={updateCurrentPage}
-                    updatePages={updatePages}
-                    addAttributedMedia={addAttributedMedia}
-                    removeAttributedMedia={removeAttributedMedia}
-                    isEditing={isEditing}
-                    originalPageId={originalPageId}
-                    source={currentPage.source}
-                    language={currentPage.language} languagesLists={languagesLists}
-                    pageSlug={currentPage.pageSlug}
-                    author={currentPage.author}
-                    category={currentPage.page}
-                    created_at={currentPage.created_at} last_modified={currentPage.last_modified}
-                    pagePermalien={currentPage.pageSlug}
-                    bandeau_id={currentPage.bandeau_id}
-                    onSubmit={onSubmitPage}
-                    onRemovePage={onRemovePage}
-                    isSubmitting={isSubmitting}
-                    onMediaUploaded={onMediaUploaded}
-                    onRemoveMedia={onRemoveMedia}
-                    onChangeLanguage={onChangeLanguage}
-                    notAllowedToSave={!canSave}
-                    categories={categories}
-                />
+                    <div style={sidebarStyles} className="w-1/3">
+                        <PageEditorSidebar
+                            updateCurrentPage={updateCurrentPage}
+                            updatePages={updatePages}
+                            addAttributedMedia={addAttributedMedia}
+                            removeAttributedMedia={removeAttributedMedia}
+                            isEditing={isEditing}
+                            originalPageId={originalPageId}
+                            source={currentPage.source}
+                            language={currentPage.language} languagesLists={languagesLists}
+                            pageSlug={currentPage.pageSlug}
+                            author={currentPage.author}
+                            category={currentPage.page}
+                            created_at={currentPage.created_at} last_modified={currentPage.last_modified}
+                            pagePermalien={currentPage.pageSlug}
+                            bandeau_id={currentPage.bandeau_id}
+                            onSubmit={onSubmitPage}
+                            onRemovePage={onRemovePage}
+                            isSubmitting={isSubmitting}
+                            onMediaUploaded={onMediaUploaded}
+                            onRemoveMedia={onRemoveMedia}
+                            onChangeLanguage={onChangeLanguage}
+                            notAllowedToSave={!canSave}
+                            categories={categories}
+                        />
+                    </div>
+                </div>
 
-            </div>
         </div>
     );
 }
