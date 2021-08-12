@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import { Editor } from "slate";
 import { useFocused, useSelected, useSlate } from "slate-react";
 import { toggleBlockEffect } from "../EditorUtils";
+import { AlignLeft, AlignRight } from "../icon";
 
 // helpers
 const isFormatActive = (editor, format) => {
@@ -29,8 +30,8 @@ export default function RenderImage({attributes, element, children, newAttribute
     const {credit, legende} = element
 
     return (
-        <div {...attributes} className={`bg-gray-100 relative w-2/3 ${selectedByUser ? selectedStyles : ""} ${newAttributes.className ? newAttributes.className : ""}`}>
-            <div contentEditable={false}>
+        <div {...attributes} className={`relative ${selectedByUser ? selectedStyles : ""} ${newAttributes.className ? newAttributes.className : ""}`}>
+            <div className="bg-gray-100" contentEditable={false}>
 
                 {
                     selectedByUser && (
@@ -42,7 +43,7 @@ export default function RenderImage({attributes, element, children, newAttribute
                 <img
                     src={element.url}
                     alt={element.url}
-                    className={`block max-w-full`}
+                    className={`block w-full`}
                 />
 
                 {/* Info */}
@@ -74,21 +75,16 @@ const ImageAlignToolbar = ({}) => {
     }
 
     return (
-        <div className="absolute rounded-sm left-4 top-4 bg-gray-200 px-3 py-1">
+        <div className="absolute rounded-sm left-4 top-4 bg-gray-200 px-3 py-1 flex">
             
             {/* Float left */}
             <ImageAlignToolbarButton effect="img-float-left" onClick={changeAlign}>
-                L
-            </ImageAlignToolbarButton>
-            
-            {/* Float center */}
-            <ImageAlignToolbarButton effect="img-center" onClick={changeAlign}>
-                C
+                <AlignLeft/>                
             </ImageAlignToolbarButton>
 
             {/* Float right */}
             <ImageAlignToolbarButton effect="img-float-right" onClick={changeAlign}>
-                R
+                <AlignRight/>
             </ImageAlignToolbarButton>
         </div>
     )
@@ -110,7 +106,7 @@ const ImageAlignToolbarButton = ({children, onClick, effect}) => {
                 event.preventDefault()
                 onClick(effect)
             }}
-            className={`border hover:border-gray-700 w-8 h-8 rounded-sm mx-1 ${isActive ? activeStyles : ""}`}
+            className={`hover:bg-gray-300 w-8 h-8 rounded-sm mx-1 flex justify-center items-center ${isActive ? activeStyles : ""}`}
         >
             {children}
         </button>

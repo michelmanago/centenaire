@@ -12,16 +12,16 @@ const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 export default function ImageModal({url, className, legende, credit}){
 
     return (
-        <div className="border-2 border-green-400 text-left">
+        <div className={`text-left ${className}`}>
             <Popup
                 modal
                 overlayStyle={overlayStyle}
                 trigger={
-                    <div className="border-2 border-red-400">
+                    <div className="bg-gray-100">
                         {/* Image */}
                         <img 
                             src={url} 
-                            className={`${className}`}
+                            className={`w-full`}
                             alt=""
                         />
 
