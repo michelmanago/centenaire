@@ -57,8 +57,27 @@ export default function PageContent({pageName, blocks, attribs}) {
                                     else if (domNode.attribs && domNode.attribs['data-js-videomodal'] !== undefined) {
                                         const url = domNode.attribs['src'];
 
-                                        return <VideoModal url={url} />;
+                                        return (
+                                            <div className={`${domNode.attribs && domNode.attribs.class}`}>
+                                                <VideoModal url={url} />
+                                            </div>
+                                        )
                                     } 
+
+                                    else if(domNode.name === "video"){
+
+                                        return (
+                                            <div className={`${domNode.attribs && domNode.attribs.class}`}>
+                                                <video 
+                                                    className="" 
+                                                    controls 
+                                                    src={domNode.attribs && domNode.attribs.src}
+                                                    loop
+                                                ></video>
+                                            </div>
+                                        )
+
+                                    }
                                     
                                     // Render Image modal
                                     else if (domNode.name === 'img') {

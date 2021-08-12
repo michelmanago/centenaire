@@ -298,6 +298,7 @@ function ToolBarButton(props) {
     const {icon, isActive, ...otherProps} = props;
     return (
         <button
+            type="button"
             className={`p-1 my-1 mr-1 text-black border toolbar-btn ${isActive ? 'border-grey-500' : 'border-black'}`}
             {...otherProps}
         >
