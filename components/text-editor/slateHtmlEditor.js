@@ -15,7 +15,7 @@ export default function SlateEditor({block, setContent}) {
         <>
             <textarea
                 ref={ref}
-                className="w-full"
+                className="w-full px-3 py-3 border"
                 value={block}
                 onInput={e => {
                     e.target.style.height = 'inherit';

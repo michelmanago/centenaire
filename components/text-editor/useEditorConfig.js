@@ -5,6 +5,8 @@ import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
 import TexteAnnote from '../Popup/texteannote';
 import PdfDownload from '../Popup/pdf-download';
+import RenderImage from './renderer/RenderImage';
+import { getClassForEffect } from './helpers/classEffects';
 const KeyBindings = {
     onKeyDown: (editor, event) => {
         if (isHotkey('mod+b', event)) {
@@ -27,24 +29,13 @@ export default function useEditorConfig(editor) {
     return {renderElement, renderLeaf, onKeyDown};
 }
 
-function getClassForEffect(effect) {
-    switch (effect) {
-        case 'align-left':
-            return ' text-left';
-        case 'align-center':
-            return ' text-center';
-        case 'align-right':
-            return ' text-right';
-        default:
-            break;
-    }
-}
-
 function renderElement(props) {
     const {element, children, attributes} = props;
     const classEffect = getClassForEffect(element.effect);
     var newAttributes = {...attributes};
     newAttributes.className = classEffect;
+    
+
     switch (element.type) {
         case 'paragraph':
             return <p {...newAttributes}>{children}</p>;
@@ -71,22 +62,13 @@ function renderElement(props) {
                 </Link>
             );
         case 'image':
-            const selected = useSelected();
-            const focused = useFocused();
+
             return (
-                <div {...attributes}>
-                    <div contentEditable={false}>
-                        <img
-                            src={element.url}
-                            alt={element.url}
-                            className={`block max-w-full max-h-80 ${
-                                selected && focused ? 'shadow-lg' : 'shadow-none'
-                            }`}
-                        />
-                        <div className='italic text-center'>{element.legende ? element.legende : ''}</div>
-                    </div>
-                    {children}
-                </div>
+                <RenderImage
+                    attributes={attributes}
+                    element={element}
+                    newAttributes={newAttributes}
+                >{children}</RenderImage>
             );
         case 'video':
             return (

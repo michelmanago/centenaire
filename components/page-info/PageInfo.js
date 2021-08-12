@@ -68,12 +68,12 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
 
                 {/* Credits images */}
                 {
-                    (creditsImage && creditsImage.length) ? <ListCredtit media={creditsImage} title={"Credits photo"}/> : ""
+                    <ListCredtit media={creditsImage} title={"Credits photo"}/>
                 }
 
                 {/* Credits video */}
                 {
-                    (creditsVideo && creditsVideo.length) ? <ListCredtit media={creditsVideo} title={"Crédits vidéo"}/> : ""
+                    <ListCredtit media={creditsVideo} title={"Crédits vidéo"}/>
                 }
             </div>
         </Popup>
@@ -81,26 +81,37 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
 
 }
 
-const ListCredtit = ({media, title}) => (
-    <div className="mb-1">
-        <p className="underline">{title}</p>
-        <div className="max-h-44 overflow-auto">
-            <ol className="pl-8 m-0">
-                {media.map(mediaItem => {
+const ListCredtit = ({media, title}) => {
 
-                    if(mediaItem.credit){
-                        return (
-                            <li key={mediaItem.id} className="mb-2 text-sm">
-                                {mediaItem.credit}
-                            </li>
-                        )
-                    }
 
-                })}
-            </ol>
+    // others
+    const length = media.filter(m => m.credit).length
+
+    if(!length){
+        return ""
+    }
+
+    return (
+        <div className="mb-1">
+            <p className="underline">{title}</p>
+            <div className="max-h-44 overflow-auto">
+                <ol className="pl-8 m-0">
+                    {media.map(mediaItem => {
+    
+                        if(mediaItem.credit){
+                            return (
+                                <li key={mediaItem.id} className="mb-2 text-sm">
+                                    {mediaItem.credit}
+                                </li>
+                            )
+                        }
+    
+                    })}
+                </ol>
+            </div>
         </div>
-    </div>
-)
+    )
+}
 
 const TriggerDOM = (
     <div className="border mb-3 px-4 py-1 border-gray-300 hover:bg-gray-200 rounded inline-flex items-center">

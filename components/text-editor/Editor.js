@@ -5,7 +5,6 @@ import isUrl from 'is-url';
 import Toolbar from './Toolbar';
 import useEditorConfig from './useEditorConfig';
 import useSelection from './useSelection';
-import {serializer, deserialize} from '../../lib/Slate/serialize';
 import { withHistory } from 'slate-history'
 
 import {wrapLink, insertImage, isImageUrl} from './EditorUtils';
@@ -64,6 +63,7 @@ const withImages = editor => {
                 }
             }
         } else if (isImageUrl(text)) {
+
             insertImage(editor, text);
         } else {
             insertData(data);
@@ -84,7 +84,14 @@ const withPDF = editor => {
 }
 
 export default function Editor({document, onChange, originalPageId, addAttributedMedia, currentPage}) {
-    const editor = useMemo(() => withPDF(withLinks(withImages(withHistory(withReact(createEditor()))))), []);
+
+
+    console.warn("using useState instead of useMemo Editor.js (to avoid fast-refresh crash with <Editable/>)")
+    // NOTE: When refreshing code using useState doesn't cause Error https://github.com/ianstormtaylor/slate/issues/4081
+    const [editor] = useState(withPDF(withLinks(withImages(withHistory(withReact(createEditor()))))), []);
+    // const editor = useMemo(() => withPDF(withLinks(withImages((withReact(createEditor()))))), []);
+
+
     const {renderElement, renderLeaf, onKeyDown} = useEditorConfig(editor);
     const [selection, setSelection] = useSelection(editor);
     const [previousSelection, setPreviousSelection] = useState(editor);
@@ -96,7 +103,7 @@ export default function Editor({document, onChange, originalPageId, addAttribute
         },
         [editor.selection, onChange, setSelection],
     );
-
+    
     return (
         <div className="pagecontent">
             <Slate editor={editor} value={document} onChange={onChangeHandler}>
@@ -106,7 +113,7 @@ export default function Editor({document, onChange, originalPageId, addAttribute
                     addAttributedMedia={addAttributedMedia}
                     currentPage={currentPage}
                 />
-                <Editable renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
+                <Editable className="px-5 py-5" renderElement={renderElement} renderLeaf={renderLeaf} onKeyDown={onKeyDown} />
             </Slate>
         </div>
     );

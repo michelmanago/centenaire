@@ -19,8 +19,10 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
     }
 
     useEffect(() => {
+        
         const document = new DOMParser().parseFromString(block, 'text/html');
         var blockContent = deserialize(document.body);
+
         if (block != '' && !contentLoad) {
             setContentLoad(true);
             setSlateContent(blockContent);
@@ -28,6 +30,8 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
             setSlateContent(blockContent);
         }
     });
+
+    // Methods
     const changeView = event => {
         event.preventDefault();
         setIsSlateView(!isSlateView);
@@ -36,36 +40,37 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
     const onChangeEditor = value => {
         setSlateContent(value);
         const valueSerialize = serializer(value);
-        //console.log(valueSerialize);
         setContent(valueSerialize);
     };
     const onChangeHtmlEditor = value => {
         setContent(value);
         const document = new DOMParser().parseFromString(block, 'text/html');
-        //console.log(document.body);
         const valueDeserialize = deserialize(document.body);
         setSlateContent(valueDeserialize);
     };
 
     return (
-        <div className="">
-            {isSlateView ? (
-                <>
-                    <div className="flex justify-end">
-                        <button
-                            className="px-2 border-t border-l border-r border-gray-900 rounded-t text-pdarkblue"
-                            onClick={changeView}
-                        >
-                            Editeur HTML
-                        </button>
-                        <button
-                            className="px-2 ml-2 text-white bg-gray-400 border-t border-l border-r border-gray-900 rounded-t cursor-not-allowed"
-                            onClick={changeView}
-                            disabled
-                        >
-                            Editeur Visuel
-                        </button>
-                    </div>
+        <div>
+
+            {/* Switch editors */}
+            <div className="flex justify-end">
+                <SwitchButton
+                    onClick={changeView}
+                    label="Editeur HTML"
+                    isActive={!isSlateView}
+                />
+                <SwitchButton
+                    onClick={changeView}
+                    label="Editeur Visuel"
+                    isActive={isSlateView}
+                />
+            </div>
+
+
+            {/* Editors */}
+            {
+                // VISUAL EDITOR
+                isSlateView ? (
                     <div className="bg-white border border-black h-screen-90">
                         {/*<Editor block={block} setContent={setContent} defuntId={defuntId} />*/}
                         <Editor
@@ -76,29 +81,27 @@ export default function CustomEditor({block, setContent, originalPageId, addAttr
                             currentPage={currentPage}
                         />
                     </div>
-                </>
-            ) : (
-                <>
-                    <div className="flex justify-end">
-                        <button
-                            className="px-2 text-white bg-gray-400 border-t border-l border-r border-gray-900 rounded-t cursor-not-allowed"
-                            onClick={changeView}
-                            disabled
-                        >
-                            Editeur HTML
-                        </button>
-                        <button
-                            className="px-2 ml-2 border-t border-l border-r border-gray-900 rounded-t text-pdarkblue"
-                            onClick={changeView}
-                        >
-                            Editeur Visuel
-                        </button>
-                    </div>
+                ) : 
+                // CODE EDITOR
+                
+                (
                     <div className="h-full bg-white border border-black">
                         <SlateHtmlEditor block={block} setContent={onChangeHtmlEditor} />
                     </div>
-                </>
-            )}
+                )
+            }
+        
         </div>
-    );
+    )
 }
+
+
+const SwitchButton = ({isActive, onClick, label}) => (
+    <button
+        className={`px-3 py-1 text-gray-900 border-t border-l border-r border-gray-900 rounded-t ${isActive ? "bg-gray-400 cursor-not-allowed" : ""}`}
+        onClick={onClick}
+        disabled={isActive}
+    >
+        {label}
+    </button>
+)

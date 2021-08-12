@@ -158,7 +158,14 @@ export function wrapLink(editor, url) {
 
 export function insertImage(editor, url, legende, credit) {
     const text = {text: ''};
-    const image = {type: 'image', url, legende, credit, children: [text]};
+    // insert a paragraph after image so we can insert something after image
+    const image = [
+        {type: 'image', url, legende, credit, children: [text]},
+        {
+            type: "paragraph",
+            children: [text]
+        }
+    ];
     Transforms.insertNodes(editor, image);
 }
 export function isImageUrl(url) {
