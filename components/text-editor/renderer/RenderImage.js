@@ -3,7 +3,10 @@ import Popup from "reactjs-popup";
 import { Editor } from "slate";
 import { useFocused, useSelected, useSlate } from "slate-react";
 import { toggleBlockEffect } from "../EditorUtils";
-import { AlignLeft, AlignRight } from "../icon";
+import { AlignCenter, AlignLeft, AlignRight } from "../icon";
+
+// utisl
+import CLASS_EFFECT from "../helpers/classEffects";
 
 // helpers
 const isFormatActive = (editor, format) => {
@@ -78,12 +81,17 @@ const ImageAlignToolbar = ({}) => {
         <div className="absolute rounded-sm left-4 top-4 bg-gray-200 px-3 py-1 flex">
             
             {/* Float left */}
-            <ImageAlignToolbarButton effect="img-float-left" onClick={changeAlign}>
+            <ImageAlignToolbarButton effect={CLASS_EFFECT.imgFloatLeft.effect} onClick={changeAlign}>
                 <AlignLeft/>                
             </ImageAlignToolbarButton>
 
+            {/* Float center */}
+            <ImageAlignToolbarButton effect={CLASS_EFFECT.imgFloatCenter.effect} onClick={changeAlign}>
+                <AlignCenter/>                
+            </ImageAlignToolbarButton>
+
             {/* Float right */}
-            <ImageAlignToolbarButton effect="img-float-right" onClick={changeAlign}>
+            <ImageAlignToolbarButton effect={CLASS_EFFECT.imgFloatRight.effect} onClick={changeAlign}>
                 <AlignRight/>
             </ImageAlignToolbarButton>
         </div>

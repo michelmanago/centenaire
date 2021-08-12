@@ -1,7 +1,14 @@
 const CLASS_EFFECT = {
+
+    // Images
     imgFloatLeft: {
         className: "page__imgfloatleft",
         effect: "img-float-left"
+    },
+
+    imgFloatCenter: {
+        className: "page__imgaligncenter",
+        effect: "img-align-center"
     },
 
     imgFloatRight: {
@@ -9,6 +16,7 @@ const CLASS_EFFECT = {
         effect: "img-float-right"
     },
 
+    // Paragraph
     alignLeft: {
         className: "text-left",
         effect: "align-left",
