@@ -63,8 +63,6 @@ function renderElement(props) {
             );
         case 'image':
 
-        console.log("will rende image", props)
-
             return (
                 <RenderImage
                     attributes={attributes}
