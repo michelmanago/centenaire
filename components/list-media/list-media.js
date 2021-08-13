@@ -1,26 +1,47 @@
 // libs
+import { useState } from "react"
 
 // utils
 import { getMediaLink } from "../../utils/utils-serveur-image"
 
 // styles
 import styles from "../../styles/pages/list-media.module.css"
+const mediaSelectedStyles = "ring-4 ring-green-400"
 
 // components
 import ListMediaPagination from "./list-media-pagination"
+import ListMediaEdit from "./list-media-edit"
+import ListMediaFilters from "./list-media-filters"
 
 // icons
 import IconVideo from "../icons/IconVideo"
 import IconHeadphone from "../icons/IconHeadphone"
 import IconDocument from "../icons/IconDocument"
 import IconUnknown from "../icons/IconUnknown"
-import IconLinked from "../icons/IconLinked"
-import ListMediaFilters from "./list-media-filters"
 
 
 export default function ListMedia({media}){
 
 
+    // States
+    const [selected, setSelected] = useState(null)
+
+    // Methods
+    const onCloseEditModal = () => {
+        setSelected(null)
+    }
+
+    // Listeners
+    const selectMedia = item => {
+
+        if(selected && selected.id === item.id){
+            setSelected(null)
+        } else {
+            setSelected(item)
+        }
+
+    }
+    
     // helpers
     const renderMediaPreview = media => {
         switch(media.type){
@@ -86,14 +107,20 @@ export default function ListMedia({media}){
                 {
                     !emptyList ? media.array.map(mediaItem => {
 
+                        const isSelected = selected && selected.id === mediaItem.id
+
                         return (
-                            <div key={mediaItem.id} className={`relative ${styles.listItem}`}>
-                                <div className="absolute w-full h-full p-2">
+                            <button 
+                                onClick={() => selectMedia(mediaItem)}
+                                key={mediaItem.id} 
+                                className={`relative ${styles.listItem}`}>
+
+                                <div className={`absolute w-full h-full p-2 ${isSelected ? mediaSelectedStyles : ""}`}>
                                     {
                                         renderMediaPreview(mediaItem)
                                     }
                                 </div>
-                            </div>
+                            </button>
                         )
                     }) : (
                         <div>
@@ -102,6 +129,12 @@ export default function ListMedia({media}){
                     )
                 }
             </div>
+
+            {/* Edit */}
+            {/* {selected && <ListMediaEdit 
+                media={selected} 
+                onClose={onCloseEditModal}
+            />} */}
             
         </main>
     )
