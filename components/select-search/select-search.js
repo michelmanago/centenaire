@@ -66,7 +66,7 @@ export default function SelectSearch({inputPlaceholder = "", value, setValue, re
                 type="text" 
                 value={value}
                 onChange={e => setValue(e.target.value)}
-                className="w-full px-2 h-10 rounded border"
+                className="w-full px-2 h-8 text-sm rounded border"
             />
 
             {/* Results */}

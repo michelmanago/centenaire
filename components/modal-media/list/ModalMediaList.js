@@ -1,9 +1,11 @@
 // libs
 import { useEffect, useState } from "react"
 import { getMediaLink } from "../../../utils/utils-serveur-image"
+import Link from "next/link"
 
 // components
 import ModalMediaListEdit from "./ModalMediaListEdit"
+import SelectSearch from "../../select-search/select-search"
 
 // icons
 import IconVideo from "../../icons/IconVideo"
@@ -16,6 +18,7 @@ import IconLinked from "../../icons/IconLinked"
 import { getFilenameFromPath } from "../../../utils/utils-media"
 import ModalMediaListPagination from "./ModalMediaListPagination"
 import fetchMediaPaginated from "../../../utils/fetch/fetchMediaPaginated"
+import fetchPagesByName from "../../../utils/fetch/fetchPagesByName"
 
 // styles
 const imageItemContainerStyles = {
@@ -32,6 +35,9 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
     const [fetching, setFetching] = useState(true)
     const [pagination, setPagination] = useState(null)
     const [hasDoneFirstFetch, setHasDoneFirstFetch] = useState(false)
+    const [search, setSearch] = useState("")
+    const [results, setResults] = useState([])
+    const [selectedSearch, setSelectedSearch] = useState(null)
 
     // utils
     const getCurrentPageIndexKey = (offset = pagination.page, isFiltered = filterByPage) => {
@@ -40,6 +46,44 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
     const currentList = (pagination ? pageIndexes[getCurrentPageIndexKey()] : []) || [] 
 
     // methods
+
+    const searchPages = async (name) => {
+        const res =  await fetchPagesByName(name)
+        setResults(res)
+    }
+
+    const onSearchByName = value => {
+
+        // update state
+        setSearch(value)
+
+        // call api
+        if(value){
+            searchPages(value)
+        } 
+        
+        // reset page filter
+        else {
+            setResults([])
+        }
+
+
+    }
+
+    const onValidFilterBySpecificPage = () => {
+        fetchMediaForList(0, false)
+    }
+
+    const onRemoveFilterBySpecificPage = () => {
+        setSelectedSearch(null)
+        setSearch("")
+    }
+
+    const onSelectPage = page => {
+
+        setSelectedSearch(page)
+        setSearch(page.pageName)
+    }
 
     const onChangeFilter = event => {
 
@@ -94,8 +138,11 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
             // is loading
             setFetching(true)
 
+            // media associated to this page
+            const page_id = selectedSearch ? selectedSearch.id : (filtered ? originalPageId : undefined)
+
             // fetch list
-            const media = await fetchMediaPaginated(pageOffset, filtered ? originalPageId : undefined, accepts)
+            const media = await fetchMediaPaginated(pageOffset, page_id, accepts)
 
             // list of media
             setPageIndexes({
@@ -161,6 +208,15 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
     }
 
     // lifecycle
+
+    useEffect(() => {
+
+        if(!selectedSearch){
+            fetchMediaForList(0, false)
+        }
+
+    }, [selectedSearch])
+
     useEffect(async () => {
 
         if(didMount){
@@ -313,16 +369,55 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
             
             {/* List */}
             <div className="w-2/3 pr-2 overflow-auto flex flex-col">
+
+                {/* Page association */}
+                <div className="flex items-center mt-4">
+                    <p className="font-medium mr-5 pl-3">Restreindre par page</p>
+                    <div className="border w-1/3">
+                        <SelectSearch
+                            value={search}
+                            setValue={onSearchByName}
+                            results={results}
+                            getKey={({id}) => id}
+                            onSelect={onSelectPage}
+                            renderResult={item => (
+                                <p className="text-md">{item.pageName}</p>
+                            )}
+                            inputPlaceholder="Rechercher le nom d'une page"
+                        
+                        />
+                    </div>
+                    {
+                        selectedSearch && (
+                            [
+                                <button 
+                                    onClick={onValidFilterBySpecificPage}
+                                    className="border border-blue-400 rounded-sm text-blue-400 hover:bg-blue-400 hover:text-white px-2 py-1 text-sm ml-3 max-w-xs inline-block truncate">
+                                        Appliquer le filtre
+                                </button>,
+                                <button 
+                                    onClick={onRemoveFilterBySpecificPage}
+                                    className="border border-red-400 rounded-sm text-red-400 hover:bg-red-400 hover:text-white px-2 py-1 text-sm ml-3 max-w-xs inline-block truncate">
+                                        Effacer le filtre
+                                </button>
+
+                            ]
+                        )
+                    }
+
+                </div>
+
+
                 {/* Filters */}
                 {/* Not allowed to filter when creating the page because there is no media attributed to this page currently */}
-                {
+                {/* {
                     originalPageId && (
                         <div className="border-b px-2 py-2">
                             <label className="select-none" htmlFor="filterByPage">Uniquement les fichiers de cette page : </label>
                             <input type="checkbox" checked={filterByPage} onChange={onChangeFilter} id="filterByPage" />
                         </div>
                     )
-                }
+                } */}
 
                 {/* List */}
                 <div className="overflow-auto h-full">
