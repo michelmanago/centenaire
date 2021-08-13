@@ -1,11 +1,16 @@
 // libs
+import Link from "next/link"
 
 // icons
-import IconPrev from "../../icons/IconPrev"
-import IconNext from "../../icons/IconNext"
+import IconPrev from "../icons/IconPrev"
+import IconNext from "../icons/IconNext"
+import { useRouter } from "next/router"
 
 
-export default function ModalMediaListPagination({pagination, changePaginationPage}){
+export default function ListMediaPagination({pagination, changePaginationPage}){
+
+    // router
+    const {query} = useRouter()
 
     // methods
     const goNextPage = () => changePaginationPage(pagination.page + 1)
@@ -41,15 +46,32 @@ export default function ModalMediaListPagination({pagination, changePaginationPa
                         const currentStyles = `bg-gray-900 text-white`
                         const notCurrentStyles = `hover:bg-gray-300`
 
-                        return (
-                            <button
-                                disabled={isCurrent}
+                        if(isCurrent){
+                            return (
+                                <span
                                 key={"page-" + pageIndex}
-                                className={`rounded mx-1 w-8 h-8 ${isCurrent ? currentStyles : notCurrentStyles}`}
-                                onClick={() => jumpAt(pageIndex)}
+                                    className={`inline-flex justify-center items-center rounded mx-1 w-8 h-8 ${isCurrent ? currentStyles : notCurrentStyles}`}
+                                >{pageIndex + 1}</span>
+                            )
+                        }
+
+                        return (
+                            <Link
+                                key={"page-" + pageIndex}
+                                href={{
+                                    pathname: "/admin/media",
+                                    query: Object.assign( {
+                                        offset: pageIndex,
+                                    },
+                                        query.accepts ? {accepts: query.accepts} : {},
+                                        query.page ? {page: query.page} : {},
+                                    )
+                                }}
                             >
-                                {pageIndex + 1}
-                            </button>
+                                <a
+                                    className={`inline-flex justify-center items-center rounded mx-1 w-8 h-8 ${isCurrent ? currentStyles : notCurrentStyles}`}
+                                >{pageIndex + 1}</a>
+                            </Link>
                         )
 
                     })

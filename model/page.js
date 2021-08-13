@@ -1,4 +1,4 @@
-import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectOriginalPageId, selectPageBySlug, selectTranslations, updatePage } from '../dao/page';
+import { deletePages, deleteTranslations, insertPage, insertTranslation, selectAllPages, selectOriginalPageId, selectPageBySlug, selectPagesByName, selectTranslations, updatePage } from '../dao/page';
 import {query} from '../lib/db';
 import { getServeurImageMedia } from '../utils/utils-serveur-image';
 import { getMedia } from './media';
@@ -203,6 +203,14 @@ export async function getPageByType(pageType) {
 export async function getAllPages(locale, category){
 
     const pages = await selectAllPages(locale, category)
+
+    return pages
+
+}
+
+export async function getPagesByName(name){
+
+    const pages = await selectPagesByName(name)
 
     return pages
 
