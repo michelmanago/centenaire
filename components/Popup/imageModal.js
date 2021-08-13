@@ -12,7 +12,7 @@ const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 export default function ImageModal({url, className, legende, credit}){
 
     return (
-        <div className={`text-left ${className}`}>
+        <div className={`${className}`}>
             <Popup
                 modal
                 overlayStyle={overlayStyle}

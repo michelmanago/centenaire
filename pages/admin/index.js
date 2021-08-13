@@ -31,6 +31,7 @@ export default function AdminIndex({menu}) {
                     <BlockLink label="Catégories" href="/admin/category" />
                     <BlockLink label="Menus de navigation" href="/admin/editor-menu" />
                     <BlockLink label="Utilisateurs" href="/admin/users/create" />
+                    <BlockLink label="Media" href="/admin/media" />
                 </div>
             </main>
         </>

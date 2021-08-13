@@ -5,7 +5,7 @@ import {isHotkey} from 'is-hotkey';
 import {toggleStyle} from './EditorUtils';
 import TexteAnnote from '../Popup/texteannote';
 import PdfDownload from '../Popup/pdf-download';
-import RenderImage from './renderer/RenderImage';
+import RenderMedia from './renderer/RenderMedia';
 import { getClassForEffect } from './helpers/classEffects';
 const KeyBindings = {
     onKeyDown: (editor, event) => {
@@ -64,17 +64,23 @@ function renderElement(props) {
         case 'image':
 
             return (
-                <RenderImage
+                <RenderMedia
+                    type="image"
+                    showInfo={true}
                     attributes={attributes}
                     element={element}
                     newAttributes={newAttributes}
-                >{children}</RenderImage>
+                >{children}</RenderMedia>
             );
         case 'video':
             return (
-                <video controls src={element.url}>
-                    {children}
-                </video>
+                <RenderMedia
+                    type="video"
+                    showInfo={false}
+                    attributes={attributes}
+                    element={element}
+                    newAttributes={newAttributes}
+                >{children}</RenderMedia>
             );
         case 'audio':
             return (

@@ -65,7 +65,7 @@ const withImages = editor => {
         } else if (isImageUrl(text)) {
 
             insertImage(editor, text);
-        } else {
+        } else {            
             insertData(data);
         }
     };
@@ -83,13 +83,23 @@ const withPDF = editor => {
     return editor;
 }
 
+const withVideo = editor => {
+    const {isVoid} = editor;
+
+    editor.isVoid = element => {
+        return element.type === 'video' ? true : isVoid(element);
+    }
+
+    return editor;
+}
+
 export default function Editor({document, onChange, originalPageId, addAttributedMedia, currentPage}) {
 
 
     console.warn("using useState instead of useMemo Editor.js (to avoid fast-refresh crash with <Editable/>)")
     // NOTE: When refreshing code using useState doesn't cause Error https://github.com/ianstormtaylor/slate/issues/4081
-    const [editor] = useState(withPDF(withLinks(withImages(withHistory(withReact(createEditor()))))), []);
-    // const editor = useMemo(() => withPDF(withLinks(withImages((withReact(createEditor()))))), []);
+    const [editor] = useState(withVideo(withPDF(withLinks(withImages(withHistory(withReact(createEditor())))))), []);
+    // const editor = useMemo(() => withVideo(withPDF(withLinks(withImages((withReact(createEditor())))))), []);
 
 
     const {renderElement, renderLeaf, onKeyDown} = useEditorConfig(editor);

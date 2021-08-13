@@ -2,6 +2,24 @@ import { query } from "../lib/db"
 import { filterObj } from "../utils/utils"
 
 
+export async function selectPagesByName(name) {
+
+    const res = await query(
+        `
+        SELECT 
+            DISTINCT pt.original_id, 
+            p.* 
+        FROM centenaire.pagecontent p,
+            page_translations pt
+        WHERE p.pageName LIKE '%${name}%'  AND pt.original_id = p.id
+        `,
+        [name]
+    )
+
+    return JSON.parse(JSON.stringify(res))
+
+}
+
 export async function selectOriginalPageId(childId) {
 
     const res = await query(

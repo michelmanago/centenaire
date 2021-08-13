@@ -20,7 +20,7 @@ const isFormatActive = (editor, format) => {
 // styles
 const selectedStyles = "ring-4 ring-green-500 ring-opacity-50 rounded"
 
-export default function RenderImage({attributes, element, children, newAttributes}){
+export default function RenderMedia({attributes, element, children, newAttributes, type = "image", showInfo = true}){
 
     // parameters
     const selected = useSelected()
@@ -28,12 +28,13 @@ export default function RenderImage({attributes, element, children, newAttribute
 
     // others
     const selectedByUser = selected && focused
+    console.log(type, selected, focused)
     
     // data
     const {credit, legende} = element
 
     return (
-        <div {...attributes} className={`relative ${selectedByUser ? selectedStyles : ""} ${newAttributes.className ? newAttributes.className : ""}`}>
+        <div {...attributes} className={`relative cursor-pointer ${selectedByUser ? selectedStyles : ""} ${newAttributes.className ? newAttributes.className : ""}`}>
             <div className="bg-gray-100" contentEditable={false}>
 
                 {
@@ -43,15 +44,26 @@ export default function RenderImage({attributes, element, children, newAttribute
                 }
                 
                 {/* Image */}
-                <img
-                    src={element.url}
-                    alt={element.url}
-                    className={`block w-full`}
-                />
+                {
+                    type === "image" ? (
+                        <img
+                            src={element.url}
+                            alt={element.url}
+                            className={`block w-full`}
+                        />
+                    ) : (type === "video" ? (
+                        <video
+                            muted
+                            src={element.url}
+                            alt={element.url}
+                            className={` block w-full`}
+                        ></video>
+                    ) : "")
+                }
 
                 {/* Info */}
                 {
-                    (legende || credit) && (
+                    (showInfo && (legende || credit)) && (
                         <div className="mt-2 ">
                             {legende && <p className='font-bold text-center'>{legende}</p>}
                             {credit && <p className='italic text-center'>{credit}</p>}
@@ -78,7 +90,7 @@ const ImageAlignToolbar = ({}) => {
     }
 
     return (
-        <div className="absolute rounded-sm left-4 top-4 bg-gray-200 px-3 py-1 flex">
+        <div className="absolute z-10 rounded-sm left-4 top-4 bg-gray-200 px-3 py-1 flex">
             
             {/* Float left */}
             <ImageAlignToolbarButton effect={CLASS_EFFECT.imgFloatLeft.effect} onClick={changeAlign}>
