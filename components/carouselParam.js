@@ -80,7 +80,7 @@ export default function Carousel({ imgList, legende, id }) {
 
     return (
         <div>
-            <div className="h-auto my-6 overflow-hidden bg-white md:max-w-full w-2/3 mx-auto">
+            <div className="border h-auto my-6 overflow-hidden bg-white md:max-w-full">
 
 
                 {/* Modal */}
