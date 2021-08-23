@@ -4,7 +4,6 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import DefaultErrorPage from 'next/error'
-import { useRouter } from 'next/router';
 import Head from "next/head"
 
 // component
@@ -53,17 +52,16 @@ export default function DynPage({ menu, page}) {
 
 
         if(hasCategory){
-            return <PageWithCategory page={page}/>
+            return <PageWithCategory key={page.id} page={page}/>
         } 
 
         else {
-            return <PageDefault page={page}/>
+            return <PageDefault key={page.id} page={page}/>
         }
 
     }
 
     // hooks
-    const router = useRouter()
 
     return (
         <div>

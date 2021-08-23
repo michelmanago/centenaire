@@ -250,16 +250,23 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
         // renderers
 
         const renderMediaPreview = media => {
+
+            const media_src = getMediaLink(media.public_path)
+
             switch(media.type){
                 case "video":
                     return (
                         <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
-                                <IconVideo className={"w-24 text-gray-100"}/>
+                            <IconVideo className={"relative z-10 w-24 text-gray-100"}/>
+                            <video 
+                                muted
+                                src={media_src}
+                                className="absolute w-full h-full object-cover"
+                            ></video>
                         </div>
                     )
                 break;
                 case "image":
-                    const media_src = getMediaLink(media.public_path)
                     return (
                         <img className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
                     )
