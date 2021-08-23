@@ -1,11 +1,17 @@
 // libs
 import { useEffect, useState } from "react"
+import { getMediaLink } from "../../../utils/utils-serveur-image"
+import Link from "next/link"
 
 // components
 import ModalMediaListEdit from "./ModalMediaListEdit"
 import SelectSearch from "../../select-search/select-search"
 
 // icons
+import IconVideo from "../../icons/IconVideo"
+import IconHeadphone from "../../icons/IconHeadphone"
+import IconDocument from "../../icons/IconDocument"
+import IconUnknown from "../../icons/IconUnknown"
 import IconLinked from "../../icons/IconLinked"
 
 // utils
@@ -13,7 +19,6 @@ import { getFilenameFromPath } from "../../../utils/utils-media"
 import ModalMediaListPagination from "./ModalMediaListPagination"
 import fetchMediaPaginated from "../../../utils/fetch/fetchMediaPaginated"
 import fetchPagesByName from "../../../utils/fetch/fetchPagesByName"
-import MediaPreview from "../../media-preview/media-preview"
 
 // styles
 const imageItemContainerStyles = {
@@ -243,6 +248,51 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
     
 
         // renderers
+
+        const renderMediaPreview = media => {
+
+            const media_src = getMediaLink(media.public_path)
+
+            switch(media.type){
+                case "video":
+                    return (
+                        <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                            <IconVideo className={"relative z-10 w-24 text-gray-100"}/>
+                            <video 
+                                muted
+                                src={media_src}
+                                className="absolute w-full h-full object-cover"
+                            ></video>
+                        </div>
+                    )
+                break;
+                case "image":
+                    return (
+                        <img className="block absolute left-0 top-0 w-full h-full object-cover" src={media_src} />
+                    )
+                break;
+                case "document":
+                    return (
+                        <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                            <IconDocument className={"w-24 text-gray-100"}/>
+                        </div>
+                    )
+                break;
+                case "audio":
+                    return (
+                        <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                            <IconHeadphone className={"w-24 text-gray-100"}/>
+                        </div>
+                    )
+                break;
+                default:
+                    return (
+                        <div className="border rounded absolute w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
+                            <IconUnknown className={"w-24 text-gray-100"}/>
+                        </div>
+                    )
+            }
+        }
     
         const renderList = list => {
     
@@ -275,7 +325,7 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
                                     }
     
                                     {/* Image preview */}
-                                    <MediaPreview type={image.type} public_path={image.public_path}/>
+                                    {renderMediaPreview(image)}
     
                                     {/* Title */}
                                     <div className="truncate px-3 text-sm py-1 opacity-70 z-10 absolute bottom-0 left-0 w-full bg-gray-500 text-white">
