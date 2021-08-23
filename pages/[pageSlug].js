@@ -10,7 +10,6 @@ import Head from "next/head"
 import Header from '../components/header/header';
 import PageDefault from '../components/page-template/PageDefault';
 import PageWithCategory from '../components/page-template/PageWithCategory';
-import PageInfo from '../components/page-info/PageInfo';
 
 // model
 import {getMenu} from '../model/menu';

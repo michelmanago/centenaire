@@ -10,11 +10,13 @@ import Header from "../../../components/header/header"
 import ListMedia from "../../../components/list-media/list-media";
 import { getMedia } from "../../../model/media";
 import { MEDIA_TYPES } from "../../../utils/utils-media";
+import { getMediaLink } from "../../../utils/utils-serveur-image";
 
 const defaultAccepts = Object.values(MEDIA_TYPES)
 
 
 export default function PageMedia({menu, media}) {
+    
 
     return (
         <>
@@ -32,7 +34,8 @@ export default function PageMedia({menu, media}) {
 }
 
 export async function getServerSideProps(context) {
-    const {req} = context;
+
+    const {req, query} = context;
 
     // session
     const session = await getSession({req});
@@ -49,19 +52,24 @@ export async function getServerSideProps(context) {
     
     // query
     let pageOffset = context.query.offset
-    pageOffset = pageOffset ? parseInt(pageOffset) : null
+    pageOffset = pageOffset ? parseInt(pageOffset) : 0
+
 
     let associatedTo = context.query.page
     associatedTo = associatedTo ? parseInt(associatedTo) : null
 
     let mediaType = context.query.accepts
 
+    const isFilteringNonAssociated = !(typeof query.with_no_page === "undefined")
+
     const menu = await getMenu(context.locale)
     const media = await getMedia(
         associatedTo, 
         pageOffset, 
-        mediaType ? [mediaType] : defaultAccepts
+        mediaType ? [mediaType] : defaultAccepts,
+        isFilteringNonAssociated
     )
+    
   
     return {props: {
       menu: menu,
