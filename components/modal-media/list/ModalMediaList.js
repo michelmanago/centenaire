@@ -188,6 +188,8 @@ export default function ModalMediaList({pageIndexes, setPageIndexes, preSelected
             [currentIndex]: currentPage.map(page => page.id === newMedia.id ? newMedia : page)
         })
 
+        setEdited(newMedia)
+
     }
     
     const deleteMediaFromList = mediaId => {
