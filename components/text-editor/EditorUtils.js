@@ -158,9 +158,11 @@ export function wrapLink(editor, url) {
 
 export function insertImage(editor, url, legende, credit) {
     const text = {text: ''};
+    const urlSplit = url.split('/')
+    const alt = urlSplit[urlSplit.length - 1];
     // insert a paragraph after image so we can insert something after image
     const image = [
-        {type: 'image', url, legende, credit, children: [text]},
+        {type: 'image', url, alt, legende, credit, children: [text]},
         {
             type: "paragraph",
             children: [text]
