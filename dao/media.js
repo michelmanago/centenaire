@@ -1,3 +1,4 @@
+// libs
 import {query} from '../lib/db';
 
 
@@ -40,6 +41,50 @@ const groupedByMedia = results => {
 }
 
 // SELECT ALL 
+
+export async function selectNonAssociatedMedia(limit = 15, pageOffset = 0, accepts = []){
+
+    console.log("ffa")
+
+    let res = await query(`
+        SELECT 
+            m.*
+        FROM 
+            medias m
+        LEFT JOIN
+            media_page mp
+        ON m.id = mp.media_id
+        WHERE mp.media_id IS NULL AND m.type IN (?)
+        ORDER BY m.id DESC
+        LIMIT ? OFFSET ?
+    `, [accepts, limit, pageOffset])
+
+    let media = JSON.parse(JSON.stringify(res))
+    let media_ids = media.map(m => m.id)
+    let item_count = 0
+
+    if(media_ids && media_ids.length){
+
+        item_count = (await query(`
+            SELECT COUNT(DISTINCT m.id) as count 
+            FROM medias m
+            WHERE m.id IN (?)
+        `, [media_ids]))[0].count
+
+    }
+
+    return {
+        array: media,
+        pagination: {
+            item_per_page: limit,
+            item_count_current_page: media.length,
+            item_count: item_count,
+            page: Number(pageOffset),
+            page_count: Math.ceil(item_count / limit)
+        }
+    }
+
+}
 
 export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id, accepts = [], order = "DESC") {
 

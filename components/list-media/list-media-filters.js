@@ -15,7 +15,11 @@ const allMedia = Object.values(MEDIA_TYPES)
 export default function ListMediaFilters(){
 
     // hooks
-    const {query} = useRouter()
+    const router = useRouter()
+    const {query} = router
+
+    // utils
+    const isFilteringNonAssociated = !(typeof query.with_no_page === "undefined")
 
     // states
     const [search, setSearch] = useState("")
@@ -26,6 +30,26 @@ export default function ListMediaFilters(){
     const searchPages = async (name) => {
         const res =  await fetchPagesByName(name)
         setResults(res)
+    }
+
+    const onFilterNonAssociated = () => {
+        
+        if(isFilteringNonAssociated){
+            router.push({
+                pathname: `/admin/media`,
+                query: Object.assign({
+                    accepts: query.type,
+                }, query.page ? {page: query.page} : {})
+            })
+        } else {
+            router.push({
+                pathname: `/admin/media`,
+                query: Object.assign({
+                    accepts: query.type,
+                    with_no_page: ""
+                }, query.page ? {page: query.page} : {})
+            })
+        }
     }
 
     const onSearchByName = value => {
@@ -94,38 +118,57 @@ export default function ListMediaFilters(){
             </div>
 
             {/* Page association */}
+            {
+                !isFilteringNonAssociated && (
+                    <div className="flex items-center mt-4">
+                        <p className="font-medium mr-5">Restreindre par page</p>
+                        <div className="border w-1/3">
+                            <SelectSearch
+                                value={search}
+                                setValue={onSearchByName}
+                                results={results}
+                                getKey={({id}) => id}
+                                onSelect={onSelectPage}
+                                renderResult={item => (
+                                    <p className="text-md">{item.pageName}</p>
+                                )}
+                                inputPlaceholder="Rechercher le nom d'une page"
+                            
+                            />
+                        </div>
+                        {
+                            selected && (
+                                <Link
+                                    href={{
+                                        pathname: "/admin/media",
+                                        query: Object.assign({
+                                            page: selected.id,
+                                        }, query.accepts ? {accepts: query.accepts} : {})
+                                    }}
+                                >
+                                    <a className="border border-blue-400 rounded-sm text-blue-400 hover:bg-blue-400 hover:text-white px-2 py-1 text-sm ml-3 max-w-xs inline-block truncate">Filtrer les media de <strong>{selected.pageName}</strong></a>
+                                </Link>
+                            )
+                        }
+
+                    </div>
+                )
+            }
+
+            {/* Non associated */}
             <div className="flex items-center mt-4">
-                <p className="font-medium mr-5">Restreindre par page</p>
-                <div className="border w-1/3">
-                    <SelectSearch
-                        value={search}
-                        setValue={onSearchByName}
-                        results={results}
-                        getKey={({id}) => id}
-                        onSelect={onSelectPage}
-                        renderResult={item => (
-                            <p className="text-md">{item.pageName}</p>
-                        )}
-                        inputPlaceholder="Rechercher le nom d'une page"
-                    
+                <label htmlFor="checkbox_filter_non_associated" className="font-medium mr-5">Afficher seulement les medias non associés</label>
+                <div>
+                    <input 
+                        id="checkbox_filter_non_associated"
+                        type="checkbox" 
+                        checked={isFilteringNonAssociated}
+                        onChange={onFilterNonAssociated}
                     />
                 </div>
-                {
-                    selected && (
-                        <Link
-                            href={{
-                                pathname: "/admin/media",
-                                query: Object.assign({
-                                    page: selected.id,
-                                }, query.accepts ? {accepts: query.accepts} : {})
-                            }}
-                        >
-                            <a className="border border-blue-400 rounded-sm text-blue-400 hover:bg-blue-400 hover:text-white px-2 py-1 text-sm ml-3 max-w-xs inline-block truncate">Filtrer les media de <strong>{selected.pageName}</strong></a>
-                        </Link>
-                    )
-                }
-
             </div>
+
+
         </div>
     )
 

@@ -1,8 +1,5 @@
 // libs
-import { useState } from "react"
-
-// utils
-import { getMediaLink } from "../../utils/utils-serveur-image"
+import { useEffect, useState } from "react"
 
 // styles
 import styles from "../../styles/pages/list-media.module.css"
@@ -14,16 +11,11 @@ import ListMediaEdit from "./list-media-edit"
 import ListMediaFilters from "./list-media-filters"
 
 // icons
-import IconVideo from "../icons/IconVideo"
-import IconHeadphone from "../icons/IconHeadphone"
-import IconDocument from "../icons/IconDocument"
-import IconUnknown from "../icons/IconUnknown"
 import { getFilenameFromPath } from "../../utils/utils-media"
 import MediaPreview from "../media-preview/media-preview"
 
 
 export default function ListMedia({media}){
-
 
     // States
     const [selected, setSelected] = useState(null)
@@ -47,7 +39,10 @@ export default function ListMedia({media}){
 
     }
     
-    // helpers
+    // refresh list on navigation
+    useEffect(() => {
+        setList(media.array)
+    }, [media])
 
 
     // others
@@ -72,6 +67,7 @@ export default function ListMedia({media}){
             }
 
             {/* List */}
+        
             <div className="mt-5">
                 {
                     !emptyList ? list.map(mediaItem => {
