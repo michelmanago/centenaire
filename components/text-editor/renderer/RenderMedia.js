@@ -53,7 +53,6 @@ export default function RenderMedia({attributes, element, children, newAttribute
                         />
                     ) : (type === "video" ? (
                         <video
-                            controls
                             muted
                             src={element.url}
                             alt={element.url}

@@ -6,10 +6,11 @@ export default async function handler(req, res) {
         if (req.method === 'GET')  {
             
             const page_id = req.query.page_id
-            const page_offset = req.query.page_offset
+            const page_offset = req.query.page_offset || 0
             const accepts = req.query.accepts ? req.query.accepts.split("-") : []
+            const with_no_page = req.query.with_no_page ? true : false
             
-            const medias = await getMedia(page_id, page_offset, accepts)
+            const medias = await getMedia(page_id, page_offset, accepts, with_no_page)
 
             return res.json(medias);
         } else {

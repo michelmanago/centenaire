@@ -1,8 +1,5 @@
 // libs
-import { useState } from "react"
-
-// utils
-import { getMediaLink } from "../../utils/utils-serveur-image"
+import { useEffect, useState } from "react"
 
 // styles
 import styles from "../../styles/pages/list-media.module.css"
@@ -14,22 +11,22 @@ import ListMediaEdit from "./list-media-edit"
 import ListMediaFilters from "./list-media-filters"
 
 // icons
-import IconVideo from "../icons/IconVideo"
-import IconHeadphone from "../icons/IconHeadphone"
-import IconDocument from "../icons/IconDocument"
-import IconUnknown from "../icons/IconUnknown"
+import { getFilenameFromPath } from "../../utils/utils-media"
+import MediaPreview from "../media-preview/media-preview"
 
 
 export default function ListMedia({media}){
 
-
     // States
     const [selected, setSelected] = useState(null)
+    const [list, setList] = useState(media.array)
 
     // Methods
     const onCloseEditModal = () => {
         setSelected(null)
     }
+
+    const updateList = fn => setList(fn(list))
 
     // Listeners
     const selectMedia = item => {
@@ -42,47 +39,14 @@ export default function ListMedia({media}){
 
     }
     
-    // helpers
-    const renderMediaPreview = media => {
-        switch(media.type){
-            case "video":
-                return (
-                    <div className="border rounded w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
-                            <IconVideo className={"w-24 text-gray-100"}/>
-                    </div>
-                )
-            break;
-            case "image":
-                const media_src = getMediaLink(media.public_path)
-                return (
-                    <img className="block left-0 top-0 w-full h-full object-cover" src={media_src} />
-                )
-            break;
-            case "document":
-                return (
-                    <div className="border rounded w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
-                        <IconDocument className={"w-24 text-gray-100"}/>
-                    </div>
-                )
-            break;
-            case "audio":
-                return (
-                    <div className="border rounded w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
-                        <IconHeadphone className={"w-24 text-gray-100"}/>
-                    </div>
-                )
-            break;
-            default:
-                return (
-                    <div className="border rounded w-full h-full bg-gray-300 left-0 top-0 flex justify-center items-center">
-                        <IconUnknown className={"w-24 text-gray-100"}/>
-                    </div>
-                )
-        }
-    }
+    // refresh list on navigation
+    useEffect(() => {
+        setList(media.array)
+    }, [media])
+
 
     // others
-    const emptyList = !media.array.length
+    const emptyList = !list.length
 
     return (
         <main className="max-w-screen-xl p-4 bg-white md:mx-auto">
@@ -103,11 +67,13 @@ export default function ListMedia({media}){
             }
 
             {/* List */}
+        
             <div className="mt-5">
                 {
-                    !emptyList ? media.array.map(mediaItem => {
+                    !emptyList ? list.map(mediaItem => {
 
                         const isSelected = selected && selected.id === mediaItem.id
+                        const filename = getFilenameFromPath(mediaItem)
 
                         return (
                             <button 
@@ -115,10 +81,19 @@ export default function ListMedia({media}){
                                 key={mediaItem.id} 
                                 className={`relative ${styles.listItem}`}>
 
-                                <div className={`absolute w-full h-full p-2 ${isSelected ? mediaSelectedStyles : ""}`}>
-                                    {
-                                        renderMediaPreview(mediaItem)
-                                    }
+                                <div className={`absolute border w-full h-full p-2 ${isSelected ? mediaSelectedStyles : ""}`}>
+                                    <div className="h-full relative">
+
+                                        {/* Preview */}
+                                        {
+                                            <MediaPreview type={mediaItem.type} public_path={mediaItem.public_path}/>
+                                        }
+
+                                        {/* Title */}
+                                        <div className="truncate px-3 text-sm py-1 opacity-70 z-10 absolute bottom-0 w-full bg-gray-500 text-white">
+                                                {filename}
+                                        </div>
+                                    </div>
                                 </div>
                             </button>
                         )
@@ -131,10 +106,11 @@ export default function ListMedia({media}){
             </div>
 
             {/* Edit */}
-            {/* {selected && <ListMediaEdit 
+            {selected && <ListMediaEdit 
                 media={selected} 
                 onClose={onCloseEditModal}
-            />} */}
+                updateList={updateList}
+            />}
             
         </main>
     )

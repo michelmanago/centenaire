@@ -22,6 +22,8 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
     const thereIsCredit = (media.length && media.some(m => m.credit))
     const creditsVideo = media.filter(m => m.type === "video")
     const creditsImage = media.filter(m => m.type === "image")
+    const creditsDocument = media.filter(m => m.type === "document")
+    const creditsAudio = media.filter(m => m.type === "audio")
 
     return (
 
@@ -74,6 +76,16 @@ export default function PageInfo({ media, author, created_at, last_modified, sou
                 {/* Credits video */}
                 {
                     <ListCredtit media={creditsVideo} title={"Crédits vidéo"}/>
+                }
+
+                {/* Credits Audio */}
+                {
+                    <ListCredtit media={creditsAudio} title={"Crédits audio"}/>
+                }
+
+                {/* Credits document */}
+                {
+                    <ListCredtit media={creditsDocument} title={"Crédits document"}/>
                 }
             </div>
         </Popup>
