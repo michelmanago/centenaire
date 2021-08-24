@@ -26,6 +26,11 @@ const CLASS_EFFECT = {
         className: "text-right",
         effect: "align-right",
     },
+
+    alignCenter: {
+        className: "text-center",
+        effect: "align-center",
+    },
 }
 
 // get all classEffects as Array
