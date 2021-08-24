@@ -30,13 +30,12 @@ export default function Header({ menu, translations }) {
                         <Image src="/logo.svg" width={124} height={150} alt="logo" />
                     </div>
                     <div className="w-4/5 md:w-3/4">
-                        <div>
-                            <span className="ml-2 text-xl md:text-4xl font-bold text-pred font-logotitle">Centenaire de l'archevêché des églises </span>
-                        </div>
-                        <div>
-                            <span className="ml-2 text-xl md:text-4xl font-bold text-pred font-logotitle"> Orthodoxes de tradition russe en Europe occidentale</span>
+                        <div className="w-4/5 md:w-3/4 ml-2 text-xl md:text-4xl font-bold text-pred font-logotitle">
+                            Centenaire de l'archevêché des églises Orthodoxes de tradition russe en Europe occidentale
                         </div>
                     </div>
+
+                    
                 </div>
             </div>
 
