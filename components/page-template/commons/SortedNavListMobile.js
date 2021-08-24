@@ -24,7 +24,7 @@ function SortedNavListMobile({ list, category}) {
     return (
         <div className="mb-8 mr-5">
             <h4 className="mb-2 font-medium">Listes des autres pages <em>{category}</em></h4>
-            <select className="border px-2 py-3 rounded" onChange={onSelectLangue} >
+            <select className="border px-2 py-3 rounded max-w-full" onChange={onSelectLangue} >
                 {
                     getPagesSortedByPosition(list).map(page => (
                         <option key={page.pageSlug} value={page.pageName}>

@@ -21,6 +21,7 @@ module.exports = {
       'mb-4', 
       'pl-4', 
       'pr-4', 
+      'mx-12',
       'md:w-96', 
       'h-52', 
       'text-center',
