@@ -15,7 +15,7 @@ export default function SortedNavList({list}){
 
     return (
         <div className="mr-5">
-            <ul className="pl-0 border max-w-full">
+            <ul className="pl-0 max-w-full">
                 {
                     getPagesSortedByPosition(list).map(page => {
 
