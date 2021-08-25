@@ -178,12 +178,24 @@ export function isImageUrl(url) {
 }
 export function insertVideo(editor, url) {
     const text = {text: ''};
-    const image = {type: 'video', url, children: [text]};
-    Transforms.insertNodes(editor, image);
+    const video = [
+        {type: 'video', url, children: [text]},
+        {
+            type: "paragraph",
+            children: [text]
+        }
+    ];
+    Transforms.insertNodes(editor, video);
 }
 export function insertVideoModal(editor, url, isModal) {
     const text = {text: ''};
-    const videoModal = {type: 'video', modal: isModal, url, children: [text]};
+    const videoModal = [
+        {type: 'video', modal: isModal, url, children: [text]},
+        {
+            type: "paragraph",
+            children: [text]
+        }
+    ];
     Transforms.insertNodes(editor, videoModal);
 }
 
