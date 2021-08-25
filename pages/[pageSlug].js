@@ -83,7 +83,7 @@ export default function DynPage({ menu, page}) {
                 </div>
             )}
 
-            <main className="max-w-screen-xl px-10 py-10 mx-auto bg-white border">
+            <main className="max-w-screen-xl px-5 py-10 mx-auto bg-white border">
 
                 {
                     renderPage(page)
