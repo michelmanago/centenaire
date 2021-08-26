@@ -6,7 +6,8 @@ import IconInfo from "../icons/IconInfo"
 
 // utils
 import { useRouter } from 'next/router';
-
+import {truncateString} from "../../utils/utils"
+import { legendeAsArray } from '../../utils/utils-media';
 
 const wrapperStyles = {
     maxWidth: 400
@@ -122,7 +123,16 @@ const ListCredtit = ({media, title}) => {
 
     // others
     const length = media.filter(m => m.credit).length
+    const {locale} = useRouter()
 
+    const getLocaleLegende = legendes => {
+        // get legendes as Array of {legende<string>, value<string>}
+        let arrayOfLegende = legendeAsArray(legendes);
+
+        let localeLegende = arrayOfLegende ? arrayOfLegende.find(l => l.locale === locale) : null;
+        return localeLegende ? localeLegende.value : '';
+    };
+ 
     if(!length){
         return ""
     }
@@ -134,10 +144,13 @@ const ListCredtit = ({media, title}) => {
                 <ol className="pl-8 m-0">
                     {media.map(mediaItem => {
     
+                        let legende = getLocaleLegende(mediaItem.legende)
+                        legende = truncateString(legende, 25)
+
                         if(mediaItem.credit){
                             return (
                                 <li key={mediaItem.id} className="mb-2 text-sm">
-                                    {mediaItem.credit}
+                                    {legende ? `${legende} : ` : ""}  {mediaItem.credit}
                                 </li>
                             )
                         }
