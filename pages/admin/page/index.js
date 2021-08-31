@@ -18,7 +18,7 @@ export default function Page({menu, pages, categories}) {
 
             <Head>
                 <title>Administrer le site</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {menu && <Header menu={menu.data}/>}

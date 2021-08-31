@@ -315,7 +315,7 @@ export default function EditorMenu({menus}) {
         <div>
             <Head>
                 <title>Admin - Editeur de menu</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {/* Header */}

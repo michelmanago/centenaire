@@ -66,7 +66,7 @@ export default function DynPage({ menu, page}) {
         <div>
             <Head>
                 <title>{page && page.pageName}</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             <Header menu={menu.data} translations={page.translations}/>

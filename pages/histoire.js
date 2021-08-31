@@ -15,7 +15,7 @@ export default function Cimetiere({menu}) {
         <div className={`bg-pyellow`}>
             <Head>
                 <title>Le cimetière russe</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {/* Header */}

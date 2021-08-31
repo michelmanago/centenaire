@@ -15,7 +15,7 @@ export default function Histoire({menu}) {
         <div className={`bg-pyellow`}>
             <Head>
                 <title>histoire de l'archevêché</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {/* Header */}
