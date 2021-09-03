@@ -14,6 +14,9 @@ const wrapperStyles = {
     maxWidth: 400
 }
 
+const desktopPopupStyles = {
+    minWidth: 400
+}
 
 export default function PageInfo(props) {
 
@@ -39,7 +42,7 @@ export default function PageInfo(props) {
                     on={["hover", "focus"]}
                     position={["right top"]}
                 >
-                    <div className="">
+                    <div style={desktopPopupStyles} className="">
                         <TooltipInner {...props} />
                     </div>
                 </Popup>

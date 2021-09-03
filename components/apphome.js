@@ -6,7 +6,6 @@ import useTranslation from 'next-translate/useTranslation'
 export default function AppHome ({currentLanguage}) {
 
     const {t} = useTranslation()
-
     return (
         <div className="bg-pyellow">
             <div className="container sm:mx-auto bg-pwhite max-w-screen-xl">

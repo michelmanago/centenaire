@@ -68,7 +68,7 @@ const LanguageSwitcher = ({translations}) => {
                 newUrl = redirectToTranslatedHome(url, selectedLocale)
             }
 
-            push(newUrl)
+            push(newUrl, null, {locale: false})
         }
 
     }
