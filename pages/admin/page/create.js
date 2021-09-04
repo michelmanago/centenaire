@@ -80,7 +80,7 @@ export default function PageEditorCreate({menu, categories}) {
         <>
             <Head>
                 <title>Creation de page</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
             {menu && <Header menu={menu.data}/>}
             <main className="">

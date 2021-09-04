@@ -23,7 +23,7 @@ export default function PageMedia({menu, media}) {
 
             <Head>
                 <title>Admin - Liste des media</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {menu && <Header menu={menu.data}/>}

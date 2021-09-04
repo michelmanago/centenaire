@@ -43,7 +43,7 @@ export default function PageCreateUser({menu}){
         <>
             <Head>
                 <title>Creation d'utilisateur</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
             {menu && <Header menu={menu.data}/>}
             <main className="max-w-screen-xl px-5 pt-5 mx-auto bg-white">

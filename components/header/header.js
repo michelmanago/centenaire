@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
 import Link from "next/link"
+import useTranslation from "next-translate/useTranslation"
 
 // styles
 import styles from '../../styles/components/header.module.css';
@@ -16,6 +17,7 @@ export default function Header({ menu, translations }) {
 
     /** Hooks */
     const router = useRouter();
+    const { t } = useTranslation()
     const { locale, locales, defaultLocale } = router;
 
     /** States */
@@ -31,7 +33,7 @@ export default function Header({ menu, translations }) {
                     </div>
                     <div className="w-4/5 md:w-3/4">
                         <div className="w-4/5 md:w-3/4 ml-2 text-xl md:text-4xl font-bold text-pred font-logotitle">
-                            Centenaire de l'archevêché des églises Orthodoxes de tradition russe en Europe occidentale
+                            {t("common:site_title")}
                         </div>
                     </div>
 

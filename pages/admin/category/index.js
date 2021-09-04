@@ -20,7 +20,7 @@ export default function AdminCategory({menu, categories}) {
         <>
             <Head>
                 <title>Admin - Catégories</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {menu && <Header menu={menu.data} />}

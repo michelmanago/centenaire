@@ -26,7 +26,7 @@ const bannerStyles = {
     height: 360
 }
 
-
+import useTranslation from 'next-translate/useTranslation';
 
 export default function DynPage({ menu, page}) {
     
@@ -62,11 +62,13 @@ export default function DynPage({ menu, page}) {
 
     // hooks
 
+    console.log({a: useTranslation().t("pageslug:page_info_created_at")})
+
     return (
         <div>
             <Head>
                 <title>{page && page.pageName}</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             <Header menu={menu.data} translations={page.translations}/>
