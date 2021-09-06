@@ -1,11 +1,11 @@
 {
-    "page_info_label": "Informations de la page",
-    "page_info_created_at": "Date de création",
-    "page_info_modified_at": "Date de modification",
-    "page_info_author": "Auteur",
-    "page_info_source": "Source",
-    "page_info_credit_photo": "Crédit photo",
-    "page_info_credit_audio": "Crédit audio",
-    "page_info_credit_document": "Crédit document",
-    "page_info_credit_video": "Crédit video"
+    "page_info_label": "Информация о странице",
+    "page_info_created_at": "Дата создания",
+    "page_info_modified_at": "Дата модификации",
+    "page_info_author": "Автор",
+    "page_info_source": "Источник",
+    "page_info_credit_photo": "Фото кредит",
+    "page_info_credit_audio": "Аудио кредит",
+    "page_info_credit_document": "Документ-кредит",
+    "page_info_credit_video": "Видео кредит"
 }
