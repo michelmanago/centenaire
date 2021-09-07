@@ -14,6 +14,7 @@ export default function AppHome ({currentLanguage}) {
                     <p className="pb-2">{t("home:paragraph_1")}</p>
                     <p className="pb-2">{t("home:paragraph_2")}</p>
                     <p className="pb-2">{t("home:paragraph_3")}</p>
+                    <p className="pb-2">{t("home:paragraph_4")}</p>
                     <img className="mx-auto" src="static/img/logo-INA.jpg"></img>
                 </main>
             </div>
