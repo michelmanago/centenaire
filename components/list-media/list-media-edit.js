@@ -178,6 +178,15 @@ export default function ListMediaEdit({media, onClose, updateList}){
 
     }, [])
 
+    useEffect(() => {
+
+        if(media){
+            setCredit(media.credit)
+            setLegendes((media.legende ? legendeAsArray(media.legende) : defaultLegendes) )
+        }
+
+    }, [media])
+
     return (
         <Popup
             lockScroll={true}
