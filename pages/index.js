@@ -22,7 +22,7 @@ export default function Home({menu}) {
     <div className={styles.container}>
       <Head>
         <title>Exposition du centenaire</title>
-        <link rel="icon" href="/favicon.ico" />
+        
       </Head>
 
       {/* Header */}

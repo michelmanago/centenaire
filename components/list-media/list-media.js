@@ -106,11 +106,11 @@ export default function ListMedia({media}){
             </div>
 
             {/* Edit */}
-            {selected && <ListMediaEdit 
+            <ListMediaEdit 
                 media={selected} 
                 onClose={onCloseEditModal}
                 updateList={updateList}
-            />}
+            />
             
         </main>
     )

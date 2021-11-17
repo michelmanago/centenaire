@@ -8,7 +8,7 @@ const LanguageSwitcher = ({translations}) => {
     
 
     // hooks
-    const { locales, locale } = useRouter()
+    const { locales, locale, push, pathname, asPath } = useRouter()
 
     // utils
     const removeLocaleFromPathname = pathname => pathname.replace(new RegExp(`\/(?:${locales.join("|")})/?`, "i"), "/")
@@ -50,8 +50,9 @@ const LanguageSwitcher = ({translations}) => {
         // or not home but there is no translations
         if(isHome() || !translations){
 
-            // switch current page to selected locale
-            newUrl = redirectToTranslatedHome(url, selectedLocale)
+            push(asPath, asPath, {
+                locale: selectedLocale
+            })
         }
 
         // if there is translations
@@ -66,10 +67,9 @@ const LanguageSwitcher = ({translations}) => {
                 // switch current page to selected locale
                 newUrl = redirectToTranslatedHome(url, selectedLocale)
             }
-        }
 
-        // change page
-        window.location = newUrl
+            push(newUrl, null, {locale: false})
+        }
 
     }
 

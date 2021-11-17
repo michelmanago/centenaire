@@ -1,0 +1,11 @@
+{
+    "page_info_label": "Page information",
+    "page_info_created_at": "Creation date",
+    "page_info_modified_at": "Date of last modification",
+    "page_info_author": "Author",
+    "page_info_source": "Source",
+    "page_info_credit_photo": "Photo credit",
+    "page_info_credit_audio": "Audio credit",
+    "page_info_credit_document": "Document credit",
+    "page_info_credit_video": "Video credit"
+}

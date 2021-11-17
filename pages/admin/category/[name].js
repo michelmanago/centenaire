@@ -147,7 +147,7 @@ export default function AdminCategory({pages, menu, categoryName}) {
         <>
             <Head>
                 <title>Admin - Catégories - {categoryName}</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
             {menu && <Header menu={menu.data} />}
             <main className="max-w-screen-xl p-4 bg-white md:mx-auto">{pageContent}</main>

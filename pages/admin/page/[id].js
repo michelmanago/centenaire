@@ -79,7 +79,7 @@ export default function PageEditorUpdate({menu, pageTranslations, categories}) {
         <>
             <Head>
                 <title>Edition de page - {pageTranslations[0] && pageTranslations[0].pageName}</title>
-                <link rel="icon" href="/favicon.ico" />
+                
             </Head>
 
             {menu && <Header menu={menu.data} />}

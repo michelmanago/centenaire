@@ -12,7 +12,7 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head>
-
+                    <link rel="shortcut icon" href="/static/favicon.jpeg" />
                     {/* Global Site Tag (gtag.js) - Google Analytics */}
                     {
                         hasGA && ([
