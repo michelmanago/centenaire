@@ -11,18 +11,18 @@ import SortedNavListMobile from "./commons/SortedNavListMobile";
 export default function PageWithCategory({ page }) {
 
     return (
-        <div className="flex flex-col lg:flex-row mt-8">
+        <div className="flex flex-col mt-8 lg:flex-row">
 
             {/* Sidebar */}
-            <div className="lg:w-1/3 w-full">
+            <div className="w-full lg:w-1/3">
                 {/* Nav mobile */}
                 <div className="lg:hidden">
-                    <SortedNavListMobile list={page.nav} category={page.page}/>
+                    <SortedNavListMobile list={page.nav} category={page.page} pageSlug={page.pageSlug} />
                 </div>
 
                 {/* Nav desktop */}
                 {page.nav &&
-                    <div className="lg:block hidden" >
+                    <div className="hidden lg:block" >
                         <SortedNavList list={page.nav} />
                     </div>
                 }
