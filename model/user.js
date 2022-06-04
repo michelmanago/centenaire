@@ -29,6 +29,16 @@ export async function getUserByEmail(email) {
     }
 }
 
+export async function getUserByHash(hash) {
+    try {
+        let user = await query('SELECT id, username, email, avatar, role FROM user_table WHERE hash LIKE ?', [hash]);
+        return JSON.parse(JSON.stringify(user[0]));
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
 export async function createUser(user) {
     const {username, email, password, provider, avatar, role} = user;
     try {
