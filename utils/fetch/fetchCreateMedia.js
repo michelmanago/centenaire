@@ -1,5 +1,6 @@
 import {getFileType} from '../utils-media';
 import {getServerImageEndpoint} from '../utils-serveur-image';
+import cleanForSlug from '../cleanForSlug';
 
 export default async function fetchCreateMedia(file) {
     try {
