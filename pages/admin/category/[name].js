@@ -5,7 +5,7 @@ import {getMenu} from '../../../model/menu';
 import Header from '../../../components/header/header';
 import Head from 'next/head';
 import {useState} from 'react';
-import SortableTree, {getVisibleNodeCount} from 'react-sortable-tree';
+import SortableTree, {getVisibleNodeCount} from 'react-sortable-tree-patch-react-17';
 import DefaultErrorPage from 'next/error';
 import {getSession, useSession} from 'next-auth/client';
 

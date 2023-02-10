@@ -1,47 +1,57 @@
 // libs
-import SortableTree, { getVisibleNodeCount} from 'react-sortable-tree';
-import { voidFunction } from '../../../utils/utils';
+import SortableTree, {getVisibleNodeCount} from 'react-sortable-tree-patch-react-17';
+import {voidFunction} from '../../../utils/utils';
 
 // components
 import {RemoveButton} from '../editor-menu-buttons';
 import ModalEditLink from './ModalEditLink';
 
+const MAX_TREE_DEPTH = 3;
 
-const MAX_TREE_DEPTH = 3
-
-export default function MenuEditorTree({onVisibilityToggle, onMoveNode, onRemoveItem, onModifyItem, onChangeLocale, currentMenuData, currentLocale, locales, editedMenuItem, label, href, setHref, setLabel, closeEditModal, onSubmitEdit}){
-
+export default function MenuEditorTree({
+    onVisibilityToggle,
+    onMoveNode,
+    onRemoveItem,
+    onModifyItem,
+    onChangeLocale,
+    currentMenuData,
+    currentLocale,
+    locales,
+    editedMenuItem,
+    label,
+    href,
+    setHref,
+    setLabel,
+    closeEditModal,
+    onSubmitEdit,
+}) {
     // others
-    const count = getVisibleNodeCount({treeData: currentMenuData})
+    const count = getVisibleNodeCount({treeData: currentMenuData});
 
     // form
-    
+
     return (
         <div>
-
-            
             {/* Tabs */}
             <div className="flex">
-                {
-                    locales.map((locale, index) => {
-                        
-                        const isCurrentTab = currentLocale === locale
+                {locales.map((locale, index) => {
+                    const isCurrentTab = currentLocale === locale;
 
-                        return (
-                            <button
-                                key={"tab-button-" + index}
-                                onClick={() => onChangeLocale(index)}
-                                className={"w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg " + (isCurrentTab ? "bg-blue-400 font-medium" : "bg-blue-200")}
-                            >{locale}</button>
-                        )
-
-                    })
-                }
+                    return (
+                        <button
+                            key={'tab-button-' + index}
+                            onClick={() => onChangeLocale(index)}
+                            className={
+                                'w-1/8 h-10 px-6 uppercase rounded-t-lg text-lg ' +
+                                (isCurrentTab ? 'bg-blue-400 font-medium' : 'bg-blue-200')
+                            }
+                        >
+                            {locale}
+                        </button>
+                    );
+                })}
             </div>
 
-
-            
-                    
             {/* Tree */}
             <div style={{height: count * 62}} className="">
                 <SortableTree
@@ -51,13 +61,12 @@ export default function MenuEditorTree({onVisibilityToggle, onMoveNode, onRemove
                     onMoveNode={onMoveNode}
                     onVisibilityToggle={onVisibilityToggle}
                     generateNodeProps={({node, path, treeIndex}) => {
-
                         let isCurrentEditingNode = editedMenuItem && editedMenuItem.node.uuid === node.uuid;
 
                         return {
                             buttons: [
-                                <ModalEditLink 
-                                    onClick={() => onModifyItem(node, path)} 
+                                <ModalEditLink
+                                    onClick={() => onModifyItem(node, path)}
                                     label={label}
                                     href={href}
                                     setHref={setHref}
@@ -76,5 +85,5 @@ export default function MenuEditorTree({onVisibilityToggle, onMoveNode, onRemove
                 />
             </div>
         </div>
-    )
+    );
 }
