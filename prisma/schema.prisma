@@ -46,7 +46,6 @@ model medias {
     credit      String?      @db.VarChar(1000)
     legende     String?      @db.VarChar(1000)
     public_path String?      @db.VarChar(250)
-    page_id     Int?
     pages       media_page[]
 }
 
