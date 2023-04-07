@@ -11,6 +11,7 @@ import fetchDissociateMediaFromPage from '../../../utils/fetch/fetchDissociateMe
 
 // icons
 import IconUnlink from '../../icons/IconUnlink';
+import {fetchWrapper} from '../../../utils/utils';
 
 export default function ModalMediaListEdit({
     media,
@@ -151,9 +152,10 @@ export default function ModalMediaListEdit({
         // Prevent miss click
         if (confirm("Êtes vous sûr de vouloir supprimer définitivement l'image ?")) {
             // fetch DELETE
-            const deleted = await fetchDeleteMedia(media);
+            const deleteMediaServer = await fetchDeleteMedia(media);
 
-            if (deleted) {
+            if (deleteMediaServer) {
+                const deleted = await fetchWrapper(`/api/media/${media.id}`, null, 'DELETE');
                 deleteMediaFromList(media.id);
             } else {
                 alert('Could not delete this media.');
