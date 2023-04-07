@@ -5,7 +5,7 @@ import {getMenu} from '../../../model/menu';
 import Header from '../../../components/header/header';
 import Head from 'next/head';
 import {useState} from 'react';
-import SortableTree, {getVisibleNodeCount} from 'react-sortable-tree';
+import SortableTree, {getVisibleNodeCount} from 'react-sortable-tree-patch-react-17';
 import DefaultErrorPage from 'next/error';
 import {getSession, useSession} from 'next-auth/client';
 
@@ -147,7 +147,6 @@ export default function AdminCategory({pages, menu, categoryName}) {
         <>
             <Head>
                 <title>Admin - Catégories - {categoryName}</title>
-                
             </Head>
             {menu && <Header menu={menu.data} />}
             <main className="max-w-screen-xl p-4 bg-white md:mx-auto">{pageContent}</main>

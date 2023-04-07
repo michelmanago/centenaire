@@ -1,0 +1,110 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
+}
+
+model accounts {
+    id                   Int      @id @default(autoincrement())
+    compound_id          String   @db.VarChar(255)
+    user_id              Int
+    provider_type        String   @db.VarChar(255)
+    provider_id          String   @db.VarChar(255)
+    provider_account_id  String   @db.VarChar(255)
+    refresh_token        String?  @db.Text
+    access_token         String?  @db.Text
+    access_token_expires DateTime @default(now()) @db.Timestamp(6)
+    created_at           DateTime @default(now()) @db.Timestamp(6)
+    updated_at           DateTime @default(now()) @db.Timestamp(6)
+}
+
+model category {
+    id    Int     @id @default(autoincrement())
+    title String? @db.VarChar(45)
+}
+
+model media_page {
+    id       Int @id @default(autoincrement())
+    media_id Int
+    page_id  Int
+
+    media medias      @relation(fields: [media_id], references: [id])
+    page  pagecontent @relation(fields: [page_id], references: [id], onDelete: Cascade)
+
+    @@index([media_id])
+    @@index([page_id])
+}
+
+model medias {
+    id          Int          @id @default(autoincrement())
+    upload_path String?      @db.VarChar(250)
+    type        String?      @db.VarChar(200)
+    credit      String?      @db.VarChar(1000)
+    legende     String?      @db.VarChar(1000)
+    public_path String?      @db.VarChar(250)
+    pages       media_page[]
+}
+
+model menus {
+    id       Int     @id @default(autoincrement())
+    links    String? @db.MediumText
+    language String  @unique @db.VarChar(45)
+}
+
+model page_translations {
+    id          Int @id @default(autoincrement())
+    original_id Int
+    child_id    Int
+
+    childPage pagecontent @relation(fields: [child_id], references: [id], onDelete: Cascade)
+
+    @@index([child_id])
+}
+
+model pagecontent {
+    id            Int       @id @default(autoincrement())
+    blockcontent  String?   @db.MediumText
+    blockid       Int?
+    language      String?   @db.Text
+    page          String?   @db.Text
+    dataType      String?   @db.VarChar(45)
+    data          String?   @db.MediumText
+    pageSlug      String?   @unique(map: "pageSlug_UNIQUE") @db.VarChar(245)
+    pageName      String?   @db.VarChar(245)
+    author        String?   @db.VarChar(100)
+    created_at    DateTime? @db.DateTime(0)
+    last_modified DateTime? @db.DateTime(0)
+    blocks        String?   @db.MediumText
+    bandeau_id    Int?
+    position      Int?
+    source        String?   @db.VarChar(8000)
+
+    page_translations page_translations[]
+    medias            media_page[]
+}
+
+model user_table {
+    id          Int       @id @default(autoincrement())
+    username    String    @db.VarChar(200)
+    email       String?   @db.VarChar(245)
+    password    String?   @db.VarChar(245)
+    create_date DateTime? @default(now()) @db.DateTime(0)
+    provider    String?   @default("custom") @db.VarChar(100)
+    avatar      String?   @db.VarChar(200)
+    role        String?   @default("admin") @db.VarChar(45)
+    hash        String?   @db.VarChar(200)
+}
+
+model users {
+    id             Int      @id @default(autoincrement())
+    name           String?  @db.VarChar(255)
+    email          String?  @db.VarChar(255)
+    email_verified DateTime @default(now()) @db.Timestamp(6)
+    image          String?  @db.VarChar(255)
+    created_at     DateTime @default(now()) @db.Timestamp(6)
+    updated_at     DateTime @default(now()) @db.Timestamp(6)
+}

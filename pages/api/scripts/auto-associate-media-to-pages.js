@@ -1,177 +1,168 @@
-import { getAllPages } from "../../../model/page";
-import { query } from "../../../lib/db";
+// import { getAllPages } from "../../../model/page";
+// import { query } from "../../../lib/db";
 
+// // const ORIGIN_FROM_SERVEURIMAGE = "http://localhost:3333/uploads/centenaire/page/"
+// const ORIGIN_FROM_SERVEURIMAGE = "https://api.eglise-russe-ste-genevieve-des-bois.eu/uploads/centenaire/page/"
 
-// const ORIGIN_FROM_SERVEURIMAGE = "http://localhost:3333/uploads/centenaire/page/"
-const ORIGIN_FROM_SERVEURIMAGE = "https://api.eglise-russe-ste-genevieve-des-bois.eu/uploads/centenaire/page/"
+// export default async function handler(req, res) {
+//     try {
 
+//         if(req.method === 'POST'){
 
+//             let exec = typeof req.query.exec === "undefined" ? false : true
+//             const results = await run(!exec)
 
-export default async function handler(req, res) {
-    try {
+//             return res.json(results)
+//         }
 
-        if(req.method === 'POST'){
+//         else {
+//             return res.status(405).json({ message: 'wrong http method' });
+//         }
+//     } catch (e) {
+//         console.log(e)
+//         return res.status(500).json({ message: e.message })
+//     }
+// }
 
-            let exec = typeof req.query.exec === "undefined" ? false : true
-            const results = await run(!exec)
+// async function run(dry = true){
 
-            return res.json(results)
-        }
-        
-        else {
-            return res.status(405).json({ message: 'wrong http method' });
-        }
-    } catch (e) {
-        console.log(e)
-        return res.status(500).json({ message: e.message })
-    }
-}
+//     const mediaFromText = []
+//     const mediaFromCarousel = []
+//     const mediaFromBandeau = []
 
+//     let media = []
+//     let pages = await query(`
+//         SELECT
+//             p.blocks, p.bandeau_id, pt.original_id id
+//         FROM
+//             pagecontent p
+//         LEFT JOIN page_translations pt
+//             ON pt.child_id = p.id
+//     `)
 
-async function run(dry = true){
+//     const matchMediaSrc = /src="(.*?)"/gm
 
-    const mediaFromText = []
-    const mediaFromCarousel = []
-    const mediaFromBandeau = []
+//     pages = pages.map(page => {
 
-    let media = []
-    let pages = await query(`
-        SELECT 
-            p.blocks, p.bandeau_id, pt.original_id id
-        FROM
-            pagecontent p
-        LEFT JOIN page_translations pt
-            ON pt.child_id = p.id
-    `)
+//         const blocks = (page.blocks && typeof page.blocks === "string") && JSON.parse(page.blocks)
 
-    const matchMediaSrc = /src="(.*?)"/gm
+//         // retrieve media from blocks
+//         blocks.forEach(block => {
 
-    pages = pages.map(page => {
+//             if(block.type === "text"){
 
-        const blocks = (page.blocks && typeof page.blocks === "string") && JSON.parse(page.blocks)
+//                 const content = block.content
+//                 const regexExecution = content && matchMediaSrc.exec(content)
 
-        // retrieve media from blocks
-        blocks.forEach(block => {
+//                 const matches = regexExecution && regexExecution.length && regexExecution.slice(1)
 
-            if(block.type === "text"){
+//                 if(matches){
 
-                const content = block.content
-                const regexExecution = content && matchMediaSrc.exec(content)
+//                     const urlFromServeurImage = matches.filter(link => link.includes(ORIGIN_FROM_SERVEURIMAGE))
+//                     const urlWithPage = urlFromServeurImage.map(url => ({
+//                         media: url,
+//                         page: page.id
+//                     }))
 
-                const matches = regexExecution && regexExecution.length && regexExecution.slice(1)
+//                     mediaFromText.push(...urlWithPage)
+//                 }
+//             }
 
-                if(matches){
+//             if(block.type === "carousel"){
 
-                    const urlFromServeurImage = matches.filter(link => link.includes(ORIGIN_FROM_SERVEURIMAGE))
-                    const urlWithPage = urlFromServeurImage.map(url => ({
-                        media: url,
-                        page: page.id
-                    }))
+//                 const list = block.content.data
+//                 mediaFromCarousel.push(
+//                     ...list.map(m => ({
+//                         media: m.id,
+//                         page: page.id
+//                     }))
+//                 )
 
-                    mediaFromText.push(...urlWithPage)
-                }
-            }
+//             }
 
-            if(block.type === "carousel"){
-                
-                const list = block.content.data
-                mediaFromCarousel.push(
-                    ...list.map(m => ({
-                        media: m.id,
-                        page: page.id
-                    }))
-                )
+//         })
 
-            }
-            
-        })
+//         // bandeau
+//         if(page.bandeau_id){
+//             mediaFromBandeau.push({
+//                 media: page.bandeau_id,
+//                 page: page.id,
+//             })
+//         }
 
-        // bandeau
-        if(page.bandeau_id){
-            mediaFromBandeau.push({
-                media: page.bandeau_id,
-                page: page.id,
-            })
-        }
+//         return {
+//             ...page
+//         }
 
-        return {
-            ...page
-        }
+//     })
 
-    })
-    
-    const fromText = await getMediaFromText(mediaFromText)
-    media = [...fromText, ...mediaFromCarousel, ...mediaFromBandeau]
+//     const fromText = await getMediaFromText(mediaFromText)
+//     media = [...fromText, ...mediaFromCarousel, ...mediaFromBandeau]
 
+//     // create association
+//     if(!dry){
 
-    // create association
-    if(!dry){
+//         const associatingMedia = []
 
-        const associatingMedia = []
+//         media.forEach(({media: media_id, page: page_id}) => {
 
-        media.forEach(({media: media_id, page: page_id}) => {
+//             associatingMedia.push(
 
+//                 query(`
 
-            associatingMedia.push(
+//                     SELECT
+//                         id
+//                     FROM media_page
+//                     WHERE media_id = ? AND page_id = ?
+//                 `, [media_id, page_id]).then(res => {
 
-                query(`
-                
-                    SELECT 
-                        id
-                    FROM media_page
-                    WHERE media_id = ? AND page_id = ?
-                `, [media_id, page_id]).then(res => {
+//                     if(res.length){
+//                         return true
+//                     } else {
 
+//                         return query(`
 
-                    if(res.length){
-                        return true
-                    } else {
-                        
-                        return query(`
+//                             INSERT INTO
+//                                 media_page
+//                             (media_id, page_id) VALUES (?, ?)
+//                         `, [media_id, page_id])
 
-                            INSERT INTO 
-                                media_page
-                            (media_id, page_id) VALUES (?, ?)
-                        `, [media_id, page_id])
+//                     }
 
-                    }
+//                 })
 
-                })
+//             )
 
-            )
+//         })
 
+//         await Promise.all(associatingMedia)
 
-        })
+//     }
 
-        await Promise.all(associatingMedia)
+//     return media
+// }
 
-    }
+// async function getMediaFromText(mediaFromText){
 
-    
-    return media
-}
+//     let retrievingMediaFromText = mediaFromText.map(({media: link, page}) => {
 
-async function getMediaFromText(mediaFromText){
+//         let upload_path = link.replace(ORIGIN_FROM_SERVEURIMAGE, "")
+//         let req = `
+//             SELECT
+//                 id
+//             FROM medias
+//             WHERE public_path LIKE '%${upload_path}%'
+//         `
 
-    let retrievingMediaFromText = mediaFromText.map(({media: link, page}) => {
+//         return query(req).then(res => res ? {
+//             media: res[0].id,
+//             page,
+//         } : null)
 
-        let upload_path = link.replace(ORIGIN_FROM_SERVEURIMAGE, "")
-        let req = `
-            SELECT
-                id
-            FROM medias
-            WHERE public_path LIKE '%${upload_path}%'
-        `
+//     })
 
-        return query(req).then(res => res ? {
-            media: res[0].id,
-            page,
-        } : null)
+//     retrievingMediaFromText = await Promise.all(retrievingMediaFromText)
 
-    })
+//     return retrievingMediaFromText
 
-    retrievingMediaFromText = await Promise.all(retrievingMediaFromText)
-
-    return retrievingMediaFromText
-
-}
+// }

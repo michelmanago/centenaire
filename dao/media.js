@@ -1,23 +1,20 @@
 // libs
-import {query} from '../lib/db';
-
+import prisma from '../lib/prisma';
 
 const groupedByMedia = results => {
-    
     // group by media
 
-    const groupedResults = {}
+    const groupedResults = {};
 
     results.forEach(media => {
-
-        const key = media.id
-        const page = media.page_id && ({
+        const key = media.id;
+        const page = media.page_id && {
             id: media.page_id,
             pageSlug: media.pageSlug,
             pageName: media.pageName,
-        })
-        
-        if(!groupedResults[key]){
+        };
+
+        if (!groupedResults[key]) {
             groupedResults[key] = {
                 id: media.id,
                 upload_path: media.upload_path,
@@ -25,244 +22,319 @@ const groupedByMedia = results => {
                 credit: media.credit,
                 legende: media.legende,
                 public_path: media.public_path,
-                pages: []
-            }
+                pages: [],
+            };
         }
 
-        if(page){
-            groupedResults[key].pages.push(page)
+        if (page) {
+            groupedResults[key].pages.push(page);
         }
+    });
 
+    return Object.values(groupedResults);
+};
 
-    })
+// SELECT ALL
 
-    return Object.values(groupedResults)
-    
-}
+export async function selectNonAssociatedMedia(limit = 15, pageOffset = 0, accepts = []) {
+    console.log('ffa');
 
-// SELECT ALL 
+    // let res = await query(`
+    //     SELECT
+    //         m.*
+    //     FROM
+    //         medias m
+    //     LEFT JOIN
+    //         media_page mp
+    //     ON m.id = mp.media_id
+    //     WHERE mp.media_id IS NULL AND m.type IN (?)
+    //     ORDER BY m.id DESC
+    //     LIMIT ? OFFSET ?
+    // `, [accepts, limit, pageOffset])
 
-export async function selectNonAssociatedMedia(limit = 15, pageOffset = 0, accepts = []){
+    // let media = JSON.parse(JSON.stringify(res))
+    // let media_ids = media.map(m => m.id)
+    // let item_count = 0
 
-    console.log("ffa")
+    // if(media_ids && media_ids.length){
 
-    let res = await query(`
-        SELECT 
-            m.*
-        FROM 
-            medias m
-        LEFT JOIN
-            media_page mp
-        ON m.id = mp.media_id
-        WHERE mp.media_id IS NULL AND m.type IN (?)
-        ORDER BY m.id DESC
-        LIMIT ? OFFSET ?
-    `, [accepts, limit, pageOffset])
+    //     item_count = (await query(`
+    //         SELECT COUNT(DISTINCT m.id) as count
+    //         FROM medias m
+    //         WHERE m.id IN (?)
+    //     `, [media_ids]))[0].count
 
-    let media = JSON.parse(JSON.stringify(res))
-    let media_ids = media.map(m => m.id)
-    let item_count = 0
+    // }
 
-    if(media_ids && media_ids.length){
+    // return {
+    //     array: media,
+    //     pagination: {
+    //         item_per_page: limit,
+    //         item_count_current_page: media.length,
+    //         item_count: item_count,
+    //         page: Number(pageOffset),
+    //         page_count: Math.ceil(item_count / limit)
+    //     }
+    // }
 
-        item_count = (await query(`
-            SELECT COUNT(DISTINCT m.id) as count 
-            FROM medias m
-            WHERE m.id IN (?)
-        `, [media_ids]))[0].count
-
-    }
+    let queryParam = {
+        where: {
+            type: {
+                in: accepts,
+            },
+            pages: {
+                none: {},
+            },
+        },
+    };
+    let item_count = (await prisma.medias.findMany(queryParam)).length;
+    console.log({pageOffset});
+    queryParam.skip = parseInt(pageOffset);
+    queryParam.take = limit;
+    let res = await prisma.medias.findMany(queryParam);
 
     return {
-        array: media,
+        array: res,
         pagination: {
             item_per_page: limit,
-            item_count_current_page: media.length,
+            item_count_current_page: res.length,
             item_count: item_count,
             page: Number(pageOffset),
-            page_count: Math.ceil(item_count / limit)
-        }
-    }
-
+            page_count: Math.ceil(item_count / limit),
+        },
+    };
 }
 
-export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id, accepts = [], order = "DESC") {
+export async function selectMediaPaginated(limit = 15, pageOffset = 0, page_id, accepts = [], order = 'desc') {
+    // let item_count = 0;
 
+    // let parameters = [];
+    // let queryString = `
+    //     SELECT
+    //         DISTINCT m.*
+    //     FROM
+    //         medias m
+    // `;
 
-    let item_count = 0
+    // // restrict to media of this page
+    // if (page_id) {
+    //     queryString += `
+    //         LEFT JOIN media_page mp ON mp.media_id = m.id
+    //         WHERE mp.page_id = ? AND type IN (?)
 
-    let parameters = []
-    let queryString = `
-        SELECT 
-            DISTINCT m.*
-        FROM
-            medias m  
-    `
+    //     `;
+    //     parameters.push(page_id, accepts);
+    // } else {
+    //     queryString += `
+    //         WHERE type IN (?)
+    //     `;
+    //     parameters.push(accepts);
+    // }
 
-    // restrict to media of this page
-    if(page_id){
-        queryString += `
-            LEFT JOIN media_page mp ON mp.media_id = m.id
-            WHERE mp.page_id = ? AND type IN (?)
+    // // add order
+    // queryString += `
+    //     ORDER BY m.id ${order}
+    // `;
 
-        `
-        parameters.push(page_id, accepts)
-    } 
+    // // add pagination
+    // queryString += `
+    //     LIMIT ? OFFSET ?
+    // `;
+    // parameters.push(limit, pageOffset * limit);
 
-    else {
-        queryString += `
-            WHERE type IN (?)
-        `
-        parameters.push(accepts)
-    }
+    // // get all media
+    // let res = await query(queryString, parameters);
+    // let media = JSON.parse(JSON.stringify(res));
+    // let media_ids = media.map(m => m.id);
 
+    // if (media_ids && media_ids.length) {
+    //     // all pages associated
+    //     let pages = await query(
+    //         `
+    //         SELECT
+    //             mp.media_id, mp.page_id
+    //         FROM media_page mp
+    //         LEFT JOIN pagecontent p ON p.id = mp.page_id
+    //         WHERE mp.media_id IN (?)
+    //     `,
+    //         [media_ids],
+    //     );
+    //     pages = JSON.parse(JSON.stringify(pages));
 
-    // add order
-    queryString += `
-        ORDER BY m.id ${order}
-    `
+    //     // set pages []
+    //     media = media.map(m => ({...m, pages: []}));
 
-    // add pagination
-    queryString += `
-        LIMIT ? OFFSET ?
-    `
-    parameters.push(limit, pageOffset * limit)
+    //     pages.forEach(page => {
+    //         // media associated with this page
+    //         const associated_media = media.find(m => m.id === page.media_id);
+    //         const outputed_page = {
+    //             id: page.page_id,
+    //         };
 
-    // get all media
-    let res = await query(queryString, parameters)
-    let media = JSON.parse(JSON.stringify(res))
-    let media_ids = media.map(m => m.id)
+    //         if (associated_media) {
+    //             if (associated_media.pages) {
+    //                 associated_media.pages.push(outputed_page);
+    //             } else {
+    //                 associated_media.pages = [outputed_page];
+    //             }
+    //         }
+    //     });
 
-    if(media_ids && media_ids.length){
-        
-        // all pages associated
-        let pages = await query(`
-            SELECT 
-                mp.media_id, mp.page_id 
-            FROM media_page mp
-            LEFT JOIN pagecontent p ON p.id = mp.page_id
-            WHERE mp.media_id IN (?)
-        `, [media_ids])
-        pages = JSON.parse(JSON.stringify(pages))
+    //     item_count = (
+    //         await query(
+    //             `
+    //         SELECT COUNT(DISTINCT m.id) as count
+    //         FROM medias m
+    //         ${
+    //             page_id
+    //                 ? `
+    //             LEFT JOIN media_page mp ON mp.media_id = m.id
+    //             WHERE mp.page_id = ? AND type IN (?)
+    //         `
+    //                 : `
+    //             WHERE type IN (?)
+    //         `
+    //         }
+    //     `,
+    //             page_id ? [page_id, accepts] : [accepts],
+    //         )
+    //     )[0].count;
+    // }
 
-        // set pages []
-        media = media.map(m => ({...m, pages: []}))
+    // return {
+    //     array: media,
+    //     pagination: {
+    //         item_per_page: limit,
+    //         item_count_current_page: media.length,
+    //         item_count: item_count,
+    //         page: Number(pageOffset),
+    //         page_count: Math.ceil(item_count / limit),
+    //     },
+    // };
 
-        pages.forEach(page => {
+    let item_count = 0;
 
-            // media associated with this page
-            const associated_media = media.find(m => m.id === page.media_id)
-            const outputed_page = {
-                id: page.page_id
-            }
+    let queryParam = {
+        where: {},
+        orderBy: {
+            id: order,
+        },
+        include: {pages: true},
+    };
 
-            if(associated_media){
-                if(associated_media.pages){
-                    associated_media.pages.push(outputed_page)
-                } else {
-                    associated_media.pages = [outputed_page]
-                }
-            }
+    if (page_id)
+        queryParam.where.pages = {
+            some: {page: {id: page_id}},
+        };
+    if (accepts.length > 0) queryParam.where.type = {in: accepts};
+    item_count = (await prisma.medias.findMany(queryParam)).length;
+    queryParam.take = limit;
+    queryParam.skip = parseInt(pageOffset);
 
-        })
-
-        item_count = (await query(`
-            SELECT COUNT(DISTINCT m.id) as count 
-            FROM medias m
-            ${page_id ? `
-                LEFT JOIN media_page mp ON mp.media_id = m.id
-                WHERE mp.page_id = ? AND type IN (?)
-            ` : `
-                WHERE type IN (?)
-            `}
-        `, page_id ? [page_id, accepts] : [accepts]))[0].count
-
-
-    }
-
+    let res = await prisma.medias.findMany(queryParam);
     return {
-        array: media,
+        array: res,
         pagination: {
             item_per_page: limit,
-            item_count_current_page: media.length,
+            item_count_current_page: res.length,
             item_count: item_count,
             page: Number(pageOffset),
-            page_count: Math.ceil(item_count / limit)
-        }
-    }
-
+            page_count: Math.ceil(item_count / limit),
+        },
+    };
 }
-
 
 export async function selectMedia(page_id) {
+    // let queryString = '';
+    // queryString = `
+    //     SELECT
+    //         m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
+    //         p.pageSlug, p.pageName,
+    //         mp.page_id
+    //     FROM medias m
+    //     LEFT JOIN media_page mp
+    //         ON mp.media_id = m.id
+    //     LEFT JOIN pagecontent p
+    //         ON p.id = mp.page_id
+    // `;
 
-    let queryString = ""
-    queryString = `
-        SELECT 
-            m.id, m.upload_path, m.type, m.credit, m.legende, m.public_path,
-            p.pageSlug, p.pageName,
-            mp.page_id
-        FROM medias m
-        LEFT JOIN media_page mp
-            ON mp.media_id = m.id
-        LEFT JOIN pagecontent p
-            ON p.id = mp.page_id
-    `
+    // if (page_id) {
+    //     queryString += `
+    //         WHERE mp.page_id = ?
+    //     `;
+    // }
 
-    if(page_id){
-        queryString += `
-            WHERE mp.page_id = ?
-        `
-    }
+    // const res = await query(queryString, page_id ? [page_id] : []);
 
-    const res = await query(queryString, page_id ? [page_id] : []);
+    // let results = JSON.parse(JSON.stringify(res));
 
-    let results = JSON.parse(JSON.stringify(res))
+    // return groupedByMedia(results);
 
-    return groupedByMedia(results)
+    const res = await prisma.media_page.findMany({
+        where: {
+            page_id,
+        },
+        include: {
+            media: true,
+        },
+    });
+
+    return res.map(item => {
+        return {...item.media};
+    });
 }
-
 
 // SELECT SINGLE
 
-export async function selectSingleMedia(media_id){
+export async function selectSingleMedia(media_id) {
+    // const rows = await query(
+    //     `
+    //         SELECT
+    //             m.*,
+    //             p.pageSlug, p.pageName,
+    //             mp.page_id
+    //         FROM medias m
+    //             LEFT JOIN media_page mp
+    //                 ON mp.media_id = m.id
+    //             LEFT JOIN pagecontent p
+    //                 ON p.id = mp.page_id
+    //         WHERE m.id = ?
+    //     `,
+    //     [media_id],
+    // );
 
-    const rows = await query(
-        `
-            SELECT 
-                m.*,
-                p.pageSlug, p.pageName,
-                mp.page_id
-            FROM medias m
-                LEFT JOIN media_page mp
-                    ON mp.media_id = m.id
-                LEFT JOIN pagecontent p
-                    ON p.id = mp.page_id
-            WHERE m.id = ?
-        `,
-        [media_id]
-    )
+    // const groupedResults = groupedByMedia(rows);
 
-    const groupedResults = groupedByMedia(rows)
+    // return rows.length ? groupedResults[0] : null;
 
-    return rows.length ? groupedResults[0] : null
+    const rows = await prisma.medias.findUnique({
+        where: {
+            id: parseInt(media_id),
+        },
+    });
+    return rows;
 }
 
 // PUT MEDIA
 
-export async function putSingleMedia(media_id, {credit, legende} = {}){
+export async function putSingleMedia(media_id, {credit, legende} = {}) {
+    // const res = await query(
+    //     `
+    //         UPDATE medias
+    //         SET
+    //             credit = ?,
+    //             legende = ?
+    //         WHERE id = ?
+    //     `,
+    //     [credit, legende, /** id of media (!needs to be the last argument) */ media_id],
+    // );
 
-    const res = await query(
-        `
-            UPDATE medias
-            SET 
-                credit = ?,
-                legende = ?
-            WHERE id = ?
-        `,
-        [credit, legende, /** id of media (!needs to be the last argument) */ media_id]
-    )
+    // return true;
 
-    return true
+    const res = await prisma.medias.update({
+        where: {id: parseInt(media_id)},
+        data: {credit, legende},
+    });
 
+    return true;
 }

@@ -13,7 +13,7 @@ export default function ResetPassword({menu}) {
         if (res.status === 200) {
             const user = await res.json();
             console.log('reset', email, {user});
-            setMessageObj({type: 'validate', message: 'Un email de réinisialisation vous a été envoyé'});
+            setMessageObj({type: 'validate', message: 'Un email de réinitialisation vous a été envoyé'});
         } else {
             const error = await res.json();
             setMessageObj({type: 'error', message: error.message});
@@ -29,7 +29,7 @@ export default function ResetPassword({menu}) {
                 <div className="grid mx-2 my-20 place-items-center">
                     <div className="w-11/12 p-12 px-6 py-10 bg-white rounded-lg shadow-md sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12 sm:px-10 sm:py-6 lg:shadow-lg">
                         <h2 className="text-3xl font-semibold text-center text-gray-800 lg:text-4xl">
-                            Réinisialisation du mot de passe
+                            Réinitialisation du mot de passe
                         </h2>
                         {messageObj && (
                             <div className={messageObj.type === 'error' ? 'text-red-500' : ''}>
@@ -55,7 +55,7 @@ export default function ResetPassword({menu}) {
                                 type="submit"
                                 className="w-full py-3 mt-10 font-medium text-white uppercase rounded-sm bg-pblue focus:outline-none hover:bg-pblue-dark hover:shadow-none"
                             >
-                                Réinisialiser
+                                Réinitialiser
                             </button>
                         </form>
                     </div>
