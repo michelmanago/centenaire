@@ -16,15 +16,17 @@ export default function PdfOptions({open, setOpen, onSubmit}) {
             <button onClick={() => setOpen(false)} className="absolute top-0 right-0 text-gray-700 hover:text-gray-800">
                 <IconClose />
             </button>
-            <div className="mb-3 text-3xl font-medium">Video Options</div>
-            <label htmlFor="valueInput"></label>
-            <input
-                type="text"
-                id="valueInput"
-                className="px-1 border rounded"
-                value={value}
-                onChange={e => setValue(e.currentTarget.value)}
-            />
+            <div className="mb-3 text-3xl font-medium">Options du Fichier</div>
+            <div className="flex flex-col items-center mb-2">
+                <label htmlFor="valueInput">Nom du fichier</label>
+                <input
+                    type="text"
+                    id="valueInput"
+                    className="px-1 border rounded"
+                    value={value}
+                    onChange={e => setValue(e.currentTarget.value)}
+                />
+            </div>
             {/* Bottom */}
             <div className="flex w-full h-16 px-3 pt-2 bg-white border-t border-gray-300">
                 {/* Submit main action */}
