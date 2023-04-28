@@ -72,3 +72,9 @@ export async function getMedia(page_id, pageOffset, accepts, with_no_page = fals
         return await selectMedia(page_id);
     }
 }
+export async function getMediaById(id) {
+    const media = await prisma.medias.findUnique({
+        where: {id},
+    });
+    return JSON.parse(JSON.stringify(media));
+}
