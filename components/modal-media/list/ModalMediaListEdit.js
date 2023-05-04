@@ -152,13 +152,23 @@ export default function ModalMediaListEdit({
         // Prevent miss click
         if (confirm("Êtes vous sûr de vouloir supprimer définitivement l'image ?")) {
             // fetch DELETE
-            const deleteMediaServer = await fetchDeleteMedia(media);
+            // const deleteMediaServer = await fetchDeleteMedia(media);
 
-            if (deleteMediaServer) {
+            // if (deleteMediaServer) {
+            //     const deleted = await fetchWrapper(`/api/media/${media.id}`, null, 'DELETE');
+            //     const res = await fetchDissociateMediaFromPage(media.id, originalPageId);
+            //     deleteMediaFromList(media.id);
+            // } else {
+            //     alert('Could not delete this media.');
+            // }
+            try {
+                const res = await fetchDissociateMediaFromPage(media.id, originalPageId);
                 const deleted = await fetchWrapper(`/api/media/${media.id}`, null, 'DELETE');
+                const deleteFromServer = await fetchDeleteMedia(media);
                 deleteMediaFromList(media.id);
-            } else {
-                alert('Could not delete this media.');
+            } catch (error) {
+                console.log({error});
+                alert(`Could not delete this media. ${error}`);
             }
         }
     };
